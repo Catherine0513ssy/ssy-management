@@ -1,0 +1,12 @@
+node_modules/
+ssy.db
+ssy.db-wal
+ssy.db-shm
+config.json
+backups/
+public/uploads/*
+!public/uploads/.gitkeep
+logs/
+*.log
+.env
+.DS_Store

@@ -1,0 +1,25 @@
+{
+  "name": "ssy-teaching",
+  "version": "2.0.0",
+  "description": "SSY 初三英语教学管理系统",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "migrate": "node scripts/migrate.js",
+    "backup": "bash scripts/backup.sh",
+    "deploy": "bash scripts/deploy.sh"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.7.0",
+    "express": "^4.21.0",
+    "helmet": "^8.0.0",
+    "marked": "^15.0.0",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.3",
+    "xss": "^1.0.15"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "private": true
+}
