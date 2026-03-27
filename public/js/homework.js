@@ -11,6 +11,43 @@
  * Depends on: Alpine.js, global API object (api.js)
  */
 document.addEventListener('alpine:init', () => {
+  const createPresentationState = () => ({ active: false, locked: false });
+  const canExitPresentation = (state) => Boolean(state && state.active && !state.locked);
+  const reducePresentationState = (state, action) => {
+    const current = state || createPresentationState();
+    switch (action.type) {
+      case 'ENTER':
+        return { active: true, locked: false };
+      case 'EXIT':
+        return canExitPresentation(current) ? createPresentationState() : current;
+      case 'TOGGLE_LOCK':
+        return current.active ? { ...current, locked: !current.locked } : current;
+      case 'RESET':
+        return createPresentationState();
+      default:
+        return current;
+    }
+  };
+
+  Alpine.store('homeworkPresentation', {
+    ...createPresentationState(),
+    enter() {
+      Object.assign(this, reducePresentationState(this, { type: 'ENTER' }));
+    },
+    exit() {
+      Object.assign(this, reducePresentationState(this, { type: 'EXIT' }));
+    },
+    toggleLock() {
+      Object.assign(this, reducePresentationState(this, { type: 'TOGGLE_LOCK' }));
+    },
+    reset() {
+      Object.assign(this, createPresentationState());
+    },
+    get canExit() {
+      return canExitPresentation(this);
+    },
+  });
+
   Alpine.data('homeworkTab', () => ({
     items: [],
     previewImage: null,
@@ -62,6 +99,34 @@ document.addEventListener('alpine:init', () => {
       this.selectedDate = date;
       await this.loadHomework();
       this.buildCalendar();          // refresh selection highlight
+    },
+
+    get presentationState() {
+      return Alpine.store('homeworkPresentation');
+    },
+
+    enterPresentationMode() {
+      this.presentationState.enter();
+      this.previewImage = null;
+    },
+
+    exitPresentationMode() {
+      this.presentationState.exit();
+    },
+
+    togglePresentationLock() {
+      this.presentationState.toggleLock();
+    },
+
+    handlePresentationKey(e) {
+      if (!this.presentationState.active) return;
+      if (e.key === 'Escape' && this.presentationState.canExit) {
+        this.exitPresentationMode();
+      }
+    },
+
+    get presentationImages() {
+      return this.items.filter((item) => item.image);
     },
 
     // ------------------------------------------------------------------

@@ -409,7 +409,7 @@
   <div class="bg-blob bg-blob-3"></div>
 
   <!-- ==================== HEADER ==================== -->
-  <header style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,0.08);padding:0 24px;box-shadow:0 1px 8px rgba(0,0,0,0.04);">
+  <header x-show="!$store.homeworkPresentation?.active" style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,0.08);padding:0 24px;box-shadow:0 1px 8px rgba(0,0,0,0.04);">
     <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;height:64px;gap:20px;">
       <!-- Logo -->
       <div style="font-size:22px;font-weight:800;white-space:nowrap;display:flex;align-items:center;gap:6px;">
@@ -440,10 +440,10 @@
   </header>
 
   <!-- ==================== MAIN LAYOUT ==================== -->
-  <div x-data="homeworkTab()" style="max-width:1200px;margin:0 auto;display:flex;gap:20px;padding:20px;position:relative;z-index:1;">
+  <div x-data="homeworkTab()" @keydown.window="handlePresentationKey($event)" :style="$store.homeworkPresentation?.active ? 'max-width:none;margin:0;display:flex;gap:20px;padding:0;position:relative;z-index:1;' : 'max-width:1200px;margin:0 auto;display:flex;gap:20px;padding:20px;position:relative;z-index:1;'">
 
     <!-- SIDEBAR (only on homework tab) -->
-    <aside x-show="activeTab==='homework'" style="width:280px;flex-shrink:0;" x-transition>
+    <aside x-show="activeTab==='homework' && !$store.homeworkPresentation?.active" style="width:280px;flex-shrink:0;" x-transition>
       <div class="glass-sidebar" style="margin-bottom:16px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
           <button @click="prevMonth()" style="border:none;background:none;cursor:pointer;font-size:16px;">◀</button>
@@ -479,15 +479,48 @@
 
       <!-- HOMEWORK TAB -->
       <div x-show="activeTab==='homework'">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <div x-show="!$store.homeworkPresentation?.active" style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
           <h2 style="font-size:22px;font-weight:700;margin:0;">📝 今日作业</h2>
           <span style="background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;padding:4px 12px;border-radius:12px;font-size:13px;" x-text="selectedDate"></span>
+          <button @click="enterPresentationMode()" class="toggle-pill active-purple" style="margin-left:auto;">📺 展示模式</button>
           <button x-show="previewImage" @click="previewImage=null" style="font-size:12px;color:#94a3b8;background:none;border:none;cursor:pointer;">✕ 关闭预览</button>
+        </div>
+        <div x-show="$store.homeworkPresentation?.active" style="position:fixed;inset:0;z-index:250;background:#f8fafc;padding:24px 28px;overflow:auto;">
+          <div style="position:sticky;top:0;display:flex;justify-content:flex-end;gap:10px;margin-bottom:18px;z-index:2;">
+            <button @click="togglePresentationLock()" class="toggle-pill" :class="$store.homeworkPresentation?.locked ? 'active-warm' : ''" x-text="$store.homeworkPresentation?.locked ? '🔒 已锁定' : '🔓 未锁定'"></button>
+            <button @click="exitPresentationMode()" class="toggle-pill" :style="$store.homeworkPresentation?.canExit ? '' : 'opacity:0.45;cursor:not-allowed;'" :disabled="!$store.homeworkPresentation?.canExit">退出展示</button>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:28px;">
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;">
+                <h2 style="margin:0;font-size:34px;font-weight:900;color:#0f172a;">今日作业</h2>
+                <span style="padding:8px 14px;border-radius:14px;background:#2563eb;color:white;font-size:18px;font-weight:700;" x-text="selectedDate"></span>
+              </div>
+              <div x-show="items.length === 0" style="padding:80px 20px;text-align:center;color:#94a3b8;font-size:28px;">今天还没有作业</div>
+              <div x-show="items.length > 0" style="display:flex;flex-direction:column;gap:18px;">
+                <template x-for="(item, idx) in items" :key="'presentation-' + item.id">
+                  <div style="padding:18px 22px;border-radius:18px;background:white;box-shadow:0 8px 30px rgba(15,23,42,0.08);border:2px solid rgba(96,165,250,0.16);">
+                    <div style="display:flex;gap:14px;align-items:flex-start;">
+                      <div style="flex-shrink:0;width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;" x-text="idx + 1"></div>
+                      <div style="font-size:28px;line-height:1.6;color:#0f172a;font-weight:700;white-space:pre-wrap;" x-text="item.text"></div>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+            <div x-show="presentationImages.length > 0" style="width:min(42vw, 560px);flex-shrink:0;display:flex;flex-direction:column;gap:18px;">
+              <template x-for="item in presentationImages" :key="'presentation-image-' + item.id">
+                <div style="background:white;border-radius:18px;padding:14px;box-shadow:0 8px 30px rgba(15,23,42,0.08);">
+                  <img :src="item.image" style="width:100%;height:auto;border-radius:12px;display:block;">
+                </div>
+              </template>
+            </div>
+          </div>
         </div>
         <div x-show="loading" style="text-align:center;padding:40px;color:#94a3b8;">加载中...</div>
 
         <!-- Split layout: list left, image preview right -->
-        <div x-show="!loading && items.length>0">
+        <div x-show="!$store.homeworkPresentation?.active && !loading && items.length>0">
           <div :style="previewImage ? 'display:flex;gap:16px;align-items:flex-start;' : ''">
             <!-- Left: homework list -->
             <div :style="previewImage ? 'width:40%;flex-shrink:0;overflow-y:auto;max-height:80vh;' : ''">
@@ -514,11 +547,11 @@
           </div>
         </div>
 
-        <div x-show="!loading && items.length===0" style="text-align:center;padding:60px 20px;color:#94a3b8;">
+        <div x-show="!$store.homeworkPresentation?.active && !loading && items.length===0" style="text-align:center;padding:60px 20px;color:#94a3b8;">
           <div style="font-size:48px;margin-bottom:12px;">📭</div><p>今天还没有作业</p>
         </div>
         <!-- Add form -->
-        <div x-show="isAdmin" style="margin-top:20px;background:rgba(255,255,255,0.85);border-radius:16px;padding:20px;">
+        <div x-show="isAdmin && !$store.homeworkPresentation?.active" style="margin-top:20px;background:rgba(255,255,255,0.85);border-radius:16px;padding:20px;">
           <h3 style="font-size:16px;font-weight:600;margin-bottom:12px;">➕ 添加作业</h3>
           <textarea x-model="newText" placeholder="输入作业内容..." rows="3" style="width:100%;padding:10px;border-radius:8px;border:1px solid #e2e8f0;font-size:14px;resize:vertical;box-sizing:border-box;"></textarea>
           <div class="upload-box" style="margin-top:10px;" @click="$refs.hwImg.click()" @dragover.prevent @drop.prevent="onImageSelect($event)">

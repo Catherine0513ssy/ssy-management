@@ -30,6 +30,9 @@ document.addEventListener('alpine:init', () => {
 
     // Tab switching
     switchTab(tabId) {
+      if (window.Alpine?.store('homeworkPresentation')?.active) {
+        window.Alpine.store('homeworkPresentation').reset();
+      }
       // 如果正在默写中，切换 tab 前确认
       if (this.activeTab === 'quiz' && tabId !== 'quiz' && window._ssyQuizActive) {
         if (!confirm('默写正在进行中，确定要离开吗？')) return;
