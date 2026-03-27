@@ -1,20 +1,14 @@
-/**
- * Centralized Express error handler.
- * Logs the error and returns a JSON response.
- * In production, stack traces are not exposed.
- */
 function errorHandler(err, req, res, _next) {
-  console.error('[Error]', err);
+  console.error(`[ERROR] ${req.method} ${req.url}:`, err.message);
 
   const status = err.status || err.statusCode || 500;
-  const message = err.message || 'Internal server error';
+  const response = { error: err.message || '服务器内部错误' };
 
-  const payload = { error: message };
   if (process.env.NODE_ENV !== 'production') {
-    payload.stack = err.stack;
+    response.stack = err.stack;
   }
 
-  res.status(status).json(payload);
+  res.status(status).json(response);
 }
 
 module.exports = errorHandler;

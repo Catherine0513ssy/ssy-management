@@ -1,7 +1,22 @@
 const router = require('express').Router();
+const multer = require('multer');
+const path = require('path');
+const crypto = require('crypto');
 const { getDB } = require('../services/db');
 const { requireAuth } = require('../middleware/auth');
-const { sanitize } = require('../middleware/sanitize');
+const { sanitizeText } = require('../middleware/sanitize');
+
+// ---------------------------------------------------------------------------
+// Multer configuration — save uploaded images to public/uploads/
+// ---------------------------------------------------------------------------
+const storage = multer.diskStorage({
+  destination: path.join(__dirname, '..', 'public', 'uploads'),
+  filename: (_req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    cb(null, Date.now() + '_' + crypto.randomBytes(6).toString('hex') + ext);
+  },
+});
+const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
 
 // ---------------------------------------------------------------------------
 // Helper: fetch all unique dates for a given class (descending)
@@ -80,8 +95,8 @@ router.get('/dates', (req, res) => {
 // ---------------------------------------------------------------------------
 // POST /  — create a homework item (auth required)
 // ---------------------------------------------------------------------------
-router.post('/', requireAuth, (req, res) => {
-  const { class_id, date, text, image } = req.body;
+router.post('/', requireAuth, upload.single('image'), (req, res) => {
+  const { class_id, date, text } = req.body;
 
   if (!class_id || !date || !text) {
     return res
@@ -91,7 +106,8 @@ router.post('/', requireAuth, (req, res) => {
 
   const db = getDB();
   const classId = Number(class_id);
-  const sanitizedText = sanitize(text);
+  const sanitizedText = sanitizeText(text);
+  const imagePath = req.file ? `/uploads/${req.file.filename}` : (req.body.image || null);
 
   // Determine next sort_order for this class + date
   const maxRow = db
@@ -106,7 +122,7 @@ router.post('/', requireAuth, (req, res) => {
   db.prepare(
     `INSERT INTO homework_items (class_id, date, text, image, sort_order, created_at)
      VALUES (?, ?, ?, ?, ?, datetime('now'))`
-  ).run(classId, date, sanitizedText, image || null, nextSort);
+  ).run(classId, date, sanitizedText, imagePath, nextSort);
 
   // Return updated items for that date
   const items = getItems(db, classId, date);

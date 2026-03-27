@@ -184,6 +184,20 @@ router.put('/:id', requireAuth, (req, res) => {
 });
 
 // ---------------------------------------------------------------------------
+// DELETE /batch  — delete multiple words by ids (auth required)
+// ---------------------------------------------------------------------------
+router.delete('/batch', requireAuth, (req, res) => {
+  const { ids } = req.body;
+  if (!Array.isArray(ids) || ids.length === 0) {
+    return res.status(400).json({ error: 'ids array is required' });
+  }
+  const db = getDB();
+  const placeholders = ids.map(() => '?').join(',');
+  const result = db.prepare(`DELETE FROM vocabulary WHERE id IN (${placeholders})`).run(...ids);
+  return res.json({ deleted: result.changes });
+});
+
+// ---------------------------------------------------------------------------
 // DELETE /:id  — delete a word by id (auth required)
 // ---------------------------------------------------------------------------
 router.delete('/:id', requireAuth, (req, res) => {

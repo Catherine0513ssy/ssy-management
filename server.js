@@ -3,12 +3,15 @@ const path = require('path');
 const helmet = require('helmet');
 const { initDB } = require('./services/db');
 const errorHandler = require('./middleware/error');
+const { startBackupSchedule } = require('./services/backup');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || '0.0.0.0';
+let serverInstance;
 
 // Initialize database
-initDB();
+initDB(process.env.DB_PATH);
 
 // Security & parsing
 app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
@@ -35,13 +38,31 @@ app.use('/api/excellent', require('./routes/excellent'));
 app.use('/api/ranking', require('./routes/ranking'));
 app.use('/api/vocabulary', require('./routes/vocabulary'));
 app.use('/api/quiz', require('./routes/quiz'));
+app.use('/api/admin', require('./routes/admin'));
+app.use('/api/ocr', require('./routes/ocr'));
+app.use('/api/upload', require('./routes/upload'));
+app.use('/api/essay', require('./routes/essay'));
 
 // Error handler
 app.use(errorHandler);
 
-// Start
-app.listen(PORT, () => {
-  console.log(`[SSY] Server running on port ${PORT}`);
-});
+function startServer(port = PORT, host = HOST) {
+  if (serverInstance) return serverInstance;
 
-module.exports = app;
+  serverInstance = app.listen(port, host, () => {
+    const address = serverInstance.address();
+    const boundPort = address && typeof address === 'object' ? address.port : port;
+    console.log(`[SSY] Server running on port ${boundPort}`);
+    if (process.env.DISABLE_BACKUPS !== 'true') {
+      startBackupSchedule();
+    }
+  });
+
+  return serverInstance;
+}
+
+if (require.main === module) {
+  startServer();
+}
+
+module.exports = { app, startServer };

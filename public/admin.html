@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSY 管理后台</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%E2%9A%99%EF%B8%8F</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/candy-theme.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <style>
+    /* Admin-specific overrides */
+    .admin-wrap { max-width: 960px; margin: 0 auto; padding: var(--space-6) var(--space-4); margin-top: var(--header-height, 60px); }
+    .admin-tabs { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-6); }
+    .admin-tabs .tab-item { padding: 0.5em 1.2em; }
+    .section-card { padding: var(--space-6); margin-bottom: var(--space-4); }
+    .section-title { font-family: var(--font-display); font-size: var(--text-lg); margin-bottom: var(--space-4); color: var(--text-primary); }
+    .form-row { display: flex; gap: var(--space-3); margin-bottom: var(--space-3); align-items: flex-end; flex-wrap: wrap; }
+    .form-row > * { flex: 1; min-width: 0; }
+    .form-row .btn { flex: 0 0 auto; }
+    .group-block { border: 1px solid var(--card-border); border-radius: var(--card-radius-sm); padding: var(--space-4); margin-bottom: var(--space-3); }
+    .group-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-3); }
+    .group-header h4 { font-family: var(--font-display); font-size: var(--text-base); margin: 0; }
+    .student-row { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) 0; border-bottom: 1px solid rgba(0,0,0,.04); }
+    .student-row:last-child { border-bottom: none; }
+    .student-row .name { flex: 1; font-weight: 600; }
+    .toggle-switch { position: relative; width: 44px; height: 24px; cursor: pointer; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-track { position: absolute; inset: 0; background: #cbd5e1; border-radius: 12px; transition: background 0.2s; }
+    .toggle-switch input:checked + .toggle-track { background: var(--color-success); }
+    .toggle-track::after { content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: #fff; border-radius: 50%; transition: transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,.15); }
+    .toggle-switch input:checked + .toggle-track::after { transform: translateX(20px); }
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--space-3); }
+    .info-item { padding: var(--space-3); background: rgba(255,255,255,.5); border-radius: var(--card-radius-sm); text-align: center; }
+    .info-item .info-value { font-family: var(--font-display); font-size: var(--text-2xl); color: var(--accent-lavender); }
+    .info-item .info-label { font-size: var(--text-sm); color: var(--text-secondary); }
+    .backup-row { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); border-bottom: 1px solid rgba(0,0,0,.04); }
+    .backup-row .backup-name { flex: 1; font-weight: 600; font-size: var(--text-sm); }
+    .backup-row .backup-size { color: var(--text-secondary); font-size: var(--text-xs); }
+    .log-table { font-size: var(--text-sm); }
+    .log-table td, .log-table th { padding: var(--space-2) var(--space-3); }
+    .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
+    .status-dot.ok { background: var(--color-success); }
+    .status-dot.err { background: var(--color-danger); }
+    .radio-group { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+    .radio-label { display: flex; align-items: center; gap: var(--space-2); cursor: pointer; font-weight: 600; font-size: var(--text-sm); }
+    .radio-label input[type="radio"] { accent-color: var(--accent-lavender); }
+    .export-btns { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+    @media (max-width: 767px) {
+      .admin-wrap { padding: var(--space-3); margin-top: 52px; }
+      .form-row { flex-direction: column; }
+      .info-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+
+<body x-data="adminApp()" x-init="init()" x-cloak>
+
+  <!-- Background Blobs -->
+  <div class="bg-blobs" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header" style="display:flex;align-items:center;height:100%;padding:0 var(--space-5);gap:var(--space-4);">
+      <a href="/" class="header-logo" style="text-decoration:none;">
+        <span class="logo-emoji">⚙️</span>
+        <span>SSY 管理后台</span>
+      </a>
+      <div style="flex:1;"></div>
+      <a href="/" class="btn btn-ghost btn-sm">← 返回主页</a>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <div class="admin-wrap">
+
+    <!-- Auth Gate -->
+    <template x-if="!authenticated">
+      <div class="card section-card" style="max-width:380px;margin:4rem auto;text-align:center;">
+        <h2 class="section-title">🔒 管理员登录</h2>
+        <div class="form-group">
+          <input type="password" class="form-input" placeholder="请输入管理密码"
+                 x-model="loginPassword" @keydown.enter="doLogin()">
+        </div>
+        <p class="text-sm" style="color:var(--color-danger);min-height:1.2em;" x-text="loginError"></p>
+        <button class="btn btn-primary" @click="doLogin()" :disabled="loginLoading">
+          <span x-show="!loginLoading">登录</span>
+          <span x-show="loginLoading">验证中...</span>
+        </button>
+      </div>
+    </template>
+
+    <!-- Admin Content -->
+    <template x-if="authenticated">
+      <div>
+        <!-- Tab Nav -->
+        <nav class="admin-tabs tab-nav" role="tablist">
+          <template x-for="t in tabs" :key="t.id">
+            <button class="tab-item" role="tab"
+                    :class="{ 'active': activeTab === t.id }"
+                    @click="activeTab = t.id"
+                    x-text="t.icon + ' ' + t.label"></button>
+          </template>
+        </nav>
+
+        <!-- ═══ Tab 1: 学生管理 ═══ -->
+        <section x-show="activeTab === 'students'" x-transition>
+          <div class="card section-card">
+            <h3 class="section-title">📋 学生管理</h3>
+
+            <!-- Class selector -->
+            <div class="form-row" style="margin-bottom:var(--space-4);">
+              <div class="form-group" style="max-width:200px;">
+                <label class="form-label">选择班级</label>
+                <select class="form-select" x-model="classId" @change="loadStudents()">
+                  <option value="1">2313班</option>
+                  <option value="2">2314班</option>
+                </select>
+              </div>
+              <button class="btn btn-primary btn-sm" @click="showAddGroup = true">+ 新增分组</button>
+              <button class="btn btn-ghost btn-sm" @click="showBatchImport = true">📥 批量导入</button>
+            </div>
+
+            <!-- Add Group inline -->
+            <div class="form-row" x-show="showAddGroup" x-transition>
+              <div class="form-group">
+                <input type="text" class="form-input" placeholder="新分组名称" x-model="newGroupName">
+              </div>
+              <button class="btn btn-success btn-sm" @click="addGroup()">确定</button>
+              <button class="btn btn-ghost btn-sm" @click="showAddGroup = false; newGroupName = ''">取消</button>
+            </div>
+
+            <!-- Groups + Students -->
+            <template x-for="group in groups" :key="group.id">
+              <div class="group-block">
+                <div class="group-header">
+                  <h4>
+                    <span x-text="group.name"></span>
+                    <span class="badge" x-text="group.students.length + '人'" style="margin-left:var(--space-2);"></span>
+                  </h4>
+                  <div style="display:flex;gap:var(--space-2);">
+                    <button class="btn btn-ghost btn-sm" @click="renameGroup(group)" title="重命名">✏️</button>
+                    <button class="btn btn-danger btn-sm" @click="deleteGroup(group.id)" title="删除分组">🗑️</button>
+                  </div>
+                </div>
+
+                <template x-for="stu in group.students" :key="stu.id">
+                  <div class="student-row">
+                    <span class="name" x-text="stu.name"></span>
+                    <button class="btn btn-ghost btn-sm" @click="editStudent(stu)" title="编辑">✏️</button>
+                    <label class="toggle-switch" :title="stu.active ? '点击停用' : '点击启用'">
+                      <input type="checkbox" :checked="stu.active" @change="toggleStudentActive(stu)">
+                      <span class="toggle-track"></span>
+                    </label>
+                  </div>
+                </template>
+
+                <!-- Add student to group -->
+                <div class="form-row" style="margin-top:var(--space-3);">
+                  <input type="text" class="form-input" :placeholder="'添加学生到' + group.name"
+                         x-model="group._newName" @keydown.enter="addStudent(group)">
+                  <button class="btn btn-success btn-sm" @click="addStudent(group)">添加</button>
+                </div>
+              </div>
+            </template>
+
+            <div class="empty-state" x-show="groups.length === 0">
+              <span class="empty-icon">👥</span>
+              <p class="empty-text">暂无分组数据</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ Tab 2: API 配置 ═══ -->
+        <section x-show="activeTab === 'api'" x-transition>
+          <div class="card section-card">
+            <h3 class="section-title">🔑 API 配置</h3>
+
+            <!-- OCR Engine -->
+            <div class="form-group">
+              <label class="form-label">OCR 引擎选择</label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="ocrEngine" value="tencent" x-model="apiConfig.ocrEngine"> 腾讯云 OCR
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="ocrEngine" value="ai" x-model="apiConfig.ocrEngine"> AI 多模态
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="ocrEngine" value="off" x-model="apiConfig.ocrEngine"> 关闭
+                </label>
+              </div>
+            </div>
+
+            <!-- Tencent Cloud -->
+            <div class="group-block" x-show="apiConfig.ocrEngine === 'tencent'">
+              <h4 style="font-family:var(--font-display);margin-bottom:var(--space-3);">腾讯云 OCR</h4>
+              <div class="form-group">
+                <label class="form-label">Secret ID <span x-show="apiConfig.tencentIdHint" style="color:var(--color-success);font-weight:400;font-size:12px;" x-text="'✅ 已配置: ' + apiConfig.tencentIdHint"></span></label>
+                <input type="password" class="form-input" x-model="apiConfig.tencentSecretId"
+                       :placeholder="apiConfig.tencentIdHint ? '已保存，留空不修改' : '请输入 Secret ID'">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Secret Key</label>
+                <input type="password" class="form-input" x-model="apiConfig.tencentSecretKey"
+                       :placeholder="'留空不修改'">
+              </div>
+              <button class="btn btn-primary btn-sm" @click="testTencentOcr()" :disabled="testingTencent">
+                <span x-show="!testingTencent">🔗 测试连接</span>
+                <span x-show="testingTencent">测试中...</span>
+              </button>
+              <span class="text-sm" style="margin-left:var(--space-2);" x-text="tencentTestResult"
+                    :style="{ color: tencentTestOk ? 'var(--color-success)' : 'var(--color-danger)' }"></span>
+            </div>
+
+            <!-- AI API -->
+            <div class="group-block" x-show="apiConfig.ocrEngine === 'ai'" style="margin-top:var(--space-3);">
+              <h4 style="font-family:var(--font-display);margin-bottom:var(--space-3);">AI 多模态 API</h4>
+              <div class="form-group">
+                <label class="form-label">Endpoint URL</label>
+                <input type="text" class="form-input" x-model="apiConfig.aiEndpoint" placeholder="https://api.example.com/v1">
+              </div>
+              <div class="form-group">
+                <label class="form-label">API Key <span x-show="apiConfig.aiKeyHint" style="color:var(--color-success);font-weight:400;font-size:12px;" x-text="'✅ 已配置: ' + apiConfig.aiKeyHint"></span></label>
+                <input type="password" class="form-input" x-model="apiConfig.aiApiKey"
+                  :placeholder="apiConfig.aiKeyHint ? '已保存，留空不修改' : '请输入 API Key'">
+              </div>
+              <div class="form-group">
+                <label class="form-label">模型名称</label>
+                <input type="text" class="form-input" x-model="apiConfig.aiModel" placeholder="gpt-4o-mini">
+              </div>
+              <button class="btn btn-primary btn-sm" @click="testAiApi()" :disabled="testingAi">
+                <span x-show="!testingAi">🔗 测试连接</span>
+                <span x-show="testingAi">测试中...</span>
+              </button>
+              <span class="text-sm" style="margin-left:var(--space-2);" x-text="aiTestResult"
+                    :style="{ color: aiTestOk ? 'var(--color-success)' : 'var(--color-danger)' }"></span>
+            </div>
+
+            <!-- Save -->
+            <div style="margin-top:var(--space-4);">
+              <button class="btn btn-primary" @click="saveApiConfig()">💾 保存配置</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ Tab 3: 系统设置 ═══ -->
+        <section x-show="activeTab === 'settings'" x-transition>
+          <!-- Change Password -->
+          <div class="card section-card">
+            <h3 class="section-title">🔐 修改密码</h3>
+            <div class="form-group">
+              <label class="form-label">当前密码</label>
+              <input type="password" class="form-input" x-model="pw.current" placeholder="当前密码">
+            </div>
+            <div class="form-group">
+              <label class="form-label">新密码</label>
+              <input type="password" class="form-input" x-model="pw.next" placeholder="新密码">
+            </div>
+            <div class="form-group">
+              <label class="form-label">确认新密码</label>
+              <input type="password" class="form-input" x-model="pw.confirm" placeholder="再次输入新密码">
+            </div>
+            <button class="btn btn-primary" @click="changePassword()">修改密码</button>
+          </div>
+
+          <!-- Backup Settings -->
+          <div class="card section-card">
+            <h3 class="section-title">💾 备份设置</h3>
+            <div class="form-row" style="align-items:center;">
+              <label class="form-label" style="margin:0;white-space:nowrap;">自动备份</label>
+              <label class="toggle-switch">
+                <input type="checkbox" x-model="backup.autoEnabled" @change="saveBackupSettings()">
+                <span class="toggle-track"></span>
+              </label>
+              <div class="form-group" style="max-width:120px;margin:0;">
+                <label class="form-label">间隔（小时）</label>
+                <input type="number" class="form-input" x-model.number="backup.intervalHours" min="1" max="168"
+                       :disabled="!backup.autoEnabled" @change="saveBackupSettings()">
+              </div>
+              <div class="form-group" style="max-width:120px;margin:0;">
+                <label class="form-label">保留份数</label>
+                <input type="number" class="form-input" x-model.number="backup.keepCount" min="1" max="50"
+                       :disabled="!backup.autoEnabled" @change="saveBackupSettings()">
+              </div>
+            </div>
+            <div style="margin-top:var(--space-4);">
+              <button class="btn btn-primary btn-sm" @click="manualBackup()" :disabled="backingUp">
+                <span x-show="!backingUp">📦 立即备份</span>
+                <span x-show="backingUp">备份中...</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- System Info -->
+          <div class="card section-card">
+            <h3 class="section-title">ℹ️ 系统信息</h3>
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="info-value" x-text="sysInfo.nodeVersion || '-'"></div>
+                <div class="info-label">Node 版本</div>
+              </div>
+              <div class="info-item">
+                <div class="info-value" x-text="sysInfo.uptime || '-'"></div>
+                <div class="info-label">运行时长</div>
+              </div>
+              <div class="info-item">
+                <div class="info-value" x-text="sysInfo.dbSize || '-'"></div>
+                <div class="info-label">数据库大小</div>
+              </div>
+              <div class="info-item">
+                <div class="info-value" x-text="sysInfo.studentCount ?? '-'"></div>
+                <div class="info-label">学生总数</div>
+              </div>
+              <div class="info-item">
+                <div class="info-value" x-text="sysInfo.vocabCount ?? '-'"></div>
+                <div class="info-label">词汇总数</div>
+              </div>
+              <div class="info-item">
+                <div class="info-value" x-text="sysInfo.homeworkCount ?? '-'"></div>
+                <div class="info-label">作业总数</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ Tab 4: 数据管理 ═══ -->
+        <section x-show="activeTab === 'data'" x-transition>
+          <!-- Backups List -->
+          <div class="card section-card">
+            <h3 class="section-title">📦 备份管理</h3>
+            <template x-for="b in backups" :key="b.name">
+              <div class="backup-row">
+                <span class="backup-name" x-text="b.name"></span>
+                <span class="backup-size" x-text="b.size"></span>
+                <button class="btn btn-ghost btn-sm" @click="downloadBackup(b.name)" title="下载">⬇️</button>
+                <button class="btn btn-danger btn-sm" @click="deleteBackup(b.name)" title="删除">🗑️</button>
+              </div>
+            </template>
+            <div class="empty-state" x-show="backups.length === 0" style="padding:var(--space-6) 0;">
+              <span class="empty-icon">📭</span>
+              <p class="empty-text">暂无备份文件</p>
+            </div>
+          </div>
+
+          <!-- Export -->
+          <div class="card section-card">
+            <h3 class="section-title">📤 数据导出</h3>
+            <div class="export-btns">
+              <button class="btn btn-ghost btn-sm" @click="exportTable('students')">👥 学生</button>
+              <button class="btn btn-ghost btn-sm" @click="exportTable('homework')">📚 作业</button>
+              <button class="btn btn-ghost btn-sm" @click="exportTable('checkin')">✅ 打卡</button>
+              <button class="btn btn-ghost btn-sm" @click="exportTable('vocabulary')">📖 词汇</button>
+              <button class="btn btn-ghost btn-sm" @click="exportTable('excellent')">⭐ 优秀作业</button>
+              <button class="btn btn-ghost btn-sm" @click="exportTable('ranking')">🏆 排名</button>
+            </div>
+          </div>
+
+          <!-- OCR Logs -->
+          <div class="card section-card">
+            <h3 class="section-title">🔍 OCR 日志（最近 20 条）</h3>
+            <div style="overflow-x:auto;">
+              <table class="data-table data-table-striped log-table" x-show="ocrLogs.length > 0">
+                <thead>
+                  <tr>
+                    <th>时间</th>
+                    <th>引擎</th>
+                    <th>状态</th>
+                    <th>耗时</th>
+                    <th>字符数</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <template x-for="log in ocrLogs" :key="log.id">
+                    <tr>
+                      <td x-text="log.time"></td>
+                      <td x-text="log.engine"></td>
+                      <td>
+                        <span class="status-dot" :class="log.success ? 'ok' : 'err'"></span>
+                        <span x-text="log.success ? '成功' : '失败'"></span>
+                      </td>
+                      <td x-text="log.duration + 'ms'"></td>
+                      <td x-text="log.chars"></td>
+                    </tr>
+                  </template>
+                </tbody>
+              </table>
+            </div>
+            <div class="empty-state" x-show="ocrLogs.length === 0" style="padding:var(--space-6) 0;">
+              <span class="empty-icon">🔍</span>
+              <p class="empty-text">暂无 OCR 日志</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </template>
+
+    <!-- Batch Import Modal -->
+    <div class="modal-overlay" x-show="showBatchImport" x-transition.opacity
+         @click.self="showBatchImport = false" @keydown.escape.window="showBatchImport = false">
+      <div class="modal card" x-show="showBatchImport" x-transition style="max-width:32rem;">
+        <div class="modal-header">
+          <h3>📥 批量导入学生</h3>
+          <button class="btn btn-icon btn-sm" @click="showBatchImport = false">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">选择目标分组</label>
+            <select class="form-select" x-model="batchGroupId">
+              <template x-for="g in groups" :key="'bi-' + g.id">
+                <option :value="g.id" x-text="g.name"></option>
+              </template>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">粘贴学生姓名（每行一个）</label>
+            <textarea class="form-textarea" rows="8" x-model="batchNames"
+                      placeholder="张三&#10;李四&#10;王五"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost btn-sm" @click="showBatchImport = false">取消</button>
+          <button class="btn btn-primary btn-sm" @click="doBatchImport()" :disabled="!batchNames.trim()">
+            导入
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Student Modal -->
+    <div class="modal-overlay" x-show="showEditStudent" x-transition.opacity
+         @click.self="showEditStudent = false" @keydown.escape.window="showEditStudent = false">
+      <div class="modal card" x-show="showEditStudent" x-transition>
+        <div class="modal-header">
+          <h3>✏️ 编辑学生</h3>
+          <button class="btn btn-icon btn-sm" @click="showEditStudent = false">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">姓名</label>
+            <input type="text" class="form-input" x-model="editingStudent.name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">分组</label>
+            <select class="form-select" x-model="editingStudent.group_id">
+              <template x-for="g in groups" :key="'es-' + g.id">
+                <option :value="g.id" x-text="g.name"></option>
+              </template>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost btn-sm" @click="showEditStudent = false">取消</button>
+          <button class="btn btn-primary btn-sm" @click="saveStudent()">保存</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" aria-live="polite">
+    <template x-for="t in toasts" :key="t.id">
+      <div class="toast" :class="'toast-' + t.type" x-show="t.visible" x-transition>
+        <span x-text="t.message"></span>
+      </div>
+    </template>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script>
+  function adminApp() {
+    return {
+      // Auth
+      authenticated: false,
+      loginPassword: '',
+      loginError: '',
+      loginLoading: false,
+
+      // Tabs
+      activeTab: 'students',
+      tabs: [
+        { id: 'students', label: '学生管理', icon: '📋' },
+        { id: 'api',      label: 'API 配置', icon: '🔑' },
+        { id: 'settings', label: '系统设置', icon: '⚙️' },
+        { id: 'data',     label: '数据管理', icon: '📦' },
+      ],
+
+      // Toast
+      toasts: [],
+
+      // Students
+      classId: '1',
+      groups: [],
+      showAddGroup: false,
+      newGroupName: '',
+      showBatchImport: false,
+      batchGroupId: '',
+      batchNames: '',
+      showEditStudent: false,
+      editingStudent: { id: null, name: '', group_id: '' },
+
+      // API Config
+      apiConfig: {
+        ocrEngine: 'off',
+        tencentSecretId: '',
+        tencentSecretKey: '',
+        tencentIdHint: '',
+        aiEndpoint: '',
+        aiApiKey: '',
+        aiModel: '',
+      },
+      testingTencent: false,
+      tencentTestResult: '',
+      tencentTestOk: false,
+      testingAi: false,
+      aiTestResult: '',
+      aiTestOk: false,
+
+      // Password
+      pw: { current: '', next: '', confirm: '' },
+
+      // Backup
+      backup: { autoEnabled: false, intervalHours: 24, keepCount: 7 },
+      backingUp: false,
+
+      // System Info
+      sysInfo: {},
+
+      // Data
+      backups: [],
+      ocrLogs: [],
+
+      // ── Init ──
+      async init() {
+        const auth = await API.checkAuth().catch(() => ({ loggedIn: false }));
+        if (auth.loggedIn) {
+          this.authenticated = true;
+          this.loadAll();
+        }
+      },
+
+      // ── Auth ──
+      async doLogin() {
+        this.loginError = '';
+        this.loginLoading = true;
+        try {
+          const { token } = await API.login(this.loginPassword);
+          API.token = token;
+          this.authenticated = true;
+          this.loginPassword = '';
+          this.loadAll();
+        } catch (e) {
+          this.loginError = '密码错误';
+        } finally {
+          this.loginLoading = false;
+        }
+      },
+
+      // ── Load All Data ──
+      loadAll() {
+        this.loadStudents();
+        this.loadApiConfig();
+        this.loadSysInfo();
+        this.loadBackups();
+        this.loadOcrLogs();
+        this.loadBackupSettings();
+      },
+
+      // ── Toast ──
+      toast(msg, type = 'info') {
+        const id = Date.now();
+        this.toasts.push({ id, message: msg, type, visible: true });
+        setTimeout(() => { this.toasts = this.toasts.filter(t => t.id !== id); }, 4000);
+      },
+
+      // ── Students ──
+      async loadStudents() {
+        try {
+          const data = await API.get(`/api/admin/students?class_id=${this.classId}`);
+          this.groups = (data.groups || []).map(g => ({ ...g, _newName: '' }));
+          if (this.groups.length > 0 && !this.batchGroupId) {
+            this.batchGroupId = this.groups[0].id;
+          }
+        } catch (e) { this.toast('加载学生失败: ' + e.message, 'error'); }
+      },
+
+      async addGroup() {
+        if (!this.newGroupName.trim()) return;
+        try {
+          await API.post('/api/admin/groups', { class_id: parseInt(this.classId), name: this.newGroupName.trim() });
+          this.newGroupName = '';
+          this.showAddGroup = false;
+          this.toast('分组已添加', 'success');
+          this.loadStudents();
+        } catch (e) { this.toast('添加失败: ' + e.message, 'error'); }
+      },
+
+      async renameGroup(group) {
+        const name = prompt('新分组名称:', group.name);
+        if (!name || name === group.name) return;
+        try {
+          await API.put(`/api/admin/groups/${group.id}`, { name });
+          this.toast('已重命名', 'success');
+          this.loadStudents();
+        } catch (e) { this.toast('重命名失败: ' + e.message, 'error'); }
+      },
+
+      async deleteGroup(groupId) {
+        if (!confirm('确定删除该分组？分组内学生将一并删除。')) return;
+        try {
+          await API.del(`/api/admin/groups/${groupId}`);
+          this.toast('分组已删除', 'success');
+          this.loadStudents();
+        } catch (e) { this.toast('删除失败: ' + e.message, 'error'); }
+      },
+
+      async addStudent(group) {
+        const name = (group._newName || '').trim();
+        if (!name) return;
+        try {
+          await API.post('/api/admin/students', { class_id: parseInt(this.classId), group_id: group.id, name });
+          group._newName = '';
+          this.toast('学生已添加', 'success');
+          this.loadStudents();
+        } catch (e) { this.toast('添加失败: ' + e.message, 'error'); }
+      },
+
+      editStudent(stu) {
+        this.editingStudent = { id: stu.id, name: stu.name, group_id: stu.group_id };
+        this.showEditStudent = true;
+      },
+
+      async saveStudent() {
+        try {
+          await API.put(`/api/admin/students/${this.editingStudent.id}`, {
+            name: this.editingStudent.name,
+            group_id: this.editingStudent.group_id,
+          });
+          this.showEditStudent = false;
+          this.toast('学生信息已更新', 'success');
+          this.loadStudents();
+        } catch (e) { this.toast('更新失败: ' + e.message, 'error'); }
+      },
+
+      async toggleStudentActive(stu) {
+        try {
+          await API.put(`/api/admin/students/${stu.id}`, { active: !stu.active });
+          this.loadStudents();
+        } catch (e) { this.toast('操作失败: ' + e.message, 'error'); }
+      },
+
+      async doBatchImport() {
+        const names = this.batchNames.split('\n').map(n => n.trim()).filter(Boolean);
+        if (names.length === 0) return;
+        try {
+          await API.post('/api/admin/students/batch', {
+            class_id: parseInt(this.classId),
+            group_id: parseInt(this.batchGroupId),
+            names,
+          });
+          this.batchNames = '';
+          this.showBatchImport = false;
+          this.toast(`已导入 ${names.length} 名学生`, 'success');
+          this.loadStudents();
+        } catch (e) { this.toast('导入失败: ' + e.message, 'error'); }
+      },
+
+      // ── API Config ──
+      async loadApiConfig() {
+        try {
+          const data = await API.get('/api/admin/settings');
+          this.apiConfig.ocrEngine = data.ocr_engine || 'off';
+          this.apiConfig.tencentSecretId = '';
+          this.apiConfig.tencentSecretKey = '';
+          this.apiConfig.tencentIdHint = data.ocr_tencent_secret_id || '';
+          this.apiConfig.aiEndpoint = data.ocr_ai_endpoint || '';
+          this.apiConfig.aiApiKey = '';
+          this.apiConfig.aiKeyHint = data.ocr_ai_api_key || '';
+          this.apiConfig.aiModel = data.ocr_ai_model || '';
+        } catch {}
+      },
+
+      async saveApiConfig() {
+        try {
+          const settings = { ocr_engine: this.apiConfig.ocrEngine === 'off' ? 'disabled' : this.apiConfig.ocrEngine };
+          if (this.apiConfig.tencentSecretId) settings.ocr_tencent_secret_id = this.apiConfig.tencentSecretId;
+          if (this.apiConfig.tencentSecretKey) settings.ocr_tencent_secret_key = this.apiConfig.tencentSecretKey;
+          if (this.apiConfig.aiEndpoint) settings.ocr_ai_endpoint = this.apiConfig.aiEndpoint;
+          if (this.apiConfig.aiApiKey) settings.ocr_ai_api_key = this.apiConfig.aiApiKey;
+          if (this.apiConfig.aiModel) settings.ocr_ai_model = this.apiConfig.aiModel;
+          await API.put('/api/admin/settings', settings);
+          this.toast('配置已保存', 'success');
+          this.loadApiConfig();
+        } catch (e) { this.toast('保存失败: ' + e.message, 'error'); }
+      },
+
+      async testTencentOcr() {
+        this.testingTencent = true;
+        this.tencentTestResult = '';
+        try {
+          const r = await API.post('/api/admin/test-ocr', { engine: 'tencent' });
+          this.tencentTestOk = r.success;
+          this.tencentTestResult = r.message;
+        } catch (e) {
+          this.tencentTestOk = false;
+          this.tencentTestResult = '连接失败: ' + e.message;
+        } finally { this.testingTencent = false; }
+      },
+
+      async testAiApi() {
+        this.testingAi = true;
+        this.aiTestResult = '';
+        try {
+          const r = await API.post('/api/admin/test-ocr', { engine: 'ai' });
+          this.aiTestOk = r.success;
+          this.aiTestResult = r.message;
+        } catch (e) {
+          this.aiTestOk = false;
+          this.aiTestResult = '连接失败: ' + e.message;
+        } finally { this.testingAi = false; }
+      },
+
+      // ── Password ──
+      async changePassword() {
+        if (this.pw.next !== this.pw.confirm) {
+          this.toast('两次输入的新密码不一致', 'error');
+          return;
+        }
+        if (this.pw.next.length < 4) {
+          this.toast('新密码至少4个字符', 'error');
+          return;
+        }
+        try {
+          await API.post('/api/admin/password', {
+            current: this.pw.current,
+            password: this.pw.next,
+          });
+          this.pw = { current: '', next: '', confirm: '' };
+          this.toast('密码已修改', 'success');
+        } catch (e) { this.toast('修改失败: ' + e.message, 'error'); }
+      },
+
+      // ── Backup ──
+      async loadBackupSettings() {
+        try {
+          const data = await API.get('/api/admin/settings');
+          this.backup.autoEnabled = data.backup_enabled === 'true';
+          this.backup.intervalHours = parseInt(data.backup_interval_hours) || 24;
+          this.backup.keepCount = parseInt(data.backup_keep_count) || 30;
+        } catch {}
+      },
+
+      async saveBackupSettings() {
+        try {
+          await API.put('/api/admin/settings', {
+            backup_enabled: this.backup.autoEnabled ? 'true' : 'false',
+            backup_interval_hours: String(this.backup.intervalHours),
+            backup_keep_count: String(this.backup.keepCount),
+          });
+          this.toast('备份设置已保存', 'success');
+        } catch (e) { this.toast('保存备份设置失败', 'error'); }
+      },
+
+      async manualBackup() {
+        this.backingUp = true;
+        try {
+          await API.post('/api/admin/backups', {});
+          this.toast('备份完成', 'success');
+          this.loadBackups();
+        } catch (e) { this.toast('备份失败: ' + e.message, 'error'); }
+        finally { this.backingUp = false; }
+      },
+
+      async loadBackups() {
+        try {
+          this.backups = await API.get('/api/admin/backups');
+        } catch { this.backups = []; }
+      },
+
+      downloadBackup(name) {
+        // Use fetch with auth header, then trigger download
+        fetch(`/api/admin/backups/${encodeURIComponent(name)}`, {
+          headers: { 'Authorization': `Bearer ${API.token}` }
+        }).then(r => r.blob()).then(blob => {
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = name;
+          a.click();
+        }).catch(() => this.toast('下载失败', 'error'));
+      },
+
+      async deleteBackup(name) {
+        if (!confirm(`确定删除备份 ${name}？`)) return;
+        try {
+          await API.del(`/api/admin/backups/${encodeURIComponent(name)}`);
+          this.toast('备份已删除', 'success');
+          this.loadBackups();
+        } catch (e) { this.toast('删除失败: ' + e.message, 'error'); }
+      },
+
+      // ── System Info ──
+      async loadSysInfo() {
+        try {
+          this.sysInfo = await API.get('/api/admin/system-info');
+        } catch {}
+      },
+
+      // ── Export ──
+      exportTable(table) {
+        // Need auth header for export
+        const map = { homework: 'homework_items', checkin: 'checkin_sessions', excellent: 'excellent_homework', ranking: 'score_events' };
+        const realTable = map[table] || table;
+        fetch(`/api/admin/export/${realTable}`, {
+          headers: { 'Authorization': `Bearer ${API.token}` }
+        }).then(r => r.blob()).then(blob => {
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = `${table}_export.json`;
+          a.click();
+        }).catch(() => this.toast('导出失败', 'error'));
+      },
+
+      // ── OCR Logs ──
+      async loadOcrLogs() {
+        try {
+          // Read from ocr_logs directly via export
+          const data = await API.get('/api/admin/export/ocr_logs');
+          this.ocrLogs = (Array.isArray(data) ? data : []).slice(-20).reverse();
+        } catch { this.ocrLogs = []; }
+      },
+    };
+  }
+  </script>
+  <script defer src="/js/alpine.min.js"></script>
+</body>
+</html>

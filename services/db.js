@@ -187,6 +187,39 @@ CREATE TABLE IF NOT EXISTS ocr_logs (
 );
 
 -- ============================================================
+-- ESSAY GRADING
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS essay_tasks (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  class_id INTEGER NOT NULL,
+  title TEXT NOT NULL,
+  requirements TEXT,
+  essay_type TEXT DEFAULT 'free',
+  max_score REAL DEFAULT 10,
+  rubric_config TEXT,
+  status TEXT DEFAULT 'active',
+  created_at TEXT DEFAULT (datetime('now')),
+  FOREIGN KEY (class_id) REFERENCES classes(id)
+);
+
+CREATE TABLE IF NOT EXISTS essay_submissions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  task_id INTEGER NOT NULL,
+  student_name TEXT NOT NULL,
+  image_path TEXT,
+  ocr_text TEXT,
+  ocr_confirmed INTEGER DEFAULT 0,
+  score_detail TEXT,
+  total_score REAL,
+  annotations TEXT,
+  ai_comment TEXT,
+  status TEXT DEFAULT 'uploaded',
+  created_at TEXT DEFAULT (datetime('now')),
+  FOREIGN KEY (task_id) REFERENCES essay_tasks(id) ON DELETE CASCADE
+);
+
+-- ============================================================
 -- INDEXES
 -- ============================================================
 
@@ -200,6 +233,8 @@ CREATE INDEX IF NOT EXISTS idx_vocabulary_word ON vocabulary(word);
 CREATE INDEX IF NOT EXISTS idx_score_events_class ON score_events(class_id, date);
 CREATE INDEX IF NOT EXISTS idx_auth_tokens_expires ON auth_tokens(expires_at);
 CREATE INDEX IF NOT EXISTS idx_login_attempts_ip ON login_attempts(ip, attempted_at);
+CREATE INDEX IF NOT EXISTS idx_essay_tasks_class ON essay_tasks(class_id);
+CREATE INDEX IF NOT EXISTS idx_essay_subs_task ON essay_submissions(task_id);
 `;
 
 function initDB(dbPath) {

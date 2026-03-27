@@ -1,33 +1,27 @@
 const xss = require('xss');
 
-/**
- * Recursively sanitize all string values in a value (object, array, or primitive).
- */
-function sanitizeValue(value) {
-  if (typeof value === 'string') {
-    return xss(value);
-  }
-  if (Array.isArray(value)) {
-    return value.map(sanitizeValue);
-  }
-  if (value !== null && typeof value === 'object') {
-    const cleaned = {};
-    for (const key of Object.keys(value)) {
-      cleaned[key] = sanitizeValue(value[key]);
-    }
-    return cleaned;
-  }
-  return value;
+function sanitizeText(value) {
+  return typeof value === 'string' ? xss(value) : value;
 }
 
-/**
- * Middleware that sanitizes all string values in req.body using the xss package.
- */
+function deepSanitize(obj) {
+  if (typeof obj === 'string') return sanitizeText(obj);
+  if (Array.isArray(obj)) return obj.map(deepSanitize);
+  if (obj && typeof obj === 'object') {
+    const result = {};
+    for (const [key, value] of Object.entries(obj)) {
+      result[key] = deepSanitize(value);
+    }
+    return result;
+  }
+  return obj;
+}
+
 function sanitize(req, res, next) {
-  if (req.body && typeof req.body === 'object') {
-    req.body = sanitizeValue(req.body);
+  if (req.body) {
+    req.body = deepSanitize(req.body);
   }
   next();
 }
 
-module.exports = { sanitize };
+module.exports = { sanitize, sanitizeText, deepSanitize };

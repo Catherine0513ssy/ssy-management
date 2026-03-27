@@ -5,6 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "test": "node --test tests/sanitize.test.js tests/backup-script.test.js",
+    "smoke": "node --test tests/smoke-api.test.js",
+    "dev": "PORT=3002 node server.js",
     "migrate": "node scripts/migrate.js",
     "backup": "bash scripts/backup.sh",
     "deploy": "bash scripts/deploy.sh"

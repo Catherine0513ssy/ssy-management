@@ -1,1 +1,1158 @@
-<h1>SSY v2 - Coming Soon</h1>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSY 英语教学管理系统</title>
+  <link rel="stylesheet" href="/css/candy-theme.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <style>
+    [x-cloak] { display: none !important; }
+    /* Force reset browser default button/select styles */
+    button, select, input, textarea {
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      outline: none;
+    }
+    button { border: none; background: none; cursor: pointer; }
+    select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M3 5l3 3 3-3'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; padding-right: 28px !important; }
+    .header-tab {
+      padding: 8px 18px !important;
+      border-radius: 24px !important;
+      border: none !important;
+      font-size: 15px !important;
+      font-weight: 600 !important;
+      white-space: nowrap;
+      transition: all 0.2s;
+      letter-spacing: 0.3px;
+    }
+    .header-tab.active {
+      background: linear-gradient(135deg, #a78bfa, #60a5fa) !important;
+      color: white !important;
+      box-shadow: 0 3px 12px rgba(99,102,241,0.35) !important;
+    }
+    .header-tab:not(.active) {
+      background: rgba(0,0,0,0.05) !important;
+      color: #475569 !important;
+    }
+    .header-tab:not(.active):hover {
+      background: rgba(0,0,0,0.1) !important;
+    }
+    .header-btn {
+      padding: 8px 18px !important;
+      border-radius: 24px !important;
+      border: 1.5px solid #e2e8f0 !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      background: white !important;
+      color: #475569 !important;
+    }
+    .header-btn:hover { background: #f8fafc !important; }
+    .header-btn.danger {
+      border-color: #fca5a5 !important;
+      background: #fff5f5 !important;
+      color: #ef4444 !important;
+    }
+    .header-select {
+      padding: 6px 12px !important;
+      border-radius: 12px !important;
+      border: 1.5px solid #e2e8f0 !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      background-color: white !important;
+      color: #475569 !important;
+    }
+    .hw-item { background: var(--card-bg, rgba(255,255,255,0.85)); border-radius: 12px; padding: 14px 18px; margin-bottom: 10px; border-left: 3px solid #a78bfa; }
+    .hw-item:nth-child(even) { border-left-color: #60a5fa; }
+    .hw-item img { max-width: 100%; border-radius: 8px; margin-top: 8px; cursor: pointer; }
+    .date-item { padding: 10px 14px; border-radius: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+    .date-item:hover, .date-item.active { background: rgba(167,139,250,0.15); }
+    .toggle-pill {
+      padding: 8px 16px !important; border-radius: 20px !important; border: 1.5px solid #e2e8f0 !important;
+      background: white !important; color: #64748b !important; font-size: 14px !important; font-weight: 600 !important;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .toggle-pill.active-purple { background: linear-gradient(135deg, #a78bfa, #60a5fa) !important; color: white !important; border-color: transparent !important; box-shadow: 0 2px 8px rgba(99,102,241,0.3) !important; }
+    .toggle-pill.active-warm { background: linear-gradient(135deg, #f472b6, #fb923c) !important; color: white !important; border-color: transparent !important; box-shadow: 0 2px 8px rgba(244,114,182,0.3) !important; }
+    .toggle-pill.active-green { background: #6ee7b7 !important; color: #065f46 !important; border-color: transparent !important; }
+    .toggle-pill.active-yellow { background: #fbbf24 !important; color: #92400e !important; border-color: transparent !important; }
+    /* Word wall chips - 6 candy color variants */
+    .word-wall-chip {
+      padding: 8px 18px; border-radius: 12px; font-size: 17px; font-weight: 600;
+      backdrop-filter: blur(6px); transition: all 0.2s; display: inline-flex; align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      margin: 0 10px 10px 0;
+    }
+    .word-wall-chip:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+    .word-wall-0 { background: rgba(167,139,250,0.18); color: #7c3aed; border: 1.5px solid rgba(167,139,250,0.3); }
+    .word-wall-1 { background: rgba(96,165,250,0.18); color: #2563eb; border: 1.5px solid rgba(96,165,250,0.3); }
+    .word-wall-2 { background: rgba(110,231,183,0.18); color: #059669; border: 1.5px solid rgba(110,231,183,0.3); }
+    .word-wall-3 { background: rgba(251,146,60,0.18); color: #ea580c; border: 1.5px solid rgba(251,146,60,0.3); }
+    .word-wall-4 { background: rgba(244,114,182,0.18); color: #db2777; border: 1.5px solid rgba(244,114,182,0.3); }
+    .word-wall-5 { background: rgba(251,191,36,0.18); color: #d97706; border: 1.5px solid rgba(251,191,36,0.3); }
+
+    /* Quiz controls */
+    .quiz-ctrl {
+      padding: 10px 20px !important; border-radius: 14px !important; border: 1.5px solid rgba(0,0,0,0.08) !important;
+      background: rgba(255,255,255,0.85) !important; color: #475569 !important; font-size: 14px !important;
+      font-weight: 600 !important; cursor: pointer; transition: all 0.2s; backdrop-filter: blur(6px);
+      display: flex; align-items: center; gap: 4px;
+    }
+    .quiz-ctrl:hover:not(:disabled) { background: rgba(255,255,255,1) !important; box-shadow: 0 2px 10px rgba(0,0,0,0.08); transform: translateY(-1px); }
+    .quiz-ctrl:disabled { opacity: 0.35; cursor: not-allowed; }
+    .quiz-ctrl-main {
+      padding: 12px 28px !important; border-radius: 16px !important; border: none !important;
+      background: linear-gradient(135deg, #a78bfa, #60a5fa) !important; color: white !important;
+      font-size: 15px !important; font-weight: 700 !important; cursor: pointer; transition: all 0.2s;
+      box-shadow: 0 4px 15px rgba(99,102,241,0.3);
+    }
+    .quiz-ctrl-main:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99,102,241,0.4); }
+    .quiz-ctrl-sm {
+      padding: 4px 12px !important; border-radius: 8px !important; border: 1px solid #e2e8f0 !important;
+      background: rgba(255,255,255,0.7) !important; color: #64748b !important; font-size: 12px !important;
+      font-weight: 500 !important; cursor: pointer; transition: all 0.15s;
+    }
+    .quiz-ctrl-sm:hover { background: rgba(255,255,255,0.9) !important; }
+
+    @keyframes chipIn { from { opacity:0; transform:scale(0.8) translateY(6px); } to { opacity:1; transform:scale(1) translateY(0); } }
+
+    /* Alpine transition helpers */
+    .opacity-0 { opacity: 0; } .opacity-100 { opacity: 1; }
+    .scale-90 { transform: scale(0.9); } .scale-100 { transform: scale(1); }
+    .translate-y-4 { transform: translateY(8px); } .translate-y-0 { transform: translateY(0); }
+
+    .student-btn { padding: 8px 14px !important; border-radius: 10px !important; border: 2px solid #e2e8f0 !important; background: white !important; color: #475569 !important; cursor: pointer; font-size: 14px !important; transition: all 0.2s; }
+    .student-btn.passed { background: linear-gradient(135deg, #6ee7b7, #34d399) !important; border-color: #34d399 !important; color: white !important; }
+    .rank-row { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 12px; background: rgba(255,255,255,0.85); margin-bottom: 8px; }
+    .rank-medal { font-size: 24px; width: 36px; text-align: center; }
+    .rank-bar { height: 8px; border-radius: 4px; background: linear-gradient(135deg, #a78bfa, #60a5fa); transition: width 0.5s; }
+    .word-card { background: rgba(255,255,255,0.85); border-radius: 12px; padding: 12px 16px; }
+    .grade-chip { padding: 4px 12px; border-radius: 16px; font-size: 13px; cursor: pointer; border: 1.5px solid #e2e8f0; background: white; transition: all 0.2s; }
+    .grade-chip.active { background: linear-gradient(135deg, #a78bfa, #60a5fa); color: white; border-color: transparent; }
+    .upload-box { border: 2px dashed #d1d5db; border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.2s; }
+    .upload-box:hover { border-color: #a78bfa; background: rgba(167,139,250,0.05); }
+    .glass-sidebar { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-radius: 16px; padding: 16px; }
+    .cal-day { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 13px; cursor: pointer; transition: all 0.15s; position: relative; }
+    .cal-day:hover { background: rgba(167,139,250,0.15); }
+    .cal-day.today { background: #a78bfa; color: white; font-weight: 700; }
+    .cal-day.selected { outline: 2px solid #60a5fa; }
+    .cal-day.has-data::after { content: ''; position: absolute; bottom: 2px; width: 4px; height: 4px; border-radius: 50%; background: #fb923c; }
+    .cal-day.muted { opacity: 0.3; }
+    .bg-blob { position: fixed; border-radius: 50%; filter: blur(80px); opacity: 0.4; z-index: 0; pointer-events: none; }
+    .bg-blob-1 { width: 400px; height: 400px; background: #fbc2eb; top: -100px; left: -100px; }
+    .bg-blob-2 { width: 300px; height: 300px; background: #a18cd1; bottom: -50px; right: -50px; }
+    .bg-blob-3 { width: 250px; height: 250px; background: #ffecd2; top: 50%; left: 50%; }
+
+    /* Essay annotation */
+    .essay-score-row { display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #f1f5f9; }
+    .essay-score-bar { flex:1;height:6px;border-radius:3px;background:#e2e8f0;overflow:hidden; }
+    .essay-score-fill { height:100%;border-radius:3px;background:linear-gradient(135deg,#a78bfa,#60a5fa);transition:width 0.3s; }
+    .essay-card { background:rgba(255,255,255,0.85);border-radius:14px;padding:16px;cursor:pointer;transition:all 0.2s;border:1.5px solid transparent; }
+    .essay-card:hover { border-color:#a78bfa;box-shadow:0 4px 16px rgba(0,0,0,0.08);transform:translateY(-1px); }
+    .essay-sub-card { background:rgba(255,255,255,0.85);border-radius:12px;padding:12px;border:1.5px solid #e2e8f0;transition:all 0.15s; }
+    .essay-sub-card:hover { border-color:#a78bfa; }
+    .essay-status { display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600; }
+
+    /* ========== Mobile Responsive (< 768px) ========== */
+    @media (max-width: 767px) {
+      /* --- Header --- */
+      header > div {
+        height: 52px !important;
+        padding: 0 10px !important;
+        gap: 8px !important;
+      }
+      /* Hide logo text, keep emoji */
+      header > div > div:first-child span {
+        display: none !important;
+      }
+      header > div > div:first-child {
+        font-size: 20px !important;
+        min-width: auto !important;
+      }
+      /* Tab nav: scrollable, smaller */
+      header nav {
+        gap: 4px !important;
+        flex: 1 !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      header nav::-webkit-scrollbar { display: none; }
+      .header-tab {
+        padding: 6px 10px !important;
+        font-size: 12px !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+      }
+      /* Right actions: compact */
+      header > div > div:last-child {
+        gap: 6px !important;
+        flex-shrink: 0 !important;
+      }
+      .header-select {
+        padding: 4px 8px !important;
+        font-size: 12px !important;
+        max-width: 80px !important;
+      }
+      .header-btn {
+        padding: 6px 10px !important;
+        font-size: 12px !important;
+      }
+      /* Hide admin gear on mobile */
+      header a[href="/admin.html"] {
+        display: none !important;
+      }
+
+      /* --- Main layout: stack vertically --- */
+      div[x-data="homeworkTab()"] {
+        flex-direction: column !important;
+        padding: 10px !important;
+        gap: 12px !important;
+      }
+      /* Sidebar: full width, collapsible */
+      div[x-data="homeworkTab()"] > aside {
+        width: 100% !important;
+        flex-shrink: unset !important;
+      }
+      .glass-sidebar {
+        padding: 12px !important;
+      }
+      /* Calendar cells: slightly smaller */
+      .cal-day {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 12px !important;
+      }
+      /* Date list: horizontal scroll */
+      .glass-sidebar > div:last-child > div {
+        max-height: 120px !important;
+      }
+
+      /* --- Main content area --- */
+      div[x-data="homeworkTab()"] > main {
+        min-width: 0 !important;
+        width: 100% !important;
+      }
+
+      /* --- Homework items --- */
+      .hw-item {
+        padding: 10px 12px !important;
+      }
+      .hw-item img {
+        max-height: none !important;
+        width: 100% !important;
+      }
+      /* Image preview: full-width below, not side-by-side */
+      div[x-data="homeworkTab()"] [style*="display:flex;gap:16px"] {
+        flex-direction: column !important;
+      }
+      div[x-data="homeworkTab()"] [style*="width:40%"],
+      div[x-data="homeworkTab()"] [style*="width:55%"] {
+        width: 100% !important;
+        position: static !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        max-height: none !important;
+      }
+
+      /* --- Add homework form --- */
+      textarea {
+        font-size: 14px !important;
+      }
+      .upload-box {
+        padding: 16px !important;
+      }
+
+      /* --- Excellent tab grid --- */
+      div[x-show="activeTab==='excellent'"] [style*="grid-template-columns"] {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+      }
+
+      /* --- Checkin tab --- */
+      div[x-show="activeTab==='checkin'"] > div:nth-child(2) {
+        gap: 6px !important;
+      }
+      .toggle-pill {
+        padding: 6px 10px !important;
+        font-size: 12px !important;
+      }
+      .student-btn {
+        padding: 6px 10px !important;
+        font-size: 13px !important;
+        -webkit-tap-highlight-color: transparent !important;
+        outline: none !important;
+      }
+      .student-btn:focus {
+        outline: none !important;
+        box-shadow: none !important;
+      }
+
+      /* --- Ranking tab --- */
+      .rank-row {
+        padding: 8px 10px !important;
+        gap: 8px !important;
+      }
+
+      /* --- Vocabulary tab --- */
+      div[x-show="activeTab==='vocabulary'"] [style*="grid-template-columns:repeat(auto-fill,minmax(250px"] {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+        gap: 8px !important;
+      }
+
+      /* --- Quiz setup panel --- */
+      div[x-show="!quizStarted"] {
+        max-width: 100% !important;
+        padding: 0 !important;
+      }
+      div[x-show="!quizStarted"] > div {
+        padding: 16px !important;
+      }
+      /* Settings grid: 2 columns instead of 3 */
+      div[x-show="!quizStarted"] [style*="grid-template-columns:1fr 1fr 1fr"] {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+      }
+
+      /* --- Quiz display --- */
+      /* Top bar: wrap */
+      div[x-show="quizStarted"] > div:first-child {
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+      }
+      .quiz-ctrl-sm {
+        padding: 4px 8px !important;
+        font-size: 11px !important;
+      }
+      /* Prompt text */
+      div[x-show="quizStarted"] [style*="font-size:3rem"] {
+        font-size: 2rem !important;
+      }
+      /* Controls bar */
+      div[x-show="quizStarted"] > div:last-child {
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+      }
+      .quiz-ctrl {
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+      }
+      .quiz-ctrl-main {
+        padding: 10px 20px !important;
+        font-size: 14px !important;
+      }
+      /* Word wall chips */
+      .word-wall-chip {
+        padding: 6px 12px !important;
+        font-size: 14px !important;
+        margin: 0 6px 6px 0 !important;
+      }
+      /* Fullscreen quiz */
+      div[x-show="quizStarted"][style*="position:fixed"] [style*="font-size:4.5rem"] {
+        font-size: 2.5rem !important;
+      }
+
+      /* --- Lightbox mobile --- */
+      #hwLightbox img {
+        max-width: 95vw !important;
+        max-height: 90vh !important;
+      }
+
+      /* --- General overrides --- */
+      h2 {
+        font-size: 18px !important;
+      }
+      /* Modal / lightbox: wider */
+      div[style*="max-width:400px"] {
+        max-width: 95% !important;
+      }
+      /* Background blobs: smaller on mobile */
+      .bg-blob-1 { width: 200px !important; height: 200px !important; }
+      .bg-blob-2 { width: 150px !important; height: 150px !important; }
+      .bg-blob-3 { width: 120px !important; height: 120px !important; }
+
+      /* Essay tab mobile */
+      div[x-show="view==='submission'"] > div:last-child {
+        grid-template-columns: 1fr !important;
+      }
+      .essay-card, .essay-sub-card {
+        padding: 12px !important;
+      }
+    }
+
+    /* ========== Tablet (768px - 1024px) ========== */
+    @media (min-width: 768px) and (max-width: 1024px) {
+      header > div {
+        gap: 12px !important;
+        padding: 0 16px !important;
+      }
+      .header-tab {
+        padding: 6px 12px !important;
+        font-size: 13px !important;
+      }
+      div[x-data="homeworkTab()"] > aside {
+        width: 220px !important;
+      }
+    }
+  </style>
+</head>
+<body x-data="app()" x-cloak style="background:linear-gradient(135deg, #ffecd2 0%, #fcb69f 40%, #ee9ca7 70%, #ffdde1 100%);background-attachment:fixed;min-height:100vh;font-family:'Nunito','PingFang SC','Microsoft YaHei',sans-serif;margin:0;">
+
+  <!-- Background blobs -->
+  <div class="bg-blob bg-blob-1"></div>
+  <div class="bg-blob bg-blob-2"></div>
+  <div class="bg-blob bg-blob-3"></div>
+
+  <!-- ==================== HEADER ==================== -->
+  <header style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,0.08);padding:0 24px;box-shadow:0 1px 8px rgba(0,0,0,0.04);">
+    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;height:64px;gap:20px;">
+      <!-- Logo -->
+      <div style="font-size:22px;font-weight:800;white-space:nowrap;display:flex;align-items:center;gap:6px;">
+        🎓 <span style="background:linear-gradient(135deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:20px;">SSY 英语</span>
+      </div>
+
+      <!-- Tab Nav -->
+      <nav style="display:flex;gap:6px;flex:1;overflow-x:auto;padding:4px 0;">
+        <template x-for="tab in tabs" :key="tab.id">
+          <button @click="switchTab(tab.id)"
+            class="header-tab"
+            :class="{'active': activeTab===tab.id}"
+            x-text="tab.icon+' '+tab.label"></button>
+        </template>
+      </nav>
+
+      <!-- Right actions -->
+      <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+        <select class="header-select" @change="switchClass($event.target.value)">
+          <option value="1" :selected="API.classId==='1'">📚 2313班</option>
+          <option value="2" :selected="API.classId==='2'">📚 2314班</option>
+        </select>
+        <button x-show="!isAdmin" @click="login()" class="header-btn">🔐 登录</button>
+        <button x-show="isAdmin" @click="logout()" class="header-btn danger">👋 退出</button>
+        <a x-show="isAdmin" href="/admin.html" style="font-size:18px;color:#a78bfa;text-decoration:none;" title="管理后台">⚙️</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN LAYOUT ==================== -->
+  <div x-data="homeworkTab()" style="max-width:1200px;margin:0 auto;display:flex;gap:20px;padding:20px;position:relative;z-index:1;">
+
+    <!-- SIDEBAR (only on homework tab) -->
+    <aside x-show="activeTab==='homework'" style="width:280px;flex-shrink:0;" x-transition>
+      <div class="glass-sidebar" style="margin-bottom:16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <button @click="prevMonth()" style="border:none;background:none;cursor:pointer;font-size:16px;">◀</button>
+          <span style="font-weight:600;font-size:14px;" x-text="calendarTitle"></span>
+          <button @click="nextMonth()" style="border:none;background:none;cursor:pointer;font-size:16px;">▶</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center;margin-bottom:8px;">
+          <template x-for="d in ['日','一','二','三','四','五','六']"><div style="font-size:11px;color:#94a3b8;padding:4px 0;" x-text="d"></div></template>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;">
+          <template x-for="day in calendarDays" :key="day.date+'-'+day.day">
+            <div @click="day.isCurrentMonth && day.date && selectDate(day.date)" class="cal-day"
+              :class="{'today':day.isToday,'selected':day.isSelected,'has-data':day.hasData,'muted':!day.isCurrentMonth}"
+              x-text="day.day"></div>
+          </template>
+        </div>
+      </div>
+      <div class="glass-sidebar">
+        <input type="text" x-model="searchText" @input="filterDates()" placeholder="🔍 搜索日期..." style="width:100%;padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:13px;margin-bottom:10px;box-sizing:border-box;">
+        <div style="max-height:300px;overflow-y:auto;">
+          <template x-for="d in filteredDates" :key="d.date">
+            <div class="date-item" :class="{'active':d.date===selectedDate}" @click="selectDate(d.date)">
+              <span style="font-size:14px;" x-text="(() => { const t=new Date().toISOString().split('T')[0]; const y=new Date(Date.now()-86400000).toISOString().split('T')[0]; if(d.date===t) return '今天'; if(d.date===y) return '昨天'; const p=d.date.split('-'); return parseInt(p[1])+'月'+parseInt(p[2])+'日'; })()"></span>
+              <span style="font-size:12px;color:#94a3b8;" x-text="d.count+'项'"></span>
+            </div>
+          </template>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main style="flex:1;min-width:0;">
+
+      <!-- HOMEWORK TAB -->
+      <div x-show="activeTab==='homework'">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+          <h2 style="font-size:22px;font-weight:700;margin:0;">📝 今日作业</h2>
+          <span style="background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;padding:4px 12px;border-radius:12px;font-size:13px;" x-text="selectedDate"></span>
+          <button x-show="previewImage" @click="previewImage=null" style="font-size:12px;color:#94a3b8;background:none;border:none;cursor:pointer;">✕ 关闭预览</button>
+        </div>
+        <div x-show="loading" style="text-align:center;padding:40px;color:#94a3b8;">加载中...</div>
+
+        <!-- Split layout: list left, image preview right -->
+        <div x-show="!loading && items.length>0">
+          <div :style="previewImage ? 'display:flex;gap:16px;align-items:flex-start;' : ''">
+            <!-- Left: homework list -->
+            <div :style="previewImage ? 'width:40%;flex-shrink:0;overflow-y:auto;max-height:80vh;' : ''">
+              <template x-for="(item,idx) in items" :key="item.id">
+                <div class="hw-item">
+                  <div style="display:flex;justify-content:space-between;align-items:start;">
+                    <span x-text="(idx+1)+'. '+item.text"></span>
+                    <button x-show="isAdmin" @click="deleteHomework(item.id)" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:16px;">✕</button>
+                  </div>
+                  <img x-show="item.image" :src="item.image"
+                    style="max-width:100%;max-height:250px;object-fit:contain;border-radius:8px;cursor:zoom-in;margin-top:6px;"
+                    @click="previewImage = item.image">
+                </div>
+              </template>
+            </div>
+            <!-- Right: image preview panel (resizable via CSS resize) -->
+            <div x-show="previewImage"
+              style="width:55%;flex-shrink:0;position:sticky;top:80px;background:rgba(255,255,255,0.85);border-radius:16px;padding:12px;text-align:center;resize:horizontal;overflow:auto;min-width:300px;max-width:80%;">
+              <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+                <button @click="previewImage=null" style="background:none;border:none;cursor:pointer;font-size:14px;color:#94a3b8;">✕ 关闭</button>
+              </div>
+              <img :src="previewImage" style="max-width:100%;max-height:80vh;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+            </div>
+          </div>
+        </div>
+
+        <div x-show="!loading && items.length===0" style="text-align:center;padding:60px 20px;color:#94a3b8;">
+          <div style="font-size:48px;margin-bottom:12px;">📭</div><p>今天还没有作业</p>
+        </div>
+        <!-- Add form -->
+        <div x-show="isAdmin" style="margin-top:20px;background:rgba(255,255,255,0.85);border-radius:16px;padding:20px;">
+          <h3 style="font-size:16px;font-weight:600;margin-bottom:12px;">➕ 添加作业</h3>
+          <textarea x-model="newText" placeholder="输入作业内容..." rows="3" style="width:100%;padding:10px;border-radius:8px;border:1px solid #e2e8f0;font-size:14px;resize:vertical;box-sizing:border-box;"></textarea>
+          <div class="upload-box" style="margin-top:10px;" @click="$refs.hwImg.click()" @dragover.prevent @drop.prevent="onImageSelect($event)">
+            <div x-show="!imagePreview">📷 点击或拖拽上传图片（可选）</div>
+            <img x-show="imagePreview" :src="imagePreview" style="max-height:120px;border-radius:8px;">
+            <input type="file" x-ref="hwImg" accept="image/*" @change="onImageSelect($event)" style="display:none;">
+          </div>
+          <button x-show="imagePreview" @click="clearImage()" style="margin-top:6px;font-size:12px;color:#ef4444;background:none;border:none;cursor:pointer;">移除图片</button>
+          <button @click="addHomework()" style="margin-top:12px;padding:10px 24px;border-radius:20px;border:none;background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;font-size:14px;font-weight:600;cursor:pointer;">发布作业</button>
+        </div>
+      </div>
+
+      <!-- EXCELLENT TAB -->
+      <div x-show="activeTab==='excellent'" x-data="excellentTab()">
+        <h2 style="font-size:22px;font-weight:700;margin:0 0 16px;">⭐ 优秀作业</h2>
+        <!-- Upload (admin, at top) -->
+        <div x-show="isAdmin" style="margin-bottom:16px;background:rgba(255,255,255,0.85);border-radius:16px;padding:16px;">
+          <div style="display:flex;gap:10px;align-items:end;flex-wrap:wrap;">
+            <div style="flex:1;min-width:120px;">
+              <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:4px;">学生姓名</label>
+              <input x-model="newName" placeholder="姓名" style="width:100%;padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:14px;box-sizing:border-box;">
+            </div>
+            <div class="upload-box" @click="$refs.exImg.click()" style="flex:1;min-width:150px;padding:12px;">
+              <div x-show="!imagePreview" style="font-size:13px;">📷 点击选择图片</div>
+              <img x-show="imagePreview" :src="imagePreview" style="max-height:60px;border-radius:6px;">
+              <input type="file" x-ref="exImg" accept="image/*" @change="onImageSelect($event)" style="display:none;">
+            </div>
+            <button @click="upload()" :disabled="uploading" style="padding:10px 20px;border-radius:16px;border:none;background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;">
+              <span x-show="!uploading">📤 上传</span><span x-show="uploading">上传中...</span>
+            </button>
+          </div>
+        </div>
+        <div x-show="loading" style="text-align:center;padding:40px;color:#94a3b8;">加载中...</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;">
+          <template x-for="item in items" :key="item.id">
+            <div style="background:rgba(255,255,255,0.85);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
+              <img x-show="item.image_path" :src="item.image_path" style="width:100%;aspect-ratio:4/3;object-fit:cover;cursor:pointer;" @click="openLightbox(item)">
+              <div style="padding:12px;">
+                <div style="font-weight:600;font-size:14px;" x-text="item.student_name"></div>
+                <div style="font-size:12px;color:#94a3b8;" x-text="item.date||''"></div>
+                <button x-show="isAdmin" @click="deleteItem(item.id)" style="margin-top:6px;font-size:12px;color:#ef4444;background:none;border:none;cursor:pointer;">删除</button>
+              </div>
+            </div>
+          </template>
+        </div>
+        <div x-show="!loading && items.length===0" style="text-align:center;padding:60px;color:#94a3b8;"><div style="font-size:48px;">🌟</div><p>还没有优秀作业</p></div>
+        <!-- Lightbox (centered) -->
+        <div x-show="lightboxImage" @click="closeLightbox()" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:200;cursor:pointer;">
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;" @click.stop>
+            <img :src="lightboxImage" style="max-width:90vw;max-height:85vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+            <div x-show="lightboxName" style="margin-top:12px;color:white;font-size:14px;font-weight:600;" x-text="lightboxName"></div>
+          </div>
+          <button @click="closeLightbox()" style="position:fixed;top:20px;right:20px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.9);border:none;font-size:20px;cursor:pointer;z-index:201;">✕</button>
+        </div>
+      </div>
+
+      <!-- CHECKIN TAB -->
+      <div x-show="activeTab==='checkin'" x-data="checkinTab()">
+        <h2 style="font-size:22px;font-weight:700;margin:0 0 16px;">✅ 幸运儿打卡</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center;">
+          <button @click="setMode('word')" class="toggle-pill" :class="mode==='word' ? 'active-purple' : ''">📖 单词默写</button>
+          <button @click="setMode('essay')" class="toggle-pill" :class="mode==='essay' ? 'active-warm' : ''">✍️ 作文默写</button>
+          <span style="color:#d1d5db;">|</span>
+          <button @click="setRound(1)" class="toggle-pill" :class="round===1 ? 'active-green' : ''">第一轮</button>
+          <button @click="setRound(2)" class="toggle-pill" :class="round===2 ? 'active-yellow' : ''">第二轮</button>
+          <span style="color:#d1d5db;">|</span>
+          <input type="date" :value="selectedDate" @change="setDate($event.target.value)" class="toggle-pill" style="width:auto;">
+          <span style="font-size:13px;color:#94a3b8;font-weight:600;" x-text="'✅ ' + passedCount + ' / ' + totalStudents"></span>
+        </div>
+        <div x-show="loading" style="text-align:center;padding:40px;color:#94a3b8;">加载中...</div>
+        <div x-show="!loading">
+          <template x-for="groupKey in Object.keys(students)" :key="groupKey">
+            <div x-show="students[groupKey]&&students[groupKey].length>0" style="margin-bottom:20px;">
+              <h3 style="font-size:15px;font-weight:600;margin-bottom:10px;color:#64748b;" x-text="'第'+groupKey+'组'"></h3>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                <template x-for="(name,idx) in students[groupKey]" :key="groupKey+'-'+idx">
+                  <button class="student-btn" :class="isStudentPassed(groupKey,idx)?'passed':''"
+                    @click="isAdmin && toggleStudent(groupKey,idx)"
+                    :style="!isAdmin?'cursor:default':''" x-text="name"></button>
+                </template>
+              </div>
+            </div>
+          </template>
+        </div>
+        <div x-show="isAdmin && modified" style="margin-top:16px;">
+          <button @click="save()" :disabled="saving" style="padding:12px 32px;border-radius:20px;border:none;background:linear-gradient(135deg,#22c55e,#16a34a);color:white;font-size:15px;font-weight:600;cursor:pointer;">
+            <span x-show="!saving">💾 保存</span><span x-show="saving">保存中...</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- RANKING TAB -->
+      <div x-show="activeTab==='ranking'" x-data="rankingTab()">
+        <h2 style="font-size:22px;font-weight:700;margin:0 0 20px;">🏆 积分排名</h2>
+        <div x-show="loading" style="text-align:center;padding:40px;color:#94a3b8;">加载中...</div>
+        <div x-show="!loading">
+          <template x-for="s in rankings" :key="s.name">
+            <div class="rank-row" @click="showDetail(s)" style="cursor:pointer;">
+              <div class="rank-medal" x-text="getMedal(s.rank)"></div>
+              <div style="flex:1;"><div style="font-weight:600;font-size:15px;" x-text="s.name"></div><div style="font-size:12px;color:#94a3b8;" x-text="s.group"></div></div>
+              <div style="width:120px;"><div class="rank-bar" :style="'width:'+getBarWidth(s.points)+'%'"></div></div>
+              <div style="font-weight:700;color:#a78bfa;min-width:40px;text-align:right;" x-text="s.points+'分'"></div>
+            </div>
+          </template>
+        </div>
+        <!-- Detail modal -->
+        <div x-show="selectedStudent" @click.self="closeDetail()" style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;">
+          <div style="background:white;border-radius:20px;padding:24px;max-width:400px;width:90%;max-height:70vh;overflow-y:auto;" @click.stop>
+            <h3 style="margin:0 0 16px;" x-text="selectedStudent?.name+' 积分明细'"></h3>
+            <div x-show="detailLoading" style="text-align:center;padding:20px;">加载中...</div>
+            <template x-for="d in details" :key="d.date+d.type+d.round">
+              <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:14px;">
+                <span x-text="formatDate(d.date)"></span>
+                <span x-text="getTypeLabel(d.type)+' '+getRoundLabel(d.round)"></span>
+                <span style="font-weight:600;color:#a78bfa;" x-text="'+'+d.points"></span>
+              </div>
+            </template>
+            <button @click="closeDetail()" style="margin-top:16px;padding:8px 20px;border-radius:16px;border:1px solid #e2e8f0;background:white;cursor:pointer;">关闭</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- VOCABULARY TAB -->
+      <div x-show="activeTab==='vocabulary'" x-data="vocabularyTab()">
+        <h2 style="font-size:22px;font-weight:700;margin:0 0 16px;">📖 词汇库</h2>
+        <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+          <span style="background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;padding:4px 12px;border-radius:12px;font-size:13px;" x-text="'共 '+stats.total+' 词'"></span>
+          <template x-for="g in grades" :key="g">
+            <span class="grade-chip" :class="{'active':isActiveGrade(g)}" @click="setGrade(g)" x-text="g"></span>
+          </template>
+          <span x-show="filterGrade" @click="clearFilters()" style="padding:4px 12px;border-radius:12px;font-size:13px;cursor:pointer;color:#ef4444;border:1px solid #fca5a5;">✕ 清除</span>
+          <button x-show="isAdmin" @click="toggleBatchMode()" class="toggle-pill" :class="batchMode ? 'active-warm' : ''" x-text="batchMode ? '✕ 取消选择' : '🗑 批量删除'" style="margin-left:auto;"></button>
+        </div>
+        <input type="text" x-model="searchQuery" @input="onSearchInput()" placeholder="🔍 搜索单词或释义..." style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;margin-bottom:12px;box-sizing:border-box;">
+
+        <!-- Admin: Import panel (above word list) -->
+        <div x-show="isAdmin" style="margin-bottom:16px;">
+          <!-- Tab switcher: 拍照识词 / 文档导入 / 手动添加 / 收起 -->
+          <div style="display:flex;gap:6px;margin-bottom:10px;">
+            <button class="toggle-pill" :class="importMode==='ocr' ? 'active-warm' : ''" @click="importMode = importMode==='ocr' ? '' : 'ocr'">📷 拍照识词</button>
+            <button class="toggle-pill" :class="importMode==='doc' ? 'active-purple' : ''" @click="importMode = importMode==='doc' ? '' : 'doc'">📄 文档导入</button>
+            <button class="toggle-pill" :class="importMode==='manual' ? 'active-green' : ''" @click="importMode = importMode==='manual' ? '' : 'manual'">➕ 手动添加</button>
+          </div>
+
+          <!-- OCR Panel -->
+          <div x-show="importMode==='ocr'" x-data="ocrUpload()" style="background:rgba(255,255,255,0.85);border-radius:16px;padding:20px;" @vocab-refresh.window="load(); loadStats();">
+            <div x-show="!showResults">
+              <div class="upload-box" @click="$refs.ocrInput.click()" @dragover.prevent @drop.prevent="onImageSelect($event)">
+                <div x-show="!imagePreviews.length">📸 点击上传图片（支持多张批量识别）</div>
+                <div x-show="imagePreviews.length" style="display:flex;gap:8px;flex-wrap:wrap;">
+                  <template x-for="(p,i) in imagePreviews" :key="i">
+                    <img :src="p" style="max-height:80px;border-radius:6px;">
+                  </template>
+                </div>
+                <input type="file" x-ref="ocrInput" accept="image/*" multiple @change="onImageSelect($event)" style="display:none;">
+              </div>
+              <button x-show="imageFiles.length" @click="recognize()" :disabled="loading" style="margin-top:12px;padding:10px 24px;border-radius:20px;border:none;background:linear-gradient(135deg,#f472b6,#fb923c);color:white;font-size:14px;font-weight:600;cursor:pointer;width:100%;">
+                <span x-show="!loading">🔍 开始识别</span><span x-show="loading" x-text="loadingMsg || '识别中...'"></span>
+              </button>
+            </div>
+            <div x-show="showResults">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <span style="font-weight:600;" x-text="'识别到 ' + recognizedWords.length + ' 个单词'"></span>
+                <button @click="reset()" style="font-size:13px;color:#ef4444;background:none;border:none;cursor:pointer;">重新识别</button>
+              </div>
+              <!-- Errors -->
+              <div x-show="recognizeErrors.length > 0" style="background:#fef2f2;border:1px solid #fca5a5;border-radius:10px;padding:10px 14px;margin-bottom:12px;">
+                <div style="font-size:13px;font-weight:600;color:#991b1b;margin-bottom:4px;">⚠️ 识别问题：</div>
+                <template x-for="err in recognizeErrors" :key="err">
+                  <div style="font-size:12px;color:#b91c1c;" x-text="err"></div>
+                </template>
+              </div>
+              <!-- Word table -->
+              <div x-show="recognizedWords.length > 0" style="max-height:300px;overflow-y:auto;">
+                <div style="display:flex;gap:8px;padding:4px 0;border-bottom:2px solid #e2e8f0;font-size:12px;color:#94a3b8;font-weight:600;">
+                  <span style="flex:1;">单词</span><span style="width:100px;">音标</span><span style="flex:1;">释义</span><span style="width:60px;">单元</span><span style="width:24px;"></span>
+                </div>
+                <template x-for="(w, i) in recognizedWords" :key="i">
+                  <div style="display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:14px;">
+                    <input x-model="recognizedWords[i].word" style="flex:1;padding:4px 8px;border:1px solid #e2e8f0;border-radius:6px;" placeholder="单词">
+                    <input x-model="recognizedWords[i].phonetic" style="width:100px;padding:4px 8px;border:1px solid #e2e8f0;border-radius:6px;" placeholder="音标">
+                    <input x-model="recognizedWords[i].meaning" style="flex:1;padding:4px 8px;border:1px solid #e2e8f0;border-radius:6px;" placeholder="释义">
+                    <input x-model="recognizedWords[i].unit" style="width:60px;padding:4px 8px;border:1px solid #e2e8f0;border-radius:6px;" placeholder="单元">
+                    <button @click="removeWord(i)" style="color:#ef4444;background:none;border:none;cursor:pointer;width:24px;">✕</button>
+                  </div>
+                </template>
+              </div>
+              <button x-show="hasEmptyMeanings" @click="aiEnrichMeanings()" :disabled="aiEnriching" style="margin-top:10px;padding:10px 24px;border-radius:20px;border:none;background:linear-gradient(135deg,#f472b6,#fb923c);color:white;font-size:14px;font-weight:600;cursor:pointer;width:100%;">
+                <span x-show="!aiEnriching">🤖 AI 补充词义</span><span x-show="aiEnriching">AI 分析中...</span>
+              </button>
+              <button x-show="recognizedWords.length > 0" @click="saveWords()" style="margin-top:12px;padding:10px 24px;border-radius:20px;border:none;background:linear-gradient(135deg,#22c55e,#16a34a);color:white;font-size:14px;font-weight:600;cursor:pointer;width:100%;">✅ 确认添加到词库</button>
+            </div>
+          </div>
+
+          <!-- Document Panel -->
+          <div x-show="importMode==='doc'" x-data="docUpload()" style="background:rgba(255,255,255,0.85);border-radius:16px;padding:20px;" @vocab-refresh.window="load(); loadStats();">
+          <h3 style="font-size:16px;font-weight:600;margin-bottom:12px;">📄 文档导入（Markdown / TXT）</h3>
+          <div x-show="!showResults">
+            <div class="upload-box" @click="$refs.docInput.click()">
+              <div x-show="!fileName">📎 点击选择 .md 或 .txt 文件</div>
+              <div x-show="fileName" x-text="'📄 ' + fileName" style="color:#475569;font-weight:600;"></div>
+              <input type="file" x-ref="docInput" accept=".md,.txt" @change="onFileSelect($event)" style="display:none;">
+            </div>
+            <button x-show="docFile" @click="parse()" :disabled="loading" style="margin-top:12px;padding:10px 24px;border-radius:20px;border:none;background:linear-gradient(135deg,#60a5fa,#a78bfa);color:white;font-size:14px;font-weight:600;cursor:pointer;width:100%;">
+              <span x-show="!loading">📋 解析文档</span><span x-show="loading">解析中...</span>
+            </button>
+          </div>
+          <div x-show="showResults">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+              <span style="font-weight:600;" x-text="'解析到 ' + parsedWords.length + ' 个单词（' + parseFormat + '格式）'"></span>
+              <div>
+                <button @click="toggleAll()" style="font-size:13px;color:#64748b;background:none;border:none;cursor:pointer;" x-text="selectAll ? '取消全选' : '全选'"></button>
+                <button @click="reset()" style="font-size:13px;color:#ef4444;background:none;border:none;cursor:pointer;margin-left:8px;">重置</button>
+              </div>
+            </div>
+            <div style="max-height:300px;overflow-y:auto;">
+              <template x-for="(w, i) in parsedWords" :key="i">
+                <div style="display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:14px;">
+                  <input type="checkbox" :checked="selected.includes(i)" @change="toggleWord(i)">
+                  <span style="flex:1;font-weight:600;" x-text="w.word"></span>
+                  <span style="color:#94a3b8;" x-text="w.phonetic || ''"></span>
+                  <span style="flex:1;" x-text="w.meaning || ''"></span>
+                </div>
+              </template>
+            </div>
+            <button @click="saveSelected()" style="margin-top:12px;padding:10px 24px;border-radius:20px;border:none;background:linear-gradient(135deg,#22c55e,#16a34a);color:white;font-size:14px;font-weight:600;cursor:pointer;width:100%;" x-text="'✅ 添加选中的 ' + selected.length + ' 个单词'"></button>
+          </div>
+        </div>
+
+          <!-- Manual add panel -->
+          <div x-show="importMode==='manual'" style="background:rgba(255,255,255,0.85);border-radius:16px;padding:20px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              <input x-model="newWord.word" placeholder="英文单词 *" style="padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:14px;">
+              <input x-model="newWord.phonetic" placeholder="音标" style="padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:14px;">
+              <input x-model="newWord.meaning" placeholder="中文释义 *" style="padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:14px;">
+              <select x-model="newWord.grade" style="padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:14px;">
+                <option value="">选择年级</option>
+                <option value="7a">七上</option><option value="7b">七下</option>
+                <option value="8a">八上</option><option value="8b">八下</option>
+                <option value="9">九年级</option>
+              </select>
+            </div>
+            <button @click="addWord()" style="margin-top:12px;padding:10px 24px;border-radius:20px;border:none;background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;font-size:14px;font-weight:600;cursor:pointer;">添加</button>
+          </div>
+        </div><!-- end admin import panel -->
+
+        <!-- Word list -->
+        <div x-show="loading" style="text-align:center;padding:40px;color:#94a3b8;">加载中...</div>
+        <div x-show="batchMode" style="display:flex;gap:8px;align-items:center;margin-bottom:10px;padding:10px 14px;background:rgba(244,114,182,0.1);border-radius:12px;">
+          <button @click="selectAllWords()" style="padding:6px 14px;border-radius:16px;border:1px solid #e2e8f0;background:white;font-size:13px;cursor:pointer;" x-text="selectedIds.length === words.length ? '取消全选' : '全选'"></button>
+          <span style="font-size:13px;color:#64748b;" x-text="'已选 ' + selectedIds.length + ' / ' + words.length"></span>
+          <button x-show="selectedIds.length > 0" @click="batchDelete()" style="margin-left:auto;padding:6px 14px;border-radius:16px;border:none;background:#ef4444;color:white;font-size:13px;font-weight:600;cursor:pointer;">🗑 删除选中</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;">
+          <template x-for="w in words" :key="w.id">
+            <div class="word-card" :style="batchMode && isWordSelected(w.id) ? 'border:2px solid #f472b6;' : ''" @click="batchMode && toggleWordSelect(w.id)">
+              <div style="display:flex;justify-content:space-between;align-items:start;">
+                <div><span style="font-weight:700;font-size:15px;" x-text="w.word"></span><span style="color:#94a3b8;font-size:12px;margin-left:6px;" x-text="w.phonetic||''"></span></div>
+                <span style="font-size:11px;color:white;background:#60a5fa;padding:2px 8px;border-radius:8px;" x-text="w.grade||''"></span>
+              </div>
+              <div style="font-size:14px;color:#64748b;margin-top:4px;" x-text="w.meaning"></div>
+              <div x-show="isAdmin">
+                <input x-show="batchMode" type="checkbox" :checked="isWordSelected(w.id)" @click.stop="toggleWordSelect(w.id)" style="width:18px;height:18px;cursor:pointer;">
+                <button x-show="!batchMode" @click="deleteWord(w.id)" style="margin-top:6px;font-size:12px;color:#ef4444;background:none;border:none;cursor:pointer;">删除</button>
+              </div>
+            </div>
+          </template>
+        </div>
+        <div x-show="!loading && words.length===0" style="text-align:center;padding:60px;color:#94a3b8;"><div style="font-size:48px;">📚</div><p>没有找到单词</p></div>
+      </div>
+
+      <!-- ===== QUIZ (DICTATION) TAB ===== -->
+      <div x-show="activeTab==='quiz'" x-data="quizTab()" @keydown.window="handleKey($event)">
+        <!-- Setup Panel -->
+        <div x-show="!quizStarted" style="max-width:500px;margin:0 auto;">
+          <h2 style="font-size:22px;font-weight:700;margin:0 0 20px;text-align:center;">🎯 单词默写</h2>
+          <div style="background:rgba(255,255,255,0.85);border-radius:16px;padding:24px;">
+            <div style="margin-bottom:16px;">
+              <label style="font-size:14px;color:#64748b;font-weight:600;display:block;margin-bottom:6px;">年级范围</label>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                <template x-for="g in grades" :key="g">
+                  <button class="grade-chip" :class="{'active': grade===g}" @click="grade=g" x-text="getGradeLabel(g)"></button>
+                </template>
+              </div>
+            </div>
+            <div style="margin-bottom:16px;">
+              <label style="font-size:14px;color:#64748b;font-weight:600;display:block;margin-bottom:6px;">默写模式</label>
+              <div style="display:flex;gap:6px;">
+                <button class="grade-chip" :class="{'active': mode==='cn2en'}" @click="mode='cn2en'">中→英</button>
+                <button class="grade-chip" :class="{'active': mode==='en2cn'}" @click="mode='en2cn'">英→中</button>
+                <button class="grade-chip" :class="{'active': mode==='audio'}" @click="mode='audio'">🔊 听写</button>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
+              <div>
+                <label style="font-size:14px;color:#64748b;font-weight:600;display:block;margin-bottom:6px;">单词数量</label>
+                <input type="number" x-model="count" min="5" max="50" style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:16px;box-sizing:border-box;">
+              </div>
+              <div>
+                <label style="font-size:14px;color:#64748b;font-weight:600;display:block;margin-bottom:6px;">自动间隔（秒）</label>
+                <input type="number" x-model="interval" min="3" max="30" style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:16px;box-sizing:border-box;">
+              </div>
+              <div>
+                <label style="font-size:14px;color:#64748b;font-weight:600;display:block;margin-bottom:6px;">朗读次数</label>
+                <input type="number" x-model="repeatCount" min="1" max="5" style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:16px;box-sizing:border-box;">
+              </div>
+            </div>
+            <div style="display:flex;gap:16px;margin-bottom:20px;">
+              <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:14px;color:#475569;">
+                <input type="checkbox" x-model="autoPlay" style="width:18px;height:18px;"> 🔊 自动朗读
+              </label>
+              <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:14px;color:#475569;">
+                <input type="checkbox" x-model="autoNext" style="width:18px;height:18px;"> ⏭ 自动跳转
+              </label>
+            </div>
+            <button @click="generate()" style="width:100%;padding:14px;border-radius:20px;border:none;background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;font-size:16px;font-weight:700;cursor:pointer;">
+              🚀 开始默写（共 <span x-text="vocab.length"></span> 词可选）
+            </button>
+            <p style="text-align:center;margin-top:12px;font-size:13px;color:#94a3b8;">键盘：← → 翻页 · 空格下一个 · Enter 显示答案 · A 朗读</p>
+          </div>
+        </div>
+
+        <!-- Quiz Display -->
+        <div x-show="quizStarted" :style="fullscreen ? 'position:fixed;inset:0;z-index:300;background:linear-gradient(135deg,#ffecd2,#fcb69f,#ee9ca7);padding:20px;' : ''" style="display:flex;flex-direction:column;">
+
+          <!-- Top bar: progress + actions -->
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <div style="display:flex;gap:8px;align-items:center;">
+              <span style="background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;padding:5px 14px;border-radius:10px;font-size:13px;font-weight:600;" x-text="'📊 ' + progress"></span>
+              <span style="background:rgba(255,255,255,0.6);padding:5px 12px;border-radius:10px;font-size:12px;color:#64748b;" x-text="getModeLabel(mode)"></span>
+              <!-- pos moved to below prompt -->
+              <span x-show="countdown > 0" style="background:rgba(0,0,0,0.06);padding:5px 12px;border-radius:10px;font-size:12px;color:#94a3b8;" x-text="countdown + 's'"></span>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <button @click="toggleAutoPlay()" class="quiz-ctrl-sm" :style="autoPlay ? 'background:rgba(167,139,250,0.25) !important;color:#7c3aed !important;border-color:#a78bfa !important;' : ''" x-text="autoPlay ? '🔊 朗读开' : '🔇 朗读关'"></button>
+              <button @click="toggleAutoNext()" class="quiz-ctrl-sm" :style="autoNext ? 'background:rgba(110,231,183,0.3) !important;color:#059669 !important;border-color:#6ee7b7 !important;' : ''" x-text="autoNext ? '⏸ 跳转开' : '⏭ 跳转关'"></button>
+              <button @click="toggleFullscreen()" class="quiz-ctrl-sm" x-text="fullscreen ? '↙ 退出全屏' : '↗ 全屏'"></button>
+              <button @click="reset()" class="quiz-ctrl-sm" style="color:#ef4444 !important;border-color:#fca5a5 !important;">✕ 结束</button>
+            </div>
+          </div>
+
+          <!-- Word Wall: 已默写单词从左往右排列 -->
+          <div style="min-height:40px;margin-bottom:16px;">
+            <!-- 完成提示 -->
+            <div x-show="quizFinished && !showAllAnswers" style="text-align:center;margin-bottom:12px;">
+              <button @click="showAllAnswers=true" style="padding:10px 28px;border-radius:20px;border:none;background:linear-gradient(135deg,#22c55e,#16a34a);color:white;font-size:15px;font-weight:700;cursor:pointer;animation:chipIn 0.3s ease-out;">
+                🎉 默写完成！点击查看所有答案
+              </button>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;align-content:flex-start;" x-show="index > 0 || showAllAnswers">
+            <template x-for="(w, i) in (showAllAnswers ? words : words.slice(0, index))" :key="'wall-'+i">
+              <div @click="index = i; answerShown = false;"
+                class="word-wall-chip"
+                :class="'word-wall-' + (i % 6)"
+                style="cursor:pointer;animation:chipIn 0.3s ease-out;">
+                <span style="font-size:10px;opacity:0.5;margin-right:2px;" x-text="i+1"></span>
+                <span x-text="getWordPrompt(w)"></span>
+                <span x-show="showAllAnswers" style="margin-left:4px;font-weight:700;opacity:0.8;" x-text="' → ' + getWordAnswer(w)"></span>
+              </div>
+            </template>
+            </div>
+          </div>
+
+          <!-- Center: Current word -->
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:280px;">
+            <div style="font-size:13px;color:#94a3b8;margin-bottom:8px;letter-spacing:1px;" x-text="promptHint"></div>
+            <div :style="fullscreen ? 'font-size:4.5rem;' : 'font-size:3rem;'" style="font-weight:800;color:#1e293b;max-width:85%;word-break:break-word;line-height:1.2;" x-text="prompt"></div>
+            <div x-show="currentWord?.pos" style="margin-top:10px;margin-bottom:20px;">
+              <span style="background:rgba(251,146,60,0.15);color:#ea580c;padding:6px 18px;border-radius:12px;font-size:18px;font-weight:700;" x-text="currentWord?.pos"></span>
+            </div>
+            <div x-show="!currentWord?.pos" style="margin-bottom:28px;"></div>
+
+            <!-- Answer card -->
+            <div x-show="answerShown" x-transition.scale.origin.bottom style="background:rgba(255,255,255,0.92);border-radius:20px;padding:20px 36px;box-shadow:0 8px 30px rgba(0,0,0,0.08);text-align:center;backdrop-filter:blur(8px);">
+              <div x-show="currentWord?.pos" style="font-size:12px;color:#94a3b8;margin-bottom:2px;" x-text="currentWord?.pos"></div>
+              <div :style="fullscreen ? 'font-size:2.8rem;' : 'font-size:2rem;'" style="font-weight:800;background:linear-gradient(135deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:2px;" x-text="currentWord?.en"></div>
+              <div style="font-size:15px;color:#94a3b8;margin-bottom:2px;" x-text="currentWord?.phonetic"></div>
+              <div style="font-size:16px;color:#475569;font-weight:500;" x-text="currentWord?.cleanMeaning"></div>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div style="display:flex;justify-content:center;align-items:center;gap:10px;padding-top:12px;">
+            <button @click="prev()" class="quiz-ctrl" :disabled="index===0">
+              <span style="font-size:16px;">←</span> 上一个
+            </button>
+            <button @click="toggleAnswer()" class="quiz-ctrl-main" x-text="answerShown ? '🙈 隐藏' : '👁 答案'"></button>
+            <button @click="speak()" class="quiz-ctrl">
+              🔊 朗读
+            </button>
+            <button @click="next()" class="quiz-ctrl" :disabled="index>=words.length-1">
+              下一个 <span style="font-size:16px;">→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== ESSAY TAB ===== -->
+      <div x-show="activeTab==='essay'" x-data="essayTab()">
+
+        <!-- === List View === -->
+        <div x-show="view==='list'">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <h2 style="font-size:22px;font-weight:700;margin:0;">&#x270D;&#xFE0F; 作文批改</h2>
+            <button x-show="isAdmin" @click="showCreateForm=!showCreateForm" style="padding:8px 18px;border-radius:20px;border:none;background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;font-size:14px;font-weight:600;cursor:pointer;">
+              <span x-text="showCreateForm ? '&#x2715; 收起' : '+ 新建任务'"></span>
+            </button>
+          </div>
+
+          <!-- Create form -->
+          <div x-show="showCreateForm" x-transition style="background:rgba(255,255,255,0.85);border-radius:16px;padding:20px;margin-bottom:16px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+              <input x-model="taskForm.title" placeholder="作文题目 *" style="padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;">
+              <select x-model="taskForm.essay_type" style="padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;">
+                <option value="free">命题作文</option><option value="picture">看图作文</option>
+                <option value="dialogue">补全对话</option><option value="letter">书信作文</option>
+                <option value="other">其他</option>
+              </select>
+            </div>
+            <textarea x-model="taskForm.requirements" placeholder="作文要求（会提供给 AI 作为评分参考）" rows="3" style="width:100%;padding:10px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;resize:vertical;box-sizing:border-box;margin-bottom:10px;"></textarea>
+            <div style="display:flex;gap:10px;align-items:center;">
+              <label style="font-size:14px;color:#64748b;">满分：</label>
+              <input type="number" x-model="taskForm.max_score" min="1" max="100" style="width:70px;padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:14px;">
+              <span style="font-size:13px;color:#94a3b8;">分</span>
+              <button @click="createTask()" style="margin-left:auto;padding:10px 24px;border-radius:20px;border:none;background:linear-gradient(135deg,#22c55e,#16a34a);color:white;font-size:14px;font-weight:600;cursor:pointer;">创建任务</button>
+            </div>
+          </div>
+
+          <!-- Task cards -->
+          <div x-show="loading" style="text-align:center;padding:40px;color:#94a3b8;">加载中...</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+            <template x-for="task in tasks" :key="task.id">
+              <div class="essay-card" @click="openTask(task)">
+                <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;">
+                  <div style="font-weight:700;font-size:16px;" x-text="task.title"></div>
+                  <button x-show="isAdmin" @click.stop="deleteTask(task.id)" style="color:#ef4444;background:none;border:none;cursor:pointer;font-size:14px;">&#x2715;</button>
+                </div>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+                  <span style="font-size:12px;padding:2px 8px;border-radius:8px;background:rgba(167,139,250,0.15);color:#7c3aed;" x-text="getTypeLabel(task.essay_type)"></span>
+                  <span style="font-size:12px;padding:2px 8px;border-radius:8px;background:rgba(96,165,250,0.15);color:#2563eb;" x-text="'满分 ' + task.max_score + ' 分'"></span>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;color:#94a3b8;">
+                  <span x-text="'已交 ' + (task.submission_count||0) + ' 份'"></span>
+                  <span x-show="task.graded_count > 0" x-text="'已批 ' + task.graded_count + ' | 均分 ' + (task.avg_score||'-')"></span>
+                </div>
+              </div>
+            </template>
+          </div>
+          <div x-show="!loading && tasks.length===0" style="text-align:center;padding:60px;color:#94a3b8;">
+            <div style="font-size:48px;">&#x270D;&#xFE0F;</div><p>暂无作文批改任务</p>
+          </div>
+        </div>
+
+        <!-- === Detail View === -->
+        <div x-show="view==='detail'">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+            <button @click="backToList()" style="padding:6px 14px;border-radius:10px;border:1px solid #e2e8f0;background:white;cursor:pointer;font-size:13px;">&larr; 返回</button>
+            <h2 style="font-size:20px;font-weight:700;margin:0;" x-text="currentTask?.title"></h2>
+            <span class="essay-status" :style="'background:rgba(167,139,250,0.15);color:#7c3aed;'" x-text="getTypeLabel(currentTask?.essay_type)"></span>
+            <span style="font-size:13px;color:#94a3b8;" x-text="'满分 ' + currentTask?.max_score + ' 分'"></span>
+          </div>
+
+          <!-- Action bar -->
+          <div x-show="isAdmin" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+            <button @click="$refs.essayFileInput.click()" style="padding:8px 16px;border-radius:16px;border:none;background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;font-size:13px;font-weight:600;cursor:pointer;">&#x1F4F7; 上传作文</button>
+            <input type="file" x-ref="essayFileInput" accept="image/*" multiple @change="onFilesSelected($event)" style="display:none;">
+            <button @click="batchOcr()" :disabled="batchProcessing" style="padding:8px 16px;border-radius:16px;border:1.5px solid #e2e8f0;background:white;font-size:13px;font-weight:600;cursor:pointer;">&#x1F50D; 批量识别</button>
+            <button @click="batchGrade()" :disabled="batchProcessing" style="padding:8px 16px;border-radius:16px;border:1.5px solid #e2e8f0;background:white;font-size:13px;font-weight:600;cursor:pointer;">&#x1F4DD; 批量评分</button>
+            <span x-show="batchProcessing" style="font-size:13px;color:#64748b;align-self:center;" x-text="batchMsg"></span>
+          </div>
+
+          <!-- Upload panel -->
+          <div x-show="showUpload" x-transition style="background:rgba(255,255,255,0.85);border-radius:16px;padding:16px;margin-bottom:16px;">
+            <div style="font-weight:600;margin-bottom:10px;">为每张图片填写学生姓名：</div>
+            <div style="max-height:300px;overflow-y:auto;">
+              <template x-for="(entry, i) in uploadEntries" :key="i">
+                <div style="display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #f1f5f9;">
+                  <img :src="entry.preview" style="width:60px;height:45px;object-fit:cover;border-radius:6px;">
+                  <input x-model="uploadEntries[i].name" :placeholder="'学生' + (i+1)" style="flex:1;padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:14px;">
+                  <button @click="removeUploadEntry(i)" style="color:#ef4444;background:none;border:none;cursor:pointer;">&#x2715;</button>
+                </div>
+              </template>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:10px;">
+              <button @click="submitUpload()" :disabled="uploading" style="padding:10px 24px;border-radius:20px;border:none;background:linear-gradient(135deg,#22c55e,#16a34a);color:white;font-size:14px;font-weight:600;cursor:pointer;">
+                <span x-show="!uploading" x-text="'&#x1F4E4; 上传 ' + uploadEntries.length + ' 张'"></span>
+                <span x-show="uploading">上传中...</span>
+              </button>
+              <button @click="showUpload=false;uploadEntries=[];" style="padding:10px 16px;border-radius:20px;border:1px solid #e2e8f0;background:white;font-size:14px;cursor:pointer;">取消</button>
+            </div>
+          </div>
+
+          <!-- Submissions grid -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">
+            <template x-for="sub in submissions" :key="sub.id">
+              <div class="essay-sub-card">
+                <img x-show="sub.image_path" :src="sub.image_path" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:8px;cursor:pointer;" @click="openSubmission(sub)">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span style="font-weight:600;font-size:14px;" x-text="sub.student_name"></span>
+                  <span class="essay-status" :style="'color:' + getStatusColor(sub.status) + ';background:' + getStatusColor(sub.status) + '18;'" x-text="getStatusLabel(sub.status)"></span>
+                </div>
+                <div x-show="sub.total_score !== null && sub.total_score !== undefined" style="margin-top:4px;font-size:18px;font-weight:800;color:#a78bfa;" x-text="sub.total_score + ' / ' + (currentTask?.max_score||10)"></div>
+                <!-- Actions -->
+                <div x-show="isAdmin" style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;">
+                  <button x-show="sub.status==='uploaded'" @click.stop="runOcr(sub)" :disabled="sub._ocrLoading" style="padding:4px 10px;border-radius:8px;border:1px solid #e2e8f0;background:white;font-size:12px;cursor:pointer;">
+                    <span x-show="!sub._ocrLoading">&#x1F50D; 识别</span><span x-show="sub._ocrLoading">...</span>
+                  </button>
+                  <button x-show="sub.status==='ocr_done' && !sub.ocr_confirmed" @click.stop="confirmOcr(sub)" style="padding:4px 10px;border-radius:8px;border:1px solid #60a5fa;background:rgba(96,165,250,0.1);font-size:12px;cursor:pointer;color:#2563eb;">&#x2713; 确认文本</button>
+                  <button x-show="sub.ocr_text && sub.status!=='graded' && sub.status!=='reviewed'" @click.stop="runGrade(sub)" :disabled="sub._gradeLoading" style="padding:4px 10px;border-radius:8px;border:1px solid #34d399;background:rgba(52,211,153,0.1);font-size:12px;cursor:pointer;color:#059669;">
+                    <span x-show="!sub._gradeLoading">&#x1F4DD; 评分</span><span x-show="sub._gradeLoading">...</span>
+                  </button>
+                  <button @click.stop="openSubmission(sub)" style="padding:4px 10px;border-radius:8px;border:1px solid #e2e8f0;background:white;font-size:12px;cursor:pointer;">&#x1F441; 详情</button>
+                  <button @click.stop="deleteSub(sub)" style="padding:4px 10px;border-radius:8px;border:none;background:none;font-size:12px;cursor:pointer;color:#ef4444;">&#x2715;</button>
+                </div>
+              </div>
+            </template>
+          </div>
+          <div x-show="submissions.length===0" style="text-align:center;padding:40px;color:#94a3b8;">
+            <p>还没有上传作文，点击上方"&#x1F4F7; 上传作文"开始</p>
+          </div>
+        </div>
+
+        <!-- === Submission Detail View === -->
+        <div x-show="view==='submission'" style="display:flex;flex-direction:column;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+            <button @click="backToTask()" style="padding:6px 14px;border-radius:10px;border:1px solid #e2e8f0;background:white;cursor:pointer;font-size:13px;">&larr; 返回</button>
+            <span style="font-weight:700;font-size:18px;" x-text="currentSub?.student_name"></span>
+            <span class="essay-status" :style="'color:' + getStatusColor(currentSub?.status) + ';background:' + getStatusColor(currentSub?.status) + '18;'" x-text="getStatusLabel(currentSub?.status)"></span>
+            <span x-show="currentSub?.total_score != null" style="font-size:20px;font-weight:800;color:#a78bfa;margin-left:auto;" x-text="currentSub?.total_score + ' / ' + (currentTask?.max_score||10)"></span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+            <!-- Left: Original image -->
+            <div style="background:rgba(255,255,255,0.85);border-radius:16px;padding:16px;text-align:center;">
+              <div style="font-weight:600;margin-bottom:8px;font-size:14px;color:#64748b;">&#x1F4F7; 原始手写</div>
+              <img :src="currentSub?.image_path" style="max-width:100%;max-height:70vh;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.08);">
+            </div>
+
+            <!-- Right: OCR + Annotations + Scores -->
+            <div style="display:flex;flex-direction:column;gap:16px;">
+              <!-- OCR Text -->
+              <div style="background:rgba(255,255,255,0.85);border-radius:16px;padding:16px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                  <span style="font-weight:600;font-size:14px;color:#64748b;">&#x1F4DD; 识别文本</span>
+                  <div style="display:flex;gap:6px;">
+                    <button x-show="isAdmin && !editingOcr" @click="startEditOcr()" style="font-size:12px;color:#60a5fa;background:none;border:none;cursor:pointer;">编辑</button>
+                    <button x-show="isAdmin && currentSub?.ocr_text && !currentSub?.ocr_confirmed" @click="confirmOcr(currentSub)" style="font-size:12px;color:#059669;background:none;border:none;cursor:pointer;">&#x2713; 确认</button>
+                  </div>
+                </div>
+                <div x-show="!editingOcr">
+                  <!-- Show annotated text if graded, otherwise plain text -->
+                  <div x-show="currentSub?.annotations && currentSub?.status !== 'uploaded'" x-html="renderAnnotatedText(currentSub?.ocr_text, currentSub?.annotations)" style="font-size:14px;line-height:1.8;white-space:pre-wrap;"></div>
+                  <div x-show="!currentSub?.annotations || currentSub?.status === 'uploaded'" style="font-size:14px;line-height:1.8;white-space:pre-wrap;color:#475569;" x-text="currentSub?.ocr_text || '（尚未识别）'"></div>
+                </div>
+                <div x-show="editingOcr">
+                  <textarea x-model="editOcrText" rows="10" style="width:100%;padding:10px;border-radius:8px;border:1px solid #e2e8f0;font-size:14px;line-height:1.6;resize:vertical;box-sizing:border-box;"></textarea>
+                  <div style="display:flex;gap:8px;margin-top:8px;">
+                    <button @click="saveOcrEdit()" style="padding:6px 16px;border-radius:12px;border:none;background:#22c55e;color:white;font-size:13px;cursor:pointer;">保存</button>
+                    <button @click="editingOcr=false" style="padding:6px 16px;border-radius:12px;border:1px solid #e2e8f0;background:white;font-size:13px;cursor:pointer;">取消</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Score breakdown -->
+              <div x-show="currentSub?.score_detail" style="background:rgba(255,255,255,0.85);border-radius:16px;padding:16px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                  <span style="font-weight:600;font-size:14px;color:#64748b;">&#x1F4CA; 评分详情</span>
+                  <button x-show="isAdmin && !editingScores" @click="editingScores=true" style="font-size:12px;color:#60a5fa;background:none;border:none;cursor:pointer;">调分</button>
+                </div>
+                <template x-for="(dim, key) in (parseJSON(currentSub?.score_detail) || {})" :key="key">
+                  <div class="essay-score-row">
+                    <span style="width:70px;font-size:13px;font-weight:600;color:#475569;" x-text="({content:'内容',grammar:'语法',vocabulary:'词汇',structure:'结构',mechanics:'规范'})[key]||key"></span>
+                    <div class="essay-score-bar">
+                      <div class="essay-score-fill" :style="'width:' + (dim.max > 0 ? (dim.score/dim.max*100) : 0) + '%'"></div>
+                    </div>
+                    <span x-show="!editingScores" style="font-size:13px;font-weight:700;color:#a78bfa;min-width:50px;text-align:right;" x-text="dim.score + '/' + dim.max"></span>
+                    <input x-show="editingScores" type="number" :value="dim.score" @input="dim.score = parseFloat($event.target.value)||0" :max="dim.max" min="0" step="0.5" style="width:50px;padding:2px 6px;border-radius:6px;border:1px solid #e2e8f0;font-size:13px;text-align:center;">
+                    <div style="font-size:12px;color:#94a3b8;flex:1;min-width:0;" x-text="dim.comment||''"></div>
+                  </div>
+                </template>
+                <div x-show="editingScores" style="display:flex;gap:8px;margin-top:10px;">
+                  <button @click="saveScoreEdit()" style="padding:6px 16px;border-radius:12px;border:none;background:#22c55e;color:white;font-size:13px;cursor:pointer;">保存</button>
+                  <button @click="editingScores=false" style="padding:6px 16px;border-radius:12px;border:1px solid #e2e8f0;background:white;font-size:13px;cursor:pointer;">取消</button>
+                </div>
+              </div>
+
+              <!-- AI Comment -->
+              <div x-show="currentSub?.ai_comment" style="background:rgba(255,255,255,0.85);border-radius:16px;padding:16px;">
+                <div style="font-weight:600;font-size:14px;color:#64748b;margin-bottom:6px;">&#x1F4AC; AI 总评</div>
+                <div style="font-size:14px;color:#475569;line-height:1.6;" x-text="currentSub?.ai_comment"></div>
+              </div>
+
+              <!-- Actions -->
+              <div x-show="isAdmin" style="display:flex;gap:8px;">
+                <button x-show="currentSub?.status==='uploaded'" @click="runOcr(currentSub)" style="padding:8px 18px;border-radius:16px;border:none;background:linear-gradient(135deg,#60a5fa,#a78bfa);color:white;font-size:14px;font-weight:600;cursor:pointer;">&#x1F50D; 开始识别</button>
+                <button x-show="currentSub?.ocr_text && currentSub?.status!=='graded' && currentSub?.status!=='reviewed'" @click="runGrade(currentSub)" style="padding:8px 18px;border-radius:16px;border:none;background:linear-gradient(135deg,#22c55e,#16a34a);color:white;font-size:14px;font-weight:600;cursor:pointer;">&#x1F4DD; AI 评分</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end essay tab -->
+
+    </main>
+  </div>
+
+  <!-- Homework Image Lightbox -->
+  <div id="hwLightbox" onclick="this.style.display='none'" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:200;display:none;cursor:pointer;">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;">
+      <img id="hwLightboxImg" src="" style="max-width:90vw;max-height:85vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+    </div>
+    <button onclick="document.getElementById('hwLightbox').style.display='none'" style="position:fixed;top:20px;right:20px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.9);border:none;font-size:20px;cursor:pointer;z-index:201;display:flex;align-items:center;justify-content:center;">✕</button>
+  </div>
+
+  <!-- TOASTS -->
+  <div style="position:fixed;top:16px;right:16px;z-index:1000;display:flex;flex-direction:column;gap:8px;">
+    <template x-for="t in toasts" :key="t.id">
+      <div x-transition :style="'background:'+(t.type==='success'?'#dcfce7;color:#166534':t.type==='error'?'#fee2e2;color:#991b1b':'#e0f2fe;color:#0c4a6e')"
+        style="padding:12px 20px;border-radius:12px;font-size:14px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:200px;" x-text="t.message"></div>
+    </template>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="/js/api.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/homework.js"></script>
+  <script src="/js/checkin.js"></script>
+  <script src="/js/excellent.js"></script>
+  <script src="/js/ranking.js"></script>
+  <script src="/js/vocabulary.js"></script>
+  <script src="/js/ocr-upload.js"></script>
+  <script src="/js/doc-upload.js"></script>
+  <script src="/js/quiz.js"></script>
+  <script src="/js/essay.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</body>
+</html>
