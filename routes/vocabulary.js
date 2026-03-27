@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { getDB } = require('../services/db');
 const { requireAuth } = require('../middleware/auth');
+const { importVocabularyBatch } = require('../services/vocabulary-import');
 
 // ---------------------------------------------------------------------------
 // GET /stats  — vocabulary statistics (count by grade, total)
@@ -24,14 +25,28 @@ router.get('/stats', (req, res) => {
     byGrade[row.grade || 'unknown'] = row.count;
   }
 
-  return res.json({ total, byGrade });
+  const unitRows = db
+    .prepare(
+      `SELECT COALESCE(grade, 'unknown') AS grade, COALESCE(unit, 'unknown') AS unit, COUNT(*) AS count
+       FROM vocabulary
+       GROUP BY COALESCE(grade, 'unknown'), COALESCE(unit, 'unknown')
+       ORDER BY grade ASC, unit ASC`
+    )
+    .all();
+
+  const byUnit = {};
+  for (const row of unitRows) {
+    byUnit[`${row.grade}:${row.unit}`] = row.count;
+  }
+
+  return res.json({ total, byGrade, byUnit });
 });
 
 // ---------------------------------------------------------------------------
 // GET /  — list vocabulary, optionally filtered by grade or search text
 // ---------------------------------------------------------------------------
 router.get('/', (req, res) => {
-  const { grade, search } = req.query;
+  const { grade, unit, search } = req.query;
   const db = getDB();
 
   const conditions = [];
@@ -40,6 +55,11 @@ router.get('/', (req, res) => {
   if (grade) {
     conditions.push('grade = ?');
     params.push(grade);
+  }
+
+  if (unit) {
+    conditions.push('unit = ?');
+    params.push(unit);
   }
 
   if (search) {
@@ -88,57 +108,22 @@ router.post('/', requireAuth, (req, res) => {
 });
 
 // ---------------------------------------------------------------------------
-// POST /batch  — insert multiple words, skip duplicates (auth required)
+// POST /batch  — insert multiple words, optionally replace existing unit data
 // ---------------------------------------------------------------------------
 router.post('/batch', requireAuth, (req, res) => {
-  const { words } = req.body;
+  const { words, mode, replace_scope } = req.body;
 
   if (!Array.isArray(words) || words.length === 0) {
     return res.status(400).json({ error: 'words array is required and must not be empty' });
   }
 
   const db = getDB();
-
-  const insertStmt = db.prepare(
-    `INSERT INTO vocabulary (word, phonetic, meaning, unit, grade, pos, created_at)
-     VALUES (?, ?, ?, ?, ?, ?, datetime('now'))`
-  );
-
-  const checkStmt = db.prepare(
-    'SELECT id FROM vocabulary WHERE word = ?'
-  );
-
-  let inserted = 0;
-  let skipped = 0;
-
-  const batchInsert = db.transaction((items) => {
-    for (const item of items) {
-      if (!item.word || !item.meaning) {
-        skipped++;
-        continue;
-      }
-
-      const existing = checkStmt.get(item.word);
-      if (existing) {
-        skipped++;
-        continue;
-      }
-
-      insertStmt.run(
-        item.word,
-        item.phonetic || null,
-        item.meaning,
-        item.unit || null,
-        item.grade || null,
-        item.pos || null
-      );
-      inserted++;
-    }
+  const result = importVocabularyBatch(db, words, {
+    mode,
+    replaceScope: replace_scope || 'unit',
   });
 
-  batchInsert(words);
-
-  return res.json({ inserted, skipped });
+  return res.json(result);
 });
 
 // ---------------------------------------------------------------------------
@@ -181,20 +166,6 @@ router.put('/:id', requireAuth, (req, res) => {
     .get(id);
 
   return res.json({ word: updated });
-});
-
-// ---------------------------------------------------------------------------
-// DELETE /batch  — delete multiple words by ids (auth required)
-// ---------------------------------------------------------------------------
-router.delete('/batch', requireAuth, (req, res) => {
-  const { ids } = req.body;
-  if (!Array.isArray(ids) || ids.length === 0) {
-    return res.status(400).json({ error: 'ids array is required' });
-  }
-  const db = getDB();
-  const placeholders = ids.map(() => '?').join(',');
-  const result = db.prepare(`DELETE FROM vocabulary WHERE id IN (${placeholders})`).run(...ids);
-  return res.json({ deleted: result.changes });
 });
 
 // ---------------------------------------------------------------------------

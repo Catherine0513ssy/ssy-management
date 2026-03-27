@@ -5,8 +5,11 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node --test tests/sanitize.test.js tests/backup-script.test.js",
+    "test": "node --test tests/sanitize.test.js tests/backup-script.test.js tests/vocabulary-import.test.js",
     "smoke": "node --test tests/smoke-api.test.js",
+    "test:goforit": "node --test tests/goforit-import.test.js",
+    "fetch:goforit": "node scripts/fetch-goforit-vocab.js",
+    "import:vocab": "node scripts/import-vocabulary-json.js",
     "dev": "PORT=3002 node server.js",
     "migrate": "node scripts/migrate.js",
     "backup": "bash scripts/backup.sh",

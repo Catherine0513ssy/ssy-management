@@ -59,15 +59,15 @@ const API = {
   getRankingDetail(studentIndex) { return this.get(`/api/ranking/detail?class_id=${this.classId}${studentIndex !== undefined ? `&student_index=${studentIndex}` : ''}`); },
 
   // Vocabulary
-  getVocabulary(grade, search) { let q = `?class_id=${this.classId}`; if (grade) q += `&grade=${grade}`; if (search) q += `&search=${encodeURIComponent(search)}`; return this.get(`/api/vocabulary${q}`); },
+  getVocabulary(grade, search, unit) { let q = `?class_id=${this.classId}`; if (grade) q += `&grade=${grade}`; if (unit) q += `&unit=${encodeURIComponent(unit)}`; if (search) q += `&search=${encodeURIComponent(search)}`; return this.get(`/api/vocabulary${q}`); },
   getVocabStats() { return this.get('/api/vocabulary/stats'); },
   addWord(word) { return this.post('/api/vocabulary', word); },
-  addWordsBatch(words) { return this.post('/api/vocabulary/batch', { words }); },
+  addWordsBatch(words, options = {}) { return this.post('/api/vocabulary/batch', { words, ...options }); },
   updateWord(id, data) { return this.put(`/api/vocabulary/${id}`, data); },
   deleteWord(id) { return this.del(`/api/vocabulary/${id}`); },
 
   // Quiz
-  generateQuiz(grade, count) { return this.post('/api/quiz/generate', { class_id: parseInt(this.classId), grade, count: parseInt(count || 20) }); },
+  generateQuiz(grade, count, units = []) { return this.post('/api/quiz/generate', { class_id: parseInt(this.classId), grade, count: parseInt(count || 20), units }); },
   getQuizWords() { return this.get(`/api/quiz/words?class_id=${this.classId}`); },
   getAllVocabulary() { return this.get('/api/quiz/all'); },
 

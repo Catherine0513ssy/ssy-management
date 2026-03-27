@@ -8,6 +8,7 @@ document.addEventListener('alpine:init', () => {
     stats: { total: 0, byGrade: {} },
     searchQuery: '',
     filterGrade: '',
+    filterUnit: '',
     grades: ['7a', '7b', '8a', '8b', '9'],
     loading: false,
     showAddForm: false,
@@ -16,8 +17,6 @@ document.addEventListener('alpine:init', () => {
     importMode: '',  // 'ocr' | 'doc' | 'manual' | ''
     newWord: { word: '', phonetic: '', meaning: '', grade: '', unit: '', pos: '' },
     searchTimeout: null,
-    batchMode: false,
-    selectedIds: [],
 
     async init() {
       await Promise.all([this.load(), this.loadStats()]);
@@ -53,6 +52,7 @@ document.addEventListener('alpine:init', () => {
 
     setGrade(grade) {
       this.filterGrade = this.filterGrade === grade ? '' : grade;
+      this.filterUnit = '';
       this.load();
     },
 
@@ -63,7 +63,12 @@ document.addEventListener('alpine:init', () => {
     clearFilters() {
       this.searchQuery = '';
       this.filterGrade = '';
+      this.filterUnit = '';
       this.load();
+    },
+
+    setUnit(unit) {
+      this.filterUnit = this.filterUnit === unit ? '' : unit;
     },
 
     toggleAddForm() {
@@ -125,48 +130,79 @@ document.addEventListener('alpine:init', () => {
       return map[grade] || '#94a3b8';
     },
 
-    toggleBatchMode() {
-      this.batchMode = !this.batchMode;
-      this.selectedIds = [];
+    getUnitLabel(unit) {
+      if (!unit) return '';
+      return unit.toUpperCase();
     },
 
-    toggleWordSelect(id) {
-      const idx = this.selectedIds.indexOf(id);
-      if (idx >= 0) this.selectedIds.splice(idx, 1);
-      else this.selectedIds.push(id);
+    compareUnits(a, b) {
+      const parse = (value) => {
+        const match = String(value || '').match(/^([A-Z]+)(\d+)$/i);
+        if (!match) return { prefix: String(value || ''), num: 0 };
+        return { prefix: match[1].toUpperCase(), num: Number(match[2]) };
+      };
+      const left = parse(a);
+      const right = parse(b);
+      if (left.prefix !== right.prefix) return left.prefix.localeCompare(right.prefix);
+      return left.num - right.num;
     },
 
-    isWordSelected(id) {
-      return this.selectedIds.includes(id);
+    get availableUnits() {
+      const source = this.filterGrade
+        ? this.words.filter((w) => w.grade === this.filterGrade)
+        : this.words;
+      return [...new Set(source.map((w) => w.unit).filter(Boolean))].sort((a, b) => this.compareUnits(a, b));
     },
 
-    selectAllWords() {
-      if (this.selectedIds.length === this.words.length) {
-        this.selectedIds = [];
-      } else {
-        this.selectedIds = this.words.map(w => w.id);
+    get visibleWords() {
+      let source = this.words;
+      if (this.filterGrade) {
+        source = source.filter((w) => w.grade === this.filterGrade);
       }
+      if (this.filterUnit) {
+        source = source.filter((w) => w.unit === this.filterUnit);
+      }
+      return source;
     },
 
-    async batchDelete() {
-      if (!this.selectedIds.length) return;
-      if (!confirm(`确定删除选中的 ${this.selectedIds.length} 个单词？`)) return;
-      try {
-        const res = await API._fetch('/api/vocabulary/batch', {
-          method: 'DELETE',
-          body: JSON.stringify({ ids: this.selectedIds }),
-        });
-        this.selectedIds = [];
-        this.batchMode = false;
-        await Promise.all([this.load(), this.loadStats()]);
-        this.$dispatch('toast', { message: `已删除 ${res.deleted} 个单词`, type: 'success' });
-      } catch (e) {
-        this.$dispatch('toast', { message: e.message || '删除失败', type: 'error' });
+    get groupedWordSections() {
+      const gradeOrder = this.grades;
+      const grouped = new Map();
+
+      for (const word of this.visibleWords) {
+        const grade = word.grade || 'unknown';
+        const unit = word.unit || 'unknown';
+        if (!grouped.has(grade)) {
+          grouped.set(grade, new Map());
+        }
+        const units = grouped.get(grade);
+        if (!units.has(unit)) {
+          units.set(unit, []);
+        }
+        units.get(unit).push(word);
       }
+
+      return [...grouped.entries()]
+        .sort((a, b) => {
+          const left = gradeOrder.indexOf(a[0]);
+          const right = gradeOrder.indexOf(b[0]);
+          return (left === -1 ? 999 : left) - (right === -1 ? 999 : right);
+        })
+        .map(([grade, units]) => ({
+          grade,
+          gradeLabel: this.getGradeLabel(grade),
+          units: [...units.entries()]
+            .sort((a, b) => this.compareUnits(a[0], b[0]))
+            .map(([unit, words]) => ({
+              unit,
+              unitLabel: this.getUnitLabel(unit),
+              words,
+            })),
+        }));
     },
 
     get filteredCount() {
-      return this.words.length;
+      return this.visibleWords.length;
     },
 
     get hasFilters() {

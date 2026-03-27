@@ -6,7 +6,7 @@ const { requireAuth } = require('../middleware/auth');
 // POST /generate  — select random words and store as quiz (auth required)
 // ---------------------------------------------------------------------------
 router.post('/generate', requireAuth, (req, res) => {
-  const { class_id, grade, count } = req.body;
+  const { class_id, grade, units, count } = req.body;
 
   if (!class_id) {
     return res.status(400).json({ error: 'class_id is required' });
@@ -23,6 +23,14 @@ router.post('/generate', requireAuth, (req, res) => {
   if (grade) {
     conditions.push('grade = ?');
     params.push(grade);
+  }
+
+  if (Array.isArray(units) && units.length > 0) {
+    const cleanUnits = units.map((unit) => String(unit).trim()).filter(Boolean);
+    if (cleanUnits.length > 0) {
+      conditions.push(`unit IN (${cleanUnits.map(() => '?').join(', ')})`);
+      params.push(...cleanUnits);
+    }
   }
 
   const where = conditions.length > 0
@@ -108,24 +116,37 @@ router.get('/all', (req, res) => {
     )
     .all();
 
-  // Organize words by grade
+  // Organize words by grade and unit
   const wordsByGrade = {};
   const grades = [];
+  const unitsByGrade = {};
 
   for (const word of allWords) {
     const g = word.grade || 'unknown';
+    const u = word.unit || 'unknown';
     if (!wordsByGrade[g]) {
-      wordsByGrade[g] = [];
+      wordsByGrade[g] = {};
       grades.push(g);
     }
-    wordsByGrade[g].push(word);
+    if (!wordsByGrade[g][u]) {
+      wordsByGrade[g][u] = [];
+    }
+    wordsByGrade[g][u].push(word);
+    if (!unitsByGrade[g]) {
+      unitsByGrade[g] = [];
+    }
+    if (!unitsByGrade[g].includes(u)) {
+      unitsByGrade[g].push(u);
+    }
   }
 
   return res.json({
     version: new Date().toISOString(),
     total: allWords.length,
     grades,
+    unitsByGrade,
     words: wordsByGrade,
+    flatWords: allWords,
   });
 });
 
