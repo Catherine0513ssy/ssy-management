@@ -69,6 +69,7 @@ const API = {
   // Quiz
   generateQuiz(grade, count, units = []) { return this.post('/api/quiz/generate', { class_id: parseInt(this.classId), grade, count: parseInt(count || 20), units }); },
   getQuizWords() { return this.get(`/api/quiz/words?class_id=${this.classId}`); },
+  getQuizMeta() { return this.get('/api/quiz/meta'); },
   getAllVocabulary() { return this.get('/api/quiz/all'); },
 
   // Essay

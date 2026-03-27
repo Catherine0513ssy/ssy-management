@@ -2,6 +2,42 @@ const router = require('express').Router();
 const { getDB } = require('../services/db');
 const { requireAuth } = require('../middleware/auth');
 
+function buildQuizMeta(allWords) {
+  const wordsByGrade = {};
+  const grades = [];
+  const unitsByGrade = {};
+  const countsByGradeUnit = {};
+
+  for (const word of allWords) {
+    const g = word.grade || 'unknown';
+    const u = word.unit || 'unknown';
+    if (!wordsByGrade[g]) {
+      wordsByGrade[g] = {};
+      grades.push(g);
+    }
+    if (!wordsByGrade[g][u]) {
+      wordsByGrade[g][u] = [];
+    }
+    wordsByGrade[g][u].push(word);
+    if (!unitsByGrade[g]) {
+      unitsByGrade[g] = [];
+    }
+    if (!unitsByGrade[g].includes(u)) {
+      unitsByGrade[g].push(u);
+    }
+    const unitKey = `${g}:${u}`;
+    countsByGradeUnit[unitKey] = (countsByGradeUnit[unitKey] || 0) + 1;
+  }
+
+  return {
+    total: allWords.length,
+    grades,
+    unitsByGrade,
+    countsByGradeUnit,
+    wordsByGrade,
+  };
+}
+
 // ---------------------------------------------------------------------------
 // POST /generate  — select random words and store as quiz (auth required)
 // ---------------------------------------------------------------------------
@@ -104,6 +140,29 @@ router.get('/words', (req, res) => {
 });
 
 // ---------------------------------------------------------------------------
+// GET /meta  — lightweight metadata for grade/unit selection
+// ---------------------------------------------------------------------------
+router.get('/meta', (req, res) => {
+  const db = getDB();
+
+  const allWords = db
+    .prepare(
+      `SELECT grade, unit
+       FROM vocabulary
+       ORDER BY grade ASC, unit ASC, id ASC`
+    )
+    .all();
+
+  const meta = buildQuizMeta(allWords);
+  return res.json({
+    total: meta.total,
+    grades: meta.grades,
+    unitsByGrade: meta.unitsByGrade,
+    countsByGradeUnit: meta.countsByGradeUnit,
+  });
+});
+
+// ---------------------------------------------------------------------------
 // GET /all  — return full vocabulary organized by grade (for quiz-display.html)
 // ---------------------------------------------------------------------------
 router.get('/all', (req, res) => {
@@ -116,36 +175,15 @@ router.get('/all', (req, res) => {
     )
     .all();
 
-  // Organize words by grade and unit
-  const wordsByGrade = {};
-  const grades = [];
-  const unitsByGrade = {};
-
-  for (const word of allWords) {
-    const g = word.grade || 'unknown';
-    const u = word.unit || 'unknown';
-    if (!wordsByGrade[g]) {
-      wordsByGrade[g] = {};
-      grades.push(g);
-    }
-    if (!wordsByGrade[g][u]) {
-      wordsByGrade[g][u] = [];
-    }
-    wordsByGrade[g][u].push(word);
-    if (!unitsByGrade[g]) {
-      unitsByGrade[g] = [];
-    }
-    if (!unitsByGrade[g].includes(u)) {
-      unitsByGrade[g].push(u);
-    }
-  }
+  const meta = buildQuizMeta(allWords);
 
   return res.json({
     version: new Date().toISOString(),
-    total: allWords.length,
-    grades,
-    unitsByGrade,
-    words: wordsByGrade,
+    total: meta.total,
+    grades: meta.grades,
+    unitsByGrade: meta.unitsByGrade,
+    countsByGradeUnit: meta.countsByGradeUnit,
+    words: meta.wordsByGrade,
     flatWords: allWords,
   });
 });

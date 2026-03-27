@@ -490,8 +490,8 @@
             <button @click="togglePresentationLock()" class="toggle-pill" :class="$store.homeworkPresentation?.locked ? 'active-warm' : ''" x-text="$store.homeworkPresentation?.locked ? '🔒 已锁定' : '🔓 未锁定'"></button>
             <button @click="exitPresentationMode()" class="toggle-pill" :style="$store.homeworkPresentation?.canExit ? '' : 'opacity:0.45;cursor:not-allowed;'" :disabled="!$store.homeworkPresentation?.canExit">退出展示</button>
           </div>
-          <div style="display:flex;align-items:flex-start;gap:28px;">
-            <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:flex-start;gap:22px;">
+            <div style="flex:0 1 44%;min-width:0;">
               <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;">
                 <h2 style="margin:0;font-size:34px;font-weight:900;color:#0f172a;">今日作业</h2>
                 <span style="padding:8px 14px;border-radius:14px;background:#2563eb;color:white;font-size:18px;font-weight:700;" x-text="selectedDate"></span>
@@ -502,13 +502,13 @@
                   <div style="padding:18px 22px;border-radius:18px;background:white;box-shadow:0 8px 30px rgba(15,23,42,0.08);border:2px solid rgba(96,165,250,0.16);">
                     <div style="display:flex;gap:14px;align-items:flex-start;">
                       <div style="flex-shrink:0;width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;" x-text="idx + 1"></div>
-                      <div style="font-size:28px;line-height:1.6;color:#0f172a;font-weight:700;white-space:pre-wrap;" x-text="item.text"></div>
+                      <div style="font-size:26px;line-height:1.55;color:#0f172a;font-weight:700;white-space:pre-wrap;" x-text="item.text"></div>
                     </div>
                   </div>
                 </template>
               </div>
             </div>
-            <div x-show="presentationImages.length > 0" style="width:min(42vw, 560px);flex-shrink:0;display:flex;flex-direction:column;gap:18px;">
+            <div x-show="presentationImages.length > 0" style="width:min(50vw, 720px);flex-shrink:0;display:flex;flex-direction:column;gap:18px;">
               <template x-for="item in presentationImages" :key="'presentation-image-' + item.id">
                 <div style="background:white;border-radius:18px;padding:14px;box-shadow:0 8px 30px rgba(15,23,42,0.08);">
                   <img :src="item.image" style="width:100%;height:auto;border-radius:12px;display:block;">
@@ -901,7 +901,7 @@
               </label>
             </div>
             <button @click="generate()" style="width:100%;padding:14px;border-radius:20px;border:none;background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;font-size:16px;font-weight:700;cursor:pointer;">
-              🚀 开始默写（共 <span x-text="filteredVocab.length"></span> 词可选）
+              🚀 开始默写（共 <span x-text="availableWordCount"></span> 词可选）
             </button>
             <p style="text-align:center;margin-top:12px;font-size:13px;color:#94a3b8;">键盘：← → 翻页 · 空格下一个 · Enter 显示答案 · A 朗读</p>
           </div>

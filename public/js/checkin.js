@@ -27,11 +27,24 @@ document.addEventListener('alpine:init', () => {
     loading: false,
     saving: false,
     modified: false,
+    loaded: false,
 
     async init() {
-      await this.loadStudents();
-      await this.loadDates();
-      await this.loadCheckin();
+      const ensureLoaded = async () => {
+        if (this.loaded) return;
+        this.loaded = true;
+        await this.loadStudents();
+        await this.loadDates();
+        await this.loadCheckin();
+      };
+      window.addEventListener('ssy:tab-change', async (event) => {
+        if (event.detail?.tabId === 'checkin') {
+          await ensureLoaded();
+        }
+      });
+      if (document.body.dataset.activeTab === 'checkin') {
+        await ensureLoaded();
+      }
     },
 
     // ------------------------------------------------------------------

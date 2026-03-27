@@ -26,6 +26,8 @@ document.addEventListener('alpine:init', () => {
       const auth = await API.checkAuth().catch(() => ({ loggedIn: false }));
       this.isAdmin = auth.loggedIn;
       window.addEventListener('ssy:logout', () => { this.isAdmin = false; });
+      document.body.dataset.activeTab = this.activeTab;
+      window.dispatchEvent(new CustomEvent('ssy:tab-change', { detail: { tabId: this.activeTab, initial: true } }));
     },
 
     // Tab switching
@@ -39,6 +41,8 @@ document.addEventListener('alpine:init', () => {
         window.dispatchEvent(new Event('ssy:quiz-stop'));
       }
       this.activeTab = tabId;
+      document.body.dataset.activeTab = tabId;
+      window.dispatchEvent(new CustomEvent('ssy:tab-change', { detail: { tabId } }));
       this.sidebarOpen = false;
     },
 

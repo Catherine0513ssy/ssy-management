@@ -72,6 +72,19 @@ test('vocabulary and quiz APIs organize words by grade and unit and support unit
     assert.deepEqual(Object.keys(result.data.words['7a']), ['U1', 'U2']);
     assert.equal(result.data.words['7a']['U1'].length, 2);
 
+    result = await request('/api/quiz/meta');
+    assert.equal(result.response.status, 200);
+    assert.equal(result.data.total, 4);
+    assert.deepEqual(result.data.unitsByGrade, {
+      '7a': ['U1', 'U2'],
+      '8a': ['U1'],
+    });
+    assert.deepEqual(result.data.countsByGradeUnit, {
+      '7a:U1': 2,
+      '7a:U2': 1,
+      '8a:U1': 1,
+    });
+
     result = await request('/api/quiz/generate', {
       method: 'POST',
       headers: {

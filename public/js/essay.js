@@ -29,9 +29,22 @@ document.addEventListener('alpine:init', () => {
     editingOcr: false,
     editOcrText: '',
     editingScores: false,
+    loaded: false,
 
     async init() {
-      await this.loadTasks();
+      const ensureLoaded = async () => {
+        if (this.loaded) return;
+        this.loaded = true;
+        await this.loadTasks();
+      };
+      window.addEventListener('ssy:tab-change', async (event) => {
+        if (event.detail?.tabId === 'essay') {
+          await ensureLoaded();
+        }
+      });
+      if (document.body.dataset.activeTab === 'essay') {
+        await ensureLoaded();
+      }
     },
 
     // ===== Task List =====

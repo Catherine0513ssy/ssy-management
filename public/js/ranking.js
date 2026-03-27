@@ -9,9 +9,22 @@ document.addEventListener('alpine:init', () => {
     selectedStudent: null,
     details: [],
     detailLoading: false,
+    loaded: false,
 
     async init() {
-      await this.load();
+      const ensureLoaded = async () => {
+        if (this.loaded) return;
+        this.loaded = true;
+        await this.load();
+      };
+      window.addEventListener('ssy:tab-change', async (event) => {
+        if (event.detail?.tabId === 'ranking') {
+          await ensureLoaded();
+        }
+      });
+      if (document.body.dataset.activeTab === 'ranking') {
+        await ensureLoaded();
+      }
     },
 
     async load() {

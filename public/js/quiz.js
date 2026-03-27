@@ -5,9 +5,9 @@
 document.addEventListener('alpine:init', () => {
   Alpine.data('quizTab', () => ({
     // Setup
-    vocab: [],
-    vocabTree: {},
+    totalVocabCount: 0,
     unitsByGrade: {},
+    countsByGradeUnit: {},
     grade: 'all',
     selectedUnits: [],
     mode: 'cn2en',
@@ -29,56 +29,68 @@ document.addEventListener('alpine:init', () => {
     quizFinished: false,   // 是否已默写完最后一个
     _autoTimer: null,
     countdown: 0,         // 倒计时显示
+    loaded: false,
 
     async init() {
-      await this.loadVocab();
+      const ensureLoaded = async () => {
+        if (this.loaded) return;
+        this.loaded = true;
+        await this.loadVocab();
+      };
+      window.addEventListener('ssy:tab-change', async (event) => {
+        if (event.detail?.tabId === 'quiz') {
+          await ensureLoaded();
+        }
+      });
+      if (document.body.dataset.activeTab === 'quiz') {
+        await ensureLoaded();
+      }
     },
 
     async loadVocab() {
       try {
-        const data = await API.getAllVocabulary();
-        if (data.words) {
-          this.vocabTree = data.words;
+        const data = await API.getQuizMeta();
+        if (data) {
+          this.totalVocabCount = data.total || 0;
           this.unitsByGrade = data.unitsByGrade || {};
-          if (Array.isArray(data.flatWords)) {
-            this.vocab = data.flatWords;
-          } else {
-            const grades = Object.values(data.words || {});
-            this.vocab = grades.flatMap((units) => Array.isArray(units) ? units : Object.values(units || {}).flat());
-          }
+          this.countsByGradeUnit = data.countsByGradeUnit || {};
         }
       } catch (e) {
-        try {
-          const data = await API.getVocabulary();
-          this.vocab = data.words || [];
-        } catch (_) {}
+        this.unitsByGrade = {};
+        this.countsByGradeUnit = {};
+        this.totalVocabCount = 0;
       }
     },
 
-    generate() {
-      const filtered = this.filteredVocab;
-      if (filtered.length === 0) {
+    async generate() {
+      if (this.availableWordCount === 0) {
         this.$dispatch('toast', { message: '当前年级/单元下暂无单词', type: 'error' });
         return;
       }
-      const n = Math.min(parseInt(this.count) || 20, filtered.length);
-      const shuffled = [...filtered].sort(() => Math.random() - 0.5);
-      this.words = shuffled.slice(0, n);
-      this.index = 0;
-      this.answerShown = false;
-      this.quizStarted = true;
-      this.$nextTick(() => this._onWordChange());
+      try {
+        const data = await API.generateQuiz(this.grade === 'all' ? '' : this.grade, this.count, this.selectedUnits);
+        this.words = data.words || [];
+        if (this.words.length === 0) {
+          this.$dispatch('toast', { message: '没有生成到可用单词', type: 'error' });
+          return;
+        }
+        this.index = 0;
+        this.answerShown = false;
+        this.quizStarted = true;
+        this.$nextTick(() => this._onWordChange());
+      } catch (e) {
+        this.$dispatch('toast', { message: e.message || '生成默写失败', type: 'error' });
+      }
     },
 
-    get filteredVocab() {
-      let filtered = this.vocab;
-      if (this.grade !== 'all') {
-        filtered = filtered.filter((w) => w.grade === this.grade);
+    get availableWordCount() {
+      if (this.grade === 'all') {
+        return this.totalVocabCount;
       }
       if (this.selectedUnits.length > 0) {
-        filtered = filtered.filter((w) => this.selectedUnits.includes(w.unit || 'unknown'));
+        return this.selectedUnits.reduce((sum, unit) => sum + (this.countsByGradeUnit[`${this.grade}:${unit}`] || 0), 0);
       }
-      return filtered;
+      return (this.unitsByGrade[this.grade] || []).reduce((sum, unit) => sum + (this.countsByGradeUnit[`${this.grade}:${unit}`] || 0), 0);
     },
 
     get availableUnits() {

@@ -13,9 +13,22 @@ document.addEventListener('alpine:init', () => {
     imagePreview: null,
     lightboxImage: null,
     lightboxName: '',
+    loaded: false,
 
     async init() {
-      await this.load();
+      const ensureLoaded = async () => {
+        if (this.loaded) return;
+        this.loaded = true;
+        await this.load();
+      };
+      window.addEventListener('ssy:tab-change', async (event) => {
+        if (event.detail?.tabId === 'excellent') {
+          await ensureLoaded();
+        }
+      });
+      if (document.body.dataset.activeTab === 'excellent') {
+        await ensureLoaded();
+      }
     },
 
     async load() {

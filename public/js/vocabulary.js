@@ -17,9 +17,22 @@ document.addEventListener('alpine:init', () => {
     importMode: '',  // 'ocr' | 'doc' | 'manual' | ''
     newWord: { word: '', phonetic: '', meaning: '', grade: '', unit: '', pos: '' },
     searchTimeout: null,
+    loaded: false,
 
     async init() {
-      await Promise.all([this.load(), this.loadStats()]);
+      const ensureLoaded = async () => {
+        if (this.loaded) return;
+        this.loaded = true;
+        await Promise.all([this.load(), this.loadStats()]);
+      };
+      window.addEventListener('ssy:tab-change', async (event) => {
+        if (event.detail?.tabId === 'vocabulary') {
+          await ensureLoaded();
+        }
+      });
+      if (document.body.dataset.activeTab === 'vocabulary') {
+        await ensureLoaded();
+      }
     },
 
     async load() {
