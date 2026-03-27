@@ -4,9 +4,6 @@
    Target: 初三英语教学管理系统 (Middle School English Teaching App)
    ============================================================ */
 
-/* === Google Fonts Import === */
-/* Google Fonts removed for speed — using system fonts */
-
 :root {
   /* === Background Gradients === */
   --bg-gradient: linear-gradient(135deg, #ffecd2 0%, #fcb69f 40%, #ee9ca7 70%, #ffdde1 100%);
