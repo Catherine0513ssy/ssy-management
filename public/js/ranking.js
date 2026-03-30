@@ -38,10 +38,38 @@ document.addEventListener('alpine:init', () => {
       this.loading = false;
     },
 
+    get groupedRankings() {
+      const map = new Map();
+      for (const s of this.rankings) {
+        const gi = s.groupIndex || 1;
+        if (!map.has(gi)) {
+          map.set(gi, {
+            groupIndex: gi,
+            groupName: s.group || ('第' + gi + '组'),
+            rankings: [],
+          });
+        }
+        map.get(gi).rankings.push(s);
+      }
+      const groups = Array.from(map.values()).sort((a, b) => a.groupIndex - b.groupIndex);
+      for (const g of groups) {
+        g.rankings.sort((a, b) => b.points - a.points || a.name.localeCompare(b.name, 'zh'));
+        let currentRank = 1;
+        for (let i = 0; i < g.rankings.length; i++) {
+          if (i > 0 && g.rankings[i].points < g.rankings[i - 1].points) {
+            currentRank++;
+          }
+          g.rankings[i].rank = currentRank;
+        }
+        g.maxPoints = g.rankings.length > 0 ? g.rankings[0].points : 0;
+      }
+      return groups;
+    },
+
     getMedal(rank) {
-      if (rank === 1) return '\u{1F947}';
-      if (rank === 2) return '\u{1F948}';
-      if (rank === 3) return '\u{1F949}';
+      if (rank === 1) return '🥇';
+      if (rank === 2) return '🥈';
+      if (rank === 3) return '🥉';
       return '#' + rank;
     },
 
@@ -65,7 +93,6 @@ document.addEventListener('alpine:init', () => {
       this.selectedStudent = student;
       this.detailLoading = true;
       try {
-        // Find the student's index from the rankings array position
         const idx = this.rankings.indexOf(student);
         const data = await API.getRankingDetail(idx >= 0 ? idx : undefined);
         this.details = data.details || [];
@@ -98,13 +125,10 @@ document.addEventListener('alpine:init', () => {
       return this.rankings.length;
     },
 
-    get maxPoints() {
-      return this.rankings.length > 0 ? this.rankings[0].points : 0;
-    },
-
-    getBarWidth(points) {
-      if (this.maxPoints === 0) return '0%';
-      return Math.round((points / this.maxPoints) * 100) + '%';
+    getBarWidth(points, maxPoints) {
+      const max = maxPoints !== undefined ? maxPoints : 0;
+      if (max === 0) return '0%';
+      return Math.round((points / max) * 100) + '%';
     },
   }));
 });

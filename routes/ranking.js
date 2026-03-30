@@ -10,7 +10,7 @@ const { getDB } = require('../services/db');
 const ROUND_POINTS = { 1: 2, 2: 1 };
 
 // ---------------------------------------------------------------------------
-// GET /  — ranking for a class, sorted by total points descending
+// GET /  �� ranking for a class, sorted by total points descending
 // ---------------------------------------------------------------------------
 router.get('/', (req, res) => {
   const { class_id } = req.query;
@@ -65,27 +65,17 @@ router.get('/', (req, res) => {
     return {
       name: s.name,
       group: s.group_name || '',
+      groupIndex: groupIndex,
       points: pointMap.get(key) || 0,
     };
   });
 
-  // Sort by points descending, then by name for tie-breaking
-  rankings.sort((a, b) => b.points - a.points || a.name.localeCompare(b.name, 'zh'));
-
-  // Assign ranks (same points = same rank)
-  let currentRank = 1;
-  for (let i = 0; i < rankings.length; i++) {
-    if (i > 0 && rankings[i].points < rankings[i - 1].points) {
-      currentRank = i + 1;
-    }
-    rankings[i].rank = currentRank;
-  }
-
+  // 返回原始数据，由前端按组分别排序和赋 rank
   return res.json({ rankings });
 });
 
 // ---------------------------------------------------------------------------
-// GET /detail  — per-date breakdown of scores for a student (or all)
+// GET /detail  �� per-date breakdown of scores for a student (or all)
 // ---------------------------------------------------------------------------
 router.get('/detail', (req, res) => {
   const { class_id, student_index } = req.query;

@@ -41,7 +41,7 @@ function buildQuizMeta(allWords) {
 // ---------------------------------------------------------------------------
 // POST /generate  — select random words and store as quiz (auth required)
 // ---------------------------------------------------------------------------
-router.post('/generate', requireAuth, (req, res) => {
+router.post('/generate', (req, res) => {
   const { class_id, grade, units, count } = req.body;
 
   if (!class_id) {
