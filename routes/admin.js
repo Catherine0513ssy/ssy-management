@@ -90,7 +90,7 @@ router.get('/students', (req, res) => {
     LEFT JOIN student_groups g ON g.id = s.group_id
     WHERE s.class_id = ?
     ORDER BY g.sort_order, s.sort_order, s.id
-  `).all(class_id);
+  `).all(Number(class_id));
 
   // Group by group_name for frontend convenience
   const grouped = {};

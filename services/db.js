@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS checkin_sessions (
 CREATE TABLE IF NOT EXISTS checkin_records (
   id INTEGER PRIMARY KEY,
   session_id INTEGER NOT NULL REFERENCES checkin_sessions(id),
+  student_id INTEGER REFERENCES students(id),
   student_index INTEGER NOT NULL,
   group_index INTEGER DEFAULT 1,
   passed INTEGER NOT NULL DEFAULT 0,
@@ -243,6 +244,18 @@ function initDB(dbPath) {
   db.pragma('journal_mode = WAL');
   db.pragma('foreign_keys = ON');
   db.exec(SCHEMA_SQL);
+  // Compatibility: add student_id to existing checkin_records
+  try {
+    db.exec(`ALTER TABLE checkin_records ADD COLUMN student_id INTEGER REFERENCES students(id)`);
+  } catch (e) {
+    // Column likely already exists; ignore
+  }
+  // Ensure index exists after column is present
+  try {
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_checkin_records_student ON checkin_records(student_id)`);
+  } catch (e) {
+    // Ignore if index already exists or column missing (should not happen now)
+  }
   return db;
 }
 

@@ -19,7 +19,7 @@ document.addEventListener('alpine:init', () => {
     isAdmin: false,
     sidebarOpen: false,
     toasts: [],
-    currentDate: new Date().toISOString().split('T')[0],
+    currentDate: new Date().toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' }).replace(/\//g, '-'),
 
     // Init
     async init() {
@@ -91,8 +91,10 @@ document.addEventListener('alpine:init', () => {
 
     // Date helpers
     formatDate(dateStr) {
-      const today = new Date().toISOString().split('T')[0];
-      const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+      const today = new Date().toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' }).replace(/\//g, '-');
+      const yesterdayDate = new Date();
+      yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+      const yesterday = yesterdayDate.toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' }).replace(/\//g, '-');
       if (dateStr === today) return '今天';
       if (dateStr === yesterday) return '昨天';
       const [, m, d] = dateStr.split('-');

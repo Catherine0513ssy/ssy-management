@@ -64,20 +64,38 @@ function getOrCreateSession(db, classId, type, round, date) {
  * Returns { "1": [studentIdx, ...], "2": [studentIdx, ...] }
  * Only records with passed = 1 are included.
  */
-function buildPassedMap(db, sessionId) {
+function buildPassedMap(db, sessionId, classId) {
   const rows = db
     .prepare(
-      `SELECT student_index, group_index FROM checkin_records
+      `SELECT student_id, student_index, group_index FROM checkin_records
        WHERE session_id = ? AND passed = 1
        ORDER BY group_index ASC, student_index ASC`
     )
     .all(sessionId);
 
+  const studentsByGroup = classId ? getStudentsByGroup(db, classId) : {};
   const passed = {};
+
   for (const r of rows) {
     const key = String(r.group_index);
     if (!passed[key]) passed[key] = [];
-    passed[key].push(r.student_index);
+
+    const students = studentsByGroup[key] || [];
+    if (r.student_id) {
+      const idx = students.findIndex((s) => s.id === r.student_id);
+      if (idx >= 0) {
+        passed[key].push(idx);
+      } else {
+        passed[key].push(r.student_index);
+      }
+    } else {
+      passed[key].push(r.student_index);
+    }
+  }
+
+  // ensure stable order
+  for (const key of Object.keys(passed)) {
+    passed[key].sort((a, b) => a - b);
   }
 
   return passed;
@@ -162,12 +180,18 @@ router.get('/missing', (req, res) => {
     if (session) {
       const rows = db
         .prepare(
-          `SELECT student_index FROM checkin_records
+          `SELECT student_id, student_index FROM checkin_records
            WHERE session_id = ? AND group_index = ? AND passed = 1`
         )
         .all(session.id, Number(groupSortOrder));
       for (const r of rows) {
-        passedIndices.add(r.student_index);
+        if (r.student_id) {
+          const idx = students.findIndex((s) => s.id === r.student_id);
+          if (idx >= 0) passedIndices.add(idx);
+          else passedIndices.add(r.student_index);
+        } else {
+          passedIndices.add(r.student_index);
+        }
       }
     }
 
@@ -209,7 +233,7 @@ router.get('/:date', (req, res) => {
     return res.json({ passed: {}, updatedAt: null });
   }
 
-  const passed = buildPassedMap(db, session.id);
+  const passed = buildPassedMap(db, session.id, classId);
   return res.json({ passed, updatedAt: session.updated_at });
 });
 
@@ -238,6 +262,7 @@ router.post('/:date', requireAuth, (req, res) => {
   const classId = Number(class_id);
   const date = req.params.date;
   const db = getDB();
+  const studentsByGroup = getStudentsByGroup(db, classId);
 
   // Use a transaction for atomicity
   const upsert = db.transaction(() => {
@@ -249,15 +274,19 @@ router.post('/:date', requireAuth, (req, res) => {
 
     // Insert new records
     const insertStmt = db.prepare(
-      `INSERT INTO checkin_records (session_id, student_index, group_index, passed, created_at)
-       VALUES (?, ?, ?, 1, datetime('now'))`
+      `INSERT INTO checkin_records (session_id, student_index, group_index, student_id, passed, created_at)
+       VALUES (?, ?, ?, ?, 1, datetime('now'))`
     );
 
     for (const [groupIndex, indices] of Object.entries(passed)) {
       const gIdx = Number(groupIndex);
       if (!Array.isArray(indices)) continue;
+      const groupStudents = studentsByGroup[gIdx] || [];
       for (const studentIndex of indices) {
-        insertStmt.run(session.id, Number(studentIndex), gIdx);
+        const sIdx = Number(studentIndex);
+        const student = groupStudents[sIdx];
+        const studentId = student ? student.id : null;
+        insertStmt.run(session.id, sIdx, gIdx, studentId);
       }
     }
 
@@ -272,7 +301,7 @@ router.post('/:date', requireAuth, (req, res) => {
       .get(session.id);
 
     return {
-      passed: buildPassedMap(db, session.id),
+      passed: buildPassedMap(db, session.id, classId),
       updatedAt: updated.updated_at,
     };
   });

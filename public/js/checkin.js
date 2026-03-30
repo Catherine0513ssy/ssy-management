@@ -20,7 +20,7 @@ document.addEventListener('alpine:init', () => {
   Alpine.data('checkinTab', () => ({
     mode: 'word',               // 'word' | 'essay'
     round: 1,                   // 1 | 2
-    selectedDate: new Date().toISOString().split('T')[0],
+    selectedDate: new Date().toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' }).replace(/\//g, '-'),
     dates: [],                  // dates with existing sessions
     students: {},               // { '1': ['name0', 'name1', ...], '2': [...] }
     passed: {},                 // { '1': [idx, ...], '2': [idx, ...] }

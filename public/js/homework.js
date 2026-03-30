@@ -53,7 +53,7 @@ document.addEventListener('alpine:init', () => {
     previewImage: null,
     allDates: [],
     filteredDates: [],
-    selectedDate: new Date().toISOString().split('T')[0],
+    selectedDate: new Date().toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' }).replace(/\//g, '-'),
     searchText: '',
     newText: '',
     newImage: null,
@@ -151,7 +151,7 @@ document.addEventListener('alpine:init', () => {
       const month = this.calendarMonth;       // 0-indexed
       const firstDayOfWeek = new Date(year, month, 1).getDay();  // 0=Sun
       const daysInMonth = new Date(year, month + 1, 0).getDate();
-      const today = new Date().toISOString().split('T')[0];
+      const today = new Date().toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' }).replace(/\//g, '-');
 
       this.calendarDays = [];
 

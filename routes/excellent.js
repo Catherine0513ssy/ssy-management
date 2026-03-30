@@ -60,7 +60,7 @@ router.post('/', requireAuth, upload.single('image'), (req, res) => {
   const db = getDB();
   const classId = Number(class_id);
   const imagePath = req.file ? '/uploads/' + req.file.filename : null;
-  const today = new Date().toISOString().slice(0, 10);
+  const today = new Date().toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' }).replace(/\//g, '-');
 
   db.prepare(
     `INSERT INTO excellent_homework (class_id, student_name, image_path, date, note, created_at)
