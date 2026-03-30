@@ -10,6 +10,49 @@ const { getDB } = require('../services/db');
 const ROUND_POINTS = { 1: 2, 2: 1 };
 
 // ---------------------------------------------------------------------------
+// Build current class roster map: group_sort_order -> [student rows]
+// ---------------------------------------------------------------------------
+function getStudentsByGroup(db, classId) {
+  const groups = db
+    .prepare(
+      `SELECT id, sort_order FROM student_groups
+       WHERE class_id = ? ORDER BY sort_order ASC`
+    )
+    .all(classId);
+
+  const result = {};
+  for (const g of groups) {
+    const students = db
+      .prepare(
+        `SELECT id, name, sort_order FROM students
+         WHERE group_id = ? AND active = 1 ORDER BY sort_order ASC`
+      )
+      .all(g.id);
+    result[g.sort_order] = students;
+  }
+  return result;
+}
+
+// ---------------------------------------------------------------------------
+// Resolve legacy (student_index, group_index) to current student_id
+// ---------------------------------------------------------------------------
+function resolveLegacyStudentId(db, classId, groupIndex, studentIndex) {
+  const group = db
+    .prepare(
+      `SELECT id FROM student_groups WHERE class_id = ? AND sort_order = ?`
+    )
+    .get(classId, groupIndex);
+  if (!group) return null;
+
+  const student = db
+    .prepare(
+      `SELECT id FROM students WHERE group_id = ? AND active = 1 ORDER BY sort_order ASC LIMIT 1 OFFSET ?`
+    )
+    .get(group.id, studentIndex);
+  return student ? student.id : null;
+}
+
+// ---------------------------------------------------------------------------
 // GET /  — ranking for a class, sorted by total points descending
 // ---------------------------------------------------------------------------
 router.get('/', (req, res) => {
@@ -22,7 +65,6 @@ router.get('/', (req, res) => {
   const db = getDB();
   const classId = Number(class_id);
 
-  // Fetch all students for this class (with their group info)
   const students = db
     .prepare(
       `SELECT s.id, s.name, s.sort_order, s.group_id,
@@ -34,38 +76,44 @@ router.get('/', (req, res) => {
     )
     .all(classId);
 
-  // Calculate points from checkin records using student_id when available.
-  // For legacy records without student_id, fall back to (student_index, group_index).
-  const pointRows = db
+  const pointMap = new Map();
+
+  // 1) modern records with student_id
+  const modernRows = db
     .prepare(
-      `SELECT
-         COALESCE(r.student_id, (
-           SELECT s2.id FROM students s2
-           JOIN student_groups g2 ON s2.group_id = g2.id
-           WHERE s2.class_id = cs.class_id AND s2.active = 1
-             AND s2.sort_order = r.student_index
-             AND g2.sort_order = r.group_index
-           LIMIT 1
-         )) AS student_id,
-         SUM(CASE WHEN cs.round = 1 THEN 2
-                  WHEN cs.round = 2 THEN 1
-                  ELSE 0 END) AS points
+      `SELECT r.student_id,
+              SUM(CASE WHEN cs.round = 1 THEN 2
+                       WHEN cs.round = 2 THEN 1
+                       ELSE 0 END) AS points
        FROM checkin_records r
        JOIN checkin_sessions cs ON r.session_id = cs.id
-       WHERE cs.class_id = ? AND r.passed = 1
-       GROUP BY student_id`
+       WHERE cs.class_id = ? AND r.passed = 1 AND r.student_id IS NOT NULL
+       GROUP BY r.student_id`
     )
     .all(classId);
+  for (const row of modernRows) {
+    pointMap.set(row.student_id, (pointMap.get(row.student_id) || 0) + row.points);
+  }
 
-  // Build a lookup: student_id -> points
-  const pointMap = new Map();
-  for (const row of pointRows) {
-    if (row.student_id) {
-      pointMap.set(row.student_id, row.points);
+  // 2) legacy records without student_id – resolve dynamically
+  const legacyRows = db
+    .prepare(
+      `SELECT r.student_index, r.group_index,
+              CASE WHEN cs.round = 1 THEN 2
+                   WHEN cs.round = 2 THEN 1
+                   ELSE 0 END AS points
+       FROM checkin_records r
+       JOIN checkin_sessions cs ON r.session_id = cs.id
+       WHERE cs.class_id = ? AND r.passed = 1 AND r.student_id IS NULL`
+    )
+    .all(classId);
+  for (const row of legacyRows) {
+    const sid = resolveLegacyStudentId(db, classId, row.group_index, row.student_index);
+    if (sid) {
+      pointMap.set(sid, (pointMap.get(sid) || 0) + row.points);
     }
   }
 
-  // Merge students with their points
   const rankings = students.map((s) => ({
     name: s.name,
     group: s.group_name || '',
@@ -73,7 +121,6 @@ router.get('/', (req, res) => {
     points: pointMap.get(s.id) || 0,
   }));
 
-  // 返回原始数据，由前端按组分别排序和赋 rank
   return res.json({ rankings });
 });
 
@@ -90,7 +137,6 @@ router.get('/detail', (req, res) => {
   const db = getDB();
   const classId = Number(class_id);
 
-  // Resolve student_index to a stable student_id if possible
   let targetStudentId = null;
   if (student_index !== undefined) {
     const students = db
@@ -107,37 +153,49 @@ router.get('/detail', (req, res) => {
     }
   }
 
-  let query = `
-    SELECT cs.date, cs.type, cs.round,
-           r.student_index, r.group_index, r.passed, r.student_id
-    FROM checkin_records r
-    JOIN checkin_sessions cs ON r.session_id = cs.id
-    WHERE cs.class_id = ? AND r.passed = 1
-  `;
-  const params = [classId];
+  const details = [];
 
-  if (student_index !== undefined) {
-    if (targetStudentId) {
-      query += ' AND (r.student_id = ? OR (r.student_id IS NULL AND r.student_index = ?))';
-      params.push(targetStudentId, Number(student_index));
-    } else {
-      query += ' AND r.student_index = ?';
-      params.push(Number(student_index));
+  // Modern records
+  if (targetStudentId) {
+    const modernRows = db
+      .prepare(
+        `SELECT cs.date, cs.type, cs.round,
+                r.student_index, r.group_index, r.passed
+         FROM checkin_records r
+         JOIN checkin_sessions cs ON r.session_id = cs.id
+         WHERE cs.class_id = ? AND r.passed = 1 AND r.student_id = ?
+         ORDER BY cs.date DESC, cs.type ASC, cs.round ASC`
+      )
+      .all(classId, targetStudentId);
+    for (const r of modernRows) {
+      details.push({
+        date: r.date, type: r.type, round: r.round,
+        student_index: r.student_index, group_index: r.group_index,
+        points: ROUND_POINTS[r.round] || 0,
+      });
     }
   }
 
-  query += ' ORDER BY cs.date DESC, cs.type ASC, cs.round ASC';
-
-  const rows = db.prepare(query).all(...params);
-
-  const details = rows.map((r) => ({
-    date: r.date,
-    type: r.type,
-    round: r.round,
-    student_index: r.student_index,
-    group_index: r.group_index,
-    points: ROUND_POINTS[r.round] || 0,
-  }));
+  // Legacy records without student_id (resolve dynamically and filter)
+  const legacyRows = db
+    .prepare(
+      `SELECT cs.date, cs.type, cs.round,
+              r.student_index, r.group_index, r.passed
+       FROM checkin_records r
+       JOIN checkin_sessions cs ON r.session_id = cs.id
+       WHERE cs.class_id = ? AND r.passed = 1 AND r.student_id IS NULL
+       ORDER BY cs.date DESC, cs.type ASC, cs.round ASC`
+    )
+    .all(classId);
+  for (const r of legacyRows) {
+    const sid = resolveLegacyStudentId(db, classId, r.group_index, r.student_index);
+    if (sid && targetStudentId && sid !== targetStudentId) continue;
+    details.push({
+      date: r.date, type: r.type, round: r.round,
+      student_index: r.student_index, group_index: r.group_index,
+      points: ROUND_POINTS[r.round] || 0,
+    });
+  }
 
   return res.json({ details });
 });
