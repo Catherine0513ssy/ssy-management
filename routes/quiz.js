@@ -188,4 +188,66 @@ router.get('/all', (req, res) => {
   });
 });
 
+// ---------------------------------------------------------------------------
+// POST /log-complete - record that a quiz was actually completed on a date
+// ---------------------------------------------------------------------------
+router.post('/log-complete', (req, res) => {
+  const { class_id, date, source, word_ids } = req.body;
+  if (!date || !source || !Array.isArray(word_ids)) {
+    return res.status(400).json({ error: 'date, source, word_ids required' });
+  }
+  const classId = Number(class_id || 1);
+  const db = getDB();
+  db.prepare(`
+    INSERT INTO quiz_history_log (class_id, log_date, source, word_ids)
+    VALUES (?, ?, ?, ?)
+    ON CONFLICT(class_id, log_date, source) DO UPDATE SET
+      word_ids = excluded.word_ids,
+      created_at = datetime('now')
+  `).run(classId, date, source, JSON.stringify(word_ids));
+  return res.json({ success: true });
+});
+
+// ---------------------------------------------------------------------------
+// GET /history — return quiz words for a specific date (only if completed)
+// ---------------------------------------------------------------------------
+router.get('/history', (req, res) => {
+  const { date, class_id } = req.query;
+  if (!date) {
+    return res.status(400).json({ error: 'date is required' });
+  }
+  const classId = Number(class_id || 1);
+  const db = getDB();
+
+  // Only return words for dates that were actually completed
+  const logs = db.prepare('SELECT * FROM quiz_history_log WHERE class_id = ? AND log_date = ?').all(classId, date);
+  const dailyLog = logs.find(l => l.source === 'daily');
+  const generatedLog = logs.find(l => l.source === 'generated');
+
+  let dailyWords = [];
+  if (dailyLog && dailyLog.word_ids) {
+    const dailyIds = JSON.parse(dailyLog.word_ids);
+    if (dailyIds.length > 0) {
+      const placeholders = dailyIds.map(() => '?').join(', ');
+      dailyWords = db.prepare(`SELECT * FROM vocabulary WHERE id IN (${placeholders})`).all(...dailyIds);
+    }
+  }
+
+  let generatedWords = [];
+  if (generatedLog && generatedLog.word_ids) {
+    const genIds = JSON.parse(generatedLog.word_ids);
+    if (genIds.length > 0) {
+      const placeholders = genIds.map(() => '?').join(', ');
+      generatedWords = db.prepare(`SELECT * FROM vocabulary WHERE id IN (${placeholders})`).all(...genIds);
+    }
+  }
+
+  return res.json({
+    date,
+    daily: { words: dailyWords, count: dailyWords.length },
+    generated: { words: generatedWords, count: generatedWords.length },
+  });
+});
+
 module.exports = router;
+

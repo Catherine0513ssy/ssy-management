@@ -13,13 +13,18 @@ document.addEventListener('alpine:init', () => {
       { id: 'checkin',   label: '打卡',     icon: '\u2705' },
       { id: 'ranking',   label: '排名',     icon: '\u{1F3C6}' },
       { id: 'vocabulary', label: '词汇',    icon: '\u{1F4D6}' },
+      { id: 'choicefill', label: '选词填空', icon: '\u{1F4D6}' },
       { id: 'quiz',       label: '默写',    icon: '\u{1F3AF}' },
+      { id: 'wordgame',   label: '英语游戏', icon: '\u{1F36C}' },
       { id: 'essay',      label: '作文',    icon: '✍️' },
     ],
     isAdmin: false,
     sidebarOpen: false,
     toasts: [],
     currentDate: new Date().toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' }).replace(/\//g, '-'),
+    loginModalOpen: false,
+    loginPassword: '',
+    showLoginPassword: false,
 
     // Init
     async init() {
@@ -47,16 +52,34 @@ document.addEventListener('alpine:init', () => {
     },
 
     // Auth
-    async login() {
-      const pw = prompt('请输入管理密码:');
+    login() {
+      console.log('login button clicked');
+      this.loginPassword = '';
+      this.showLoginPassword = false;
+      this.loginModalOpen = true;
+      this.$nextTick(() => {
+        const el = document.getElementById('loginPasswordInput');
+        if (el) el.focus();
+      });
+    },
+    closeLoginModal() {
+      this.loginModalOpen = false;
+      this.loginPassword = '';
+      this.showLoginPassword = false;
+    },
+    async submitLogin() {
+      const pw = this.loginPassword;
       if (!pw) return;
       try {
         const { token } = await API.login(pw);
         API.token = token;
         this.isAdmin = true;
+        this.loginModalOpen = false;
+        this.loginPassword = '';
         this.toast('登录成功', 'success');
       } catch (e) {
         this.toast(e.message, 'error');
+        this.loginPassword = '';
       }
     },
     async logout() {

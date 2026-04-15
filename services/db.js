@@ -236,6 +236,16 @@ CREATE INDEX IF NOT EXISTS idx_auth_tokens_expires ON auth_tokens(expires_at);
 CREATE INDEX IF NOT EXISTS idx_login_attempts_ip ON login_attempts(ip, attempted_at);
 CREATE INDEX IF NOT EXISTS idx_essay_tasks_class ON essay_tasks(class_id);
 CREATE INDEX IF NOT EXISTS idx_essay_subs_task ON essay_submissions(task_id);
+
+CREATE TABLE IF NOT EXISTS quiz_history_log (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  class_id INTEGER NOT NULL,
+  log_date TEXT NOT NULL,
+  source TEXT NOT NULL CHECK(source IN ('daily', 'generated')),
+  word_ids TEXT NOT NULL DEFAULT '[]',
+  created_at TEXT DEFAULT (datetime('now')),
+  UNIQUE(class_id, log_date, source)
+);
 `;
 
 function initDB(dbPath) {

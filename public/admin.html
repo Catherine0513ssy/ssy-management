@@ -55,6 +55,11 @@
       .info-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
+
+<style>
+.modal-hidden { display: none !important; }
+.modal-active { display: flex !important; align-items: center; justify-content: center; }
+</style>
 </head>
 
 <body x-data="adminApp()" x-init="init()" x-cloak>
@@ -125,7 +130,34 @@
                 </select>
               </div>
               <button class="btn btn-primary btn-sm" @click="showAddGroup = true">+ 新增分组</button>
-              <button class="btn btn-ghost btn-sm" @click="showBatchImport = true">📥 批量导入</button>
+              <button class="btn btn-ghost btn-sm" @click="showBatchImport = !showBatchImport">📥 批量导入</button>
+            </div>
+
+            <!-- Inline Batch Import Form -->
+            <div x-show="showBatchImport" style="background: #f0fdf4; padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px solid #86efac;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <strong>批量导入学生</strong>
+                <button @click="showBatchImport = false" style="background: none; border: none; font-size: 18px; cursor: pointer;">&times;</button>
+              </div>
+              <div style="margin-bottom: 10px;">
+                <label style="display: block; margin-bottom: 5px; font-size: 14px;">选择分组（可选）</label>
+                <select x-model="batchGroupId" style="width: 200px; padding: 6px; border: 1px solid #ddd; border-radius: 4px;">
+                  <option value="">-- 不分组 --</option>
+                  <template x-for="g in groups" :key="'bi-' + g.id">
+                    <option :value="g.id" x-text="g.name"></option>
+                  </template>
+                </select>
+              </div>
+              <div style="margin-bottom: 10px;">
+                <label style="display: block; margin-bottom: 5px; font-size: 14px;">学生姓名（每行一个）</label>
+                <textarea x-model="batchNames" rows="5" placeholder="张三
+李四
+王五" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; resize: vertical;"></textarea>
+              </div>
+              <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button @click="showBatchImport = false" style="padding: 8px 16px; border: 1px solid #ddd; background: #f5f5f5; border-radius: 4px; cursor: pointer;">取消</button>
+                <button @click="doBatchImport()" :disabled="!batchNames.trim()" style="padding: 8px 16px; border: none; background: #22c55e; color: white; border-radius: 4px; cursor: pointer;">导入</button>
+              </div>
             </div>
 
             <!-- Add Group inline -->
@@ -137,43 +169,38 @@
               <button class="btn btn-ghost btn-sm" @click="showAddGroup = false; newGroupName = ''">取消</button>
             </div>
 
-            <!-- Groups + Students -->
-            <template x-for="group in groups" :key="group.id">
-              <div class="group-block">
-                <div class="group-header">
-                  <h4>
-                    <span x-text="group.name"></span>
-                    <span class="badge" x-text="group.students.length + '人'" style="margin-left:var(--space-2);"></span>
-                  </h4>
-                  <div style="display:flex;gap:var(--space-2);">
-                    <button class="btn btn-ghost btn-sm" @click="renameGroup(group)" title="重命名">✏️</button>
-                    <button class="btn btn-danger btn-sm" @click="deleteGroup(group.id)" title="删除分组">🗑️</button>
-                  </div>
-                </div>
+            <!-- All Students List -->
+            <div style="margin-top:20px;">
+              <h4 style="margin:0 0 15px 0;">学生列表（共 <span x-text="totalStudents"></span> 人）</h4>
 
-                <template x-for="stu in group.students" :key="stu.id">
-                  <div class="student-row">
-                    <span class="name" x-text="stu.name"></span>
-                    <button class="btn btn-ghost btn-sm" @click="editStudent(stu)" title="编辑">✏️</button>
-                    <label class="toggle-switch" :title="stu.active ? '点击停用' : '点击启用'">
-                      <input type="checkbox" :checked="stu.active" @change="toggleStudentActive(stu)">
-                      <span class="toggle-track"></span>
-                    </label>
+              <div x-show="allStudents.length === 0" style="text-align:center;padding:40px;color:#999;background:#f8fafc;border-radius:8px;">
+                暂无学生
+              </div>
+
+              <div style="display:grid;gap:8px;">
+                <template x-for="stu in allStudents" :key="stu.id">
+                  <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
+                    <span style="font-weight:500;min-width:100px;font-size:15px;" x-text="stu.name"></span>
+
+                    <span x-show="stu.group_name" style="background:#dbeafe;padding:4px 10px;border-radius:4px;font-size:12px;color:#1e40af;">
+                      <span x-text="stu.group_name"></span>
+                    </span>
+                    <span x-show="!stu.group_name" style="color:#94a3b8;font-size:12px;background:#f1f5f9;padding:4px 10px;border-radius:4px;">未分组</span>
+
+                    <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
+                      <select class="form-select" @change="moveToGroup(stu, $event.target.value); $event.target.value='';"
+                              style="width:120px;font-size:13px;padding:6px;">
+                        <option value="" selected disabled>移动分组...</option>
+                        <option value="">-- 不分组 --</option>
+                        <template x-for="g in groups" :key="'move-' + stu.id + '-' + g.id">
+                          <option :value="g.id" x-text="g.name"></option>
+                        </template>
+                      </select>
+                      <button class="btn btn-danger btn-xs" @click="deleteStudent(stu.id)" style="padding:6px 12px;">删除</button>
+                    </div>
                   </div>
                 </template>
-
-                <!-- Add student to group -->
-                <div class="form-row" style="margin-top:var(--space-3);">
-                  <input type="text" class="form-input" :placeholder="'添加学生到' + group.name"
-                         x-model="group._newName" @keydown.enter="addStudent(group)">
-                  <button class="btn btn-success btn-sm" @click="addStudent(group)">添加</button>
-                </div>
               </div>
-            </template>
-
-            <div class="empty-state" x-show="groups.length === 0">
-              <span class="empty-icon">👥</span>
-              <p class="empty-text">暂无分组数据</p>
             </div>
           </div>
         </section>
@@ -402,38 +429,6 @@
       </div>
     </template>
 
-    <!-- Batch Import Modal -->
-    <div class="modal-overlay" x-show="showBatchImport" x-transition.opacity
-         @click.self="showBatchImport = false" @keydown.escape.window="showBatchImport = false">
-      <div class="modal card" x-show="showBatchImport" x-transition style="max-width:32rem;">
-        <div class="modal-header">
-          <h3>📥 批量导入学生</h3>
-          <button class="btn btn-icon btn-sm" @click="showBatchImport = false">✕</button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label class="form-label">选择目标分组</label>
-            <select class="form-select" x-model="batchGroupId">
-              <template x-for="g in groups" :key="'bi-' + g.id">
-                <option :value="g.id" x-text="g.name"></option>
-              </template>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">粘贴学生姓名（每行一个）</label>
-            <textarea class="form-textarea" rows="8" x-model="batchNames"
-                      placeholder="张三&#10;李四&#10;王五"></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-ghost btn-sm" @click="showBatchImport = false">取消</button>
-          <button class="btn btn-primary btn-sm" @click="doBatchImport()" :disabled="!batchNames.trim()">
-            导入
-          </button>
-        </div>
-      </div>
-    </div>
-
     <!-- Edit Student Modal -->
     <div class="modal-overlay" x-show="showEditStudent" x-transition.opacity
          @click.self="showEditStudent = false" @keydown.escape.window="showEditStudent = false">
@@ -505,6 +500,8 @@
       showBatchImport: false,
       batchGroupId: '',
       batchNames: '',
+      allStudents: [],
+      totalStudents: 0,
       showEditStudent: false,
       editingStudent: { id: null, name: '', group_id: '' },
 
@@ -546,6 +543,11 @@
           this.authenticated = true;
           this.loadAll();
         }
+        // Listen for logout events (e.g., 401 errors)
+        window.addEventListener('ssy:logout', () => {
+          this.authenticated = false;
+          this.toast('登录已过期，请重新登录', 'error');
+        });
       },
 
       // ── Auth ──
@@ -583,14 +585,73 @@
       },
 
       // ── Students ──
-      async loadStudents() {
+      openBatchImport() {
+        console.log('[DEBUG] Opening batch import modal');
+        this.showBatchImport = true;
+        console.log('[DEBUG] showBatchImport set to:', this.showBatchImport);
+        // Prevent any automatic closing
+        setTimeout(() => {
+          console.log('[DEBUG] After 500ms, showBatchImport is:', this.showBatchImport);
+        }, 500);
+      },
+
+      async loadGroups() {
         try {
-          const data = await API.get(`/api/admin/students?class_id=${this.classId}`);
-          this.groups = (data.groups || []).map(g => ({ ...g, _newName: '' }));
+          const groups = await API.get(`/api/admin/groups?class_id=${this.classId}`);
+          this.groups = (groups || []).map(g => ({ ...g, _newName: '' }));
           if (this.groups.length > 0 && !this.batchGroupId) {
             this.batchGroupId = this.groups[0].id;
           }
-        } catch (e) { this.toast('加载学生失败: ' + e.message, 'error'); }
+        } catch (e) { console.error('loadGroups:', e); }
+      },
+
+      async loadStudents() {
+        try {
+          const data = await API.get(`/api/admin/students?class_id=${this.classId}`);
+          // API returns {grouped: {groupName: [students], ...}}
+          const grouped = data.grouped || {};
+          
+          // Extract groups from grouped keys
+          this.groups = Object.keys(grouped).map(name => ({ 
+            id: name, 
+            name, 
+            _newName: '' 
+          }));
+          if (this.groups.length > 0 && !this.batchGroupId) {
+            this.batchGroupId = this.groups[0].id;
+          }
+          
+          // Build flat student list
+          const students = [];
+          for (const [groupName, groupStudents] of Object.entries(grouped)) {
+            for (const s of groupStudents || []) {
+              students.push({ ...s, group_name: groupName === 'δ����' ? null : groupName });
+            }
+          }
+          students.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
+          this.allStudents = students;
+          this.totalStudents = students.length;
+        } catch (e) { this.toast('加载学生失败', 'error'); }
+      },
+
+      async deleteStudent(id) {
+        if (!confirm('确定删除这名学生？')) return;
+        try {
+          await API.del(`/api/admin/students/${id}`);
+          this.toast('学生已删除', 'success');
+          this.loadStudents();
+        } catch (e) { this.toast('删除失败', 'error'); }
+      },
+
+      async moveToGroup(stu, groupId) {
+        try {
+          await API.put(`/api/admin/students/${stu.id}`, {
+            name: stu.name,
+            group_id: groupId ? parseInt(groupId) : null
+          });
+          this.toast('分组已更新', 'success');
+          this.loadStudents();
+        } catch (e) { this.toast('移动失败', 'error'); }
       },
 
       async addGroup() {
@@ -662,11 +723,9 @@
         const names = this.batchNames.split('\n').map(n => n.trim()).filter(Boolean);
         if (names.length === 0) return;
         try {
-          await API.post('/api/admin/students/batch', {
-            class_id: parseInt(this.classId),
-            group_id: parseInt(this.batchGroupId),
-            names,
-          });
+          const payload = { class_id: parseInt(this.classId), names };
+          if (this.batchGroupId) payload.group_id = parseInt(this.batchGroupId);
+          await API.post('/api/admin/students/batch', payload);
           this.batchNames = '';
           this.showBatchImport = false;
           this.toast(`已导入 ${names.length} 名学生`, 'success');

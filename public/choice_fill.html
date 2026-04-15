@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>选词填空 - 株洲新高考</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #666;
+      font-size: 24px;
+      margin-bottom: 25px;
+    }
+    .date-info {
+      text-align: center;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+    }
+    .date-info.warning {
+      background: linear-gradient(135deg, #f093fb, #f5576c);
+    }
+    .passage {
+      background: #f8f9fa;
+      padding: 25px;
+      border-radius: 12px;
+      line-height: 2;
+      font-size: 24px;
+      margin-bottom: 25px;
+      border-left: 4px solid #667eea;
+    }
+    .blank {
+      display: inline-block;
+      min-width: 80px;
+      border-bottom: 2px solid #667eea;
+      margin: 0 4px;
+      text-align: center;
+      font-weight: bold;
+      color: #667eea;
+    }
+    .options-box {
+      background: #fff3cd;
+      border: 2px dashed #ffc107;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+    }
+    .options-title {
+      font-weight: bold;
+      color: #856404;
+      margin-bottom: 12px;
+      font-size: 24px;
+    }
+    .options-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .option-item {
+      background: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 2px solid #ffc107;
+      font-weight: 600;
+      color: #333;
+    }
+    .answers-section {
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    .answers-title {
+      font-weight: bold;
+      color: #155724;
+      margin-bottom: 12px;
+      font-size: 18px;
+    }
+    .answer-item {
+      display: flex;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px dashed #c3e6cb;
+    }
+    .answer-item:last-child {
+      border-bottom: none;
+    }
+    .answer-num {
+      font-weight: bold;
+      color: #155724;
+      width: 50px;
+    }
+    .answer-word {
+      font-weight: bold;
+      color: #28a745;
+      font-size: 18px;
+      margin-right: 15px;
+    }
+    .explanation {
+      color: #155724;
+      font-size: 24px;
+    }
+    .toggle-btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 24px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: transform 0.2s;
+    }
+    .toggle-btn:hover {
+      transform: translateY(-2px);
+    }
+    .admin-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .admin-link a {
+      color: #667eea;
+      text-decoration: none;
+      font-size: 24px;
+    }
+    .admin-link a:hover {
+      text-decoration: underline;
+    }
+    .loading {
+      text-align: center;
+      padding: 60px;
+      color: #666;
+    }
+    .error {
+      text-align: center;
+      padding: 40px;
+      color: #dc3545;
+    }
+    .error button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" x-data="choiceFillApp()" x-init="init()">
+    <h1>📚 选词填空</h1>
+    <p class="subtitle">株洲新高考题型：从方框中选择适当的词并用其正确形式填空</p>
+
+    <!-- 日期信息 -->
+    <div class="date-info" :class="{ 'warning': !question?.is_today }">
+      <div x-text="today"></div>
+      <div x-show="question?.is_today" style="font-size: 24px; margin-top: 5px;">今日练习</div>
+      <div x-show="!question?.is_today && question" style="font-size: 24px; margin-top: 5px;">
+        今日暂无新题，显示 <span x-text="question?.scheduled_date"></span> 的题目
+      </div>
+    </div>
+
+    <!-- 加载中 -->
+    <div x-show="loading" class="loading">
+      <div>加载中...</div>
+    </div>
+
+    <!-- 错误提示 -->
+    <div x-show="error" class="error">
+      <div x-text="error"></div>
+      <button @click="loadQuestion()">重新加载</button>
+    </div>
+
+    <!-- 题目内容 -->
+    <div x-show="!loading && !error && question">
+      <!-- 文章 -->
+      <div class="passage" x-html="formatPassage(question?.passage)"></div>
+
+      <!-- 选项 -->
+      <div class="options-box">
+        <div class="options-title">📋 方框中的词（请选用适当形式）：</div>
+        <div class="options-list">
+          <template x-for="option in question?.options" :key="option">
+            <span class="option-item" x-text="option"></span>
+          </template>
+        </div>
+      </div>
+
+      <!-- 显示答案按钮 -->
+      <button class="toggle-btn" @click="showAnswers = !showAnswers">
+        <span x-show="!showAnswers">👀 查看答案与详解</span>
+        <span x-show="showAnswers">🙈 隐藏答案</span>
+      </button>
+
+      <!-- 答案与详解 -->
+      <div x-show="showAnswers" class="answers-section">
+        <div class="answers-title">✅ 参考答案与详解</div>
+        <template x-for="(answer, num) in question?.answers" :key="num">
+          <div class="answer-item">
+            <span class="answer-num" x-text="num + '.'"></span>
+            <span class="answer-word" x-text="answer"></span>
+            <span class="explanation" x-text="getExplanation(num)"></span>
+          </div>
+        </template>
+
+        <div style="margin-top: 20px; padding-top: 15px; border-top: 1px dashed #c3e6cb;">
+          <div style="font-weight: bold; color: #155724; margin-bottom: 8px;">📝 完整解析</div>
+          <div style="color: #155724; font-size: 24px; line-height: 1.8; white-space: pre-line;" x-text="question?.explanations"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 管理员入口 -->
+    <div class="admin-link">
+      <a href="/choice_fill_admin.html">➕ 添加/管理题目</a>
+    </div>
+  </div>
+
+  <script>
+    function choiceFillApp() {
+      return {
+        today: new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' }),
+        question: null,
+        loading: true,
+        error: null,
+        showAnswers: false,
+
+        async init() {
+          await this.loadQuestion();
+        },
+
+        async loadQuestion() {
+          this.loading = true;
+          this.error = null;
+          try {
+            const res = await fetch('/api/choice-fill/daily');
+            const data = await res.json();
+            if (res.ok) {
+              this.question = data;
+              // 解析explanations为对象
+              if (data.explanations) {
+                this.question.explanationMap = this.parseExplanations(data.explanations);
+              }
+            } else if (data.error === 'NO_QUESTION_AVAILABLE') {
+              this.error = data.message;
+            } else {
+              this.error = data.error || '加载失败';
+            }
+          } catch (e) {
+            this.error = '网络错误，请稍后重试';
+          } finally {
+            this.loading = false;
+          }
+        },
+
+        formatPassage(passage) {
+          if (!passage) return '';
+          // 将 ____ 替换为带样式的空白
+          return passage.replace(/(\d+)\.?\s*____/g, '<span class="blank">$1</span>');
+        },
+
+        parseExplanations(exps) {
+          const map = {};
+          if (!exps) return map;
+          exps.split('|').forEach(item => {
+            const parts = item.split(':');
+            if (parts.length >= 2) {
+              map[parts[0]] = parts.slice(1).join(':');
+            }
+          });
+          return map;
+        },
+
+        getExplanation(num) {
+          if (this.question?.explanationMap && this.question.explanationMap[num]) {
+            return this.question.explanationMap[num];
+          }
+          return '';
+        }
+      };
+    }
+  </script>
+</body>
+</html>

@@ -33,16 +33,31 @@ function getAllDates(db, classId) {
 }
 
 // ---------------------------------------------------------------------------
+// Helper: normalize date format to YYYY-MM-DD (matching database format)
+// ---------------------------------------------------------------------------
+function normalizeDate(dateStr) {
+  if (!dateStr) return dateStr;
+  // Handle both YYYY-MM-DD and YYYY-M-D formats
+  const match = dateStr.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (!match) return dateStr;
+  const [, year, month, day] = match;
+  // Return in YYYY-MM-DD format (with leading zeros)
+  return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+}
+
+// ---------------------------------------------------------------------------
 // Helper: fetch homework items for a class + date
 // ---------------------------------------------------------------------------
 function getItems(db, classId, date) {
+  // Normalize date to match database format
+  const normalizedDate = normalizeDate(date);
   return db
     .prepare(
       `SELECT * FROM homework_items
        WHERE class_id = ? AND date = ?
        ORDER BY sort_order ASC, id ASC`
     )
-    .all(classId, date);
+    .all(classId, normalizedDate);
 }
 
 // ---------------------------------------------------------------------------
@@ -109,6 +124,9 @@ router.post('/', requireAuth, upload.single('image'), (req, res) => {
   const sanitizedText = sanitizeText(text);
   const imagePath = req.file ? `/uploads/${req.file.filename}` : (req.body.image || null);
 
+  // Normalize date for consistency
+  const normalizedDate = normalizeDate(date);
+  
   // Determine next sort_order for this class + date
   const maxRow = db
     .prepare(
@@ -116,16 +134,16 @@ router.post('/', requireAuth, upload.single('image'), (req, res) => {
        FROM homework_items
        WHERE class_id = ? AND date = ?`
     )
-    .get(classId, date);
+    .get(classId, normalizedDate);
   const nextSort = (maxRow && maxRow.max_sort != null ? maxRow.max_sort : -1) + 1;
 
   db.prepare(
     `INSERT INTO homework_items (class_id, date, text, image, sort_order, created_at)
      VALUES (?, ?, ?, ?, ?, datetime('now'))`
-  ).run(classId, date, sanitizedText, imagePath, nextSort);
+  ).run(classId, normalizedDate, sanitizedText, imagePath, nextSort);
 
   // Return updated items for that date
-  const items = getItems(db, classId, date);
+  const items = getItems(db, classId, normalizedDate);
   const allDates = getAllDates(db, classId);
 
   return res.json({ items, allDates });

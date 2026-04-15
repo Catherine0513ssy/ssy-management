@@ -1,0 +1,3934 @@
+{
+  "version": "人教版初中英语（自定义）",
+  "total": 491,
+  "words": {
+    "ride a bike": {
+      "en": "ride a bike",
+      "phonetic": "",
+      "meaning": "骑自行车",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "other"
+    },
+    "sixty": {
+      "en": "sixty",
+      "phonetic": "/ˈsɪksti/",
+      "meaning": "num. 六十",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "numeral"
+    },
+    "seventy": {
+      "en": "seventy",
+      "phonetic": "/ˈsevənti/",
+      "meaning": "num. 七十",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "numeral"
+    },
+    "eighty": {
+      "en": "eighty",
+      "phonetic": "/ˈeɪti/",
+      "meaning": "num. 八十",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "numeral"
+    },
+    "ninety": {
+      "en": "ninety",
+      "phonetic": "/ˈnaɪnti/",
+      "meaning": "num. 九十",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "numeral"
+    },
+    "hundred": {
+      "en": "hundred",
+      "phonetic": "/ˈhʌndrəd/",
+      "meaning": "num. 一百",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "numeral"
+    },
+    "minute": {
+      "en": "minute",
+      "phonetic": "/ˈmɪnɪt/",
+      "meaning": "n. 分钟",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "noun"
+    },
+    "far": {
+      "en": "far",
+      "phonetic": "/fɑː(r)/",
+      "meaning": "adv. & adj. 远；远的",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "adverb"
+    },
+    "kilometer": {
+      "en": "kilometer",
+      "phonetic": "/ˈkɪləmiːtə(r)/, /kɪˈlɑːmɪtər/",
+      "meaning": "n. 千米；公里",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "noun"
+    },
+    "new": {
+      "en": "new",
+      "phonetic": "/njuː/, /nuː/",
+      "meaning": "adj. 新的；刚出现的",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "adjective"
+    },
+    "every": {
+      "en": "every",
+      "phonetic": "/ˈevri/",
+      "meaning": "adj. 每一；每个",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "adjective"
+    },
+    "every day": {
+      "en": "every day",
+      "phonetic": "",
+      "meaning": "每天",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "other"
+    },
+    "by": {
+      "en": "by",
+      "phonetic": "/baɪ/",
+      "meaning": "prep. (表示方式) 乘（交通工具）",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "preposition"
+    },
+    "by bike": {
+      "en": "by bike",
+      "phonetic": "",
+      "meaning": "骑自行车",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "other"
+    },
+    "drive": {
+      "en": "drive",
+      "phonetic": "/draɪv/",
+      "meaning": "v. 开车",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "verb"
+    },
+    "car": {
+      "en": "car",
+      "phonetic": "/kɑː(r)/",
+      "meaning": "n. 小汽车；轿车",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "noun"
+    },
+    "live": {
+      "en": "live",
+      "phonetic": "/lɪv/",
+      "meaning": "v. 居住；生活",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "verb"
+    },
+    "stop": {
+      "en": "stop",
+      "phonetic": "/stɒp/, /stɑːp/",
+      "meaning": "n. 车站；停止",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "noun"
+    },
+    "think of": {
+      "en": "think of",
+      "phonetic": "",
+      "meaning": "认为；想起",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "other"
+    },
+    "cross": {
+      "en": "cross",
+      "phonetic": "/krɒs/, /krɔːs/",
+      "meaning": "v. 横过；越过",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "verb"
+    },
+    "river": {
+      "en": "river",
+      "phonetic": "/ˈrɪvə(r)/",
+      "meaning": "n. 河；江",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "noun"
+    },
+    "many": {
+      "en": "many",
+      "phonetic": "/ˈmeni/",
+      "meaning": "adj. & pron. 许多",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "adjective"
+    },
+    "village": {
+      "en": "village",
+      "phonetic": "/ˈvɪlɪdʒ/",
+      "meaning": "n. 村庄；村镇",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "noun"
+    },
+    "between": {
+      "en": "between",
+      "phonetic": "/bɪˈtwiːn/",
+      "meaning": "prep. 介于……之间",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "preposition"
+    },
+    "between ... and ...": {
+      "en": "between ... and ...",
+      "phonetic": "",
+      "meaning": "在……和……之间",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "other"
+    },
+    "bridge": {
+      "en": "bridge",
+      "phonetic": "/brɪdʒ/",
+      "meaning": "n. 桥",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "noun"
+    },
+    "boat": {
+      "en": "boat",
+      "phonetic": "/bəʊt/",
+      "meaning": "n. 小船",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "noun"
+    },
+    "ropeway": {
+      "en": "ropeway",
+      "phonetic": "/ˈrəʊpweɪ/",
+      "meaning": "n. 索道",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "noun"
+    },
+    "afraid": {
+      "en": "afraid",
+      "phonetic": "/əˈfreɪd/",
+      "meaning": "adj. 害怕；畏惧",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "adjective"
+    },
+    "like": {
+      "en": "like",
+      "phonetic": "/laɪk/",
+      "meaning": "prep. 像；怎么样",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "preposition"
+    },
+    "villager": {
+      "en": "villager",
+      "phonetic": "/ˈvɪlɪdʒə(r)/",
+      "meaning": "n. 村民",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "noun"
+    },
+    "leave": {
+      "en": "leave",
+      "phonetic": "/liːv/",
+      "meaning": "v. 离开；留下",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "verb"
+    },
+    "dream": {
+      "en": "dream",
+      "phonetic": "/driːm/",
+      "meaning": "n. 梦想；睡梦 v. 做梦",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "noun"
+    },
+    "true": {
+      "en": "true",
+      "phonetic": "/truː/",
+      "meaning": "adj. 真的；符合事实的",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "adjective"
+    },
+    "come true": {
+      "en": "come true",
+      "phonetic": "",
+      "meaning": "实现；成为现实",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "other"
+    },
+    "rule": {
+      "en": "rule",
+      "phonetic": "/ruːl/",
+      "meaning": "n. 规则；规章",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "noun"
+    },
+    "arrive": {
+      "en": "arrive",
+      "phonetic": "/əˈraɪv/",
+      "meaning": "v. 到达",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "verb"
+    },
+    "(be) on time": {
+      "en": "(be) on time",
+      "phonetic": "",
+      "meaning": "准时",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "other"
+    },
+    "hallway": {
+      "en": "hallway",
+      "phonetic": "/ˈhɔːlweɪ/",
+      "meaning": "n. 走廊；过道",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "noun"
+    },
+    "hall": {
+      "en": "hall",
+      "phonetic": "/hɔːl/",
+      "meaning": "n. 大厅；礼堂",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "noun"
+    },
+    "dining hall": {
+      "en": "dining hall",
+      "phonetic": "",
+      "meaning": "餐厅",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "other"
+    },
+    "listen": {
+      "en": "listen",
+      "phonetic": "/ˈlɪsn/",
+      "meaning": "v. 听；倾听",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "verb"
+    },
+    "listen to ...": {
+      "en": "listen to ...",
+      "phonetic": "",
+      "meaning": "听……",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "other"
+    },
+    "fight": {
+      "en": "fight",
+      "phonetic": "/faɪt/",
+      "meaning": "v. & n. 打架；战斗",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "verb"
+    },
+    "sorry": {
+      "en": "sorry",
+      "phonetic": "/ˈsɒri/, /ˈsɑːri/",
+      "meaning": "adj. 抱歉的；难过的；惋惜的",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "adjective"
+    },
+    "outside": {
+      "en": "outside",
+      "phonetic": "/ˌaʊtˈsaɪd/",
+      "meaning": "adv. 在外面 adj. 外面的",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "adverb"
+    },
+    "wear": {
+      "en": "wear",
+      "phonetic": "/weə(r)/, /wer/",
+      "meaning": "v. 穿；戴",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "verb"
+    },
+    "important": {
+      "en": "important",
+      "phonetic": "/ɪmˈpɔː(r)tnt/",
+      "meaning": "adj. 重要的",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "adjective"
+    },
+    "bring": {
+      "en": "bring",
+      "phonetic": "/brɪŋ/",
+      "meaning": "v. 带来；取来",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "verb"
+    },
+    "have to": {
+      "en": "have to",
+      "phonetic": "",
+      "meaning": "必须；不得不",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "other"
+    },
+    "uniform": {
+      "en": "uniform",
+      "phonetic": "/ˈjuːnɪfɔː(r)m/",
+      "meaning": "n. 校服；制服",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "noun"
+    },
+    "quiet": {
+      "en": "quiet",
+      "phonetic": "/ˈkwaɪət/",
+      "meaning": "adj. 安静的",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "adjective"
+    },
+    "out": {
+      "en": "out",
+      "phonetic": "/aʊt/",
+      "meaning": "adv. 外出",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "adverb"
+    },
+    "go out": {
+      "en": "go out",
+      "phonetic": "",
+      "meaning": "外出（娱乐）",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "other"
+    },
+    "year": {
+      "en": "year",
+      "phonetic": "/jɪə(r)/, /jɪr/",
+      "meaning": "n. 年；岁",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "noun"
+    },
+    "guitar": {
+      "en": "guitar",
+      "phonetic": "/ɡɪˈtɑː(r)/",
+      "meaning": "n. 吉他",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "noun"
+    },
+    "sing": {
+      "en": "sing",
+      "phonetic": "/sɪŋ/",
+      "meaning": "v. 唱歌",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "verb"
+    },
+    "swim": {
+      "en": "swim",
+      "phonetic": "/swɪm/",
+      "meaning": "v. & n. 游泳",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "verb"
+    },
+    "dance": {
+      "en": "dance",
+      "phonetic": "/dɑːns/, /dæns/",
+      "meaning": "v. 跳舞 n. 舞蹈",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "verb"
+    },
+    "draw": {
+      "en": "draw",
+      "phonetic": "/drɔː/",
+      "meaning": "v. 画",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "verb"
+    },
+    "chess": {
+      "en": "chess",
+      "phonetic": "/tʃes/",
+      "meaning": "n. 国际象棋",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "noun"
+    },
+    "play chess": {
+      "en": "play chess",
+      "phonetic": "",
+      "meaning": "下国际象棋",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "other"
+    },
+    "speak": {
+      "en": "speak",
+      "phonetic": "/spiːk/",
+      "meaning": "v. 说（某种语言）；说话",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "verb"
+    },
+    "speak english": {
+      "en": "speak English",
+      "phonetic": "",
+      "meaning": "说英语",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "other"
+    },
+    "join": {
+      "en": "join",
+      "phonetic": "/dʒɔɪn/",
+      "meaning": "v. 参加；加入",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "verb"
+    },
+    "club": {
+      "en": "club",
+      "phonetic": "/klʌb/",
+      "meaning": "n. 俱乐部；社团",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "noun"
+    },
+    "be good at...": {
+      "en": "be good at...",
+      "phonetic": "",
+      "meaning": "擅长于……",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "other"
+    },
+    "tell": {
+      "en": "tell",
+      "phonetic": "/tel/",
+      "meaning": "v. 讲述；告诉",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "verb"
+    },
+    "story": {
+      "en": "story",
+      "phonetic": "/ˈstɔːri/",
+      "meaning": "n. 故事；小说",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "noun"
+    },
+    "write": {
+      "en": "write",
+      "phonetic": "/raɪt/",
+      "meaning": "v. 写作；写字",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "verb"
+    },
+    "show": {
+      "en": "show",
+      "phonetic": "/ʃəʊ/",
+      "meaning": "n. 演出；节目 v. 给……看；展示",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "noun"
+    },
+    "or": {
+      "en": "or",
+      "phonetic": "/ɔː(r)/",
+      "meaning": "conj. 或者；也不（用于否定句）",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "conjunction"
+    },
+    "talk": {
+      "en": "talk",
+      "phonetic": "/tɔːk/",
+      "meaning": "v. & n. 说话；交谈",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "verb"
+    },
+    "talk to ...": {
+      "en": "talk to ...",
+      "phonetic": "",
+      "meaning": "跟……说",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "other"
+    },
+    "kung fu": {
+      "en": "kung fu",
+      "phonetic": "/kʌŋ ˈfuː/",
+      "meaning": "n.（中国）功夫",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "other"
+    },
+    "drum": {
+      "en": "drum",
+      "phonetic": "/drʌm/",
+      "meaning": "n. 鼓",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "noun"
+    },
+    "play the drums": {
+      "en": "play the drums",
+      "phonetic": "",
+      "meaning": "敲鼓",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "other"
+    },
+    "piano": {
+      "en": "piano",
+      "phonetic": "/piˈænəʊ/",
+      "meaning": "n. 钢琴",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "noun"
+    },
+    "play the piano": {
+      "en": "play the piano",
+      "phonetic": "",
+      "meaning": "弹钢琴",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "other"
+    },
+    "violin": {
+      "en": "violin",
+      "phonetic": "/ˌvaɪəˈlɪn/",
+      "meaning": "n. 小提琴",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "noun"
+    },
+    "play the violin": {
+      "en": "play the violin",
+      "phonetic": "",
+      "meaning": "拉小提琴",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "other"
+    },
+    "also": {
+      "en": "also",
+      "phonetic": "/ˈɔːlsəʊ/",
+      "meaning": "adv. 也；而且",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "adverb"
+    },
+    "people": {
+      "en": "people",
+      "phonetic": "/ˈpiːpl/",
+      "meaning": "n. 人；人们",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "noun"
+    },
+    "home": {
+      "en": "home",
+      "phonetic": "/həʊm/",
+      "meaning": "n. 家；活动本部 adv. 到家；在家",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "noun"
+    },
+    "be good with ...": {
+      "en": "be good with ...",
+      "phonetic": "",
+      "meaning": "善于应付……的；对……有办法",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "other"
+    },
+    "make": {
+      "en": "make",
+      "phonetic": "/meɪk/",
+      "meaning": "v. 使成为；制造",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "verb"
+    },
+    "make friends": {
+      "en": "make friends",
+      "phonetic": "",
+      "meaning": "结交朋友",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "other"
+    },
+    "today": {
+      "en": "today",
+      "phonetic": "/təˈdeɪ/",
+      "meaning": "adv. 在今天",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "adverb"
+    },
+    "help (sb.) with sth.": {
+      "en": "help (sb.) with sth.",
+      "phonetic": "",
+      "meaning": "在某方面帮助（某人）",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "other"
+    },
+    "center": {
+      "en": "center",
+      "phonetic": "/ˈsentə(r)/",
+      "meaning": "n. (=centre) 中心；中央",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "noun"
+    },
+    "weekend": {
+      "en": "weekend",
+      "phonetic": "/ˌwiːkˈend/, /ˈwiːkend/",
+      "meaning": "n. 周末",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "noun"
+    },
+    "on the weekend": {
+      "en": "on the weekend",
+      "phonetic": "",
+      "meaning": "(在)周末",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "other"
+    },
+    "teach": {
+      "en": "teach",
+      "phonetic": "/tiːtʃ/",
+      "meaning": "v. 教；讲授",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "verb"
+    },
+    "musician": {
+      "en": "musician",
+      "phonetic": "/mjuˈzɪʃn/",
+      "meaning": "n. 音乐家",
+      "grade": "7a",
+      "unit": "U1",
+      "pos": "noun"
+    },
+    "up": {
+      "en": "up",
+      "phonetic": "/ʌp/",
+      "meaning": "adv. 向上",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "adverb"
+    },
+    "get up": {
+      "en": "get up",
+      "phonetic": "",
+      "meaning": "起床；站起",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "other"
+    },
+    "dress": {
+      "en": "dress",
+      "phonetic": "/dres/",
+      "meaning": "v. 穿衣服 n. 连衣裙",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "verb"
+    },
+    "get dressed": {
+      "en": "get dressed",
+      "phonetic": "",
+      "meaning": "穿上衣服",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "other"
+    },
+    "brush": {
+      "en": "brush",
+      "phonetic": "/brʌʃ/",
+      "meaning": "v. 刷；刷净 n. 刷子",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "verb"
+    },
+    "tooth": {
+      "en": "tooth",
+      "phonetic": "/tuːθ/",
+      "meaning": "n. (pl. teeth) 牙齿",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "noun"
+    },
+    "shower": {
+      "en": "shower",
+      "phonetic": "/ˈʃaʊə(r)/",
+      "meaning": "n. & v. 淋浴 n. 淋浴器（间）",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "noun"
+    },
+    "take a shower": {
+      "en": "take a shower",
+      "phonetic": "",
+      "meaning": "洗淋浴",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "other"
+    },
+    "usually": {
+      "en": "usually",
+      "phonetic": "/ˈjuːʒuəli/",
+      "meaning": "adv. 通常地；一般地",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "adverb"
+    },
+    "forty": {
+      "en": "forty",
+      "phonetic": "/ˈfɔː(r)ti/",
+      "meaning": "num. 四十",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "numeral"
+    },
+    "wow": {
+      "en": "wow",
+      "phonetic": "/waʊ/",
+      "meaning": "interj. （表示惊奇或敬佩）哇；呀",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "other"
+    },
+    "never": {
+      "en": "never",
+      "phonetic": "/ˈnevə(r)/",
+      "meaning": "adv. 从不；绝不",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "adverb"
+    },
+    "early": {
+      "en": "early",
+      "phonetic": "/ˈɜː(r)li/",
+      "meaning": "adv. & adj. 早（的）",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "adverb"
+    },
+    "fifty": {
+      "en": "fifty",
+      "phonetic": "/ˈfɪfti/",
+      "meaning": "num. 五十",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "numeral"
+    },
+    "job": {
+      "en": "job",
+      "phonetic": "/dʒɒb/, /dʒɑːb/",
+      "meaning": "n. 工作；职业",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "noun"
+    },
+    "work": {
+      "en": "work",
+      "phonetic": "/wɜː(r)k/",
+      "meaning": "v. & n. 工作",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "verb"
+    },
+    "radio station": {
+      "en": "radio station",
+      "phonetic": "",
+      "meaning": "广播电台",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "other"
+    },
+    "funny": {
+      "en": "funny",
+      "phonetic": "/ˈfʌni/",
+      "meaning": "adj. 奇怪的；滑稽好笑的",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "adjective"
+    },
+    "exercise": {
+      "en": "exercise",
+      "phonetic": "/ˈeksəsaɪz/",
+      "meaning": "v. & n. 锻炼；练习",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "verb"
+    },
+    "on weekends": {
+      "en": "on weekends",
+      "phonetic": "",
+      "meaning": "(在)周末",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "other"
+    },
+    "best": {
+      "en": "best",
+      "phonetic": "/best/",
+      "meaning": "adj. 最好的 adv. 最好地；最",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "adjective"
+    },
+    "group": {
+      "en": "group",
+      "phonetic": "/ɡruːp/",
+      "meaning": "n. 组；群",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "noun"
+    },
+    "half": {
+      "en": "half",
+      "phonetic": "/hɑːf/, /hæf/",
+      "meaning": "n. & pron. 一半；半数",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "noun"
+    },
+    "past": {
+      "en": "past",
+      "phonetic": "/pɑːst/, /pæst/",
+      "meaning": "prep. 晚于；过（时间）adj. 过去的",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "preposition"
+    },
+    "quarter": {
+      "en": "quarter",
+      "phonetic": "/ˈkwɔːtə(r)/",
+      "meaning": "n. 一刻钟；四分之一",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "noun"
+    },
+    "homework": {
+      "en": "homework",
+      "phonetic": "/ˈhəʊmwɜːk/",
+      "meaning": "n. 家庭作业",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "noun"
+    },
+    "do (one's) homework": {
+      "en": "do (one's) homework",
+      "phonetic": "",
+      "meaning": "做作业",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "other"
+    },
+    "run": {
+      "en": "run",
+      "phonetic": "/rʌn/",
+      "meaning": "v. 跑；奔",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "verb"
+    },
+    "clean": {
+      "en": "clean",
+      "phonetic": "/kliːn/",
+      "meaning": "v. 打扫；弄干净 adj. 干净的",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "verb"
+    },
+    "walk": {
+      "en": "walk",
+      "phonetic": "/wɔːk/",
+      "meaning": "n. & v. 行走；步行",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "noun"
+    },
+    "take a walk": {
+      "en": "take a walk",
+      "phonetic": "",
+      "meaning": "散步；走一走",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "other"
+    },
+    "quickly": {
+      "en": "quickly",
+      "phonetic": "/ˈkwɪkli/",
+      "meaning": "adv. 很快地",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "adverb"
+    },
+    "either": {
+      "en": "either",
+      "phonetic": "/ˈaɪðə(r)/, /ˈiːðə(r)/",
+      "meaning": "conj. 或者 adv. 也（用在否定词组后）",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "conjunction"
+    },
+    "either ... or ...": {
+      "en": "either ... or ...",
+      "phonetic": "",
+      "meaning": "要么……要么……；或者……或者……",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "other"
+    },
+    "lot": {
+      "en": "lot",
+      "phonetic": "/lɒt/, /lɑːt/",
+      "meaning": "pron. 大量；许多",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "pronoun"
+    },
+    "lots of": {
+      "en": "lots of",
+      "phonetic": "",
+      "meaning": "大量；许多",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "other"
+    },
+    "sometimes": {
+      "en": "sometimes",
+      "phonetic": "/ˈsʌmtaɪmz/",
+      "meaning": "adv. 有时",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "adverb"
+    },
+    "taste": {
+      "en": "taste",
+      "phonetic": "/teɪst/",
+      "meaning": "v. 有……的味道；品尝 n. 味道；滋味",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "verb"
+    },
+    "life": {
+      "en": "life",
+      "phonetic": "/laɪf/",
+      "meaning": "n. (pl. lives) 生活",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "noun"
+    },
+    "station": {
+      "en": "station",
+      "phonetic": "/ˈsteɪʃn/",
+      "meaning": "n. 电（视）台；车站",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "noun"
+    },
+    "night": {
+      "en": "night",
+      "phonetic": "/naɪt/",
+      "meaning": "n. 晚上；夜晚",
+      "grade": "7a",
+      "unit": "U2",
+      "pos": "noun"
+    },
+    "get to": {
+      "en": "get to",
+      "phonetic": "",
+      "meaning": "到达",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "other"
+    },
+    "train": {
+      "en": "train",
+      "phonetic": "/treɪn/",
+      "meaning": "n. 火车",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "noun"
+    },
+    "bus": {
+      "en": "bus",
+      "phonetic": "/bʌs/",
+      "meaning": "n. 公共汽车",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "noun"
+    },
+    "subway": {
+      "en": "subway",
+      "phonetic": "/ˈsʌbweɪ/",
+      "meaning": "n. 地铁",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "noun"
+    },
+    "take the subway": {
+      "en": "take the subway",
+      "phonetic": "",
+      "meaning": "乘地铁",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "other"
+    },
+    "ride": {
+      "en": "ride",
+      "phonetic": "/raɪd/",
+      "meaning": "v. 骑 n. 旅程",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "verb"
+    },
+    "bike": {
+      "en": "bike",
+      "phonetic": "/baɪk/",
+      "meaning": "n. 自行车",
+      "grade": "7a",
+      "unit": "U3",
+      "pos": "noun"
+    },
+    "practice": {
+      "en": "practice",
+      "phonetic": "/ˈpræktɪs/",
+      "meaning": "v. & n. 练习",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "verb"
+    },
+    "dish": {
+      "en": "dish",
+      "phonetic": "/dɪʃ/",
+      "meaning": "n. 碟；盘",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "noun"
+    },
+    "do the dishes": {
+      "en": "do the dishes",
+      "phonetic": "",
+      "meaning": "清洗餐具",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "other"
+    },
+    "before": {
+      "en": "before",
+      "phonetic": "/bɪˈfɔː(r)/",
+      "meaning": "prep. & conj. 在……以前 adv. 以前",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "preposition"
+    },
+    "make one’s bed": {
+      "en": "make one’s bed",
+      "phonetic": "",
+      "meaning": "铺床",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "other"
+    },
+    "dirty": {
+      "en": "dirty",
+      "phonetic": "/ˈdɜːti/",
+      "meaning": "adj. 脏的",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "adjective"
+    },
+    "kitchen": {
+      "en": "kitchen",
+      "phonetic": "/ˈkɪtʃɪn/",
+      "meaning": "n. 厨房",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "noun"
+    },
+    "more": {
+      "en": "more",
+      "phonetic": "/mɔː(r)/",
+      "meaning": "adj. & pron. 更多（的）",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "adjective"
+    },
+    "noisy": {
+      "en": "noisy",
+      "phonetic": "/ˈnɔɪzi/",
+      "meaning": "adj. 吵闹的",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "adjective"
+    },
+    "relax": {
+      "en": "relax",
+      "phonetic": "/rɪˈlæks/",
+      "meaning": "v. 放松；休息",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "verb"
+    },
+    "read": {
+      "en": "read",
+      "phonetic": "/riːd/",
+      "meaning": "v. 读；阅读",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "verb"
+    },
+    "terrible": {
+      "en": "terrible",
+      "phonetic": "/ˈterəbl/",
+      "meaning": "adj. 非常讨厌的；可怕的",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "adjective"
+    },
+    "feel": {
+      "en": "feel",
+      "phonetic": "/fiːl/",
+      "meaning": "v. 感受；觉得",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "verb"
+    },
+    "strict": {
+      "en": "strict",
+      "phonetic": "/strɪkt/",
+      "meaning": "adj. 严格的；严厉的",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "adjective"
+    },
+    "be strict (with sb.)": {
+      "en": "be strict (with sb.)",
+      "phonetic": "",
+      "meaning": "（对某人）要求严格",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "other"
+    },
+    "remember": {
+      "en": "remember",
+      "phonetic": "/rɪˈmembə(r)/",
+      "meaning": "v. 记住；记起",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "verb"
+    },
+    "follow": {
+      "en": "follow",
+      "phonetic": "/ˈfɒləʊ/, /ˈfɑːləʊ/",
+      "meaning": "v. 遵循；跟随",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "verb"
+    },
+    "follow the rules": {
+      "en": "follow the rules",
+      "phonetic": "",
+      "meaning": "遵守规则",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "other"
+    },
+    "luck": {
+      "en": "luck",
+      "phonetic": "/lʌk/",
+      "meaning": "n. 幸运；运气",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "noun"
+    },
+    "keep": {
+      "en": "keep",
+      "phonetic": "/kiːp/",
+      "meaning": "v. 保持；保留",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "verb"
+    },
+    "hair": {
+      "en": "hair",
+      "phonetic": "/heə(r)/, /her/",
+      "meaning": "n. 头发；毛发",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "noun"
+    },
+    "learn": {
+      "en": "learn",
+      "phonetic": "/lɜː(r)n/",
+      "meaning": "v. 学习；学会",
+      "grade": "7a",
+      "unit": "U4",
+      "pos": "verb"
+    },
+    "panda": {
+      "en": "panda",
+      "phonetic": "/ˈpændə/",
+      "meaning": "n. 熊猫",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "zoo": {
+      "en": "zoo",
+      "phonetic": "/zuː/",
+      "meaning": "n. 动物园",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "tiger": {
+      "en": "tiger",
+      "phonetic": "/ˈtaɪɡə(r)/",
+      "meaning": "n. 老虎",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "elephant": {
+      "en": "elephant",
+      "phonetic": "/ˈelɪfənt/",
+      "meaning": "n. 大象",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "koala": {
+      "en": "koala",
+      "phonetic": "/kəʊˈɑːlə/",
+      "meaning": "n. 树袋熊；考拉",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "lion": {
+      "en": "lion",
+      "phonetic": "/ˈlaɪən/",
+      "meaning": "n. 狮子",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "giraffe": {
+      "en": "giraffe",
+      "phonetic": "/dʒəˈrɑːf/, /dʒəˈræf/",
+      "meaning": "n. 长颈鹿",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "animal": {
+      "en": "animal",
+      "phonetic": "/ˈænɪml/",
+      "meaning": "n. 动物",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "cute": {
+      "en": "cute",
+      "phonetic": "/kjuːt/",
+      "meaning": "adj. 可爱的；机灵的",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "adjective"
+    },
+    "lazy": {
+      "en": "lazy",
+      "phonetic": "/ˈleɪzi/",
+      "meaning": "adj. 懒散的；懒惰的",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "adjective"
+    },
+    "smart": {
+      "en": "smart",
+      "phonetic": "/smɑː(r)t/",
+      "meaning": "adj. 聪明的",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "adjective"
+    },
+    "beautiful": {
+      "en": "beautiful",
+      "phonetic": "/ˈbjuːtɪfl/",
+      "meaning": "adj. 美丽的；美好的",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "adjective"
+    },
+    "scary": {
+      "en": "scary",
+      "phonetic": "/ˈskeəri/, /ˈskeri/",
+      "meaning": "adj. 吓人的；恐怖的",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "adjective"
+    },
+    "kind": {
+      "en": "kind",
+      "phonetic": "/kaɪnd/",
+      "meaning": "n. 种类",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "kind of": {
+      "en": "kind of",
+      "phonetic": "",
+      "meaning": "稍微；有点儿",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "other"
+    },
+    "australia": {
+      "en": "Australia",
+      "phonetic": "/ɒˈstreɪliə/",
+      "meaning": "n. 澳大利亚",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "south": {
+      "en": "south",
+      "phonetic": "/saʊθ/",
+      "meaning": "adj. 南方的 n. 南；南方",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "adjective"
+    },
+    "africa": {
+      "en": "Africa",
+      "phonetic": "/ˈæfrɪkə/",
+      "meaning": "n. 非洲",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "south africa": {
+      "en": "South Africa",
+      "phonetic": "",
+      "meaning": "南非",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "other"
+    },
+    "pet": {
+      "en": "pet",
+      "phonetic": "/pet/",
+      "meaning": "n. 宠物",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "leg": {
+      "en": "leg",
+      "phonetic": "/leɡ/",
+      "meaning": "n. 腿",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "cat": {
+      "en": "cat",
+      "phonetic": "/kæt/",
+      "meaning": "n. 猫",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "sleep": {
+      "en": "sleep",
+      "phonetic": "/sliːp/",
+      "meaning": "v. & n. 睡觉",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "verb"
+    },
+    "friendly": {
+      "en": "friendly",
+      "phonetic": "/ˈfrendli/",
+      "meaning": "adj. 友好的",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "adjective"
+    },
+    "shy": {
+      "en": "shy",
+      "phonetic": "/ʃaɪ/",
+      "meaning": "adj. 羞怯的；腼腆的",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "adjective"
+    },
+    "save": {
+      "en": "save",
+      "phonetic": "/seɪv/",
+      "meaning": "v. 救；救助",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "verb"
+    },
+    "symbol": {
+      "en": "symbol",
+      "phonetic": "/ˈsɪmbl/",
+      "meaning": "n. 象征",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "flag": {
+      "en": "flag",
+      "phonetic": "/flæɡ/",
+      "meaning": "n. 旗；旗帜",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "forget": {
+      "en": "forget",
+      "phonetic": "/fəˈɡet/",
+      "meaning": "v. 忘记；遗忘",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "verb"
+    },
+    "get lost": {
+      "en": "get lost",
+      "phonetic": "",
+      "meaning": "迷路",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "other"
+    },
+    "place": {
+      "en": "place",
+      "phonetic": "/pleɪs/",
+      "meaning": "n. 地点；位置",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "water": {
+      "en": "water",
+      "phonetic": "/ˈwɔːtə(r)/, /ˈwɑːtər/",
+      "meaning": "n. 水",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "danger": {
+      "en": "danger",
+      "phonetic": "/ˈdeɪndʒə(r)/",
+      "meaning": "n. 危险",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "be in (great) danger": {
+      "en": "be in (great) danger",
+      "phonetic": "",
+      "meaning": "处于（极大）危险之中",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "other"
+    },
+    "cut": {
+      "en": "cut",
+      "phonetic": "/kʌt/",
+      "meaning": "v. 砍；切",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "verb"
+    },
+    "down": {
+      "en": "down",
+      "phonetic": "/daʊn/",
+      "meaning": "adv. (坐、躺、倒) 下 prep. 向下；沿着",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "adverb"
+    },
+    "cut down": {
+      "en": "cut down",
+      "phonetic": "",
+      "meaning": "砍倒",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "other"
+    },
+    "tree": {
+      "en": "tree",
+      "phonetic": "/triː/",
+      "meaning": "n. 树",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "kill": {
+      "en": "kill",
+      "phonetic": "/kɪl/",
+      "meaning": "v. 杀死；弄死",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "verb"
+    },
+    "ivory": {
+      "en": "ivory",
+      "phonetic": "/ˈaɪvəri/",
+      "meaning": "n. 象牙",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "noun"
+    },
+    "over": {
+      "en": "over",
+      "phonetic": "/ˈəʊvə(r)/",
+      "meaning": "prep. 超过，多于；在……上方",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "preposition"
+    },
+    "(be) made of": {
+      "en": "(be) made of",
+      "phonetic": "",
+      "meaning": "由……制成的",
+      "grade": "7a",
+      "unit": "U5",
+      "pos": "other"
+    },
+    "newspaper": {
+      "en": "newspaper",
+      "phonetic": "/ˈnjuːzpeɪpə(r)/, /ˈnuːzpeɪpər/",
+      "meaning": "n. 报纸",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "noun"
+    },
+    "read a newspaper": {
+      "en": "read a newspaper",
+      "phonetic": "",
+      "meaning": "看报纸",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "other"
+    },
+    "use": {
+      "en": "use",
+      "phonetic": "/juːz/",
+      "meaning": "v. 使用；运用",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "verb"
+    },
+    "soup": {
+      "en": "soup",
+      "phonetic": "/suːp/",
+      "meaning": "n. 汤",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "noun"
+    },
+    "make soup": {
+      "en": "make soup",
+      "phonetic": "",
+      "meaning": "做汤",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "other"
+    },
+    "wash": {
+      "en": "wash",
+      "phonetic": "/wɒʃ/, /wɔːʃ/",
+      "meaning": "v. 洗",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "verb"
+    },
+    "movie": {
+      "en": "movie",
+      "phonetic": "/ˈmuːvi/",
+      "meaning": "n. 电影",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "noun"
+    },
+    "go to the movies": {
+      "en": "go to the movies",
+      "phonetic": "",
+      "meaning": "去电影院",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "other"
+    },
+    "just": {
+      "en": "just",
+      "phonetic": "/dʒʌst/",
+      "meaning": "adv. 只是；恰好",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "adverb"
+    },
+    "eat out": {
+      "en": "eat out",
+      "phonetic": "",
+      "meaning": "出去吃饭",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "other"
+    },
+    "house": {
+      "en": "house",
+      "phonetic": "/haʊs/",
+      "meaning": "n. 房子",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "noun"
+    },
+    "drink": {
+      "en": "drink",
+      "phonetic": "/drɪŋk/",
+      "meaning": "v. 喝 n. 饮料",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "verb"
+    },
+    "tea": {
+      "en": "tea",
+      "phonetic": "/tiː/",
+      "meaning": "n. 茶；茶叶",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "noun"
+    },
+    "drink tea": {
+      "en": "drink tea",
+      "phonetic": "",
+      "meaning": "喝茶",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "other"
+    },
+    "tomorrow": {
+      "en": "tomorrow",
+      "phonetic": "/təˈmɒrəʊ/, /təˈmɑːrəʊ/",
+      "meaning": "adv. 在明天 n. 明天；未来",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "adverb"
+    },
+    "pool": {
+      "en": "pool",
+      "phonetic": "/puːl/",
+      "meaning": "n. 游泳池；水池",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "noun"
+    },
+    "shop": {
+      "en": "shop",
+      "phonetic": "/ʃɒp/, /ʃɑːp/",
+      "meaning": "v. 购物 n. 商店",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "verb"
+    },
+    "supermarket": {
+      "en": "supermarket",
+      "phonetic": "/ˈsuːpəmɑːkɪt/",
+      "meaning": "n. 超市",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "noun"
+    },
+    "man": {
+      "en": "man",
+      "phonetic": "/mæn/",
+      "meaning": "n. 男人；人",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "noun"
+    },
+    "race": {
+      "en": "race",
+      "phonetic": "/reɪs/",
+      "meaning": "n. 竞赛",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "noun"
+    },
+    "host": {
+      "en": "host",
+      "phonetic": "/həʊst/",
+      "meaning": "n. 主人；东道主",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "noun"
+    },
+    "study": {
+      "en": "study",
+      "phonetic": "/ˈstʌdi/",
+      "meaning": "v. & n. 学习；研究",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "verb"
+    },
+    "state": {
+      "en": "state",
+      "phonetic": "/steɪt/",
+      "meaning": "n. 州",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "noun"
+    },
+    "the united states (of america)": {
+      "en": "the United States (of America)",
+      "phonetic": "",
+      "meaning": "美国；美利坚合众国",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "other"
+    },
+    "american": {
+      "en": "American",
+      "phonetic": "/əˈmerɪkən/",
+      "meaning": "adj. 美国的；美洲的 n. 美国人；美洲人",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "adjective"
+    },
+    "dragon": {
+      "en": "dragon",
+      "phonetic": "/ˈdræɡən/",
+      "meaning": "n. 龙",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "noun"
+    },
+    "dragon boat festival": {
+      "en": "Dragon Boat Festival",
+      "phonetic": "",
+      "meaning": "端午节",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "other"
+    },
+    "any": {
+      "en": "any",
+      "phonetic": "/ˈeni/",
+      "meaning": "adj. 任何的；任一的 pron. 任何；任一",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "adjective"
+    },
+    "other": {
+      "en": "other",
+      "phonetic": "/ˈʌðə(r)/",
+      "meaning": "adj. 另外的；其他的 pron. 另外的人（或物）",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "adjective"
+    },
+    "young": {
+      "en": "young",
+      "phonetic": "/jʌŋ/",
+      "meaning": "adj. 幼小的；年轻的",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "adjective"
+    },
+    "child": {
+      "en": "child",
+      "phonetic": "/tʃaɪld/",
+      "meaning": "n. 儿童 (pl. children)",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "noun"
+    },
+    "miss": {
+      "en": "miss",
+      "phonetic": "/mɪs/",
+      "meaning": "v. 怀念；思念；错过",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "verb"
+    },
+    "wish": {
+      "en": "wish",
+      "phonetic": "/wɪʃ/",
+      "meaning": "v. 希望",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "verb"
+    },
+    "delicious": {
+      "en": "delicious",
+      "phonetic": "/dɪˈlɪʃəs/",
+      "meaning": "adj. 可口的；美味的",
+      "grade": "7a",
+      "unit": "U6",
+      "pos": "adjective"
+    },
+    "rain": {
+      "en": "rain",
+      "phonetic": "/reɪn/",
+      "meaning": "v. 下雨 n. 雨水",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "verb"
+    },
+    "windy": {
+      "en": "windy",
+      "phonetic": "/ˈwɪndi/",
+      "meaning": "adj. 多风的",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "adjective"
+    },
+    "cloudy": {
+      "en": "cloudy",
+      "phonetic": "/ˈklaʊdi/",
+      "meaning": "adj. 多云的",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "adjective"
+    },
+    "sunny": {
+      "en": "sunny",
+      "phonetic": "/ˈsʌni/",
+      "meaning": "adj. 晴朗的",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "adjective"
+    },
+    "snow": {
+      "en": "snow",
+      "phonetic": "/snəʊ/",
+      "meaning": "v. 下雪 n. 雪",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "verb"
+    },
+    "weather": {
+      "en": "weather",
+      "phonetic": "/ˈweðə(r)/",
+      "meaning": "n. 天气",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "noun"
+    },
+    "cook": {
+      "en": "cook",
+      "phonetic": "/kʊk/",
+      "meaning": "v. 做饭",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "verb"
+    },
+    "bad": {
+      "en": "bad",
+      "phonetic": "/bæd/",
+      "meaning": "adj. 坏的；糟的",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "adjective"
+    },
+    "park": {
+      "en": "park",
+      "phonetic": "/pɑːk/",
+      "meaning": "n. 公园",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "noun"
+    },
+    "message": {
+      "en": "message",
+      "phonetic": "/ˈmesɪdʒ/",
+      "meaning": "n. 信息；消息",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "noun"
+    },
+    "take a message": {
+      "en": "take a message",
+      "phonetic": "",
+      "meaning": "捎个口信；传话",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "other"
+    },
+    "him": {
+      "en": "him",
+      "phonetic": "/hɪm/",
+      "meaning": "pron. 他（he 的宾格）",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "pronoun"
+    },
+    "could": {
+      "en": "could",
+      "phonetic": "/kʊd/",
+      "meaning": "modal v. 能；可以",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "other"
+    },
+    "back": {
+      "en": "back",
+      "phonetic": "/bæk/",
+      "meaning": "adv. 回来；回原处",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "adverb"
+    },
+    "call (sb.) back": {
+      "en": "call (sb.) back",
+      "phonetic": "",
+      "meaning": "(给某人）回电话",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "other"
+    },
+    "problem": {
+      "en": "problem",
+      "phonetic": "/ˈprɒbləm/, /ˈprɑːbləm/",
+      "meaning": "n. 困难；难题",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "noun"
+    },
+    "right now": {
+      "en": "right now",
+      "phonetic": "",
+      "meaning": "此刻；马上",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "other"
+    },
+    "again": {
+      "en": "again",
+      "phonetic": "/əˈɡeɪn/, /əˈɡen/",
+      "meaning": "adv. 再一次；又一次",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "adverb"
+    },
+    "dry": {
+      "en": "dry",
+      "phonetic": "/draɪ/",
+      "meaning": "adj. 干燥的",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "adjective"
+    },
+    "cold": {
+      "en": "cold",
+      "phonetic": "/kəʊld/",
+      "meaning": "adj. 寒冷的；冷的",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "adjective"
+    },
+    "hot": {
+      "en": "hot",
+      "phonetic": "/hɒt/, /hɑːt/",
+      "meaning": "adj. 热的",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "adjective"
+    },
+    "warm": {
+      "en": "warm",
+      "phonetic": "/wɔːm/",
+      "meaning": "adj. 温暖的",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "adjective"
+    },
+    "visit": {
+      "en": "visit",
+      "phonetic": "/ˈvɪzɪt/",
+      "meaning": "v. 拜访；参观",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "verb"
+    },
+    "canada": {
+      "en": "Canada",
+      "phonetic": "/ˈkænədə/",
+      "meaning": "n. 加拿大",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "noun"
+    },
+    "summer": {
+      "en": "summer",
+      "phonetic": "/ˈsʌmə(r)/",
+      "meaning": "n. 夏天；夏季",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "noun"
+    },
+    "sit": {
+      "en": "sit",
+      "phonetic": "/sɪt/",
+      "meaning": "v. 坐",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "verb"
+    },
+    "juice": {
+      "en": "juice",
+      "phonetic": "/dʒuːs/",
+      "meaning": "n. 果汁；饮料",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "noun"
+    },
+    "soon": {
+      "en": "soon",
+      "phonetic": "/suːn/",
+      "meaning": "adv. 不久；很快",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "adverb"
+    },
+    "vacation": {
+      "en": "vacation",
+      "phonetic": "/vəˈkeɪʃn/",
+      "meaning": "n. 假期",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "noun"
+    },
+    "on (a) vacation": {
+      "en": "on (a) vacation",
+      "phonetic": "",
+      "meaning": "度假",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "other"
+    },
+    "hard": {
+      "en": "hard",
+      "phonetic": "/hɑːd/",
+      "meaning": "adv. 努力地 adj. 困难的",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "adverb"
+    },
+    "europe": {
+      "en": "Europe",
+      "phonetic": "/ˈjʊərəp/",
+      "meaning": "n. 欧洲",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "noun"
+    },
+    "mountain": {
+      "en": "mountain",
+      "phonetic": "/ˈmaʊntən/",
+      "meaning": "n. 高山",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "noun"
+    },
+    "country": {
+      "en": "country",
+      "phonetic": "/ˈkʌntri/",
+      "meaning": "n. 国；国家",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "noun"
+    },
+    "skate": {
+      "en": "skate",
+      "phonetic": "/skeɪt/",
+      "meaning": "v. 滑冰",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "verb"
+    },
+    "snowy": {
+      "en": "snowy",
+      "phonetic": "/ˈsnəʊi/",
+      "meaning": "adj. 下雪的",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "adjective"
+    },
+    "winter": {
+      "en": "winter",
+      "phonetic": "/ˈwɪntə(r)/",
+      "meaning": "n. 冬天；冬季",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "noun"
+    },
+    "russian": {
+      "en": "Russian",
+      "phonetic": "/ˈrʌʃn/",
+      "meaning": "adj. 俄罗斯的 n. 俄罗斯人；俄语",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "adjective"
+    },
+    "snowman": {
+      "en": "snowman",
+      "phonetic": "/ˈsnəʊmæn/",
+      "meaning": "n. 雪人",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "noun"
+    },
+    "rainy": {
+      "en": "rainy",
+      "phonetic": "/ˈreɪni/",
+      "meaning": "adj. 阴雨的；多雨的",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "adjective"
+    },
+    "still": {
+      "en": "still",
+      "phonetic": "/stɪl/",
+      "meaning": "adv. 还；仍然",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "adverb"
+    },
+    "living room": {
+      "en": "living room",
+      "phonetic": "",
+      "meaning": "客厅",
+      "grade": "7a",
+      "unit": "U7",
+      "pos": "other"
+    },
+    "post": {
+      "en": "post",
+      "phonetic": "/pəʊst/",
+      "meaning": "n. 邮政",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "noun"
+    },
+    "office": {
+      "en": "office",
+      "phonetic": "/ˈɒfɪs/, /ˈɑːfɪs/",
+      "meaning": "n. 办公室",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "noun"
+    },
+    "post office": {
+      "en": "post office",
+      "phonetic": "",
+      "meaning": "邮局",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "other"
+    },
+    "police": {
+      "en": "police",
+      "phonetic": "/pəˈliːs/",
+      "meaning": "n. 警察",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "noun"
+    },
+    "police station": {
+      "en": "police station",
+      "phonetic": "",
+      "meaning": "警察局",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "other"
+    },
+    "hotel": {
+      "en": "hotel",
+      "phonetic": "/həʊˈtel/",
+      "meaning": "n. 旅馆；酒店",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "noun"
+    },
+    "restaurant": {
+      "en": "restaurant",
+      "phonetic": "/ˈrestrɒnt/, /ˈrestərɑːnt/",
+      "meaning": "n. 餐馆",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "noun"
+    },
+    "bank": {
+      "en": "bank",
+      "phonetic": "/bæŋk/",
+      "meaning": "n. 银行",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "noun"
+    },
+    "hospital": {
+      "en": "hospital",
+      "phonetic": "/ˈhɒspɪtl/, /ˈhɑːspɪtl/",
+      "meaning": "n. 医院",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "noun"
+    },
+    "street": {
+      "en": "street",
+      "phonetic": "/striːt/",
+      "meaning": "n. 大街",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "noun"
+    },
+    "pay": {
+      "en": "pay",
+      "phonetic": "/peɪ/",
+      "meaning": "v. & n. 付费",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "verb"
+    },
+    "pay phone": {
+      "en": "pay phone",
+      "phonetic": "",
+      "meaning": "付费电话",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "other"
+    },
+    "near": {
+      "en": "near",
+      "phonetic": "/nɪə(r)/, /nɪr/",
+      "meaning": "prep. 在……附近",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "preposition"
+    },
+    "across": {
+      "en": "across",
+      "phonetic": "/əˈkrɒs/, /əˈkrɔːs/",
+      "meaning": "adv. & prep. 过；穿过",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "adverb"
+    },
+    "across from": {
+      "en": "across from",
+      "phonetic": "",
+      "meaning": "在……对面",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "other"
+    },
+    "front": {
+      "en": "front",
+      "phonetic": "/frʌnt/",
+      "meaning": "n. 前面",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "noun"
+    },
+    "in front of": {
+      "en": "in front of",
+      "phonetic": "",
+      "meaning": "在……前面",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "other"
+    },
+    "behind": {
+      "en": "behind",
+      "phonetic": "/bɪˈhaɪnd/",
+      "meaning": "prep. 在……的后面",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "preposition"
+    },
+    "town": {
+      "en": "town",
+      "phonetic": "/taʊn/",
+      "meaning": "n. 镇；市镇",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "noun"
+    },
+    "around": {
+      "en": "around",
+      "phonetic": "/əˈraʊnd/",
+      "meaning": "prep. 在……周围 adv. 在周围；大约",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "preposition"
+    },
+    "north": {
+      "en": "north",
+      "phonetic": "/nɔːθ/",
+      "meaning": "n. 北；北方 adj. 北方的",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "noun"
+    },
+    "along": {
+      "en": "along",
+      "phonetic": "/əˈlɒŋ/, /əˈlɔːŋ/",
+      "meaning": "prep. 沿着",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "preposition"
+    },
+    "go along (the street)": {
+      "en": "go along (the street)",
+      "phonetic": "",
+      "meaning": "沿着（这条街）走",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "other"
+    },
+    "turn": {
+      "en": "turn",
+      "phonetic": "/tɜːn/",
+      "meaning": "v. 转向；翻",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "verb"
+    },
+    "right": {
+      "en": "right",
+      "phonetic": "/raɪt/",
+      "meaning": "adv. 向右边 n. 右边",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "adverb"
+    },
+    "left": {
+      "en": "left",
+      "phonetic": "/left/",
+      "meaning": "adv. 向左边 n. 左边",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "adverb"
+    },
+    "turn right/left": {
+      "en": "turn right/left",
+      "phonetic": "",
+      "meaning": "向右/左转",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "other"
+    },
+    "crossing": {
+      "en": "crossing",
+      "phonetic": "/ˈkrɒsɪŋ/, /ˈkrɔːsɪŋ/",
+      "meaning": "n. 十字路口",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "noun"
+    },
+    "neighborhood": {
+      "en": "neighborhood",
+      "phonetic": "/ˈneɪbəhʊd/",
+      "meaning": "n. (=neighbourhood) 街区；街坊",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "noun"
+    },
+    "spend": {
+      "en": "spend",
+      "phonetic": "/spend/",
+      "meaning": "v. 花（时间、钱等）",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "verb"
+    },
+    "spend time": {
+      "en": "spend time",
+      "phonetic": "",
+      "meaning": "花时间",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "other"
+    },
+    "monkey": {
+      "en": "monkey",
+      "phonetic": "/ˈmʌŋki/",
+      "meaning": "n. 猴子",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "noun"
+    },
+    "climb": {
+      "en": "climb",
+      "phonetic": "/klaɪm/",
+      "meaning": "v. 爬",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "verb"
+    },
+    "road": {
+      "en": "road",
+      "phonetic": "/rəʊd/",
+      "meaning": "n. 路",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "noun"
+    },
+    "often": {
+      "en": "often",
+      "phonetic": "/ˈɒfn/, /ˈɔːfn/",
+      "meaning": "adv. 时常；常常",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "adverb"
+    },
+    "air": {
+      "en": "air",
+      "phonetic": "/eə(r)/, /er/",
+      "meaning": "n. 空气",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "noun"
+    },
+    "sunshine": {
+      "en": "sunshine",
+      "phonetic": "/ˈsʌnʃaɪn/",
+      "meaning": "n. 阳光",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "noun"
+    },
+    "free": {
+      "en": "free",
+      "phonetic": "/friː/",
+      "meaning": "adj. 免费的",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "adjective"
+    },
+    "enjoy": {
+      "en": "enjoy",
+      "phonetic": "/ɪnˈdʒɔɪ/",
+      "meaning": "v. 享受；喜爱",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "verb"
+    },
+    "enjoy reading": {
+      "en": "enjoy reading",
+      "phonetic": "",
+      "meaning": "喜欢阅读",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "other"
+    },
+    "easily": {
+      "en": "easily",
+      "phonetic": "/ˈiːzəli/",
+      "meaning": "adv. 容易地",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "adverb"
+    },
+    "money": {
+      "en": "money",
+      "phonetic": "/ˈmʌni/",
+      "meaning": "n. 钱",
+      "grade": "7a",
+      "unit": "U8",
+      "pos": "noun"
+    },
+    "curly": {
+      "en": "curly",
+      "phonetic": "/ˈkɜːli/",
+      "meaning": "adj. 卷曲的",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "adjective"
+    },
+    "straight": {
+      "en": "straight",
+      "phonetic": "/streɪt/",
+      "meaning": "adj. 直的",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "adjective"
+    },
+    "tall": {
+      "en": "tall",
+      "phonetic": "/tɔːl/",
+      "meaning": "adj. 高的",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "adjective"
+    },
+    "medium": {
+      "en": "medium",
+      "phonetic": "/ˈmiːdiəm/",
+      "meaning": "adj. 中等的",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "adjective"
+    },
+    "height": {
+      "en": "height",
+      "phonetic": "/haɪt/",
+      "meaning": "n. 身高；高度",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "noun"
+    },
+    "(be) of medium height": {
+      "en": "(be) of medium height",
+      "phonetic": "",
+      "meaning": "中等身高",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "other"
+    },
+    "thin": {
+      "en": "thin",
+      "phonetic": "/θɪn/",
+      "meaning": "adj. 瘦的",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "adjective"
+    },
+    "heavy": {
+      "en": "heavy",
+      "phonetic": "/ˈhevi/",
+      "meaning": "adj. 重的",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "adjective"
+    },
+    "tonight": {
+      "en": "tonight",
+      "phonetic": "/təˈnaɪt/",
+      "meaning": "adv. & n. (在) 今晚；(在) 今夜",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "adverb"
+    },
+    "little": {
+      "en": "little",
+      "phonetic": "/ˈlɪtl/",
+      "meaning": "adj. 小的",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "adjective"
+    },
+    "a little": {
+      "en": "a little",
+      "phonetic": "",
+      "meaning": "一点；少量",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "other"
+    },
+    "may": {
+      "en": "may",
+      "phonetic": "/meɪ/",
+      "meaning": "modal v. 也许；可能；可以",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "other"
+    },
+    "cinema": {
+      "en": "cinema",
+      "phonetic": "/ˈsɪnəmə/",
+      "meaning": "n. 电影院",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "noun"
+    },
+    "glasses": {
+      "en": "glasses",
+      "phonetic": "/ˈɡlɑːsɪz/, /ˈɡlæsɪz/",
+      "meaning": "n. (pl.) 眼镜",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "noun"
+    },
+    "later": {
+      "en": "later",
+      "phonetic": "/ˈleɪtə(r)/",
+      "meaning": "adv. 以后",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "adverb"
+    },
+    "handsome": {
+      "en": "handsome",
+      "phonetic": "/ˈhænsəm/",
+      "meaning": "adj. 英俊的",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "adjective"
+    },
+    "actor": {
+      "en": "actor",
+      "phonetic": "/ˈæktə(r)/",
+      "meaning": "n. 演员",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "noun"
+    },
+    "actress": {
+      "en": "actress",
+      "phonetic": "/ˈæktrəs/",
+      "meaning": "n. 女演员",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "noun"
+    },
+    "person": {
+      "en": "person",
+      "phonetic": "/ˈpɜːsn/",
+      "meaning": "n. 人",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "noun"
+    },
+    "nose": {
+      "en": "nose",
+      "phonetic": "/nəʊz/",
+      "meaning": "n. 鼻子",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "noun"
+    },
+    "blonde": {
+      "en": "blonde",
+      "phonetic": "/blɒnd/, /blɑːnd/",
+      "meaning": "adj. (头发) 金黄色的",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "adjective"
+    },
+    "mouth": {
+      "en": "mouth",
+      "phonetic": "/maʊθ/",
+      "meaning": "n. 嘴",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "noun"
+    },
+    "round": {
+      "en": "round",
+      "phonetic": "/raʊnd/",
+      "meaning": "adj. 圆形的",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "adjective"
+    },
+    "face": {
+      "en": "face",
+      "phonetic": "/feɪs/",
+      "meaning": "n. 脸",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "noun"
+    },
+    "eye": {
+      "en": "eye",
+      "phonetic": "/aɪ/",
+      "meaning": "n. 眼睛",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "noun"
+    },
+    "singer": {
+      "en": "singer",
+      "phonetic": "/ˈsɪŋə(r)/",
+      "meaning": "n. 歌手",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "noun"
+    },
+    "artist": {
+      "en": "artist",
+      "phonetic": "/ˈɑːtɪst/",
+      "meaning": "n. 艺术家",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "noun"
+    },
+    "crime": {
+      "en": "crime",
+      "phonetic": "/kraɪm/",
+      "meaning": "n. 犯罪活动",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "noun"
+    },
+    "criminal": {
+      "en": "criminal",
+      "phonetic": "/ˈkrɪmɪnl/",
+      "meaning": "n. 罪犯",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "noun"
+    },
+    "put": {
+      "en": "put",
+      "phonetic": "/pʊt/",
+      "meaning": "v. 放",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "verb"
+    },
+    "each": {
+      "en": "each",
+      "phonetic": "/iːtʃ/",
+      "meaning": "adj. & pron. 每个；各自",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "adjective"
+    },
+    "way": {
+      "en": "way",
+      "phonetic": "/weɪ/",
+      "meaning": "n. 方式；路线",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "noun"
+    },
+    "describe": {
+      "en": "describe",
+      "phonetic": "/dɪˈskraɪb/",
+      "meaning": "v. 描述",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "verb"
+    },
+    "differently": {
+      "en": "differently",
+      "phonetic": "/ˈdɪfərəntli/",
+      "meaning": "adv. 不同地",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "adverb"
+    },
+    "another": {
+      "en": "another",
+      "phonetic": "/əˈnʌðə(r)/",
+      "meaning": "adj. & pron. 另一；又一",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "adjective"
+    },
+    "end": {
+      "en": "end",
+      "phonetic": "/end/",
+      "meaning": "n. 结尾；尽头",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "noun"
+    },
+    "in the end": {
+      "en": "in the end",
+      "phonetic": "",
+      "meaning": "最后",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "other"
+    },
+    "real": {
+      "en": "real",
+      "phonetic": "/riːəl/",
+      "meaning": "adj. 真正的；真实的",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "adjective"
+    },
+    "jeans": {
+      "en": "jeans",
+      "phonetic": "/dʒiːnz/",
+      "meaning": "n. 牛仔裤",
+      "grade": "7a",
+      "unit": "U9",
+      "pos": "noun"
+    },
+    "noodle": {
+      "en": "noodle",
+      "phonetic": "/ˈnuːdl/",
+      "meaning": "n. (常用复数形式) 面条",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "mutton": {
+      "en": "mutton",
+      "phonetic": "/ˈmʌtn/",
+      "meaning": "n. 羊肉",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "beef": {
+      "en": "beef",
+      "phonetic": "/biːf/",
+      "meaning": "n. 牛肉",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "cabbage": {
+      "en": "cabbage",
+      "phonetic": "/ˈkæbɪdʒ/",
+      "meaning": "n. 卷心菜；洋白菜",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "potato": {
+      "en": "potato",
+      "phonetic": "/pəˈteɪtəʊ/",
+      "meaning": "n. 土豆；马铃薯",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "special": {
+      "en": "special",
+      "phonetic": "/ˈspeʃl/",
+      "meaning": "n. 特色菜；特价品 adj. 特别的；特殊的",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "would": {
+      "en": "would",
+      "phonetic": "/wʊd/",
+      "meaning": "modal v. (表示意愿) 愿意",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "other"
+    },
+    "would like": {
+      "en": "would like",
+      "phonetic": "",
+      "meaning": "(表示意愿) 愿意；喜欢",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "other"
+    },
+    "yet": {
+      "en": "yet",
+      "phonetic": "/jet/",
+      "meaning": "adv. (常用于否定句或疑问句) 还；仍然",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "adverb"
+    },
+    "large": {
+      "en": "large",
+      "phonetic": "/lɑːdʒ/",
+      "meaning": "adj. 大号的；大的",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "adjective"
+    },
+    "order": {
+      "en": "order",
+      "phonetic": "/ˈɔːdə(r)/",
+      "meaning": "n. & v. 点菜；命令",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "take one’s order": {
+      "en": "take one’s order",
+      "phonetic": "",
+      "meaning": "点菜",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "other"
+    },
+    "size": {
+      "en": "size",
+      "phonetic": "/saɪz/",
+      "meaning": "n. 大小；尺码",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "bowl": {
+      "en": "bowl",
+      "phonetic": "/bəʊl/",
+      "meaning": "n. 碗",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "one (large) bowl of...": {
+      "en": "one (large) bowl of...",
+      "phonetic": "",
+      "meaning": "一（大）碗……",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "other"
+    },
+    "tofu": {
+      "en": "tofu",
+      "phonetic": "/ˈtəʊfuː/",
+      "meaning": "n. 豆腐",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "meat": {
+      "en": "meat",
+      "phonetic": "/miːt/",
+      "meaning": "n. (可食用的) 肉",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "dumpling": {
+      "en": "dumpling",
+      "phonetic": "/ˈdʌmplɪŋ/",
+      "meaning": "n. 饺子",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "porridge": {
+      "en": "porridge",
+      "phonetic": "/ˈpɒrɪdʒ/, /ˈpɔːrɪdʒ/",
+      "meaning": "n. 粥；面糊",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "onion": {
+      "en": "onion",
+      "phonetic": "/ˈʌnjən/",
+      "meaning": "n. 洋葱",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "fish": {
+      "en": "fish",
+      "phonetic": "/fɪʃ/",
+      "meaning": "n. 鱼；鱼肉",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "pancake": {
+      "en": "pancake",
+      "phonetic": "/ˈpænkeɪk/",
+      "meaning": "n. 烙饼；薄饼",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "world": {
+      "en": "world",
+      "phonetic": "/wɜːld/",
+      "meaning": "n. 世界",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "around the world": {
+      "en": "around the world",
+      "phonetic": "",
+      "meaning": "世界各地",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "other"
+    },
+    "answer": {
+      "en": "answer",
+      "phonetic": "/ˈɑːnsə(r)/, /ˈænsər/",
+      "meaning": "n. 答案 v. 回答",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "different": {
+      "en": "different",
+      "phonetic": "/ˈdɪfrənt/",
+      "meaning": "adj. 不同的",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "adjective"
+    },
+    "cake": {
+      "en": "cake",
+      "phonetic": "/keɪk/",
+      "meaning": "n. 蛋糕",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "candle": {
+      "en": "candle",
+      "phonetic": "/ˈkændl/",
+      "meaning": "n. 蜡烛",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "age": {
+      "en": "age",
+      "phonetic": "/eɪdʒ/",
+      "meaning": "n. 年龄",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "make a wish": {
+      "en": "make a wish",
+      "phonetic": "",
+      "meaning": "许愿",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "other"
+    },
+    "blow": {
+      "en": "blow",
+      "phonetic": "/bləʊ/",
+      "meaning": "v. 吹",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "verb"
+    },
+    "blow out": {
+      "en": "blow out",
+      "phonetic": "",
+      "meaning": "吹灭",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "other"
+    },
+    "if": {
+      "en": "if",
+      "phonetic": "/ɪf/",
+      "meaning": "conj. 如果",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "conjunction"
+    },
+    "will": {
+      "en": "will",
+      "phonetic": "/wɪl/",
+      "meaning": "v. 将要；会",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "verb"
+    },
+    "the uk": {
+      "en": "the UK",
+      "phonetic": "/juː keɪ/",
+      "meaning": "n. (= the United Kingdom) 英国",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "candy": {
+      "en": "candy",
+      "phonetic": "/ˈkændi/",
+      "meaning": "n. 糖果",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "lucky": {
+      "en": "lucky",
+      "phonetic": "/ˈlʌki/",
+      "meaning": "adj. 幸运的",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "adjective"
+    },
+    "popular": {
+      "en": "popular",
+      "phonetic": "/ˈpɒpjələ(r)/, /ˈpɑːpjələr/",
+      "meaning": "adj. 受欢迎的；普通的",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "adjective"
+    },
+    "get popular": {
+      "en": "get popular",
+      "phonetic": "",
+      "meaning": "受欢迎；流行",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "other"
+    },
+    "cut up": {
+      "en": "cut up",
+      "phonetic": "",
+      "meaning": "切碎",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "other"
+    },
+    "idea": {
+      "en": "idea",
+      "phonetic": "/aɪˈdɪə/",
+      "meaning": "n. 想法；主意",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "noun"
+    },
+    "bring good luck to ...": {
+      "en": "bring good luck to ...",
+      "phonetic": "",
+      "meaning": "给……带来好运",
+      "grade": "7a",
+      "unit": "U10",
+      "pos": "other"
+    },
+    "milk": {
+      "en": "milk",
+      "phonetic": "/mɪlk/",
+      "meaning": "v. 挤奶",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "verb"
+    },
+    "cow": {
+      "en": "cow",
+      "phonetic": "/kaʊ/",
+      "meaning": "n. 奶牛",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "noun"
+    },
+    "milk a cow": {
+      "en": "milk a cow",
+      "phonetic": "",
+      "meaning": "给奶牛挤奶",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "other"
+    },
+    "horse": {
+      "en": "horse",
+      "phonetic": "/hɔːs/",
+      "meaning": "n. 马",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "noun"
+    },
+    "ride a horse": {
+      "en": "ride a horse",
+      "phonetic": "",
+      "meaning": "骑马",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "other"
+    },
+    "feed": {
+      "en": "feed",
+      "phonetic": "/fiːd/",
+      "meaning": "v. (fed) 喂养；饲养",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "verb"
+    },
+    "feed chickens": {
+      "en": "feed chickens",
+      "phonetic": "",
+      "meaning": "喂鸡",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "other"
+    },
+    "farmer": {
+      "en": "farmer",
+      "phonetic": "/ˈfɑːmə(r)/",
+      "meaning": "n. 农民；农场主",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "noun"
+    },
+    "quite": {
+      "en": "quite",
+      "phonetic": "/kwaɪt/",
+      "meaning": "adv. 相当；完全",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "adverb"
+    },
+    "quite a lot (of...)": {
+      "en": "quite a lot (of...)",
+      "phonetic": "",
+      "meaning": "许多",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "other"
+    },
+    "anything": {
+      "en": "anything",
+      "phonetic": "/ˈeniθɪŋ/",
+      "meaning": "pron. (常用于否定句或疑问句) 任何东西；任何事物",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "pronoun"
+    },
+    "grow": {
+      "en": "grow",
+      "phonetic": "/ɡrəʊ/",
+      "meaning": "v. (grew) 种植；生长；发育",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "verb"
+    },
+    "farm": {
+      "en": "farm",
+      "phonetic": "/fɑːm/",
+      "meaning": "n. 农场 v. 务农；种田",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "noun"
+    },
+    "pick": {
+      "en": "pick",
+      "phonetic": "/pɪk/",
+      "meaning": "v. 采；摘",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "verb"
+    },
+    "excellent": {
+      "en": "excellent",
+      "phonetic": "/ˈeksələnt/",
+      "meaning": "adj. 极好的；优秀的",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "adjective"
+    },
+    "countryside": {
+      "en": "countryside",
+      "phonetic": "/ˈkʌntrisaɪd/",
+      "meaning": "n. 乡村；农村",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "noun"
+    },
+    "in the countryside": {
+      "en": "in the countryside",
+      "phonetic": "",
+      "meaning": "在乡下；在农村",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "other"
+    },
+    "yesterday": {
+      "en": "yesterday",
+      "phonetic": "/ˈjestədeɪ/",
+      "meaning": "adv. 昨天",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "adverb"
+    },
+    "flower": {
+      "en": "flower",
+      "phonetic": "/ˈflaʊə(r)/",
+      "meaning": "n. 花",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "noun"
+    },
+    "worry": {
+      "en": "worry",
+      "phonetic": "/ˈwʌri/, /ˈwɜːri/",
+      "meaning": "v. & n. 担心；担忧",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "verb"
+    },
+    "luckily": {
+      "en": "luckily",
+      "phonetic": "/ˈlʌkɪli/",
+      "meaning": "adv. 幸运地；好运地",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "adverb"
+    },
+    "sun": {
+      "en": "sun",
+      "phonetic": "/sʌn/",
+      "meaning": "n. 太阳",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "noun"
+    },
+    "museum": {
+      "en": "museum",
+      "phonetic": "/mjuˈziːəm/",
+      "meaning": "n. 博物馆",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "noun"
+    },
+    "fire": {
+      "en": "fire",
+      "phonetic": "/ˈfaɪə(r)/",
+      "meaning": "n. 火；火灾",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "noun"
+    },
+    "fire station": {
+      "en": "fire station",
+      "phonetic": "",
+      "meaning": "消防站",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "other"
+    },
+    "painting": {
+      "en": "painting",
+      "phonetic": "/ˈpeɪntɪŋ/",
+      "meaning": "n. 油画；绘画",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "noun"
+    },
+    "exciting": {
+      "en": "exciting",
+      "phonetic": "/ɪkˈsaɪtɪŋ/",
+      "meaning": "adj. 使人兴奋的；令人激动的",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "adjective"
+    },
+    "lovely": {
+      "en": "lovely",
+      "phonetic": "/ˈlʌvli/",
+      "meaning": "adj. 可爱的",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "adjective"
+    },
+    "expensive": {
+      "en": "expensive",
+      "phonetic": "/ɪkˈspensɪv/",
+      "meaning": "adj. 昂贵的",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "adjective"
+    },
+    "cheap": {
+      "en": "cheap",
+      "phonetic": "/tʃiːp/",
+      "meaning": "adj. 廉价的；便宜的",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "adjective"
+    },
+    "slow": {
+      "en": "slow",
+      "phonetic": "/sləʊ/",
+      "meaning": "adj. 缓慢的；迟缓的",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "adjective"
+    },
+    "fast": {
+      "en": "fast",
+      "phonetic": "/fɑːst/, /fæst/",
+      "meaning": "adv. & adj. 快地（的）",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "adverb"
+    },
+    "robot": {
+      "en": "robot",
+      "phonetic": "/ˈrəʊbɒt/, /ˈrəʊbɑːt/",
+      "meaning": "n. 机器人",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "noun"
+    },
+    "guide": {
+      "en": "guide",
+      "phonetic": "/ɡaɪd/",
+      "meaning": "n. 导游；向导",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "noun"
+    },
+    "gift": {
+      "en": "gift",
+      "phonetic": "/ɡɪft/",
+      "meaning": "n. 礼物；赠品",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "noun"
+    },
+    "all in all": {
+      "en": "all in all",
+      "phonetic": "",
+      "meaning": "总的说来",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "other"
+    },
+    "everything": {
+      "en": "everything",
+      "phonetic": "/ˈevriθɪŋ/",
+      "meaning": "pron. 所有事物；一切",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "pronoun"
+    },
+    "interested": {
+      "en": "interested",
+      "phonetic": "/ˈɪntrəstɪd/",
+      "meaning": "adj. 感兴趣的",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "adjective"
+    },
+    "be interested in": {
+      "en": "be interested in",
+      "phonetic": "",
+      "meaning": "对……感兴趣",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "other"
+    },
+    "dark": {
+      "en": "dark",
+      "phonetic": "/dɑːk/",
+      "meaning": "adj. 黑暗的；昏暗的",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "adjective"
+    },
+    "hear": {
+      "en": "hear",
+      "phonetic": "/hɪə(r)/, /hɪr/",
+      "meaning": "v. (heard) 听到；听见",
+      "grade": "7a",
+      "unit": "U11",
+      "pos": "verb"
+    },
+    "camp": {
+      "en": "camp",
+      "phonetic": "/kæmp/",
+      "meaning": "v. 扎营；搭帐篷",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "verb"
+    },
+    "lake": {
+      "en": "lake",
+      "phonetic": "/leɪk/",
+      "meaning": "n. 湖；湖泊",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "noun"
+    },
+    "beach": {
+      "en": "beach",
+      "phonetic": "/biːtʃ/",
+      "meaning": "n. 海滩；沙滩",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "noun"
+    },
+    "badminton": {
+      "en": "badminton",
+      "phonetic": "/ˈbædmɪntən/",
+      "meaning": "n. 羽毛球运动",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "noun"
+    },
+    "sheep": {
+      "en": "sheep",
+      "phonetic": "/ʃiːp/",
+      "meaning": "n. 羊；绵羊",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "noun"
+    },
+    "as": {
+      "en": "as",
+      "phonetic": "/æz, əz/",
+      "meaning": "prep. 作为；当作",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "preposition"
+    },
+    "natural": {
+      "en": "natural",
+      "phonetic": "/ˈnætʃrəl/",
+      "meaning": "adj. 自然的",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "adjective"
+    },
+    "butterfly": {
+      "en": "butterfly",
+      "phonetic": "/ˈbʌtəflaɪ/",
+      "meaning": "n. 蝴蝶",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "noun"
+    },
+    "visitor": {
+      "en": "visitor",
+      "phonetic": "/ˈvɪzɪtə(r)/",
+      "meaning": "n. 游客；访问者",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "noun"
+    },
+    "tired": {
+      "en": "tired",
+      "phonetic": "/ˈtaɪəd/",
+      "meaning": "adj. 疲倦的；疲劳的",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "adjective"
+    },
+    "stay": {
+      "en": "stay",
+      "phonetic": "/steɪ/",
+      "meaning": "v. 停留；待",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "verb"
+    },
+    "stay up late": {
+      "en": "stay up late",
+      "phonetic": "",
+      "meaning": "深夜不睡；熬夜",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "other"
+    },
+    "away": {
+      "en": "away",
+      "phonetic": "/əˈweɪ/",
+      "meaning": "adv. 离开；远离",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "adverb"
+    },
+    "run away": {
+      "en": "run away",
+      "phonetic": "",
+      "meaning": "跑开",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "other"
+    },
+    "mouse": {
+      "en": "mouse",
+      "phonetic": "/maʊs/",
+      "meaning": "n. (pl. mice) 老鼠；耗子",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "noun"
+    },
+    "baby": {
+      "en": "baby",
+      "phonetic": "/ˈbeɪbi/",
+      "meaning": "adj. 幼小的 n. 婴儿",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "adjective"
+    },
+    "shout": {
+      "en": "shout",
+      "phonetic": "/ʃaʊt/",
+      "meaning": "v. 呼叫；喊叫",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "verb"
+    },
+    "shout at ...": {
+      "en": "shout at ...",
+      "phonetic": "",
+      "meaning": "冲……大声叫嚷",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "other"
+    },
+    "woof": {
+      "en": "woof",
+      "phonetic": "/wʊf/",
+      "meaning": "interj. (狗叫声) 汪汪",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "other"
+    },
+    "language": {
+      "en": "language",
+      "phonetic": "/ˈlæŋɡwɪdʒ/",
+      "meaning": "n. 语言",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "noun"
+    },
+    "fly": {
+      "en": "fly",
+      "phonetic": "/flaɪ/",
+      "meaning": "v. (flew) 飞",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "verb"
+    },
+    "kite": {
+      "en": "kite",
+      "phonetic": "/kaɪt/",
+      "meaning": "n. 风筝",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "noun"
+    },
+    "fly a kite": {
+      "en": "fly a kite",
+      "phonetic": "",
+      "meaning": "放风筝",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "other"
+    },
+    "high": {
+      "en": "high",
+      "phonetic": "/haɪ/",
+      "meaning": "adj. & adv. 高的（地）",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "adjective"
+    },
+    "high school": {
+      "en": "high school",
+      "phonetic": "",
+      "meaning": "中学",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "other"
+    },
+    "ago": {
+      "en": "ago",
+      "phonetic": "/əˈɡəʊ/",
+      "meaning": "adv. 以前",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "adverb"
+    },
+    "india": {
+      "en": "India",
+      "phonetic": "/ˈɪndiə/",
+      "meaning": "n. 印度",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "noun"
+    },
+    "tent": {
+      "en": "tent",
+      "phonetic": "/tent/",
+      "meaning": "n. 帐篷",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "noun"
+    },
+    "put up": {
+      "en": "put up",
+      "phonetic": "",
+      "meaning": "搭起；举起",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "other"
+    },
+    "moon": {
+      "en": "moon",
+      "phonetic": "/muːn/",
+      "meaning": "n. 月亮",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "noun"
+    },
+    "each other": {
+      "en": "each other",
+      "phonetic": "",
+      "meaning": "互相；彼此",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "other"
+    },
+    "surprise": {
+      "en": "surprise",
+      "phonetic": "/səˈpraɪz/",
+      "meaning": "n. 惊奇；惊讶 v. 使吃惊",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "noun"
+    },
+    "get a surprise": {
+      "en": "get a surprise",
+      "phonetic": "",
+      "meaning": "吃惊",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "other"
+    },
+    "snake": {
+      "en": "snake",
+      "phonetic": "/sneɪk/",
+      "meaning": "n. 蛇",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "noun"
+    },
+    "scared": {
+      "en": "scared",
+      "phonetic": "/skeəd/, /skerd/",
+      "meaning": "adj. 惊惶的；吓坏了的",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "adjective"
+    },
+    "move": {
+      "en": "move",
+      "phonetic": "/muːv/",
+      "meaning": "v. 移动",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "verb"
+    },
+    "shout to ...": {
+      "en": "shout to ...",
+      "phonetic": "",
+      "meaning": "对……大声喊叫",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "other"
+    },
+    "start": {
+      "en": "start",
+      "phonetic": "/stɑːt/",
+      "meaning": "v. 开始；着手",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "verb"
+    },
+    "jump": {
+      "en": "jump",
+      "phonetic": "/dʒʌmp/",
+      "meaning": "v. 跳；跃",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "verb"
+    },
+    "up and down": {
+      "en": "up and down",
+      "phonetic": "",
+      "meaning": "上上下下；起伏",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "other"
+    },
+    "wake": {
+      "en": "wake",
+      "phonetic": "/weɪk/",
+      "meaning": "v. (woke) 弄醒；醒",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "verb"
+    },
+    "wake ... up": {
+      "en": "wake ... up",
+      "phonetic": "",
+      "meaning": "把……弄醒",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "other"
+    },
+    "into": {
+      "en": "into",
+      "phonetic": "/ˈɪntuː/",
+      "meaning": "prep. 到……里面；进入",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "preposition"
+    },
+    "forest": {
+      "en": "forest",
+      "phonetic": "/ˈfɒrɪst/, /ˈfɔːrɪst/",
+      "meaning": "n. 森林",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "noun"
+    },
+    "ear": {
+      "en": "ear",
+      "phonetic": "/ɪə(r)/, /ɪr/",
+      "meaning": "n. 耳朵",
+      "grade": "7a",
+      "unit": "U12",
+      "pos": "noun"
+    }
+  }
+}

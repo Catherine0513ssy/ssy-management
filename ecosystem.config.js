@@ -2,7 +2,7 @@ module.exports = {
   apps: [{
     name: "ssy",
     script: "server.js",
-    cwd: "/var/www/ssy",
+    cwd: "/var/www/homework",
     instances: 1,
     autorestart: true,
     watch: false,
@@ -11,8 +11,8 @@ module.exports = {
       NODE_ENV: "production",
       PORT: 3000
     },
-    error_file: "/var/www/ssy/logs/error.log",
-    out_file: "/var/www/ssy/logs/out.log",
+    error_file: "/var/www/homework/logs/error.log",
+    out_file: "/var/www/homework/logs/out.log",
     log_date_format: "YYYY-MM-DD HH:mm:ss"
   }]
 };

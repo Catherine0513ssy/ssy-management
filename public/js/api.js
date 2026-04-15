@@ -55,7 +55,7 @@ const API = {
   deleteExcellent(id) { return this.del(`/api/excellent/${id}`); },
 
   // Ranking
-  getRanking() { return this.get(`/api/ranking?class_id=${this.classId}`); },
+  getRanking(period = 'current') { return this.get(`/api/ranking?class_id=${this.classId}&period=${period}`); },
   getRankingDetail(studentIndex) { return this.get(`/api/ranking/detail?class_id=${this.classId}${studentIndex !== undefined ? `&student_index=${studentIndex}` : ''}`); },
 
   // Vocabulary
@@ -71,6 +71,8 @@ const API = {
   getQuizWords() { return this.get(`/api/quiz/words?class_id=${this.classId}`); },
   getQuizMeta() { return this.get('/api/quiz/meta'); },
   getAllVocabulary() { return this.get('/api/quiz/all'); },
+  getQuizHistory(date) { return this.get(`/api/quiz/history?class_id=${this.classId}&date=${date}`); },
+  logQuizComplete(date, source, wordIds) { return this.post('/api/quiz/log-complete', { class_id: parseInt(this.classId), date, source, word_ids: wordIds }); },
 
   // Essay
   getEssayTasks() { return this.get(`/api/essay/tasks?class_id=${this.classId}`); },

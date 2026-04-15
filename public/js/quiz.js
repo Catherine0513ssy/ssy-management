@@ -12,10 +12,12 @@ document.addEventListener('alpine:init', () => {
     selectedUnits: [],
     mode: 'cn2en',
     count: 20,
-    interval: 5,         // 自动跳转间隔（秒）
+    // 固定词性比例：动词80%，名词10%，形容词5%，其他5%
+    POS_RATIOS: { verb: 0.8, noun: 0.1, adjective: 0.05, other: 0.05 },
+    interval: 13,         // 自动跳转间隔（秒）
     autoPlay: true,       // 自动朗读
     repeatCount: 1,       // 每个单词朗读次数
-    autoNext: false,      // 自动跳转
+    autoNext: true,      // 自动跳转
     grades: ['all', '7a', '7b', '8a', '8b', '9'],
 
     // Quiz state
@@ -24,18 +26,27 @@ document.addEventListener('alpine:init', () => {
     answerShown: false,
     quizStarted: false,
     fullscreen: false,
+    showHistoryModal: false,
+    historyDate: '',
+    historyData: { daily: { words: [], count: 0 }, generated: { words: [], count: 0 } },
+    historyLoading: false,
     showSidebar: true,
     showAllAnswers: false, // 默写完成后显示所有答案
     quizFinished: false,   // 是否已默写完最后一个
+    quizSource: null,      // 'daily' | 'generated' | null
     _autoTimer: null,
     countdown: 0,         // 倒计时显示
     loaded: false,
+    _allVocabCache: null, // 缓存全部词汇（用于本地筛选）
 
     async init() {
       const ensureLoaded = async () => {
         if (this.loaded) return;
         this.loaded = true;
         await this.loadVocab();
+        this.historyDate = new Date().toISOString().split('T')[0];
+        // 尝试恢复上次进度
+        this._restoreProgress();
       };
       window.addEventListener('ssy:tab-change', async (event) => {
         if (event.detail?.tabId === 'quiz') {
@@ -45,6 +56,50 @@ document.addEventListener('alpine:init', () => {
       if (document.body.dataset.activeTab === 'quiz') {
         await ensureLoaded();
       }
+    },
+
+    // 保存当前进度到 localStorage
+    _saveProgress() {
+      if (!this.quizStarted || this.words.length === 0) return;
+      const progress = {
+        words: this.words,
+        index: this.index,
+        answerShown: this.answerShown,
+        mode: this.mode,
+        quizSource: this.quizSource,
+        timestamp: Date.now()
+      };
+      localStorage.setItem('ssy_quiz_progress', JSON.stringify(progress));
+    },
+
+    // 从 localStorage 恢复进度
+    _restoreProgress() {
+      try {
+        const saved = localStorage.getItem('ssy_quiz_progress');
+        if (!saved) return;
+        const progress = JSON.parse(saved);
+        // 检查是否超过24小时
+        if (Date.now() - progress.timestamp > 24 * 60 * 60 * 1000) {
+          localStorage.removeItem('ssy_quiz_progress');
+          return;
+        }
+        // 恢复状态
+        this.words = progress.words || [];
+        this.index = progress.index || 0;
+        this.answerShown = progress.answerShown || false;
+        this.mode = progress.mode || 'cn2en';
+        this.quizSource = progress.quizSource || null;
+        if (this.words.length > 0) {
+          this.quizStarted = true;
+        }
+      } catch (e) {
+        localStorage.removeItem('ssy_quiz_progress');
+      }
+    },
+
+    // 清除保存的进度
+    _clearSavedProgress() {
+      localStorage.removeItem('ssy_quiz_progress');
     },
 
     async loadVocab() {
@@ -62,12 +117,93 @@ document.addEventListener('alpine:init', () => {
       }
     },
 
+    // 本地筛选词汇：按词性比例选择
+    _selectWordsLocally(allWords, targetCount) {
+      // 筛选符合年级和单元的词
+      let filtered = allWords;
+      if (this.grade !== 'all') {
+        filtered = filtered.filter(w => w.grade === this.grade);
+      }
+      if (this.selectedUnits.length > 0) {
+        filtered = filtered.filter(w => this.selectedUnits.includes(w.unit));
+      }
+
+      // 分离四类词性
+      const verbs = filtered.filter(w => w.pos === 'verb');
+      const nouns = filtered.filter(w => w.pos === 'noun');
+      const adjs = filtered.filter(w => w.pos === 'adjective');
+      // 其他词性（副词、代词、介词等）
+      const others = filtered.filter(w => !['verb', 'noun', 'adjective'].includes(w.pos));
+
+      // 打乱顺序
+      const shuffle = arr => {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      };
+
+      // 使用固定比例：动词80%，名词10%，形容词5%，其他5%
+      const ratios = this.POS_RATIOS;
+      let verbCount = Math.floor(targetCount * ratios.verb);
+      let nounCount = Math.floor(targetCount * ratios.noun);
+      let adjCount = Math.floor(targetCount * ratios.adjective);
+      let otherCount = Math.floor(targetCount * ratios.other);
+
+      // 调整因取整导致的总数差异
+      let total = verbCount + nounCount + adjCount + otherCount;
+      if (total < targetCount) {
+        // 优先从动词补（因为占比最大）
+        verbCount += targetCount - total;
+      }
+
+      // 选择各类词
+      let selected = [];
+      selected.push(...shuffle(verbs).slice(0, Math.min(verbCount, verbs.length)));
+      selected.push(...shuffle(nouns).slice(0, Math.min(nounCount, nouns.length)));
+      selected.push(...shuffle(adjs).slice(0, Math.min(adjCount, adjs.length)));
+      selected.push(...shuffle(others).slice(0, Math.min(otherCount, others.length)));
+
+      // 如果某类词不足，从其他类补
+      if (selected.length < targetCount) {
+        const remaining = targetCount - selected.length;
+        const usedIds = new Set(selected.map(w => w.id));
+        const pool = filtered.filter(w => !usedIds.has(w.id));
+        selected.push(...shuffle(pool).slice(0, remaining));
+      }
+
+      return shuffle(selected).slice(0, targetCount);
+    },
+
     async generate() {
       if (this.availableWordCount === 0) {
         this.$dispatch('toast', { message: '当前年级/单元下暂无单词', type: 'error' });
         return;
       }
       try {
+        // 动词比例 > 0 时，先预加载全部词汇
+        if (this.verbRatio > 0 || this.nounRatio > 0 || this.adjRatio > 0) {
+          await this._preloadAllVocab();
+        }
+        // 优先使用本地缓存的全部词汇进行筛选（支持动词比例控制）
+        if (this._allVocabCache) {
+          const selectedWords = this._selectWordsLocally(this._allVocabCache, this.count);
+          if (selectedWords.length > 0) {
+            this.words = selectedWords;
+            this.index = 0;
+            this.answerShown = false;
+            this.quizStarted = true;
+            this.quizSource = 'generated';
+            this.quizFinished = false;
+            this.showAllAnswers = false;
+            this.$nextTick(() => this._onWordChange());
+            this._saveProgress();
+            return;
+          }
+        }
+        // fallback: 使用API随机选词
         const data = await API.generateQuiz(this.grade === 'all' ? '' : this.grade, this.count, this.selectedUnits);
         this.words = data.words || [];
         if (this.words.length === 0) {
@@ -77,10 +213,25 @@ document.addEventListener('alpine:init', () => {
         this.index = 0;
         this.answerShown = false;
         this.quizStarted = true;
+        this.quizFinished = false;
+        this.showAllAnswers = false;
         this.$nextTick(() => this._onWordChange());
+        this._saveProgress();
       } catch (e) {
         this.$dispatch('toast', { message: e.message || '生成默写失败', type: 'error' });
       }
+    },
+
+    // 预加载全部词汇（用于本地筛选）
+    async _preloadAllVocab() {
+      if (this._allVocabCache) return this._allVocabCache;
+      try {
+        const data = await API.getAllVocabulary();
+        this._allVocabCache = data.flatWords || [];
+      } catch (e) {
+        this._allVocabCache = [];
+      }
+      return this._allVocabCache;
     },
 
     get availableWordCount() {
@@ -102,6 +253,8 @@ document.addEventListener('alpine:init', () => {
     setGrade(grade) {
       this.grade = grade;
       this.selectedUnits = [];
+      // 切换年级时清除缓存
+      this._allVocabCache = null;
     },
 
     toggleUnit(unit) {
@@ -111,6 +264,8 @@ document.addEventListener('alpine:init', () => {
       } else {
         this.selectedUnits.push(unit);
       }
+      // 切换单元时清除缓存
+      this._allVocabCache = null;
     },
 
     isUnitSelected(unit) {
@@ -136,8 +291,8 @@ document.addEventListener('alpine:init', () => {
       // 解析词性: "n. 鞋" → pos="n.", cleanMeaning="鞋"
       // 也处理 "v. & n. 游泳" 这种复合词性
       const posMatch = meaning.match(/^([a-z]+\.(?:\s*&\s*[a-z]+\.)*\s*)/);
-      const pos = posMatch ? posMatch[1].trim() : '';
-      const cleanMeaning = posMatch ? meaning.slice(posMatch[0].length).trim() : meaning;
+      const pos = w.pos || '';
+      let cm = posMatch ? meaning.slice(posMatch[0].length).trim() : meaning; cm = cm.replace(/\([^(]*[a-zA-Z][^(]*\)/g, "").replace(/\/[^/]*\//g, "").replace(/\/[^/]*\]/g, "").replace(/^[，,\s]+/, "").replace(/^&\s*/, "").trim(); const cleanMeaning = cm;
       return {
         en: w.en || w.word || '',
         phonetic: w.phonetic || '',
@@ -179,8 +334,8 @@ document.addEventListener('alpine:init', () => {
     },
 
     getWordPrompt(w) {
-      const meaning = (w.meaning || '').replace(/^[a-z]+\.(?:\s*&\s*[a-z]+\.)*\s*/, '');
-      if (this.mode === 'cn2en') return meaning;
+      let m1 = (w.meaning || '').replace(/^[a-z]+\.(?:\s*&\s*[a-z]+\.)*\s*/, ''); m1 = m1.replace(/\([^(]*[a-zA-Z][^(]*\)/g, '').replace(/\/[^/]*\//g, '').replace(/\/[^/]*\]/g, '').replace(/^[，,\s]+/, '').replace(/^&\s*/, '').trim();
+      if (this.mode === 'cn2en') return m1;
       if (this.mode === 'en2cn') return w.en || w.word || '';
       return '🔊 ' + (w.en || w.word || '');
     },
@@ -247,36 +402,47 @@ document.addEventListener('alpine:init', () => {
     toggleAnswer() { this.answerShown = !this.answerShown; },
 
     prev() {
-      if (this.index > 0) { this.index--; this.answerShown = false; this.quizFinished = false; this.showAllAnswers = false; this._onWordChange(); }
+      if (this.index > 0) { this.index--; this.answerShown = false; this.quizFinished = false; this.showAllAnswers = false; this._onWordChange(); this._saveProgress(); }
     },
     next() {
       if (this.index < this.words.length - 1) {
-        this.index++; this.answerShown = false; this._onWordChange();
+        this.index++; this.answerShown = false; this._onWordChange(); this._saveProgress();
       }
       // 到最后一个了，标记完成
       if (this.index === this.words.length - 1 && !this.quizFinished) {
         this.quizFinished = true;
+        this._saveProgress();
+        if (this.quizSource) {
+          const today = new Date().toISOString().split('T')[0];
+          API.logQuizComplete(today, this.quizSource, this.words.map(w => w.id)).catch(() => {});
+        }
       }
     },
     reset() {
       this._clearAutoTimer();
       speechSynthesis.cancel();
       this.quizStarted = false; this.quizFinished = false; this.showAllAnswers = false;
-      this.words = []; this.index = 0; this.answerShown = false;
+      this.words = []; this.index = 0; this.answerShown = false; this.quizSource = null;
+      this._clearSavedProgress();
     },
+    toggleAnswer() { this.answerShown = !this.answerShown; this._saveProgress(); },
 
     // 获取单词的答案文本
     getWordAnswer(w) {
       const en = w.en || w.word || '';
-      const meaning = (w.meaning || '').replace(/^[a-z]+\.(?:\s*&\s*[a-z]+\.)*\s*/, '');
+      let m2 = (w.meaning || '').replace(/^[a-z]+\.(?:\s*&\s*[a-z]+\.)*\s*/, ''); m2 = m2.replace(/\([^(]*[a-zA-Z][^(]*\)/g, '').replace(/\/[^/]*\//g, '').replace(/\/[^/]*\]/g, '').replace(/^[，,\s]+/, '').replace(/^&\s*/, '').trim();
       if (this.mode === 'cn2en') return en;
-      if (this.mode === 'en2cn') return meaning;
+      if (this.mode === 'en2cn') return m2;
       return en;
     },
 
     toggleAutoNext() {
       this.autoNext = !this.autoNext;
       if (this.autoNext) { this._onWordChange(); } else { this._clearAutoTimer(); }
+    },
+
+    toggleAutoPlay() {
+      this.autoPlay = !this.autoPlay;
     },
 
     toggleFullscreen() {
@@ -288,6 +454,50 @@ document.addEventListener('alpine:init', () => {
       }
     },
 
+    
+
+    // === History Modal ===
+    async loadHistory() {
+      this.historyLoading = true;
+      try {
+        const data = await API.getQuizHistory(this.historyDate);
+        this.historyData = {
+          daily: data.daily || { words: [], count: 0 },
+          generated: data.generated || { words: [], count: 0 },
+        };
+      } catch (e) {
+        this.historyData = { daily: { words: [], count: 0 }, generated: { words: [], count: 0 } };
+      } finally {
+        this.historyLoading = false;
+      }
+    },
+    openHistory() {
+      this.showHistoryModal = true;
+      this.loadHistory();
+    },
+
+    // === 智能每日50词 ===
+    async loadSmartDaily() {
+      try {
+        const data = await API.get('/api/quiz-smart/daily');
+        if (data.words && data.words.length > 0) {
+          this.words = data.words;
+          this.index = 0;
+          this.answerShown = false;
+          this.quizStarted = true;
+          this.quizSource = 'daily';
+          this.quizFinished = false;
+          this.showAllAnswers = false;
+          this.$nextTick(() => this._onWordChange());
+          this._saveProgress();
+          this.$dispatch('toast', { message: `已加载今日智能50词（${data.cached ? '缓存' : '新生成'}）`, type: 'success' });
+        } else {
+          this.$dispatch('toast', { message: '生成单词失败', type: 'error' });
+        }
+      } catch (e) {
+        this.$dispatch('toast', { message: e.message || '加载智能单词失败', type: 'error' });
+      }
+    },
     handleKey(e) {
       if (!this.quizStarted) return;
       if (e.key === 'ArrowLeft') this.prev();

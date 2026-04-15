@@ -10,6 +10,14 @@ const { getDB } = require('../services/db');
 const ROUND_POINTS = { 1: 2, 2: 1 };
 
 // ---------------------------------------------------------------------------
+// Period date ranges (2026年)
+// ---------------------------------------------------------------------------
+const PERIOD_RANGES = {
+  '1': { start: '2026-03-23', end: '2026-04-03', name: '第1周期' },
+  '2': { start: '2026-04-06', end: '2026-04-17', name: '第2周期' },
+};
+
+// ---------------------------------------------------------------------------
 // Build current class roster map: group_sort_order -> [student rows]
 // ---------------------------------------------------------------------------
 function getStudentsByGroup(db, classId) {
@@ -54,9 +62,10 @@ function resolveLegacyStudentId(db, classId, groupIndex, studentIndex) {
 
 // ---------------------------------------------------------------------------
 // GET /  — ranking for a class, sorted by total points descending
+// Query params: class_id (required), period (optional: '1', '2', 'current', 'all')
 // ---------------------------------------------------------------------------
 router.get('/', (req, res) => {
-  const { class_id } = req.query;
+  const { class_id, period } = req.query;
 
   if (!class_id) {
     return res.status(400).json({ error: 'class_id is required' });
@@ -64,6 +73,13 @@ router.get('/', (req, res) => {
 
   const db = getDB();
   const classId = Number(class_id);
+
+  // Determine date range based on period
+  let dateFilter = null;
+  const effectivePeriod = period === 'current' ? '2' : period;
+  if (effectivePeriod && effectivePeriod !== 'all' && PERIOD_RANGES[effectivePeriod]) {
+    dateFilter = PERIOD_RANGES[effectivePeriod];
+  }
 
   const students = db
     .prepare(
@@ -78,35 +94,70 @@ router.get('/', (req, res) => {
 
   const pointMap = new Map();
 
+  // Build query conditions for date filtering
+  let modernQuery, legacyQuery;
+  let modernParams, legacyParams;
+
+  if (dateFilter) {
+    // With date filter
+    modernQuery = `
+      SELECT r.student_id,
+             SUM(CASE WHEN cs.round = 1 THEN 2
+                      WHEN cs.round = 2 THEN 1
+                      ELSE 0 END) AS points
+      FROM checkin_records r
+      JOIN checkin_sessions cs ON r.session_id = cs.id
+      WHERE cs.class_id = ? AND r.passed = 1 AND r.student_id IS NOT NULL
+        AND cs.date >= ? AND cs.date <= ?
+      GROUP BY r.student_id
+    `;
+    modernParams = [classId, dateFilter.start, dateFilter.end];
+
+    legacyQuery = `
+      SELECT r.student_index, r.group_index,
+             CASE WHEN cs.round = 1 THEN 2
+                  WHEN cs.round = 2 THEN 1
+                  ELSE 0 END AS points
+      FROM checkin_records r
+      JOIN checkin_sessions cs ON r.session_id = cs.id
+      WHERE cs.class_id = ? AND r.passed = 1 AND r.student_id IS NULL
+        AND cs.date >= ? AND cs.date <= ?
+    `;
+    legacyParams = [classId, dateFilter.start, dateFilter.end];
+  } else {
+    // Without date filter (all periods)
+    modernQuery = `
+      SELECT r.student_id,
+             SUM(CASE WHEN cs.round = 1 THEN 2
+                      WHEN cs.round = 2 THEN 1
+                      ELSE 0 END) AS points
+      FROM checkin_records r
+      JOIN checkin_sessions cs ON r.session_id = cs.id
+      WHERE cs.class_id = ? AND r.passed = 1 AND r.student_id IS NOT NULL
+      GROUP BY r.student_id
+    `;
+    modernParams = [classId];
+
+    legacyQuery = `
+      SELECT r.student_index, r.group_index,
+             CASE WHEN cs.round = 1 THEN 2
+                  WHEN cs.round = 2 THEN 1
+                  ELSE 0 END AS points
+      FROM checkin_records r
+      JOIN checkin_sessions cs ON r.session_id = cs.id
+      WHERE cs.class_id = ? AND r.passed = 1 AND r.student_id IS NULL
+    `;
+    legacyParams = [classId];
+  }
+
   // 1) modern records with student_id
-  const modernRows = db
-    .prepare(
-      `SELECT r.student_id,
-              SUM(CASE WHEN cs.round = 1 THEN 2
-                       WHEN cs.round = 2 THEN 1
-                       ELSE 0 END) AS points
-       FROM checkin_records r
-       JOIN checkin_sessions cs ON r.session_id = cs.id
-       WHERE cs.class_id = ? AND r.passed = 1 AND r.student_id IS NOT NULL
-       GROUP BY r.student_id`
-    )
-    .all(classId);
+  const modernRows = db.prepare(modernQuery).all(...modernParams);
   for (const row of modernRows) {
     pointMap.set(row.student_id, (pointMap.get(row.student_id) || 0) + row.points);
   }
 
   // 2) legacy records without student_id – resolve dynamically
-  const legacyRows = db
-    .prepare(
-      `SELECT r.student_index, r.group_index,
-              CASE WHEN cs.round = 1 THEN 2
-                   WHEN cs.round = 2 THEN 1
-                   ELSE 0 END AS points
-       FROM checkin_records r
-       JOIN checkin_sessions cs ON r.session_id = cs.id
-       WHERE cs.class_id = ? AND r.passed = 1 AND r.student_id IS NULL`
-    )
-    .all(classId);
+  const legacyRows = db.prepare(legacyQuery).all(...legacyParams);
   for (const row of legacyRows) {
     const sid = resolveLegacyStudentId(db, classId, row.group_index, row.student_index);
     if (sid) {

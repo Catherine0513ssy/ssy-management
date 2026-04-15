@@ -20,14 +20,17 @@ document.addEventListener('alpine:init', () => {
   Alpine.data('checkinTab', () => ({
     mode: 'word',               // 'word' | 'essay'
     round: 1,                   // 1 | 2
-    selectedDate: new Date().toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' }).replace(/\//g, '-'),
+    selectedDate: new Date().toISOString().split('T')[0], // ISO format yyyy-MM-DD
     dates: [],                  // dates with existing sessions
     students: {},               // { '1': ['name0', 'name1', ...], '2': [...] }
     passed: {},                 // { '1': [idx, ...], '2': [idx, ...] }
     loading: false,
     saving: false,
     modified: false,
+    showDatePicker: false, // Toggle for date picker visibility
+    tempDate: null, // Temporary date for date picker
     loaded: false,
+    bothFailed: {},  // 两轮都未通过的学生
 
     async init() {
       const ensureLoaded = async () => {
@@ -77,6 +80,8 @@ document.addEventListener('alpine:init', () => {
         const data = await API.getCheckin(this.selectedDate, this.mode, this.round);
         this.passed = data.passed || {};
         this.modified = false;
+        // 同时更新两轮都未通过的学生列表
+        await this.loadBothFailed();
       } catch (e) { console.error('loadCheckin:', e); }
       this.loading = false;
     },
@@ -109,6 +114,8 @@ document.addEventListener('alpine:init', () => {
         await API.saveCheckin(this.selectedDate, this.mode, this.round, this.passed);
         this.modified = false;
         this.$dispatch('toast', { message: '保存成功', type: 'success' });
+        this.$dispatch('checkin-saved');
+        await this.loadBothFailed();
         // Refresh dates list in case a new session was created
         await this.loadDates();
       } catch (e) {
@@ -148,6 +155,20 @@ document.addEventListener('alpine:init', () => {
       if (!(await this._guardAndReload())) { this.selectedDate = prev; }
     },
 
+    // Open date picker and initialize tempDate
+    openDatePicker() {
+      this.tempDate = this.selectedDate;
+      this.showDatePicker = true;
+    },
+
+    // Confirm date selection
+    async confirmDate() {
+      if (this.tempDate && this.tempDate !== this.selectedDate) {
+        await this.setDate(this.tempDate);
+      }
+      this.showDatePicker = false;
+    },
+
     // ------------------------------------------------------------------
     // Computed helpers
     // ------------------------------------------------------------------
@@ -171,6 +192,50 @@ document.addEventListener('alpine:init', () => {
       const total = this.totalStudents;
       if (!total) return '0%';
       return Math.round((this.passedCount / total) * 100) + '%';
+    },
+
+    // ------------------------------------------------------------------
+    // 获取两轮都未通过的学生
+    // ------------------------------------------------------------------
+    async loadBothFailed() {
+      try {
+        // 获取第一轮数据
+        const round1Data = await API.getCheckin(this.selectedDate, this.mode, 1);
+        const round1Passed = round1Data.passed || {};
+        
+        // 获取第二轮数据
+        const round2Data = await API.getCheckin(this.selectedDate, this.mode, 2);
+        const round2Passed = round2Data.passed || {};
+        
+        const failed = {};
+        
+        for (const groupKey of Object.keys(this.students)) {
+          const groupStudents = this.students[groupKey] || [];
+          const r1Passed = new Set(round1Passed[groupKey] || []);
+          const r2Passed = new Set(round2Passed[groupKey] || []);
+          
+          // 找出两轮都没通过的学生
+          failed[groupKey] = groupStudents.filter((name, idx) => {
+            return !r1Passed.has(idx) && !r2Passed.has(idx);
+          });
+        }
+        
+        this.bothFailed = failed;
+        return failed;
+      } catch (e) {
+        console.error('loadBothFailed:', e);
+        this.bothFailed = {};
+        return {};
+      }
+    },
+
+    // ------------------------------------------------------------------
+    // 计算两轮都未通过的学生总数
+    // ------------------------------------------------------------------
+    get bothRoundsFailedCount() {
+      // 同步计算（基于当前已加载的round数据）
+      // 需要同时知道两轮的passed状态
+      return 0; // 占位，实际通过getBothRoundsFailed获取
     },
 
     // Quick action: mark all students in a group as passed

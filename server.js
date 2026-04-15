@@ -6,7 +6,7 @@ const errorHandler = require('./middleware/error');
 const { startBackupSchedule } = require('./services/backup');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const HOST = process.env.HOST || '0.0.0.0';
 let serverInstance;
 
@@ -28,6 +28,12 @@ app.use((req, res, next) => {
 });
 
 // Static files
+app.use((req, res, next) => {
+  if (req.path.endsWith('.html')) {
+    res.setHeader('Cache-Control', 'no-store');
+  }
+  next();
+});
 app.use(express.static(path.join(__dirname, 'public')));
 
 // API Routes
@@ -38,6 +44,8 @@ app.use('/api/excellent', require('./routes/excellent'));
 app.use('/api/ranking', require('./routes/ranking'));
 app.use('/api/vocabulary', require('./routes/vocabulary'));
 app.use('/api/quiz', require('./routes/quiz'));
+app.use('/api/quiz-smart', require('./routes/quiz_smart'));
+app.use('/api/choice-fill', require('./routes/choice_fill'));
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/ocr', require('./routes/ocr'));
 app.use('/api/upload', require('./routes/upload'));

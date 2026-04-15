@@ -88,7 +88,7 @@ router.get('/students', (req, res) => {
     SELECT s.*, g.name AS group_name
     FROM students s
     LEFT JOIN student_groups g ON g.id = s.group_id
-    WHERE s.class_id = ?
+    WHERE s.class_id = ? AND s.active = 1
     ORDER BY g.sort_order, s.sort_order, s.id
   `).all(Number(class_id));
 
@@ -114,7 +114,13 @@ router.post('/students/batch', (req, res) => {
   const { class_id, group_id, names } = req.body;
   if (!class_id || !names) return res.status(400).json({ error: 'class_id and names are required' });
 
-  const nameList = names.split(/\r?\n/).map(n => n.trim()).filter(Boolean);
+  // Handle both string (newline separated) and array formats
+  let nameList;
+  if (Array.isArray(names)) {
+    nameList = names.map(n => n.trim()).filter(Boolean);
+  } else {
+    nameList = names.split(/\r?\n/).map(n => n.trim()).filter(Boolean);
+  }
   if (nameList.length === 0) return res.status(400).json({ error: 'names is empty' });
 
   const db = getDB();

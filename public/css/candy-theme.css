@@ -103,7 +103,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
-  font-size: 16px;
+  font-size: 24px;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -909,7 +909,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Mobile */
 @media (max-width: 480px) {
-  html { font-size: 14px; }
+  html { font-size: 24px; }
   .grid-cols-2 { grid-template-columns: 1fr; }
   .grid-cols-3 { grid-template-columns: 1fr; }
   .grid-cols-4 { grid-template-columns: 1fr; }

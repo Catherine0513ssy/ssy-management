@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>选词填空 - 题目管理</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #666;
+      font-size: 24px;
+      margin-bottom: 25px;
+    }
+    .form-section {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    .form-title {
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 24px;
+      border-left: 4px solid #667eea;
+      padding-left: 10px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 6px;
+      font-size: 24px;
+    }
+    input[type="text"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 24px;
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    .help-text {
+      font-size: 24px;
+      color: #888;
+      margin-top: 5px;
+    }
+    .options-input {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .options-input input {
+      flex: 1;
+      min-width: 200px;
+    }
+    .answer-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .answer-num {
+      width: 40px;
+      font-weight: bold;
+      color: #667eea;
+    }
+    .answer-input {
+      flex: 1;
+    }
+    .btn {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 25px;
+      font-size: 24px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 600;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    }
+    .btn-secondary {
+      background: #e0e0e0;
+      color: #333;
+    }
+    .btn-secondary:hover {
+      background: #d0d0d0;
+    }
+    .btn-danger {
+      background: #e74c3c;
+      color: white;
+    }
+    .btn-sm {
+      padding: 6px 15px;
+      font-size: 24px;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .message {
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+      text-align: center;
+    }
+    .message.success {
+      background: #d4edda;
+      color: #155724;
+    }
+    .message.error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    .back-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .back-link a {
+      color: #667eea;
+      text-decoration: none;
+    }
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+    .question-list {
+      margin-top: 30px;
+    }
+    .question-item {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .question-info {
+      flex: 1;
+    }
+    .question-title {
+      font-weight: 600;
+      color: #333;
+    }
+    .question-date {
+      font-size: 24px;
+      color: #888;
+    }
+    .preview-box {
+      background: #fff3cd;
+      border: 2px dashed #ffc107;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+    .preview-title {
+      font-weight: bold;
+      color: #856404;
+      margin-bottom: 10px;
+    }
+    .tab-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 10px;
+    }
+    .tab-btn {
+      padding: 10px 20px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 24px;
+      font-weight: 600;
+      color: #666;
+      border-radius: 20px;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
+    .image-upload {
+      border: 2px dashed #ccc;
+      padding: 30px;
+      text-align: center;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .image-upload:hover {
+      border-color: #667eea;
+      background: #f8f9fa;
+    }
+    .ocr-result {
+      background: #e3f2fd;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" x-data="adminApp()">
+    <h1>📚 选词填空管理</h1>
+    <p class="subtitle">添加、编辑和管理选词填空题目</p>
+
+    <div class="tab-nav">
+      <button class="tab-btn" :class="{'active': activeTab === 'list'}" @click="activeTab = 'list'">📋 题目列表</button>
+      <button class="tab-btn" :class="{'active': activeTab === 'add'}" @click="activeTab = 'add'">➕ 添加题目</button>
+      <button class="tab-btn" :class="{'active': activeTab === 'image'}" @click="activeTab = 'image'">📷 图片识别</button>
+    </div>
+
+    <!-- 题目列表 -->
+    <div x-show="activeTab === 'list'">
+      <div class="form-section">
+        <div class="form-title">所有题目</div>
+        <div x-show="loading">加载中...</div>
+        <div x-show="!loading && questions.length === 0" style="text-align:center;color:#888;padding:40px;">
+          暂无题目，请先添加
+        </div>
+        <template x-for="q in questions" :key="q.id">
+          <div class="question-item">
+            <div class="question-info">
+              <div class="question-title" x-text="q.title"></div>
+              <div class="question-date" x-text="'日期: ' + (q.scheduled_date || '未安排') + ' | 难度: ' + q.difficulty"></div>
+            </div>
+            <div>
+              <button class="btn btn-sm btn-secondary" @click="editQuestion(q)">编辑</button>
+              <button class="btn btn-sm btn-danger" @click="deleteQuestion(q.id)">删除</button>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <!-- 添加/编辑题目 -->
+    <div x-show="activeTab === 'add' || activeTab === 'edit'">
+      <div class="form-section">
+        <div class="form-title" x-text="editingId ? '编辑题目' : '添加新题目'"></div>
+
+        <div class="form-group">
+          <label>题目标题</label>
+          <input type="text" x-model="form.title" placeholder="例如：江西米粉 - 语法填空">
+        </div>
+
+        <div class="form-group">
+          <label>文章段落</label>
+          <textarea x-model="form.passage" placeholder="粘贴文章段落，用 ____ 表示填空位置，例如：This is a test passage with 44. ____ and 45. ____."></textarea>
+          <div class="help-text">在需要填空的地方使用 ____ 占位，并在前面标注题号（如 44. ____）</div>
+        </div>
+
+        <div class="form-group">
+          <label>方框中的词（用 | 分隔）</label>
+          <input type="text" x-model="form.options" placeholder="例如：even|as|start|story|order|tons|different|dish|popular|rises|such">
+          <div class="help-text">输入所有选项词，用竖线 | 分隔，系统会随机打乱显示</div>
+        </div>
+
+        <div class="form-group">
+          <label>答案配置</label>
+          <div class="help-text" style="margin-bottom:10px;">格式：题号:答案（如 44:dish|45:start）</div>
+          <input type="text" x-model="form.answers" placeholder="44:dish|45:start|46:even|47:as|48:story|49:order|50:tons|51:different|52:popular|53:rises">
+        </div>
+
+        <div class="form-group">
+          <label>详细解析</label>
+          <textarea x-model="form.explanations" placeholder="输入详细解析，格式：44:解析1|45:解析2" rows="4"></textarea>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+          <div class="form-group">
+            <label>难度</label>
+            <select x-model="form.difficulty">
+              <option value="easy">简单</option>
+              <option value="medium">中等</option>
+              <option value="hard">困难</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>题目来源</label>
+            <input type="text" x-model="form.source" placeholder="例如：2024湖南中考模拟">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>安排日期（可选）</label>
+          <input type="date" x-model="form.scheduled_date">
+          <div class="help-text">设置该题目在哪一天显示给学生，不设置则不会自动显示</div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-secondary" @click="resetForm()">清空</button>
+          <button class="btn btn-primary" @click="saveQuestion()" :disabled="saving">
+            <span x-show="!saving" x-text="editingId ? '更新题目' : '保存题目'"></span>
+            <span x-show="saving">保存中...</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 预览 -->
+      <div class="preview-box" x-show="form.passage && form.options">
+        <div class="preview-title">👁 预览</div>
+        <div style="line-height:2;margin-bottom:15px;" x-html="formatPreview(form.passage)"></div>
+        <div style="background:white;padding:10px;border-radius:8px;">
+          <strong>选项：</strong>
+          <span x-text="form.options ? form.options.split('|').join('  ') : ''"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 图片识别 -->
+    <div x-show="activeTab === 'image'">
+      <div class="form-section">
+        <div class="form-title">拍照识题（实验功能）</div>
+        <div class="image-upload" @click="$refs.imageInput.click()">
+          <div x-show="!imagePreview">📷 点击上传题目图片</div>
+          <img x-show="imagePreview" :src="imagePreview" style="max-width:100%;max-height:300px;">
+          <input type="file" x-ref="imageInput" accept="image/*" @change="onImageSelect($event)" style="display:none;">
+        </div>
+        <button x-show="imageFile" @click="recognizeImage()" :disabled="recognizing" class="btn btn-primary" style="margin-top:15px;width:100%;">
+          <span x-show="!recognizing">🔍 识别题目内容</span>
+          <span x-show="recognizing">识别中...</span>
+        </button>
+        <div x-show="ocrText" class="ocr-result">
+          <strong>识别结果：</strong>
+          <pre x-text="ocrText" style="margin-top:10px;white-space:pre-wrap;"></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 消息提示 -->
+    <div x-show="message" :class="'message ' + messageType" x-text="message"></div>
+
+    <div class="back-link">
+      <a href="/choice_fill.html">← 返回学生页面</a> |
+      <a href="/">← 返回首页</a>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = '/api/choice-fill';
+
+    function adminApp() {
+      return {
+        activeTab: 'list',
+        loading: false,
+        saving: false,
+        questions: [],
+        editingId: null,
+        message: '',
+        messageType: '',
+        imagePreview: '',
+        imageFile: null,
+        recognizing: false,
+        ocrText: '',
+        form: {
+          title: '',
+          passage: '',
+          options: '',
+          answers: '',
+          explanations: '',
+          difficulty: 'medium',
+          source: '',
+          scheduled_date: ''
+        },
+
+        init() {
+          this.loadQuestions();
+        },
+
+        async loadQuestions() {
+          this.loading = true;
+          try {
+            const res = await fetch(`${API_BASE}/all`);
+            const data = await res.json();
+            this.questions = data.questions || [];
+          } catch (e) {
+            this.showMessage('加载题目列表失败', 'error');
+          } finally {
+            this.loading = false;
+          }
+        },
+
+        async saveQuestion() {
+          if (!this.form.title || !this.form.passage || !this.form.options || !this.form.answers) {
+            this.showMessage('请填写所有必填项', 'error');
+            return;
+          }
+
+          this.saving = true;
+          try {
+            const url = this.editingId ? `${API_BASE}/update/${this.editingId}` : `${API_BASE}/add`;
+            const method = this.editingId ? 'PUT' : 'POST';
+
+            const res = await fetch(url, {
+              method: method,
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(this.form)
+            });
+
+            if (res.ok) {
+              this.showMessage(this.editingId ? '题目更新成功' : '题目添加成功', 'success');
+              this.resetForm();
+              this.loadQuestions();
+              this.activeTab = 'list';
+            } else {
+              const data = await res.json();
+              this.showMessage(data.error || '保存失败', 'error');
+            }
+          } catch (e) {
+            this.showMessage('网络错误', 'error');
+          } finally {
+            this.saving = false;
+          }
+        },
+
+        editQuestion(q) {
+          this.editingId = q.id;
+          this.form = {
+            title: q.title || '',
+            passage: q.passage || '',
+            options: q.options || '',
+            answers: q.answers || '',
+            explanations: q.explanations || '',
+            difficulty: q.difficulty || 'medium',
+            source: q.source || '',
+            scheduled_date: q.scheduled_date || ''
+          };
+          this.activeTab = 'edit';
+        },
+
+        async deleteQuestion(id) {
+          if (!confirm('确定要删除这道题吗？')) return;
+
+          try {
+            const res = await fetch(`${API_BASE}/delete/${id}`, { method: 'DELETE' });
+            if (res.ok) {
+              this.showMessage('删除成功', 'success');
+              this.loadQuestions();
+            } else {
+              this.showMessage('删除失败', 'error');
+            }
+          } catch (e) {
+            this.showMessage('网络错误', 'error');
+          }
+        },
+
+        resetForm() {
+          this.editingId = null;
+          this.form = {
+            title: '',
+            passage: '',
+            options: '',
+            answers: '',
+            explanations: '',
+            difficulty: 'medium',
+            source: '',
+            scheduled_date: ''
+          };
+        },
+
+        formatPreview(passage) {
+          if (!passage) return '';
+          return passage.replace(/(\d+)\.?\s*____/g, '<span style="display:inline-block;min-width:60px;border-bottom:2px solid #667eea;margin:0 4px;text-align:center;font-weight:bold;color:#667eea;">$1</span>');
+        },
+
+        onImageSelect(e) {
+          const file = e.target.files[0];
+          if (!file) return;
+          this.imageFile = file;
+          const reader = new FileReader();
+          reader.onload = (e) => this.imagePreview = e.target.result;
+          reader.readAsDataURL(file);
+        },
+
+        async recognizeImage() {
+          if (!this.imageFile) return;
+          this.recognizing = true;
+          this.showMessage('图片识别功能需要配置OCR服务，请手动输入题目内容', 'error');
+          this.recognizing = false;
+        },
+
+        showMessage(msg, type) {
+          this.message = msg;
+          this.messageType = type;
+          setTimeout(() => this.message = '', 3000);
+        }
+      };
+    }
+  </script>
+</body>
+</html>
