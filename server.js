@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const helmet = require('helmet');
+const compression = require('compression');
 const { initDB } = require('./services/db');
 const errorHandler = require('./middleware/error');
 const { startBackupSchedule } = require('./services/backup');
@@ -18,6 +19,9 @@ app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
+// Compression
+app.use(compression());
+
 // CORS for development
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -34,7 +38,16 @@ app.use((req, res, next) => {
   }
   next();
 });
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {
+  maxAge: '7d',
+  setHeaders: (res, path) => {
+    if (path.endsWith('.js') || path.endsWith('.css')) {
+      res.setHeader('Cache-Control', 'public, max-age=86400');
+    } else if (path.match(/\.(png|jpg|jpeg|gif|webp|svg|ico)$/)) {
+      res.setHeader('Cache-Control', 'public, max-age=604800');
+    }
+  }
+}));
 
 // API Routes
 app.use('/api/auth', require('./routes/auth'));
