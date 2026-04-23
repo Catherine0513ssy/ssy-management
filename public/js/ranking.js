@@ -7,11 +7,20 @@ document.addEventListener('alpine:init', () => {
     detailLoading: false,
     loaded: false,
     period: 'current',
-    periods: { 1: { start: '3.23', end: '4.3', name: '第1周期', status: 'ended' }, 2: { start: '4.6', end: '4.17', name: '第2周期', status: 'active' } },
-    async init() { const ensureLoaded = async () => { if (this.loaded) return; this.loaded = true; await this.load(); }; window.addEventListener('ssy:tab-change', async (e) => { if (e.detail?.tabId === 'ranking') await ensureLoaded(); }); if (document.body.dataset.activeTab === 'ranking') await ensureLoaded(); },
+    periods: {},
+    async init() { const ensureLoaded = async () => { if (this.loaded) return; this.loaded = true; await this.loadPeriods(); await this.load(); }; window.addEventListener('ssy:tab-change', async (e) => { if (e.detail?.tabId === 'ranking') await ensureLoaded(); }); if (document.body.dataset.activeTab === 'ranking') await ensureLoaded(); },
+    async loadPeriods() {
+      try {
+        const data = await API.getRankingPeriods();
+        this.periods = data.periods || {};
+        if (data.current && this.period === 'current') {
+          this.period = data.current;
+        }
+      } catch (e) { console.error('loadPeriods:', e); }
+    },
     async load() { this.loading = true; try { const data = await API.getRanking(this.period); this.rankings = data.rankings || []; } catch (e) { this.rankings = []; } this.loading = false; },
     async loadRanking(period) { this.period = period; await this.load(); },
-    get periodInfo() { if (this.period === 'all') return '📊 显示所有历史累计积分'; const pid = this.period === 'current' ? '2' : this.period; const p = this.periods[pid]; if (!p) return ''; return `${p.name} (${p.start}-${p.end}) - ${p.status === 'ended' ? '已结束' : '进行中'}`; },
+    get periodInfo() { if (this.period === 'all') return '📊 显示所有历史累计积分'; const p = this.periods[this.period]; if (!p) return ''; const statusText = p.status === 'ended' ? '已结束' : p.status === 'active' ? '进行中' : '未开始'; return `${p.name} (${p.startShort}-${p.endShort}) - ${statusText}`; },
     get groupedRankings() {
       const map = new Map();
       for (const s of this.rankings) {

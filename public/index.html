@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SSY 英语教学管理系统</title>
-  <meta name="description" content="SSY英语教学管理系统 - 作业、签到、默写、排名、选词填空、作文批改一站式平台">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%9A%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="/css/candy-theme.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/layout.css">
@@ -254,8 +252,8 @@
       }
       /* Calendar cells: slightly smaller */
       .cal-day {
-        width: 40px !important;
-        height: 40px !important;
+        width: 28px !important;
+        height: 28px !important;
         font-size: 16px !important;
       }
       /* Date list: horizontal scroll */
@@ -413,43 +411,6 @@
       .essay-card, .essay-sub-card {
         padding: 12px !important;
       }
-
-      /* Choice fill mobile */
-      .choicefill-container { padding: 12px !important; }
-      .choicefill-dateinfo { padding: 12px !important; font-size: 18px !important; margin-bottom: 12px !important; }
-      .choicefill-passage { padding: 16px !important; font-size: 18px !important; line-height: 1.8 !important; }
-      .choicefill-blank { min-width: 60px !important; }
-      .choicefill-options { padding: 16px !important; font-size: 18px !important; }
-      .choicefill-option-item { padding: 8px 14px !important; font-size: 18px !important; border-radius: 16px !important; }
-      .choicefill-answers { padding: 16px !important; font-size: 16px !important; }
-      .choicefill-answer-item { padding: 10px 0 !important; font-size: 18px !important; gap: 10px !important; }
-      .choicefill-answer-num { width: 40px !important; font-size: 20px !important; }
-      .choicefill-answer-word { font-size: 20px !important; }
-      .choicefill-explanation { font-size: 16px !important; }
-      .choicefill-toggle-btn { padding: 12px !important; font-size: 20px !important; border-radius: 10px !important; }
-
-      /* Quiz mobile font size */
-      div[x-show="quizStarted"] [style*="font-size:56px"] {
-        font-size: 2rem !important;
-      }
-
-      /* Wordgame mode cards mobile */
-      .wg-mode-cards { grid-template-columns: 1fr !important; }
-      .wg-card-grid { gap: 8px !important; }
-      .wg-card { padding: 6px 4px !important; border-radius: 12px !important; }
-
-      /* Remove resize handle on mobile */
-      div[x-data="homeworkTab()"] [style*="resize:horizontal"] {
-        resize: none !important;
-        width: 100% !important;
-        min-width: 0 !important;
-        max-width: 100% !important;
-      }
-
-      /* Reduce motion for performance */
-      @media (prefers-reduced-motion: reduce) {
-        .bg-blob { display: none !important; }
-      }
     }
 
     /* ========== Tablet (768px - 1024px) ========== */
@@ -469,7 +430,7 @@
   .period-active { background: white !important; color: #764ba2 !important; border-color: white !important; font-weight: bold; }
     /* Choice Fill Styles */
     .choicefill-container { max-width: 100%; margin: 0 auto; padding: 24px;  min-height: 75vh; }
-    .choicefill-dateinfo { text-align: center; background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 20px; border-radius: 14px; font-size: 24px; margin-bottom: 20px; }
+    .choicefill-dateinfo { text-align: center; background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 20px; border-radius: 14px; font-size: 24px; } margin-bottom: 20px; }
     .choicefill-dateinfo.warning { background: linear-gradient(135deg, #f093fb, #f5576c); }
     .choicefill-passage { background: #f8f9fa; padding: 40px; border-radius: 14px; line-height: 2; font-size: 40px; margin-bottom: 20px; border-left: 4px solid #667eea; text-align: left; }
     .choicefill-blank { display: inline-block; min-width: 180px; border-bottom: 2px solid #667eea; min-width: 100px; margin: 0 4px; text-align: center; font-weight: bold; color: #667eea; }
@@ -483,7 +444,7 @@
     .choicefill-answer-num { font-weight: bold; color: #155724; width: 80px; font-size: 48px; flex-shrink: 0; }
     .choicefill-answer-word { font-weight: bold; color: #28a745; font-size: 48px; margin-right: 20px; flex-shrink: 0; }
     .choicefill-explanation { color: #155724; font-size: 36px !important; line-height: 1.8; }
-    .choicefill-toggle-btn { display: block; width: 100%; padding: 18px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 14px; font-size: 60px; font-weight: 700; cursor: pointer; margin-top: 15px; }
+    .choicefill-toggle-btn { display: block; width: 100%; padding: 18px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 14px; font-size: 60px; font-weight: 700; } font-weight: 600; cursor: pointer; margin-top: 15px; }
     .choicefill-admin-link { text-align: center; margin-top: 15px; }
     .choicefill-admin-link a { color: #667eea; text-decoration: none; font-size: 24px; }
     .choicefill-loading { text-align: center; padding: 40px; color: #666; }
@@ -496,24 +457,24 @@
     }
     .sidebar {
       width: 180px;
-      background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+      background: linear-gradient(180deg, #f3e8ff 0%, #e9d5ff 100%);
       padding: 30px 0;
       position: fixed;
-      
       left: 0;
       top: 0;
       bottom: 0;
       overflow-y: auto;
       z-index: 100;
+      border-right: 1px solid rgba(192,132,252,0.15);
     }
     .sidebar-logo {
       text-align: center;
       padding: 0 12px 15px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(147,51,234,0.1);
       margin-bottom: 15px;
     }
     .sidebar-logo h1 {
-      color: white;
+      color: #581c87;
       font-size: 18px;
       margin: 0;
       line-height: 1.3;
@@ -531,7 +492,7 @@
       margin-bottom: 4px;
       border: none;
       background: transparent;
-      color: rgba(255,255,255,0.7);
+      color: rgba(88,28,135,0.7);
       font-size: 24px;
       font-weight: 500;
       cursor: pointer;
@@ -541,13 +502,13 @@
       white-space: nowrap;
     }
     .sidebar-tab:hover {
-      background: rgba(255,255,255,0.1);
-      color: white;
+      background: rgba(192,132,252,0.15);
+      color: #581c87;
     }
     .sidebar-tab.active {
-      background: linear-gradient(135deg, #667eea, #764ba2);
+      background: linear-gradient(135deg, #c084fc, #f472b6);
       color: white;
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      box-shadow: 0 4px 15px rgba(192,132,252,0.35);
     }
     .sidebar-tab-icon {
       font-size: 18px;
@@ -1023,7 +984,7 @@
     @keyframes wgSpin { to { transform: rotate(360deg); } }
 </style>
 </head>
-<body x-data="app()" x-cloak style="background:linear-gradient(135deg, #ffecd2 0%, #fcb69f 40%, #ee9ca7 70%, #ffdde1 100%);background-attachment:fixed;min-height:100vh;font-family:'Nunito','PingFang SC','Microsoft YaHei',sans-serif;margin:0;">  <!-- Sidebar Navigation -->
+<body x-data="app()" x-cloak style="background:linear-gradient(135deg, #faf5ff 0%, #f3e8ff 35%, #e9d5ff 65%, #fbcfe8 100%);background-attachment:fixed;min-height:100vh;font-family:'Nunito','PingFang SC','Microsoft YaHei',sans-serif;margin:0;">  <!-- Sidebar Navigation -->
   <aside class="sidebar">
     <div class="sidebar-logo">
       <h1>📚 作业系统</h1>
@@ -1146,7 +1107,7 @@
             <div x-show="presentationImages.length > 0" style="width:min(50vw, 720px);flex-shrink:0;display:flex;flex-direction:column;gap:18px;">
               <template x-for="item in presentationImages" :key="'presentation-image-' + item.id">
                 <div style="background:white;border-radius:18px;padding:14px;box-shadow:0 8px 30px rgba(15,23,42,0.08);">
-                  <img :src="item.image" alt="作业图片" style="width:100%;height:auto;border-radius:12px;display:block;">
+                  <img :src="item.image" style="width:100%;height:auto;border-radius:12px;display:block;">
                 </div>
               </template>
             </div>
@@ -1165,7 +1126,7 @@
                     <span x-text="(idx+1)+'. '+item.text"></span>
                     <button x-show="isAdmin" @click="deleteHomework(item.id)" style="background:none;border:none;cursor:pointer;color:#ef4444;">✕</button>
                   </div>
-                  <img x-show="item.image" :src="item.image" alt="作业图片"
+                  <img x-show="item.image" :src="item.image"
                     style="max-width:100%;max-height:250px;object-fit:contain;border-radius:8px;cursor:zoom-in;margin-top:6px;"
                     @click="previewImage = item.image">
                 </div>
@@ -1177,7 +1138,7 @@
               <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
                 <button @click="previewImage=null" style="background:none;border:none;cursor:pointer;font-size: 24px;color:#94a3b8;">✕ 关闭</button>
               </div>
-              <img :src="previewImage" alt="图片预览" style="max-width:100%;max-height:80vh;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+              <img :src="previewImage" style="max-width:100%;max-height:80vh;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.1);">
             </div>
           </div>
         </div>
@@ -1191,7 +1152,7 @@
           <textarea x-model="newText" placeholder="输入作业内容..." rows="3" style="width:100%;padding:10px;border-radius:8px;border:1px solid #e2e8f0;font-size: 24px;resize:vertical;box-sizing:border-box;"></textarea>
           <div class="upload-box" style="margin-top:10px;" @click="$refs.hwImg.click()" @dragover.prevent @drop.prevent="onImageSelect($event)">
             <div x-show="!imagePreview">📷 点击或拖拽上传图片（可选）</div>
-            <img x-show="imagePreview" :src="imagePreview" alt="图片预览" style="max-height:120px;border-radius:8px;">
+            <img x-show="imagePreview" :src="imagePreview" style="max-height:120px;border-radius:8px;">
             <input type="file" x-ref="hwImg" accept="image/*" @change="onImageSelect($event)" style="display:none;">
           </div>
           <button x-show="imagePreview" @click="clearImage()" style="margin-top:6px;font-size: 24px;color:#ef4444;background:none;border:none;cursor:pointer;">移除图片</button>
@@ -1211,7 +1172,7 @@
             </div>
             <div class="upload-box" @click="$refs.exImg.click()" style="flex:1;min-width:150px;padding:12px;">
               <div x-show="!imagePreview" style="font-size: 24px;">📷 点击选择图片</div>
-              <img x-show="imagePreview" :src="imagePreview" alt="图片预览" style="max-height:60px;border-radius:6px;">
+              <img x-show="imagePreview" :src="imagePreview" style="max-height:60px;border-radius:6px;">
               <input type="file" x-ref="exImg" accept="image/*" @change="onImageSelect($event)" style="display:none;">
             </div>
             <button @click="upload()" :disabled="uploading" style="padding:10px 20px;border-radius:24px;border:none;background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;font-size: 24px;font-weight:600;cursor:pointer;white-space:nowrap;">
@@ -1223,7 +1184,7 @@
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;">
           <template x-for="item in items" :key="item.id">
             <div style="background:rgba(255,255,255,0.85);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
-              <img x-show="item.image_path" :src="item.image_path" alt="优秀作业" style="width:100%;aspect-ratio:4/3;object-fit:cover;cursor:pointer;" @click="openLightbox(item)">
+              <img x-show="item.image_path" :src="item.image_path" style="width:100%;aspect-ratio:4/3;object-fit:cover;cursor:pointer;" @click="openLightbox(item)">
               <div style="padding:12px;">
                 <div style="font-weight:600;font-size: 24px;" x-text="item.student_name"></div>
                 <div style="font-size: 24px;color:#94a3b8;" x-text="item.date||''"></div>
@@ -1236,7 +1197,7 @@
         <!-- Lightbox (centered) -->
         <div x-show="lightboxImage" @click="closeLightbox()" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:200;cursor:pointer;">
           <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;" @click.stop>
-            <img :src="lightboxImage" alt="优秀作业大图" style="max-width:90vw;max-height:85vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+            <img :src="lightboxImage" style="max-width:90vw;max-height:85vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
             <div x-show="lightboxName" style="margin-top:12px;color:white;font-size: 24px;font-weight:600;" x-text="lightboxName"></div>
           </div>
           <button @click="closeLightbox()" style="position:fixed;top:20px;right:20px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.9);border:none;font-size:20px;cursor:pointer;z-index:201;">✕</button>
@@ -1329,8 +1290,12 @@
 <div style="background:linear-gradient(135deg,#a78bfa,#60a5fa);border-radius:16px;padding:16px;margin-bottom:20px;color:white;">
   <div style="font-size: 24px;opacity:0.9;margin-bottom:10px;">📅 选择周期</div>
   <div style="display:flex;gap:10px;flex-wrap:wrap;">
-    <button @click="loadRanking('1')" :class="period === '1' ? 'period-active' : 'period-btn'" style="padding:10px 24px;border-radius:10px;border:2px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1);color:white;cursor:pointer;font-size: 24px;">第1周期<small style="display:block;font-size: 24px;opacity:0.8;">3.23-4.3</small></button>
-    <button @click="loadRanking('current')" :class="period === 'current' ? 'period-active' : 'period-btn'" style="padding:10px 24px;border-radius:10px;border:2px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1);color:white;cursor:pointer;font-size: 24px;">第2周期<small style="display:block;font-size: 24px;opacity:0.8;">4.6-4.17</small></button>
+    <template x-for="[num, p] in Object.entries(periods).filter(([n,p]) => p.status !== 'upcoming').sort((a,b) => a[0] - b[0])" :key="num">
+      <button @click="loadRanking(num)" :class="period === num ? 'period-active' : 'period-btn'" style="padding:10px 24px;border-radius:10px;border:2px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1);color:white;cursor:pointer;font-size: 24px;">
+        <span x-text="p.name"></span>
+        <small style="display:block;font-size: 24px;opacity:0.8;" x-text="p.startShort + '-' + p.endShort"></small>
+      </button>
+    </template>
     <button @click="loadRanking('all')" :class="period === 'all' ? 'period-active' : 'period-btn'" style="padding:10px 24px;border-radius:10px;border:2px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1);color:white;cursor:pointer;font-size: 24px;">历史总榜<small style="display:block;font-size: 24px;opacity:0.8;">全部累计</small></button>
   </div>
   <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.2);font-size: 24px;" x-text="periodInfo"></div>
@@ -1438,7 +1403,7 @@
                 <div x-show="!imagePreviews.length">📸 点击上传图片（支持多张批量识别）</div>
                 <div x-show="imagePreviews.length" style="display:flex;gap:8px;flex-wrap:wrap;">
                   <template x-for="(p,i) in imagePreviews" :key="i">
-                    <img :src="p" alt="OCR识别图片" style="max-height:80px;border-radius:6px;">
+                    <img :src="p" style="max-height:80px;border-radius:6px;">
                   </template>
                 </div>
                 <input type="file" x-ref="ocrInput" accept="image/*" multiple @change="onImageSelect($event)" style="display:none;">
@@ -1591,8 +1556,29 @@
             <a href="/quiz_mark_wrong.html" target="_blank" style="display:inline-block;padding:6px 24px;background:linear-gradient(135deg,#ff6b6b,#ee5a24);color:white;text-decoration:none;border-radius:20px;font-size: 24px;font-weight:600;">✏️ 录入错误单词</a>
             <button @click="loadSmartDaily()" style="display:inline-block;margin-left:8px;padding:6px 24px;background:linear-gradient(135deg,#667eea,#764ba2);color:white;border:none;border-radius:20px;font-size: 24px;font-weight:600;cursor:pointer;">🤖 智能今日50词</button>
             <button @click="openHistory()" style="display:inline-block;margin-left:8px;padding:6px 24px;background:linear-gradient(135deg,#10b981,#059669);color:white;border:none;border-radius:20px;font-size: 24px;font-weight:600;cursor:pointer;">&#128203; &#40664;&#20889;&#35760;&#24405;</button>
+            <button @click="planMode = !planMode" :style="planMode ? 'background:linear-gradient(135deg,#d35400,#e67e22);' : 'background:linear-gradient(135deg,#f59e0b,#d97706);'" style="display:inline-block;margin-left:8px;padding:6px 24px;color:white;border:none;border-radius:20px;font-size: 24px;font-weight:600;cursor:pointer;">📅 30天计划</button>
           </div>
-          <div style="background:rgba(255,255,255,0.85);border-radius:16px;padding:24px;">
+          <!-- 30天计划面板 -->
+          <div x-show="planMode" style="max-width:900px;margin:0 auto;margin-bottom:15px;">
+            <div style="background:rgba(255,248,240,0.95);border-radius:16px;padding:20px;border:2px solid #ffd0a8;" x-init="loadPlanDay(1)">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                <span style="font-size:20px;font-weight:700;color:#d35400;">📅 30天单词计划</span>
+                <span style="font-size:14px;color:#888;" x-text="'Day ' + planDay + ' · ' + planWords.length + '词'"></span>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-bottom:12px;">
+                <template x-for="d in 30" :key="d">
+                  <button @click="loadPlanDay(d)" :style="planDay === d ? 'background:#d35400;color:white;' : 'background:#ffe8d6;color:#d35400;'" style="padding:8px 0;border:none;border-radius:6px;font-size:13px;font-weight:bold;cursor:pointer;" x-text="'D'+d"></button>
+                </template>
+              </div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <button @click="downloadPlanMd()" style="padding:8px 20px;border:none;border-radius:10px;background:#ffe8d6;color:#d35400;font-size:16px;font-weight:600;cursor:pointer;">📥 下载背记表</button>
+                <button @click="startPlanDictation()" style="padding:8px 20px;border:none;border-radius:10px;background:linear-gradient(135deg,#d35400,#e67e22);color:white;font-size:16px;font-weight:600;cursor:pointer;">🎧 开始听写</button>
+              </div>
+            </div>
+          </div>
+          <!-- 原有设置面板 -->
+          <div x-show="!planMode">
+            <div style="background:rgba(255,255,255,0.85);border-radius:16px;padding:24px;">
             <div style="margin-bottom:16px;">
               <label style="font-size: 24px;color:#64748b;font-weight:600;display:block;margin-bottom:6px;">年级范围</label>
               <div style="display:flex;gap:6px;flex-wrap:wrap;">
@@ -1651,10 +1637,11 @@
             </button>
             <p style="text-align:center;margin-top:12px;font-size: 24px;color:#94a3b8;">键盘：← → 翻页 · 空格下一个 · Enter 显示答案 · A 朗读</p>
           </div>
+          </div>
         </div>
 
         <!-- Quiz Display -->
-        <div x-show="quizStarted" :style="fullscreen ? 'position:fixed;inset:0;z-index:300;background:linear-gradient(135deg,#ffecd2,#fcb69f,#ee9ca7);padding:20px;' : ''" style="display:flex;flex-direction:column;">
+        <div x-show="quizStarted" :style="fullscreen ? 'position:fixed;inset:0;z-index:300;background:linear-gradient(135deg,#faf5ff,#f3e8ff,#e9d5ff,#fbcfe8);padding:20px;' : ''" style="display:flex;flex-direction:column;">
 
           <!-- Top bar: progress + actions -->
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
@@ -1746,7 +1733,7 @@
                     <template x-for="w in historyData.daily.words" :key="w.id">
                       <div style="background:#f8fafc;border-radius:10px;padding:10px 12px;">
                         <div style="font-weight:700;color:#1e293b;" x-text="w.en || w.word"></div>
-                        <div style="font-size:14px;color:#64748b;margin-top:2px;" x-text="(w.pos || '') + '  ' + (w.meaning || '')"></div>
+                        <div style="font-size:12px;color:#64748b;margin-top:2px;" x-text="(w.pos || '') + '  ' + (w.meaning || '')"></div>
                       </div>
                     </template>
                   </div>
@@ -1757,7 +1744,7 @@
                     <template x-for="w in historyData.generated.words" :key="w.id">
                       <div style="background:#f8fafc;border-radius:10px;padding:10px 12px;">
                         <div style="font-weight:700;color:#1e293b;" x-text="w.en || w.word"></div>
-                        <div style="font-size:14px;color:#64748b;margin-top:2px;" x-text="(w.pos || '') + '  ' + (w.meaning || '')"></div>
+                        <div style="font-size:12px;color:#64748b;margin-top:2px;" x-text="(w.pos || '') + '  ' + (w.meaning || '')"></div>
                       </div>
                     </template>
                   </div>
@@ -1943,7 +1930,7 @@
             <div style="max-height:300px;overflow-y:auto;">
               <template x-for="(entry, i) in uploadEntries" :key="i">
                 <div style="display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #f1f5f9;">
-                  <img :src="entry.preview" alt="作文图片" style="width:60px;height:45px;object-fit:cover;border-radius:6px;">
+                  <img :src="entry.preview" style="width:60px;height:45px;object-fit:cover;border-radius:6px;">
                   <input x-model="uploadEntries[i].name" :placeholder="'学生' + (i+1)" style="flex:1;padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size: 24px;">
                   <button @click="removeUploadEntry(i)" style="color:#ef4444;background:none;border:none;cursor:pointer;">&#x2715;</button>
                 </div>
@@ -1962,7 +1949,7 @@
           <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">
             <template x-for="sub in submissions" :key="sub.id">
               <div class="essay-sub-card">
-                <img x-show="sub.image_path" :src="sub.image_path" alt="学生作文" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:8px;cursor:pointer;" @click="openSubmission(sub)">
+                <img x-show="sub.image_path" :src="sub.image_path" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:8px;cursor:pointer;" @click="openSubmission(sub)">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                   <span style="font-weight:600;font-size: 24px;" x-text="sub.student_name"></span>
                   <span class="essay-status" :style="'color:' + getStatusColor(sub.status) + ';background:' + getStatusColor(sub.status) + '18;'" x-text="getStatusLabel(sub.status)"></span>
@@ -2001,7 +1988,7 @@
             <!-- Left: Original image -->
             <div style="background:rgba(255,255,255,0.85);border-radius:16px;padding:16px;text-align:center;">
               <div style="font-weight:600;margin-bottom:8px;font-size: 24px;color:#64748b;">&#x1F4F7; 原始手写</div>
-              <img :src="currentSub?.image_path" alt="学生作文原图" style="max-width:100%;max-height:70vh;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.08);">
+              <img :src="currentSub?.image_path" style="max-width:100%;max-height:70vh;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.08);">
             </div>
 
             <!-- Right: OCR + Annotations + Scores -->
@@ -2166,7 +2153,7 @@
   <!-- Homework Image Lightbox -->
   <div id="hwLightbox" onclick="this.style.display='none'" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:200;display:none;cursor:pointer;">
     <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;">
-      <img id="hwLightboxImg" src="" alt="作业大图" style="max-width:90vw;max-height:85vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+      <img id="hwLightboxImg" src="" style="max-width:90vw;max-height:85vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
     </div>
     <button onclick="document.getElementById('hwLightbox').style.display='none'" style="position:fixed;top:20px;right:20px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.9);border:none;font-size:20px;cursor:pointer;z-index:201;display:flex;align-items:center;justify-content:center;">✕</button>
   </div>

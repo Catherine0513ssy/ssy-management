@@ -124,7 +124,7 @@
             <div class="form-row" style="margin-bottom:var(--space-4);">
               <div class="form-group" style="max-width:200px;">
                 <label class="form-label">选择班级</label>
-                <select class="form-select" x-model="classId" @change="loadStudents()">
+                <select class="form-select" x-model="classId" @change="loadGroups(); loadStudents()">
                   <option value="1">2313班</option>
                   <option value="2">2314班</option>
                 </select>
@@ -569,6 +569,7 @@
 
       // ── Load All Data ──
       loadAll() {
+        this.loadGroups();
         this.loadStudents();
         this.loadApiConfig();
         this.loadSysInfo();
@@ -611,15 +612,6 @@
           // API returns {grouped: {groupName: [students], ...}}
           const grouped = data.grouped || {};
           
-          // Extract groups from grouped keys
-          this.groups = Object.keys(grouped).map(name => ({ 
-            id: name, 
-            name, 
-            _newName: '' 
-          }));
-          if (this.groups.length > 0 && !this.batchGroupId) {
-            this.batchGroupId = this.groups[0].id;
-          }
           
           // Build flat student list
           const students = [];

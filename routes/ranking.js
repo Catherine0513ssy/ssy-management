@@ -10,12 +10,88 @@ const { getDB } = require('../services/db');
 const ROUND_POINTS = { 1: 2, 2: 1 };
 
 // ---------------------------------------------------------------------------
-// Period date ranges (2026年)
+// Period calculation: starting from 2026-03-23, each period = 14 calendar days (2 weeks)
 // ---------------------------------------------------------------------------
-const PERIOD_RANGES = {
-  '1': { start: '2026-03-23', end: '2026-04-03', name: '第1周期' },
-  '2': { start: '2026-04-06', end: '2026-04-17', name: '第2周期' },
-};
+const PERIOD_START_DATE = '2026-03-23';
+const DAYS_PER_PERIOD = 14;
+
+function formatDateISO(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+function formatShortDate(date) {
+  return `${date.getMonth() + 1}.${date.getDate()}`;
+}
+
+function addCalendarDays(date, days) {
+  const d = new Date(date);
+  d.setDate(d.getDate() + days);
+  return d;
+}
+
+function calculatePeriods() {
+  const start = new Date(PERIOD_START_DATE + 'T00:00:00');
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const periods = {};
+  let periodNum = 1;
+  let currentStart = new Date(start);
+
+  while (periodNum <= 50) {
+    // Period includes the start day as day 1, so add (DAYS_PER_PERIOD - 1) more days
+    const currentEnd = addCalendarDays(currentStart, DAYS_PER_PERIOD - 1);
+    const startStr = formatDateISO(currentStart);
+    const endStr = formatDateISO(currentEnd);
+
+    const status = today < currentStart ? 'upcoming' : today > currentEnd ? 'ended' : 'active';
+
+    periods[String(periodNum)] = {
+      start: startStr,
+      end: endStr,
+      name: `第${periodNum}周期`,
+      startShort: formatShortDate(currentStart),
+      endShort: formatShortDate(currentEnd),
+      status,
+    };
+
+    // Stop if we've gone too far past today
+    if (currentStart > today && (currentStart - today) > 60 * 24 * 60 * 60 * 1000) {
+      break;
+    }
+
+    currentStart = addCalendarDays(currentEnd, 1);
+    periodNum++;
+  }
+
+  return periods;
+}
+
+function getCurrentPeriod(periods) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  for (const [num, p] of Object.entries(periods)) {
+    const start = new Date(p.start + 'T00:00:00');
+    const end = new Date(p.end + 'T23:59:59');
+    if (today >= start && today <= end) {
+      return num;
+    }
+  }
+
+  // If no active period, return the latest ended period
+  let latest = null;
+  for (const [num, p] of Object.entries(periods)) {
+    const end = new Date(p.end + 'T23:59:59');
+    if (today > end) {
+      latest = num;
+    }
+  }
+  return latest || '1';
+}
 
 // ---------------------------------------------------------------------------
 // Build current class roster map: group_sort_order -> [student rows]
@@ -61,8 +137,17 @@ function resolveLegacyStudentId(db, classId, groupIndex, studentIndex) {
 }
 
 // ---------------------------------------------------------------------------
+// GET /periods  — return all calculated periods
+// ---------------------------------------------------------------------------
+router.get('/periods', (req, res) => {
+  const periods = calculatePeriods();
+  const current = getCurrentPeriod(periods);
+  return res.json({ periods, current });
+});
+
+// ---------------------------------------------------------------------------
 // GET /  — ranking for a class, sorted by total points descending
-// Query params: class_id (required), period (optional: '1', '2', 'current', 'all')
+// Query params: class_id (required), period (optional: '1', '2', ..., 'current', 'all')
 // ---------------------------------------------------------------------------
 router.get('/', (req, res) => {
   const { class_id, period } = req.query;
@@ -76,9 +161,15 @@ router.get('/', (req, res) => {
 
   // Determine date range based on period
   let dateFilter = null;
-  const effectivePeriod = period === 'current' ? '2' : period;
-  if (effectivePeriod && effectivePeriod !== 'all' && PERIOD_RANGES[effectivePeriod]) {
-    dateFilter = PERIOD_RANGES[effectivePeriod];
+  const periods = calculatePeriods();
+
+  let effectivePeriod = period;
+  if (period === 'current') {
+    effectivePeriod = getCurrentPeriod(periods);
+  }
+
+  if (effectivePeriod && effectivePeriod !== 'all' && periods[effectivePeriod]) {
+    dateFilter = periods[effectivePeriod];
   }
 
   const students = db

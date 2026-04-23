@@ -58,11 +58,13 @@ app.use('/api/ranking', require('./routes/ranking'));
 app.use('/api/vocabulary', require('./routes/vocabulary'));
 app.use('/api/quiz', require('./routes/quiz'));
 app.use('/api/quiz-smart', require('./routes/quiz_smart'));
+app.use('/api/word-plan', require('./routes/word_plan'));
 app.use('/api/choice-fill', require('./routes/choice_fill'));
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/ocr', require('./routes/ocr'));
 app.use('/api/upload', require('./routes/upload'));
 app.use('/api/essay', require('./routes/essay'));
+
 
 // Error handler
 app.use(errorHandler);

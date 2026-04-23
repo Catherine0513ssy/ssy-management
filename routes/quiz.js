@@ -225,8 +225,10 @@ router.get('/history', (req, res) => {
   const generatedLog = logs.find(l => l.source === 'generated');
 
   let dailyWords = [];
+  let dailyCount = 0;
   if (dailyLog && dailyLog.word_ids) {
     const dailyIds = JSON.parse(dailyLog.word_ids);
+    dailyCount = dailyIds.length;
     if (dailyIds.length > 0) {
       const placeholders = dailyIds.map(() => '?').join(', ');
       dailyWords = db.prepare(`SELECT * FROM vocabulary WHERE id IN (${placeholders})`).all(...dailyIds);
@@ -234,8 +236,10 @@ router.get('/history', (req, res) => {
   }
 
   let generatedWords = [];
+  let generatedCount = 0;
   if (generatedLog && generatedLog.word_ids) {
     const genIds = JSON.parse(generatedLog.word_ids);
+    generatedCount = genIds.length;
     if (genIds.length > 0) {
       const placeholders = genIds.map(() => '?').join(', ');
       generatedWords = db.prepare(`SELECT * FROM vocabulary WHERE id IN (${placeholders})`).all(...genIds);
@@ -244,8 +248,8 @@ router.get('/history', (req, res) => {
 
   return res.json({
     date,
-    daily: { words: dailyWords, count: dailyWords.length },
-    generated: { words: generatedWords, count: generatedWords.length },
+    daily: { words: dailyWords, count: dailyCount },
+    generated: { words: generatedWords, count: generatedCount },
   });
 });
 

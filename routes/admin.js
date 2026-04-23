@@ -141,11 +141,14 @@ router.post('/students/batch', (req, res) => {
 router.put('/students/:id', (req, res) => {
   const { name, group_id, active } = req.body;
   const db = getDB();
-  db.prepare(`
-    UPDATE students
-    SET name = COALESCE(?, name), group_id = COALESCE(?, group_id), active = COALESCE(?, active)
-    WHERE id = ?
-  `).run(name || null, group_id !== undefined ? group_id : null, active !== undefined ? active : null, req.params.id);
+  const fields = [];
+  const values = [];
+  if (name !== undefined) { fields.push('name = ?'); values.push(name); }
+  if (group_id !== undefined) { fields.push('group_id = ?'); values.push(group_id); }
+  if (active !== undefined) { fields.push('active = ?'); values.push(active); }
+  if (fields.length === 0) return res.status(400).json({ error: 'no fields to update' });
+  values.push(req.params.id);
+  db.prepare(`UPDATE students SET ${fields.join(', ')} WHERE id = ?`).run(...values);
   res.json({ success: true });
 });
 

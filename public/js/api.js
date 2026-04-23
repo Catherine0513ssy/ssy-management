@@ -56,6 +56,7 @@ const API = {
 
   // Ranking
   getRanking(period = 'current') { return this.get(`/api/ranking?class_id=${this.classId}&period=${period}`); },
+  getRankingPeriods() { return this.get(`/api/ranking/periods`); },
   getRankingDetail(studentIndex) { return this.get(`/api/ranking/detail?class_id=${this.classId}${studentIndex !== undefined ? `&student_index=${studentIndex}` : ''}`); },
 
   // Vocabulary

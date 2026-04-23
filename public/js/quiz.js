@@ -39,6 +39,11 @@ document.addEventListener('alpine:init', () => {
     loaded: false,
     _allVocabCache: null, // 缓存全部词汇（用于本地筛选）
 
+    // 30天单词计划
+    planMode: false,
+    planDay: 1,
+    planWords: [],
+
     async init() {
       const ensureLoaded = async () => {
         if (this.loaded) return;
@@ -184,7 +189,7 @@ document.addEventListener('alpine:init', () => {
       }
       try {
         // 动词比例 > 0 时，先预加载全部词汇
-        if (this.verbRatio > 0 || this.nounRatio > 0 || this.adjRatio > 0) {
+        if (true) { // 始终预加载以支持词性比例筛选
           await this._preloadAllVocab();
         }
         // 优先使用本地缓存的全部词汇进行筛选（支持动词比例控制）
@@ -213,6 +218,7 @@ document.addEventListener('alpine:init', () => {
         this.index = 0;
         this.answerShown = false;
         this.quizStarted = true;
+        this.quizSource = 'generated';
         this.quizFinished = false;
         this.showAllAnswers = false;
         this.$nextTick(() => this._onWordChange());
@@ -387,6 +393,10 @@ document.addEventListener('alpine:init', () => {
             } else {
               this.countdown = 0;
               this.quizFinished = true;
+              if (this.quizSource) {
+                const today = new Date().toISOString().split('T')[0];
+                API.logQuizComplete(today, this.quizSource, this.words.map(w => w.id)).catch(() => {});
+              }
             }
           }
         }, 1000);
@@ -497,6 +507,37 @@ document.addEventListener('alpine:init', () => {
       } catch (e) {
         this.$dispatch('toast', { message: e.message || '加载智能单词失败', type: 'error' });
       }
+    },
+
+    // === 30天单词计划 ===
+    async loadPlanDay(day) {
+      this.planDay = day;
+      try {
+        const data = await API.get('/api/word-plan/day/' + day);
+        this.planWords = data.words || [];
+      } catch (e) {
+        this.$dispatch('toast', { message: '加载计划单词失败', type: 'error' });
+      }
+    },
+    async startPlanDictation() {
+      try {
+        const data = await API.get('/api/word-plan/day/' + this.planDay + '/shuffle');
+        this.words = data.words || [];
+        this.index = 0;
+        this.answerShown = false;
+        this.quizStarted = true;
+        this.quizSource = 'generated';
+        this.quizFinished = false;
+        this.showAllAnswers = false;
+        this.mode = 'audio';
+        this.$nextTick(() => this._onWordChange());
+        this._saveProgress();
+      } catch (e) {
+        this.$dispatch('toast', { message: e.message || '加载听写单词失败', type: 'error' });
+      }
+    },
+    downloadPlanMd() {
+      window.open('/api/word-plan/day/' + this.planDay + '/md', '_blank');
     },
     handleKey(e) {
       if (!this.quizStarted) return;
