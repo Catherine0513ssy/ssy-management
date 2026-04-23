@@ -343,7 +343,7 @@ document.addEventListener('alpine:init', () => {
       let m1 = (w.meaning || '').replace(/^[a-z]+\.(?:\s*&\s*[a-z]+\.)*\s*/, ''); m1 = m1.replace(/\([^(]*[a-zA-Z][^(]*\)/g, '').replace(/\/[^/]*\//g, '').replace(/\/[^/]*\]/g, '').replace(/^[，,\s]+/, '').replace(/^&\s*/, '').trim();
       if (this.mode === 'cn2en') return m1;
       if (this.mode === 'en2cn') return w.en || w.word || '';
-      return '🔊 ' + (w.en || w.word || '');
+      return m1; // 听写模式和中→英一样显示中文，学生听读音写英文
     },
 
     // === 朗读 ===
@@ -443,7 +443,7 @@ document.addEventListener('alpine:init', () => {
       let m2 = (w.meaning || '').replace(/^[a-z]+\.(?:\s*&\s*[a-z]+\.)*\s*/, ''); m2 = m2.replace(/\([^(]*[a-zA-Z][^(]*\)/g, '').replace(/\/[^/]*\//g, '').replace(/\/[^/]*\]/g, '').replace(/^[，,\s]+/, '').replace(/^&\s*/, '').trim();
       if (this.mode === 'cn2en') return en;
       if (this.mode === 'en2cn') return m2;
-      return en;
+      return en + ' / ' + m2; // 听写完成后同时显示英文和中文
     },
 
     toggleAutoNext() {
