@@ -312,7 +312,7 @@ document.addEventListener('alpine:init', () => {
       if (!this.currentWord) return '';
       if (this.mode === 'cn2en') return this.currentWord.cleanMeaning;
       if (this.mode === 'en2cn') return this.currentWord.en;
-      return '🔊';
+      return this.currentWord.cleanMeaning;
     },
 
     get promptHint() {
