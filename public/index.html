@@ -98,8 +98,9 @@
     .hw-item { background: var(--card-bg, rgba(255,255,255,0.85)); border-radius: 14px; padding: 14px 18px; margin-bottom: 10px; border-left: 3px solid #a78bfa;  }
     .hw-item:nth-child(even) { border-left-color: #60a5fa; }
     .hw-item img { max-width: 100%; border-radius: 8px; margin-top: 8px; cursor: pointer; }
-    .date-item { padding: 10px 14px; border-radius: 10px;  cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
-    .date-item:hover, .date-item.active { background: rgba(167,139,250,0.15); }
+    .date-item { padding: 10px 14px; border-radius: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s; position: relative; overflow: hidden; }
+    .date-item:hover { background: rgba(167,139,250,0.12); transform: translateX(4px); }
+    .date-item.active { background: linear-gradient(90deg, rgba(167,139,250,0.18), rgba(96,165,250,0.08)); }
     .toggle-pill {
       padding: 8px 16px !important; border-radius: 16px !important; border: 1.5px solid #e2e8f0 !important;
       background: white !important; color: #64748b !important; font-size: 0.9375rem !important; font-weight: 600 !important;
@@ -972,7 +973,7 @@
     .sidebar { width: 220px; }
     .main-content { margin-left: 220px; max-width: calc(100vw - 270px); }
     .sidebar-tab { padding: 12px 16px; gap: 12px; font-size: 16px; }
-    .sidebar-tab-icon { font-size: 20px; width: 28px; }
+    .sidebar-tab-icon { font-size: 20px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: rgba(167,139,250,0.12); transition: all 0.2s; }
     .sidebar-logo h1 { font-size: 20px; font-weight: 700; }
     .sidebar-tab.active { position: relative; overflow: hidden; }
     .sidebar-tab.active::before {
@@ -1048,6 +1049,21 @@
       outline: none;
     }
     .glass-input::placeholder { color: #94a3b8; }
+
+    /* 7. Sidebar icon backgrounds */
+    .sidebar-tab:hover .sidebar-tab-icon { background: rgba(167,139,250,0.22); }
+    .sidebar-tab.active .sidebar-tab-icon { background: rgba(255,255,255,0.25); }
+
+    /* 8. Date list enhance */
+    .date-item.active::before {
+      content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+      width: 3px; height: 50%; background: linear-gradient(180deg, #a78bfa, #60a5fa);
+      border-radius: 0 3px 3px 0;
+    }
+    .date-label { font-weight: 500; color: #475569; }
+    .date-item.active .date-label { color: #7c3aed; font-weight: 600; }
+    .date-count { background: rgba(148,163,184,0.12); padding: 2px 8px; border-radius: 6px; font-size: 12px; font-weight: 600; color: #94a3b8; }
+    .date-item.active .date-count { background: rgba(167,139,250,0.18); color: #7c3aed; }
 
   </style>
 </head>
@@ -1129,8 +1145,8 @@
         <div style="max-height:300px;overflow-y:auto;">
           <template x-for="d in filteredDates" :key="d.date">
             <div class="date-item" :class="{'active':d.date===selectedDate}" @click="selectDate(d.date)">
-              <span style="font-size:0.875rem;" x-text="(() => { const t=new Date().toISOString().split('T')[0]; const y=new Date(Date.now()-86400000).toISOString().split('T')[0]; if(d.date===t) return '今天'; if(d.date===y) return '昨天'; const p=d.date.split('-'); return parseInt(p[1])+'月'+parseInt(p[2])+'日'; })()"></span>
-              <span style="font-size:0.875rem;color:#94a3b8;" x-text="d.count+'项'"></span>
+              <span class="date-label" style="font-size:0.875rem;" x-text="(() => { const t=new Date().toISOString().split('T')[0]; const y=new Date(Date.now()-86400000).toISOString().split('T')[0]; if(d.date===t) return '今天'; if(d.date===y) return '昨天'; const p=d.date.split('-'); return parseInt(p[1])+'月'+parseInt(p[2])+'日'; })()"></span>
+              <span class="date-count" style="font-size:0.875rem;" x-text="d.count+'项'"></span>
             </div>
           </template>
         </div>
