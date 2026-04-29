@@ -303,6 +303,28 @@
         padding-bottom: 80px;
         box-sizing: border-box;
       }
+      /* Homework tab: stack calendar above content on mobile */
+      .main-content > div[x-data="homeworkTab()"] {
+        flex-direction: column !important;
+        padding: 12px !important;
+        gap: 12px !important;
+      }
+      .main-content > div[x-data="homeworkTab()"] > aside {
+        width: 100% !important;
+        flex-shrink: 0 !important;
+      }
+      .main-content > div[x-data="homeworkTab()"] > main {
+        min-width: 0 !important;
+        width: 100% !important;
+      }
+      /* Header padding fix on mobile */
+      .main-content > header {
+        padding: 0 12px !important;
+      }
+      /* Homework items text wrap */
+      .hw-item span {
+        word-break: break-word;
+      }
     }
 
     /* Ranking Page Styles */
