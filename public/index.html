@@ -763,9 +763,13 @@
     @keyframes wgSpin { to { transform: rotate(360deg); } }
 
 
-    /* ===== Mobile Bottom Navigation ===== */
 
-    .bottom-nav {
+
+  
+
+    /* ===== Mobile Bottom Tab Bar ===== */
+
+    .mobile-tab-bar {
 
       display: none;
 
@@ -773,7 +777,7 @@
 
     @media (max-width: 768px) {
 
-      .bottom-nav {
+      .mobile-tab-bar {
 
         display: flex;
 
@@ -805,13 +809,13 @@
 
       }
 
-      .bottom-nav::-webkit-scrollbar {
+      .mobile-tab-bar::-webkit-scrollbar {
 
         display: none;
 
       }
 
-      .bottom-nav-item {
+      .mobile-tab-item {
 
         flex: 1;
 
@@ -847,7 +851,7 @@
 
       }
 
-      .bottom-nav-item.active {
+      .mobile-tab-item.active {
 
         color: #9333ea;
 
@@ -857,7 +861,7 @@
 
       }
 
-      .bottom-nav-icon {
+      .mobile-tab-icon {
 
         font-size: 22px;
 
@@ -865,7 +869,7 @@
 
       }
 
-      .bottom-nav-label {
+      .mobile-tab-label {
 
         font-size: 10px;
 
@@ -2120,33 +2124,6 @@
     </template>
   </nav>
 
-
-
-
-
-  <!-- Mobile Bottom Navigation -->
-
-  <nav class="bottom-nav" x-data="{}">
-
-    <template x-for="tab in tabs" :key="tab.id">
-
-      <button
-
-        @click="switchTab(tab.id)"
-
-        class="bottom-nav-item"
-
-        :class="{'active': activeTab===tab.id}">
-
-        <span class="bottom-nav-icon" x-text="tab.icon"></span>
-
-        <span class="bottom-nav-label" x-text="tab.label"></span>
-
-      </button>
-
-    </template>
-
-  </nav>
 
 </body>
 </html>
