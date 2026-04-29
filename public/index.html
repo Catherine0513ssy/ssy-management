@@ -1218,6 +1218,61 @@
       animation: fadeInUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
+    /* 18. Custom scrollbar */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(167,139,250,0.5), rgba(96,165,250,0.5));
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, rgba(167,139,250,0.8), rgba(96,165,250,0.8));
+    }
+
+    /* 19. Image preview panel enhanced */
+    .img-preview-panel {
+      background: rgba(255,255,255,0.72) !important;
+      backdrop-filter: blur(20px) saturate(1.2) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(1.2) !important;
+      border: 1px solid rgba(255,255,255,0.6) !important;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,0.4) !important;
+      border-radius: 24px !important;
+      animation: slideInRight 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      position: relative;
+      overflow: hidden;
+    }
+    .img-preview-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 20%;
+      right: 20%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+      pointer-events: none;
+    }
+    .img-preview-panel img {
+      border-radius: 12px !important;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1) !important;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .img-preview-panel img:hover {
+      transform: scale(1.02);
+    }
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* 20. Homework image hover zoom */
+    .hw-item img {
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+    }
+    .hw-item img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
   </style>
 </head>
 <body x-data="app()" x-cloak style="background:linear-gradient(135deg, #eef2ff 0%, #e0e7ff 25%, #f5f3ff 50%, #fdf2f8 75%, #fce7f3 100%);background-attachment:fixed;min-height:100vh;font-family:'Nunito','PingFang SC','Microsoft YaHei',sans-serif;margin:0;">
@@ -1378,12 +1433,17 @@
               </template>
             </div>
             <!-- Right: image preview panel (resizable via CSS resize) -->
-            <div x-show="previewImage"
-              style="width:55%;flex-shrink:0;position:sticky;top:80px;background:rgba(255,255,255,0.85);border-radius:24px;padding:12px;text-align:center;resize:horizontal;overflow:auto;min-width:300px;max-width:80%;">
+            <div x-show="previewImage" x-transition:enter="slideInRight"
+              class="img-preview-panel"
+              style="width:55%;flex-shrink:0;position:sticky;top:80px;padding:16px;text-align:center;resize:horizontal;overflow:auto;min-width:300px;max-width:80%;"
+              @click.away="previewImage=null">
               <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
-                <button @click="previewImage=null" style="background:none;border:none;cursor:pointer;font-size:0.875rem;color:#94a3b8;">✕ 关闭</button>
+                <button @click="previewImage=null" style="background:none;border:none;cursor:pointer;font-size:0.875rem;color:#94a3b8;padding:4px 8px;border-radius:6px;transition:all 0.2s;"
+                onmouseover="this.style.background='rgba(148,163,184,0.12)';this.style.color='#64748b'"
+                onmouseout="this.style.background='transparent';this.style.color='#94a3b8'"
+                >✕ 关闭</button>
               </div>
-              <img :src="previewImage" style="max-width:100%;max-height:80vh;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+              <img :src="previewImage" style="max-width:100%;max-height:80vh;border-radius:10px;">
             </div>
           </div>
         </div>
