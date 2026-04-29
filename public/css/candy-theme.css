@@ -6,7 +6,7 @@
 
 :root {
   /* === Background Gradients === */
-  --bg-gradient: linear-gradient(135deg, #ffecd2 0%, #fcb69f 40%, #ee9ca7 70%, #ffdde1 100%);
+  --bg-gradient: linear-gradient(135deg, #f5f3ff 0%, #e0e7ff 35%, #fce7f3 70%, #fdf2f8 100%);
   --bg-gradient-alt: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
 
   /* === Card / Surface === */

@@ -961,9 +961,54 @@
 
     }
 
+    /* ===== UI Quick Fixes 2026-04-29 ===== */
+
+    /* 1. Header unify - consistent sizes */
+    .header-tab { font-size: 18px; }
+    .header-select { font-size: 18px; }
+    .header-btn { font-size: 16px; }
+
+    /* 2. Sidebar optimize */
+    .sidebar { width: 220px; }
+    .main-content { margin-left: 220px; max-width: calc(100vw - 270px); }
+    .sidebar-tab { padding: 12px 16px; gap: 12px; font-size: 16px; }
+    .sidebar-tab-icon { font-size: 20px; width: 28px; }
+    .sidebar-logo h1 { font-size: 20px; font-weight: 700; }
+    .sidebar-tab.active { position: relative; overflow: hidden; }
+    .sidebar-tab.active::before {
+      content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+      width: 4px; height: 24px; background: white; border-radius: 0 4px 4px 0;
+    }
+
+    /* 3. Glassmorphism cards */
+    .hw-item {
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      transition: all 0.25s ease;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      border-left-width: 4px;
+    }
+    .hw-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      background: rgba(255,255,255,0.92);
+    }
+    .top-header {
+      backdrop-filter: blur(16px);
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    /* 4. Calendar enhance */
+    .cal-day { width: 40px; height: 40px; font-size: 15px; }
+    .cal-day.today { box-shadow: 0 0 0 2px rgba(167,139,250,0.4); }
+
   </style>
 </head>
-<body x-data="app()" x-cloak style="background:linear-gradient(135deg, #faf5ff 0%, #f3e8ff 35%, #e9d5ff 65%, #fbcfe8 100%);background-attachment:fixed;min-height:100vh;font-family:'Nunito','PingFang SC','Microsoft YaHei',sans-serif;margin:0;">  <!-- Sidebar Navigation -->
+<body x-data="app()" x-cloak style="background:linear-gradient(135deg, #f8fafc 0%, #f5f3ff 30%, #eef2ff 60%, #fdf2f8 100%);background-attachment:fixed;min-height:100vh;font-family:'Nunito','PingFang SC','Microsoft YaHei',sans-serif;margin:0;">  <!-- Sidebar Navigation -->
   <aside class="sidebar">
     <div class="sidebar-logo">
       <h1>📚 作业系统</h1>
