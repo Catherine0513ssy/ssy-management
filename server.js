@@ -33,8 +33,10 @@ app.use((req, res, next) => {
 
 // Static files
 app.use((req, res, next) => {
-  if (req.path.endsWith('.html')) {
-    res.setHeader('Cache-Control', 'no-store');
+  if (req.path.endsWith('.html') || req.path === '/') {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
   }
   next();
 });
