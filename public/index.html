@@ -1101,10 +1101,130 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* ===== B方案：极光毛玻璃升级 ===== */
+
+    /* 11. Stagger entrance animation */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .anim-item {
+      opacity: 0;
+      animation: fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .anim-1  { animation-delay: 0.00s; }
+    .anim-2  { animation-delay: 0.06s; }
+    .anim-3  { animation-delay: 0.12s; }
+    .anim-4  { animation-delay: 0.18s; }
+    .anim-5  { animation-delay: 0.24s; }
+    .anim-6  { animation-delay: 0.30s; }
+    .anim-7  { animation-delay: 0.36s; }
+    .anim-8  { animation-delay: 0.42s; }
+    .anim-9  { animation-delay: 0.48s; }
+    .anim-10 { animation-delay: 0.54s; }
+
+    /* 12. Cursor glow */
+    .cursor-glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(167,139,250,0.10) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.12s ease-out;
+      transform: translate(-50%, -50%);
+    }
+
+    /* 13. Enhanced glassmorphism with highlight edge */
+    .glass-card-v2 {
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px) saturate(1.2);
+      -webkit-backdrop-filter: blur(20px) saturate(1.2);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow:
+        0 1px 2px rgba(0,0,0,0.02),
+        0 4px 12px rgba(0,0,0,0.04),
+        inset 0 0 0 1px rgba(255,255,255,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .glass-card-v2::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 20%;
+      right: 20%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+    }
+
+    /* 14. Subtle noise texture overlay */
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* 15. Enhanced glass surfaces */
+    .glass-sidebar {
+      background: rgba(255, 255, 255, 0.72) !important;
+      backdrop-filter: blur(20px) saturate(1.2) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(1.2) !important;
+      border: 1px solid rgba(255, 255, 255, 0.6) !important;
+      box-shadow:
+        0 1px 2px rgba(0,0,0,0.02),
+        0 4px 12px rgba(0,0,0,0.04),
+        inset 0 0 0 1px rgba(255,255,255,0.4) !important;
+      position: relative;
+      overflow: hidden;
+    }
+    .glass-sidebar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 20%;
+      right: 20%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+      pointer-events: none;
+    }
+    .app-header {
+      background: rgba(255, 255, 255, 0.78) !important;
+      backdrop-filter: blur(20px) saturate(1.2) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(1.2) !important;
+      border-bottom: 1px solid rgba(255,255,255,0.5) !important;
+      box-shadow:
+        0 1px 2px rgba(0,0,0,0.02),
+        0 4px 12px rgba(0,0,0,0.04) !important;
+    }
+
+    /* 16. Homework item entrance animation */
+    .hw-list .hw-item {
+      animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .hw-list .hw-item:nth-child(1) { animation-delay: 0.05s; }
+    .hw-list .hw-item:nth-child(2) { animation-delay: 0.10s; }
+    .hw-list .hw-item:nth-child(3) { animation-delay: 0.15s; }
+    .hw-list .hw-item:nth-child(4) { animation-delay: 0.20s; }
+    .hw-list .hw-item:nth-child(5) { animation-delay: 0.25s; }
+    .hw-list .hw-item:nth-child(6) { animation-delay: 0.30s; }
+
+    /* 17. Date item entrance */
+    .date-item {
+      animation: fadeInUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
   </style>
 </head>
-<body x-data="app()" x-cloak style="background:linear-gradient(135deg, #f8fafc 0%, #f5f3ff 30%, #eef2ff 60%, #fdf2f8 100%);background-attachment:fixed;min-height:100vh;font-family:'Nunito','PingFang SC','Microsoft YaHei',sans-serif;margin:0;">  <!-- Sidebar Navigation -->
-  <aside class="sidebar">
+<body x-data="app()" x-cloak style="background:linear-gradient(135deg, #eef2ff 0%, #e0e7ff 25%, #f5f3ff 50%, #fdf2f8 75%, #fce7f3 100%);background-attachment:fixed;min-height:100vh;font-family:'Nunito','PingFang SC','Microsoft YaHei',sans-serif;margin:0;">
+  <div class="cursor-glow" id="cursorGlow"></div>
+  <div class="noise-overlay"></div>
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar anim-item anim-1">
     <div class="sidebar-logo">
       <h1>📚 作业系统</h1>
     </div>
@@ -1130,7 +1250,7 @@
   <div class="bg-blob bg-blob-3"></div>
 
   <!-- ==================== HEADER ==================== -->
-<header x-show="!$store.homeworkPresentation?.active" style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,0.08);padding:0 24px;box-shadow:0 1px 8px rgba(0,0,0,0.04);">
+<header x-show="!$store.homeworkPresentation?.active" class="app-header" style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,0.08);padding:0 24px;box-shadow:0 1px 8px rgba(0,0,0,0.04);">
     <div style="max-width:100%;margin:0 auto;display:flex;align-items:center;height:64px;gap:20px;">
       <!-- Logo -->
       <div style="font-size:22px;font-weight:800;white-space:nowrap;display:flex;align-items:center;gap:6px;">
@@ -1159,7 +1279,7 @@
 
     <!-- SIDEBAR (only on homework tab) -->
     <aside x-show="activeTab==='homework' && !$store.homeworkPresentation?.active" style="width:280px;flex-shrink:0;" x-transition>
-      <div class="glass-sidebar" style="margin-bottom:16px;">
+      <div class="glass-sidebar anim-item anim-2" style="margin-bottom:16px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
           <button @click="prevMonth()" style="border:none;background:none;cursor:pointer;">◀</button>
           <span style="font-weight:600;font-size:0.9375rem;" x-text="calendarTitle"></span>
@@ -1176,7 +1296,7 @@
           </template>
         </div>
       </div>
-      <div class="glass-sidebar">
+      <div class="glass-sidebar anim-item anim-3">
         <input type="text" class="glass-input" x-model="searchText" @input="filterDates()" placeholder="🔍 搜索日期..." style="width:100%;padding:10px 14px;border-radius:12px;font-size:14px;margin-bottom:12px;box-sizing:border-box;">
         <div style="max-height:300px;overflow-y:auto;">
           <template x-for="d in filteredDates" :key="d.date">
@@ -1194,7 +1314,7 @@
 
       <!-- HOMEWORK TAB -->
       <div x-show="activeTab==='homework'">
-        <div x-show="!$store.homeworkPresentation?.active" style="display:flex;align-items:center;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
+        <div x-show="!$store.homeworkPresentation?.active" class="anim-item anim-4" style="display:flex;align-items:center;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
           <h2 style="font-size:22px;font-weight:800;margin:0;color:#1e293b;letter-spacing:-0.3px;">📝 今日作业</h2>
           <span style="background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;padding:5px 14px;border-radius:20px;font-size:14px;font-weight:700;box-shadow:0 2px 8px rgba(99,102,241,0.25);" x-text="selectedDate"></span>
           <div style="margin-left:auto;display:flex;align-items:center;gap:10px;">
@@ -1274,7 +1394,7 @@
           <p style="color:#94a3b8;font-size:13px;margin-top:6px;">去日历选个其他日期看看吧</p>
         </div>
         <!-- Add form -->
-        <div x-show="isAdmin && !$store.homeworkPresentation?.active" style="margin-top:20px;background:rgba(255,255,255,0.85);border-radius:16px;padding:20px;">
+        <div x-show="isAdmin && !$store.homeworkPresentation?.active" class="anim-item anim-7" style="margin-top:20px;background:rgba(255,255,255,0.85);border-radius:16px;padding:20px;">
           <h3 style="font-weight:600;margin-bottom:12px;">➕ 添加作业</h3>
           <textarea class="glass-input" x-model="newText" placeholder="输入作业内容..." rows="3" style="width:100%;padding:10px;border-radius:8px;font-size:14px;resize:vertical;box-sizing:border-box;"></textarea>
           <div class="upload-box" style="margin-top:10px;" @click="$refs.hwImg.click()" @dragover.prevent @drop.prevent="onImageSelect($event)">
@@ -2349,5 +2469,15 @@
   </nav>
 
 
+  <script>
+    (function() {
+      var glow = document.getElementById('cursorGlow');
+      if (!glow) return;
+      document.addEventListener('mousemove', function(e) {
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+      });
+    })();
+  </script>
 </body>
 </html>
