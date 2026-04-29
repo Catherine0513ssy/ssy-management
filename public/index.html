@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
   <title>SSY 英语教学管理系统</title>
   <link rel="stylesheet" href="/css/candy-theme.css">
   <link rel="stylesheet" href="/css/components.css">
@@ -53,7 +53,7 @@
       padding: 8px 18px !important;
       border-radius: 24px !important;
       border: none !important;
-      font-size: 40px;
+      font-size: 2.5rem;
       font-weight: 600 !important;
       white-space: nowrap;
       transition: all 0.2s;
@@ -75,7 +75,7 @@
       padding: 8px 18px !important;
       border-radius: 24px !important;
       border: 1.5px solid #e2e8f0 !important;
-      font-size: 24px !important;
+      font-size: 1.5rem;
       font-weight: 600 !important;
       background: white !important;
       color: #475569 !important;
@@ -90,7 +90,7 @@
       padding: 6px 12px !important;
       border-radius: 12px !important;
       border: 1.5px solid #e2e8f0 !important;
-      font-size: 24px !important;
+      font-size: 1.5rem;
       font-weight: 600 !important;
       background-color: white !important;
       color: #475569 !important;
@@ -186,247 +186,6 @@
     .essay-sub-card:hover { border-color:#a78bfa; }
     .essay-status { display:inline-block;padding:2px 8px;border-radius:8px;font-size: 24px;font-weight:600; }
 
-    /* ========== Mobile Responsive (< 768px) ========== */
-    @media (max-width: 767px) {
-      /* --- Header --- */
-      header > div {
-        height: 52px !important;
-        padding: 0 10px !important;
-        gap: 8px !important;
-      }
-      /* Hide logo text, keep emoji */
-      header > div > div:first-child span {
-        display: none !important;
-      }
-      header > div > div:first-child {
-        font-size: 24px !important;
-        min-width: auto !important;
-      }
-      /* Tab nav: scrollable, smaller */
-      header nav {
-        gap: 4px !important;
-        flex: 1 !important;
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-      }
-      header nav::-webkit-scrollbar { display: none; }
-      .header-tab {
-        padding: 6px 10px !important;
-        font-size: 24px !important;
-        white-space: nowrap !important;
-        flex-shrink: 0 !important;
-      }
-      /* Right actions: compact */
-      header > div > div:last-child {
-        gap: 6px !important;
-        flex-shrink: 0 !important;
-      }
-      .header-select {
-        padding: 4px 8px !important;
-        font-size: 24px !important;
-        max-width: 80px !important;
-      }
-      .header-btn {
-        padding: 6px 10px !important;
-        font-size: 24px !important;
-      }
-      /* Hide admin gear on mobile */
-      header a[href="/admin.html"] {
-        display: none !important;
-      }
-
-      /* --- Main layout: stack vertically --- */
-      div[x-data="homeworkTab()"] {
-        flex-direction: column !important;
-        padding: 10px !important;
-        gap: 12px !important;
-      }
-      /* Sidebar: full width, collapsible */
-      div[x-data="homeworkTab()"] > aside {
-        width: 100% !important;
-        flex-shrink: unset !important;
-      }
-      .glass-sidebar {
-        padding: 12px !important;
-      }
-      /* Calendar cells: slightly smaller */
-      .cal-day {
-        width: 28px !important;
-        height: 28px !important;
-        font-size: 16px !important;
-      }
-      /* Date list: horizontal scroll */
-      .glass-sidebar > div:last-child > div {
-        max-height: 120px !important;
-      }
-
-      /* --- Main content area --- */
-      div[x-data="homeworkTab()"] > main {
-        min-width: 0 !important;
-        width: 100% !important;
-      }
-
-      /* --- Homework items --- */
-      .hw-item {
-        padding: 10px 12px !important;
-      }
-      .hw-item img {
-        max-height: none !important;
-        width: 100% !important;
-      }
-      /* Image preview: full-width below, not side-by-side */
-      div[x-data="homeworkTab()"] [style*="display:flex;gap:16px"] {
-        flex-direction: column !important;
-      }
-      div[x-data="homeworkTab()"] [style*="width:40%"],
-      div[x-data="homeworkTab()"] [style*="width:55%"] {
-        width: 100% !important;
-        position: static !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        max-height: none !important;
-      }
-
-      /* --- Add homework form --- */
-      textarea {
-        font-size: 24px !important;
-      }
-      .upload-box {
-        padding: 16px !important;
-      }
-
-      /* --- Excellent tab grid --- */
-      div[x-show="activeTab==='excellent'"] [style*="grid-template-columns"] {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 10px !important;
-      }
-
-      /* --- Checkin tab --- */
-      div[x-show="activeTab==='checkin'"] > div:nth-child(2) {
-        gap: 6px !important;
-      }
-      .toggle-pill {
-        padding: 6px 10px !important;
-        font-size: 24px !important;
-      }
-      .student-btn {
-        padding: 6px 10px !important;
-        font-size: 24px !important;
-        -webkit-tap-highlight-color: transparent !important;
-        outline: none !important;
-      }
-      .student-btn:focus {
-        outline: none !important;
-        box-shadow: none !important;
-      }
-
-      /* --- Ranking tab --- */
-      .rank-row {
-        padding: 8px 10px !important;
-        gap: 8px !important;
-      }
-
-      /* --- Vocabulary tab --- */
-      div[x-show="activeTab==='vocabulary'"] [style*="grid-template-columns:repeat(auto-fill,minmax(250px"] {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
-        gap: 8px !important;
-      }
-
-      /* --- Quiz setup panel --- */
-      div[x-show="!quizStarted"] {
-        max-width: 100% !important;
-        padding: 0 !important;
-      }
-      div[x-show="!quizStarted"] > div {
-        padding: 16px !important;
-      }
-      /* Settings grid: 2 columns instead of 3 */
-      div[x-show="!quizStarted"] [style*="grid-template-columns:1fr 1fr 1fr"] {
-        grid-template-columns: 1fr 1fr !important;
-        gap: 8px !important;
-      }
-
-      /* --- Quiz display --- */
-      /* Top bar: wrap */
-      div[x-show="quizStarted"] > div:first-child {
-        flex-wrap: wrap !important;
-        gap: 6px !important;
-      }
-      .quiz-ctrl-sm {
-        padding: 4px 8px !important;
-        font-size: 24px !important;
-      }
-      /* Prompt text */
-      div[x-show="quizStarted"] [style*="font-size:3rem"] {
-        font-size: 2rem !important;
-      }
-      /* Controls bar */
-      div[x-show="quizStarted"] > div:last-child {
-        flex-wrap: wrap !important;
-        gap: 6px !important;
-      }
-      .quiz-ctrl {
-        padding: 8px 12px !important;
-        font-size: 24px !important;
-      }
-      .quiz-ctrl-main {
-        padding: 10px 20px !important;
-        font-size: 24px !important;
-      }
-      /* Word wall chips */
-      .word-wall-chip {
-        padding: 6px 12px !important;
-        font-size: 24px !important;
-        margin: 0 6px 6px 0 !important;
-      }
-      /* Fullscreen quiz */
-      div[x-show="quizStarted"][style*="position:fixed"] [style*="font-size:4.5rem"] {
-        font-size: 2.5rem !important;
-      }
-
-      /* --- Lightbox mobile --- */
-      #hwLightbox img {
-        max-width: 95vw !important;
-        max-height: 90vh !important;
-      }
-
-      /* --- General overrides --- */
-      h2 {
-        font-size: 18px !important;
-      }
-      /* Modal / lightbox: wider */
-      div[style*="max-width:400px"] {
-        max-width: 95% !important;
-      }
-      /* Background blobs: smaller on mobile */
-      .bg-blob-1 { width: 200px !important; height: 200px !important; }
-      .bg-blob-2 { width: 150px !important; height: 150px !important; }
-      .bg-blob-3 { width: 120px !important; height: 120px !important; }
-
-      /* Essay tab mobile */
-      div[x-show="view==='submission'"] > div:last-child {
-        grid-template-columns: 1fr !important;
-      }
-      .essay-card, .essay-sub-card {
-        padding: 12px !important;
-      }
-    }
-
-    /* ========== Tablet (768px - 1024px) ========== */
-    @media (min-width: 768px) and (max-width: 1024px) {
-      header > div {
-        gap: 12px !important;
-        padding: 0 16px !important;
-      }
-      .header-tab {
-        padding: 6px 12px !important;
-        font-size: 24px !important;
-      }
-      div[x-data="homeworkTab()"] > aside {
-        width: 220px !important;
-      }
-    }
   .period-active { background: white !important; color: #764ba2 !important; border-color: white !important; font-weight: bold; }
     /* Choice Fill Styles */
     .choicefill-container { max-width: 100%; margin: 0 auto; padding: 24px;  min-height: 75vh; }
@@ -2210,6 +1969,16 @@
   <script src="/js/choicefill.js?v=4"></script>
   <script src="/js/wordgame.js?v=7"></script>
   <script defer src="/js/alpine.min.js?v=4"></script>
+
+  <!-- Mobile Bottom Tab Bar -->
+  <nav class="mobile-tab-bar" x-show="!$store.homeworkPresentation?.active">
+    <template x-for="tab in tabs" :key="tab.id">
+      <button @click="switchTab(tab.id)" class="mobile-tab-item" :class="{'active': activeTab===tab.id}">
+        <span class="mobile-tab-icon" x-text="tab.icon"></span>
+        <span class="mobile-tab-label" x-text="tab.label"></span>
+      </button>
+    </template>
+  </nav>
 
 </body>
 </html>
