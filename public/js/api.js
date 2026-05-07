@@ -37,8 +37,16 @@ const API = {
   // Homework
   getHomework(date) { return this.get(`/api/homework?class_id=${this.classId}&date=${date}`); },
   getHomeworkDates() { return this.get(`/api/homework/dates?class_id=${this.classId}`); },
-  addHomework(date, text, image) {
-    if (image) { const fd = new FormData(); fd.append('class_id', this.classId); fd.append('date', date); fd.append('text', text); fd.append('image', image); return this.post('/api/homework', fd); }
+  addHomework(date, text, images) {
+    const list = Array.isArray(images) ? images.filter(Boolean) : (images ? [images] : []);
+    if (list.length) {
+      const fd = new FormData();
+      fd.append('class_id', this.classId);
+      fd.append('date', date);
+      fd.append('text', text);
+      list.forEach((file) => fd.append('images', file));
+      return this.post('/api/homework', fd);
+    }
     return this.post('/api/homework', { class_id: parseInt(this.classId), date, text });
   },
   deleteHomework(id) { return this.del(`/api/homework/${id}`); },

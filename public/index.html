@@ -1280,6 +1280,52 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
 
+
+    /* Multi-image gallery for homework cards */
+    .hw-gallery {
+      display: grid;
+      gap: 6px;
+      margin-top: 8px;
+      max-width: 100%;
+    }
+    .hw-gallery img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: zoom-in;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .hw-gallery img:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+    .hw-gallery-1 {
+      grid-template-columns: 1fr;
+      max-width: 360px;
+    }
+    .hw-gallery-1 img {
+      aspect-ratio: auto;
+      max-height: 320px;
+      object-fit: contain;
+      background: rgba(248,250,252,0.7);
+    }
+    .hw-gallery-2 { grid-template-columns: 1fr 1fr; max-width: 480px; }
+    .hw-gallery-3,
+    .hw-gallery-4,
+    .hw-gallery-5,
+    .hw-gallery-6,
+    .hw-gallery-7,
+    .hw-gallery-8,
+    .hw-gallery-9 {
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 540px;
+    }
+    @media (max-width: 768px) {
+      .hw-gallery { gap: 4px; }
+      .hw-gallery-1 { max-width: 100%; }
+      .hw-gallery-1 img { max-height: 240px; }
+    }
   </style>
 </head>
 <body x-data="app()" x-cloak style="background:linear-gradient(135deg, #eef2ff 0%, #e0e7ff 25%, #f5f3ff 50%, #fdf2f8 75%, #fce7f3 100%);background-attachment:fixed;min-height:100vh;font-family:'Nunito','PingFang SC','Microsoft YaHei',sans-serif;margin:0;">
@@ -1433,9 +1479,12 @@
                     <span x-text="item.text"></span>
                     <button x-show="isAdmin" @click="deleteHomework(item.id)" class="del-btn" style="flex-shrink:0;margin-top:2px;">✕</button>
                   </div>
-                  <img x-show="item.image" :src="item.image"
-                    style="max-width:100%;max-height:250px;object-fit:contain;border-radius:8px;cursor:zoom-in;margin-top:6px;"
-                    @click="previewImage = item.image">
+                  <div x-show="(item.images && item.images.length) || item.image"
+                       :class="'hw-gallery hw-gallery-' + Math.min(((item.images && item.images.length) ? item.images.length : (item.image ? 1 : 0)), 9)">
+                    <template x-for="(src, gi) in (item.images && item.images.length ? item.images : (item.image ? [item.image] : []))" :key="gi">
+                      <img :src="src" loading="lazy" @click="previewImage = src">
+                    </template>
+                  </div>
                 </div>
               </template>
             </div>
@@ -1465,11 +1514,20 @@
           <h3 style="font-weight:600;margin-bottom:12px;">➕ 添加作业</h3>
           <textarea class="glass-input" x-model="newText" placeholder="输入作业内容..." rows="3" style="width:100%;padding:10px;border-radius:8px;font-size:14px;resize:vertical;box-sizing:border-box;"></textarea>
           <div class="upload-box" style="margin-top:10px;" @click="$refs.hwImg.click()" @dragover.prevent @drop.prevent="onImageSelect($event)">
-            <div x-show="!imagePreview">📷 点击或拖拽上传图片（可选）</div>
-            <img x-show="imagePreview" :src="imagePreview" style="max-height:120px;border-radius:8px;">
-            <input type="file" x-ref="hwImg" accept="image/*" @change="onImageSelect($event)" style="display:none;">
+            <div x-show="!imagePreviews.length">📷 点击或拖拽上传图片（可多张，最多 9 张）</div>
+            <div x-show="imagePreviews.length" style="display:flex;flex-wrap:wrap;gap:8px;">
+              <template x-for="(src, idx) in imagePreviews" :key="idx">
+                <div style="position:relative;width:80px;height:80px;">
+                  <img :src="src" style="width:100%;height:100%;object-fit:cover;border-radius:6px;border:1px solid rgba(148,163,184,0.3);">
+                  <button type="button" @click.stop="removeImage(idx)" title="移除"
+                    style="position:absolute;top:-6px;right:-6px;width:20px;height:20px;border:none;border-radius:50%;background:#ef4444;color:white;font-size:12px;line-height:18px;cursor:pointer;padding:0;">×</button>
+                </div>
+              </template>
+              <div x-show="imagePreviews.length < 9" style="width:80px;height:80px;display:flex;align-items:center;justify-content:center;border:1px dashed #cbd5e1;border-radius:6px;color:#94a3b8;font-size:24px;">+</div>
+            </div>
+            <input type="file" x-ref="hwImg" accept="image/*" multiple @change="onImageSelect($event)" style="display:none;">
           </div>
-          <button x-show="imagePreview" @click="clearImage()" style="margin-top:6px;font-size:0.875rem;color:#ef4444;background:none;border:none;cursor:pointer;">移除图片</button>
+          <button x-show="imagePreviews.length" @click="clearImage()" style="margin-top:6px;font-size:0.875rem;color:#ef4444;background:none;border:none;cursor:pointer;">清空全部图片</button>
           <button @click="addHomework()" style="margin-top:12px;padding:10px 24px;border-radius:20px;border:none;background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;font-size:0.875rem;font-weight:600;cursor:pointer;">发布作业</button>
         </div>
       </div>

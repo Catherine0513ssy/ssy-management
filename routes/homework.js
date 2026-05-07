@@ -16,7 +16,19 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + '_' + crypto.randomBytes(6).toString('hex') + ext);
   },
 });
-const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
+const upload = multer({
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter(_req, file, cb) {
+    const allowed = ['.png', '.jpg', '.jpeg', '.gif', '.webp'];
+    const ext = path.extname(file.originalname).toLowerCase();
+    if (allowed.includes(ext)) {
+      cb(null, true);
+    } else {
+      cb(new Error('只允许上传图片文件 (png, jpg, jpeg, gif, webp)'));
+    }
+  },
+});
 
 // ---------------------------------------------------------------------------
 // Helper: fetch all unique dates for a given class (descending)
@@ -48,16 +60,31 @@ function normalizeDate(dateStr) {
 // ---------------------------------------------------------------------------
 // Helper: fetch homework items for a class + date
 // ---------------------------------------------------------------------------
+function normalizeItems(rows) {
+  return rows.map((row) => {
+    let images = [];
+    if (row.images) {
+      try {
+        const parsed = JSON.parse(row.images);
+        if (Array.isArray(parsed)) images = parsed.filter(Boolean);
+      } catch (_) { /* ignore */ }
+    }
+    if (!images.length && row.image) images = [row.image];
+    return { ...row, images };
+  });
+}
+
 function getItems(db, classId, date) {
   // Normalize date to match database format
   const normalizedDate = normalizeDate(date);
-  return db
+  const rows = db
     .prepare(
       `SELECT * FROM homework_items
        WHERE class_id = ? AND date = ?
        ORDER BY sort_order ASC, id ASC`
     )
     .all(classId, normalizedDate);
+  return normalizeItems(rows);
 }
 
 // ---------------------------------------------------------------------------
@@ -110,7 +137,12 @@ router.get('/dates', (req, res) => {
 // ---------------------------------------------------------------------------
 // POST /  — create a homework item (auth required)
 // ---------------------------------------------------------------------------
-router.post('/', requireAuth, upload.single('image'), (req, res) => {
+const homeworkUploadFields = upload.fields([
+  { name: 'images', maxCount: 9 },
+  { name: 'image', maxCount: 1 },
+]);
+
+router.post('/', requireAuth, homeworkUploadFields, (req, res) => {
   const { class_id, date, text } = req.body;
 
   if (!class_id || !date || !text) {
@@ -122,11 +154,22 @@ router.post('/', requireAuth, upload.single('image'), (req, res) => {
   const db = getDB();
   const classId = Number(class_id);
   const sanitizedText = sanitizeText(text);
-  const imagePath = req.file ? `/uploads/${req.file.filename}` : (req.body.image || null);
+
+  // Collect uploaded images: prefer images[] (new), fallback to image (legacy)
+  const filesNew = (req.files && req.files.images) ? req.files.images : [];
+  const filesLegacy = (req.files && req.files.image) ? req.files.image : [];
+  const allFiles = filesNew.concat(filesLegacy);
+  let paths = allFiles.map((f) => `/uploads/${f.filename}`);
+  // Backward-compat: text-form image URL (legacy code sometimes posted a path string)
+  if (!paths.length && req.body.image) paths = [req.body.image];
+  paths = paths.slice(0, 9);
+
+  const firstImage = paths[0] || null;
+  const imagesJson = paths.length ? JSON.stringify(paths) : null;
 
   // Normalize date for consistency
   const normalizedDate = normalizeDate(date);
-  
+
   // Determine next sort_order for this class + date
   const maxRow = db
     .prepare(
@@ -138,9 +181,9 @@ router.post('/', requireAuth, upload.single('image'), (req, res) => {
   const nextSort = (maxRow && maxRow.max_sort != null ? maxRow.max_sort : -1) + 1;
 
   db.prepare(
-    `INSERT INTO homework_items (class_id, date, text, image, sort_order, created_at)
-     VALUES (?, ?, ?, ?, ?, datetime('now'))`
-  ).run(classId, normalizedDate, sanitizedText, imagePath, nextSort);
+    `INSERT INTO homework_items (class_id, date, text, image, images, sort_order, created_at)
+     VALUES (?, ?, ?, ?, ?, ?, datetime('now'))`
+  ).run(classId, normalizedDate, sanitizedText, firstImage, imagesJson, nextSort);
 
   // Return updated items for that date
   const items = getItems(db, classId, normalizedDate);

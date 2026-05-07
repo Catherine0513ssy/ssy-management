@@ -56,8 +56,8 @@ document.addEventListener('alpine:init', () => {
     selectedDate: new Date().toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' }).replace(/\//g, '-'),
     searchText: '',
     newText: '',
-    newImage: null,
-    imagePreview: null,
+    newImages: [],
+    imagePreviews: [],
     loading: false,
 
     // Calendar state
@@ -126,7 +126,14 @@ document.addEventListener('alpine:init', () => {
     },
 
     get presentationImages() {
-      return this.items.filter((item) => item.image);
+      const out = [];
+      this.items.forEach((item) => {
+        const list = Array.isArray(item.images) && item.images.length
+          ? item.images
+          : (item.image ? [item.image] : []);
+        list.forEach((src) => out.push({ id: `${item.id}-${out.length}`, image: src, text: item.text }));
+      });
+      return out;
     },
 
     // ------------------------------------------------------------------
@@ -216,21 +223,38 @@ document.addEventListener('alpine:init', () => {
     // ------------------------------------------------------------------
 
     onImageSelect(e) {
-      const file = e.target.files?.[0] || e.dataTransfer?.files?.[0];
-      if (!file) return;
-      if (file.size > 5 * 1024 * 1024) {
-        this.$dispatch('toast', { message: '图片不能超过5MB', type: 'error' });
+      const list = Array.from(e.target.files || e.dataTransfer?.files || []);
+      if (!list.length) return;
+      const remaining = 9 - this.newImages.length;
+      if (remaining <= 0) {
+        this.$dispatch('toast', { message: '一条作业最多 9 张图片', type: 'error' });
+        e.target.value = '';
         return;
       }
-      this.newImage = file;
-      const reader = new FileReader();
-      reader.onload = (ev) => { this.imagePreview = ev.target.result; };
-      reader.readAsDataURL(file);
+      const accepted = list.slice(0, remaining).filter((file) => {
+        if (file.size > 5 * 1024 * 1024) {
+          this.$dispatch('toast', { message: `${file.name} 超过 5MB，已跳过`, type: 'error' });
+          return false;
+        }
+        return true;
+      });
+      accepted.forEach((file) => {
+        this.newImages.push(file);
+        const reader = new FileReader();
+        reader.onload = (ev) => { this.imagePreviews.push(ev.target.result); };
+        reader.readAsDataURL(file);
+      });
+      if (e.target && 'value' in e.target) e.target.value = '';
+    },
+
+    removeImage(idx) {
+      this.newImages.splice(idx, 1);
+      this.imagePreviews.splice(idx, 1);
     },
 
     clearImage() {
-      this.newImage = null;
-      this.imagePreview = null;
+      this.newImages = [];
+      this.imagePreviews = [];
     },
 
     // ------------------------------------------------------------------
@@ -240,7 +264,7 @@ document.addEventListener('alpine:init', () => {
     async addHomework() {
       if (!this.newText.trim()) return;
       try {
-        await API.addHomework(this.selectedDate, this.newText.trim(), this.newImage);
+        await API.addHomework(this.selectedDate, this.newText.trim(), this.newImages);
         this.newText = '';
         this.clearImage();
         await this.loadHomework();
