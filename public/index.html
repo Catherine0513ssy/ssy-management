@@ -305,16 +305,17 @@
         box-sizing: border-box;
       }
       /* Homework tab: stack calendar above content on mobile */
-      body > div[x-data="homeworkTab()"] {
-        flex-direction: column !important;
+      body { overflow-x: hidden !important; }
+      .hw-layout {
+        display: block !important;
         padding: 12px !important;
-        gap: 12px !important;
+        gap: 0 !important;
       }
-      body > div[x-data="homeworkTab()"] > aside {
+      .hw-layout > aside {
         width: 100% !important;
-        flex-shrink: 0 !important;
+        margin-bottom: 16px !important;
       }
-      body > div[x-data="homeworkTab()"] > main {
+      .hw-layout > main {
         min-width: 0 !important;
         width: 100% !important;
       }
@@ -1330,7 +1331,7 @@
   </header>
 
   <!-- ==================== MAIN LAYOUT ==================== -->
-  <div x-data="homeworkTab()" @keydown.window="handlePresentationKey($event)" :style="$store.homeworkPresentation?.active ? 'max-width:none;margin:0;display:flex;gap:20px;padding:0;' : 'max-width:100%;margin:0 auto;display:flex;gap:20px;padding:20px;'">
+  <div class="hw-layout" x-data="homeworkTab()" @keydown.window="handlePresentationKey($event)" :style="$store.homeworkPresentation?.active ? 'max-width:none;margin:0;display:flex;gap:20px;padding:0;' : 'max-width:100%;margin:0 auto;display:flex;gap:20px;padding:20px;'">
 
     <!-- SIDEBAR (only on homework tab) -->
     <aside x-show="activeTab==='homework' && !$store.homeworkPresentation?.active" style="width:280px;flex-shrink:0;" x-transition>
