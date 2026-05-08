@@ -35,6 +35,7 @@ document.addEventListener('alpine:init', () => {
       { id: 'wordgame',   label: '英语游戏', icon: '\u{1F36C}' },
 
       { id: 'essay',      label: '作文',    icon: '✍️' },
+      { id: 'exam',       label: '考试分析', icon: '📈' },
 
     ],
 

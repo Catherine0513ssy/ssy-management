@@ -2428,6 +2428,111 @@
 
       </div><!-- end essay tab -->
 
+
+      <!-- EXAM ANALYSIS TAB -->
+      <div x-show="activeTab==='exam'" x-data="examTab()">
+        <div style="max-width:900px;margin:0 auto;">
+          <h2 style="font-size:26px;font-weight:700;margin:0 0 20px;">&#x1F4C8; 考试分析</h2>
+
+          <!-- Search -->
+          <div style="display:flex;gap:12px;margin-bottom:24px;align-items:center;">
+            <input x-model="searchNum" placeholder="输入学号(如 231301)" maxlength="10"
+              style="flex:1;max-width:280px;padding:12px 16px;border-radius:12px;border:1px solid #e2e8f0;font-size:1rem;"
+              @keydown.enter="searchStudent()">
+            <button @click="searchStudent()"
+              style="padding:12px 24px;border-radius:12px;border:none;background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;font-size:1rem;font-weight:600;cursor:pointer;">
+              查询
+            </button>
+          </div>
+
+          <!-- Loading -->
+          <div x-show="loading" style="text-align:center;padding:40px;color:#94a3b8;">加载数据中...</div>
+
+          <!-- Result -->
+          <div x-show="currentStudent && !loading">
+            <!-- Student header -->
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+              <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,#60a5fa);display:flex;align-items:center;justify-content:center;color:white;font-size:20px;font-weight:700;"
+                x-text="currentStudent.name ? currentStudent.name.charAt(0) : '?'">
+              </div>
+              <div>
+                <div style="font-size:18px;font-weight:700;" x-text="isAdmin ? currentStudent.name + ' (' + searchNum + ')' : searchNum"></div>
+                <div style="font-size:0.875rem;color:#64748b;" x-text="stats.examCount + ' 场考试记录'"></div>
+              </div>
+            </div>
+
+            <!-- Stats cards -->
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:24px;">
+              <div style="background:rgba(255,255,255,0.85);border-radius:12px;padding:16px;text-align:center;">
+                <div style="font-size:0.875rem;color:#64748b;">平均分数</div>
+                <div style="font-size:24px;font-weight:800;color:#5470c6;" x-text="stats.avgScore"></div>
+              </div>
+              <div style="background:rgba(255,255,255,0.85);border-radius:12px;padding:16px;text-align:center;">
+                <div style="font-size:0.875rem;color:#64748b;">平均班排</div>
+                <div style="font-size:24px;font-weight:800;color:#5470c6;" x-text="stats.avgRank"></div>
+              </div>
+              <div style="background:rgba(255,255,255,0.85);border-radius:12px;padding:16px;text-align:center;">
+                <div style="font-size:0.875rem;color:#64748b;">最高分</div>
+                <div style="font-size:24px;font-weight:800;color:#22c55e;" x-text="stats.bestScore"></div>
+              </div>
+              <div style="background:rgba(255,255,255,0.85);border-radius:12px;padding:16px;text-align:center;">
+                <div style="font-size:0.875rem;color:#64748b;">最低分</div>
+                <div style="font-size:24px;font-weight:800;color:#ef4444;" x-text="stats.worstScore"></div>
+              </div>
+              <div style="background:rgba(255,255,255,0.85);border-radius:12px;padding:16px;text-align:center;">
+                <div style="font-size:0.875rem;color:#64748b;">最佳班排</div>
+                <div style="font-size:24px;font-weight:800;color:#22c55e;" x-text="stats.bestRank"></div>
+              </div>
+              <div style="background:rgba(255,255,255,0.85);border-radius:12px;padding:16px;text-align:center;">
+                <div style="font-size:0.875rem;color:#64748b;">与班均差</div>
+                <div style="font-size:24px;font-weight:800;" :style="stats.avgDiff >= 0 ? 'color:#22c55e' : 'color:#ef4444'" x-text="(stats.avgDiff > 0 ? '+' : '') + stats.avgDiff"></div>
+              </div>
+            </div>
+
+            <!-- Chart -->
+            <div style="background:rgba(255,255,255,0.85);border-radius:16px;padding:20px;margin-bottom:24px;">
+              <div id="examChart" style="width:100%;height:360px;"></div>
+            </div>
+
+            <!-- Weakness analysis -->
+            <div style="background:rgba(255,255,255,0.85);border-radius:16px;padding:20px;">
+              <h3 style="font-size:18px;font-weight:700;margin:0 0 16px;">&#x1F3AF; 学情诊断</h3>
+              <div x-show="weaknesses.length === 0" style="color:#94a3b8;font-size:0.875rem;">暂无诊断数据</div>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <template x-for="w in weaknesses" :key="w.desc">
+                  <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:10px;"
+                    :style="w.level === 'high' ? 'background:rgba(239,68,68,0.08);border-left:4px solid #ef4444;' : w.level === 'medium' ? 'background:rgba(245,158,11,0.08);border-left:4px solid #f59e0b;' : 'background:rgba(34,197,94,0.08);border-left:4px solid #22c55e;'">
+                    <span style="font-size:1.2rem;"
+                      x-text="w.level === 'high' ? '&#x26A0;&#xFE0F;' : w.level === 'medium' ? '&#x1F4A1;' : '&#x2705;'">
+                    </span>
+                    <div>
+                      <div style="font-weight:600;font-size:0.875rem;"
+                        :style="w.level === 'high' ? 'color:#dc2626' : w.level === 'medium' ? 'color:#d97706' : 'color:#16a34a'"
+                        x-text="w.type"></div>
+                      <div style="font-size:0.875rem;color:#475569;" x-text="w.desc"></div>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </div>
+
+          <!-- Empty state -->
+          <div x-show="!currentStudent && !loading && searchNum" style="text-align:center;padding:60px;color:#94a3b8;">
+            <div style="font-size:48px;">&#x1F50D;</div>
+            <p>未找到学号 <span x-text="searchNum"></span> 的记录</p>
+            <p style="font-size:0.875rem;">请检查学号是否正确</p>
+          </div>
+
+          <div x-show="!currentStudent && !loading && !searchNum" style="text-align:center;padding:60px;color:#94a3b8;">
+            <div style="font-size:48px;">&#x1F4C8;</div>
+            <p>输入学号查看个人考试分析</p>
+            <p style="font-size:0.875rem;">支持查看分数曲线、班级对比和学情诊断</p>
+          </div>
+        </div>
+      </div><!-- end exam tab -->
+
+
       <!-- CHOICE FILL TAB -->
       <div x-show="activeTab==='choicefill'" x-data="choicefillTab()" x-init="init()">
         <div class="choicefill-container">
@@ -2581,7 +2686,9 @@
   <script src="/js/essay.js?v=4"></script>
   <script src="/js/choicefill.js?v=4"></script>
   <script src="/js/wordgame.js?v=7"></script>
-  <script defer src="/js/alpine.min.js?v=4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="/js/exam.js?v=1"></script>
+    <script defer src="/js/alpine.min.js?v=4"></script>
 
   <!-- Mobile Bottom Tab Bar -->
   <nav class="mobile-tab-bar" x-show="!$store.homeworkPresentation?.active">
