@@ -191,14 +191,18 @@ document.addEventListener('alpine:init', () => {
       const n = cards.length;
       const isDual = prefix === 'p1' || prefix === 'p2';
       const w = window.innerWidth || 1200;
-      let extraCols = 0;
-      if (w < 850) extraCols = 2;
-      else if (w < 1100) extraCols = 1;
-      else if (w >= 1600) extraCols = -1;
-      let cols = isDual
-        ? (n <= 10 ? 3 : n <= 14 ? 4 : n <= 24 ? 5 : n <= 36 ? 6 : n <= 50 ? 7 : 8)
-        : (n <= 10 ? 3 : n <= 16 ? 4 : n <= 26 ? 5 : n <= 40 ? 6 : n <= 56 ? 7 : 8);
-      cols = Math.max(3, cols + extraCols);
+      let cols;
+      if (w < 480) {
+        cols = isDual ? 2 : 4;
+      } else if (w < 850) {
+        cols = isDual ? 3 : 5;
+      } else {
+        cols = isDual
+          ? (n <= 10 ? 3 : n <= 14 ? 4 : n <= 24 ? 5 : n <= 36 ? 6 : n <= 50 ? 7 : 8)
+          : (n <= 10 ? 3 : n <= 16 ? 4 : n <= 26 ? 5 : n <= 40 ? 6 : n <= 56 ? 7 : 8);
+        if (w >= 1600) cols += 1;
+      }
+      cols = Math.max(2, cols);
       container.style.gridTemplateColumns = 'repeat(' + cols + ', 1fr)';
       container.style.display = 'grid';
       container.innerHTML = '';

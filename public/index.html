@@ -846,6 +846,28 @@
     .wg-loading-spinner { width: 40px; height: 40px; border: 4px solid #e2e8f0; border-top-color: #667eea; border-radius: 50%; animation: wgSpin 1s linear infinite; margin: 0 auto 12px; }
     @keyframes wgSpin { to { transform: rotate(360deg); } }
 
+    /* Mobile (<=640px) — wordgame */
+    @media (max-width: 640px) {
+      .wordgame-wrap { padding: 10px; }
+      .wg-game-header { flex-wrap: wrap; padding: 10px 14px; gap: 8px; row-gap: 6px; }
+      .wg-game-header .wg-score-display { order: 1; font-size: 1.05em; }
+      .wg-game-header .wg-game-controls { order: 2; margin-left: auto; gap: 6px; }
+      .wg-game-header .wg-timer-section { order: 3; flex: 1 1 100%; width: 100%; }
+      .wg-game-header .wg-players-status { order: 1; flex: 1 1 auto; }
+      .wg-pause-btn, .wg-quit-btn { padding: 6px 10px; font-size: 0.82em; border-radius: 8px; }
+      .wg-timer-text { font-size: 0.82em; margin-top: 2px; }
+      .wg-card-grid { gap: 8px; padding: 0 2px; }
+      .wg-card { aspect-ratio: unset; min-height: 52px; padding: 6px 4px; border-radius: 12px; }
+      .wg-card.wg-english { font-size: clamp(0.8rem, 3.6vw, 1.05rem); }
+      .wg-card.wg-english.wg-long  { font-size: clamp(0.72rem, 3.2vw, 0.95rem); }
+      .wg-card.wg-english.wg-xl    { font-size: clamp(0.64rem, 2.8vw, 0.82rem); }
+      .wg-card.wg-english.wg-xxl   { font-size: clamp(0.56rem, 2.4vw, 0.72rem); }
+      .wg-card.wg-chinese { font-size: clamp(0.8rem, 3.6vw, 1.05rem); }
+      .wg-arena-dual { gap: 8px; }
+      .wg-vs-divider { font-size: 1.2em; }
+      .wg-player-side h4 { font-size: 0.9em; padding: 6px; }
+    }
+
 
 
 
@@ -2685,7 +2707,7 @@
   <script src="/js/quiz.js?v=8"></script>
   <script src="/js/essay.js?v=4"></script>
   <script src="/js/choicefill.js?v=4"></script>
-  <script src="/js/wordgame.js?v=7"></script>
+  <script src="/js/wordgame.js?v=8"></script>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <script src="/js/exam.js?v=1"></script>
     <script defer src="/js/alpine.min.js?v=4"></script>
