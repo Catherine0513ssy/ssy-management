@@ -866,6 +866,13 @@
       .wg-arena-dual { gap: 8px; }
       .wg-vs-divider { font-size: 1.2em; }
       .wg-player-side h4 { font-size: 0.9em; padding: 6px; }
+      .wg-mode-cards { gap: 12px; }
+      .wg-mode-card { padding: 14px; border-radius: 16px; }
+      .wg-mode-card .emoji { font-size: 2.2em; }
+      .wg-mode-card h3 { font-size: 1.1em; margin-bottom: 2px; }
+      .wg-mode-card p { font-size: 0.85em; }
+      .wg-title { font-size: clamp(2em, 5vw, 3.2em); }
+      .wg-diff-btn { padding: 10px 14px; font-size: 0.85em; min-width: 80px; }
     }
 
 
@@ -895,7 +902,7 @@
 
         right: 0;
 
-        height: 60px;
+        height: 52px;
 
         background: rgba(255,255,255,0.96);
 
@@ -913,6 +920,10 @@
 
         -ms-overflow-style: none;
 
+        mask-image: linear-gradient(to right, black 85%, transparent 100%);
+
+        -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+
       }
 
       .mobile-tab-bar::-webkit-scrollbar {
@@ -925,9 +936,9 @@
 
         flex: 1;
 
-        min-width: 56px;
+        min-width: 38px;
 
-        max-width: 80px;
+        max-width: 60px;
 
         display: flex;
 
@@ -943,7 +954,7 @@
 
         border: none;
 
-        padding: 4px 2px;
+        padding: 4px 1px;
 
         color: rgba(88,28,135,0.55);
 
@@ -963,13 +974,13 @@
 
         background: rgba(147,51,234,0.08);
 
-        border-radius: 12px;
+        border-radius: 10px;
 
       }
 
       .mobile-tab-icon {
 
-        font-size: 22px;
+        font-size: 18px;
 
         line-height: 1;
 
@@ -977,7 +988,7 @@
 
       .mobile-tab-label {
 
-        font-size: 10px;
+        font-size: 9px;
 
         white-space: nowrap;
 
@@ -1946,11 +1957,11 @@
         <!-- Setup Panel -->
         <div x-show="!quizStarted" style="max-width:900px;margin:0 auto;">
           <h2 style="font-size:26px;font-weight:700;margin:0 0 10px;text-align:center;">🎯 单词默写</h2>
-          <div style="text-align:center;margin-bottom:15px;">
-            <a href="/quiz_mark_wrong.html" target="_blank" style="display:inline-block;padding:6px 24px;background:linear-gradient(135deg,#ff6b6b,#ee5a24);color:white;text-decoration:none;border-radius:20px;font-size:0.875rem;font-weight:600;">✏️ 录入错误单词</a>
-            <button @click="loadSmartDaily()" style="display:inline-block;margin-left:8px;padding:6px 24px;background:linear-gradient(135deg,#667eea,#764ba2);color:white;border:none;border-radius:20px;font-size:0.875rem;font-weight:600;cursor:pointer;">🤖 智能今日50词</button>
-            <button @click="openHistory()" style="display:inline-block;margin-left:8px;padding:6px 24px;background:linear-gradient(135deg,#10b981,#059669);color:white;border:none;border-radius:20px;font-size:0.875rem;font-weight:600;cursor:pointer;">&#128203; &#40664;&#20889;&#35760;&#24405;</button>
-            <button @click="planMode = !planMode" :style="planMode ? 'background:linear-gradient(135deg,#d35400,#e67e22);' : 'background:linear-gradient(135deg,#f59e0b,#d97706);'" style="display:inline-block;margin-left:8px;padding:6px 24px;color:white;border:none;border-radius:20px;font-size:0.875rem;font-weight:600;cursor:pointer;">📅 30天计划</button>
+          <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:15px;">
+            <a href="/quiz_mark_wrong.html" target="_blank" style="padding:6px 16px;background:linear-gradient(135deg,#ff6b6b,#ee5a24);color:white;text-decoration:none;border-radius:20px;font-size:0.875rem;font-weight:600;white-space:nowrap;">✏️ 录入错误单词</a>
+            <button @click="loadSmartDaily()" style="padding:6px 16px;background:linear-gradient(135deg,#667eea,#764ba2);color:white;border:none;border-radius:20px;font-size:0.875rem;font-weight:600;cursor:pointer;white-space:nowrap;">🤖 智能今日50词</button>
+            <button @click="openHistory()" style="padding:6px 16px;background:linear-gradient(135deg,#10b981,#059669);color:white;border:none;border-radius:20px;font-size:0.875rem;font-weight:600;cursor:pointer;white-space:nowrap;">📋 默写记录</button>
+            <button @click="planMode = !planMode" :style="planMode ? 'background:linear-gradient(135deg,#d35400,#e67e22);' : 'background:linear-gradient(135deg,#f59e0b,#d97706);'" style="padding:6px 16px;color:white;border:none;border-radius:20px;font-size:0.875rem;font-weight:600;cursor:pointer;white-space:nowrap;">📅 30天计划</button>
           </div>
           <!-- 30天计划面板 -->
           <div x-show="planMode" style="max-width:900px;margin:0 auto;margin-bottom:15px;">
