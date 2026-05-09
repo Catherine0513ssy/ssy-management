@@ -140,6 +140,7 @@ document.addEventListener('alpine:init', () => {
     },
 
     startDualGame() {
+      this.mode = 'dual';
       const cfg = this.CONFIG[this.diff];
       const words = this.pickWords(cfg.grade, cfg.pairs);
       this.dualState = {
@@ -197,9 +198,11 @@ document.addEventListener('alpine:init', () => {
       } else if (w < 850) {
         cols = isDual ? 3 : 5;
       } else {
-        cols = isDual
-          ? (n <= 10 ? 3 : n <= 14 ? 4 : n <= 24 ? 5 : n <= 36 ? 6 : n <= 50 ? 7 : 8)
-          : (n <= 10 ? 3 : n <= 16 ? 4 : n <= 26 ? 5 : n <= 40 ? 6 : n <= 56 ? 7 : 8);
+        if (isDual) {
+          cols = (n <= 10 ? 3 : n <= 14 ? 4 : n <= 24 ? 5 : n <= 36 ? 6 : 6);
+        } else {
+          cols = (n <= 10 ? 3 : n <= 16 ? 4 : n <= 26 ? 5 : n <= 40 ? 6 : n <= 56 ? 7 : 8);
+        }
         if (w >= 1600) cols += 1;
       }
       cols = Math.max(2, cols);

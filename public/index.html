@@ -768,10 +768,10 @@
     .wg-timer-fill.wg-warning { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
     .wg-timer-fill.wg-danger { background: linear-gradient(90deg, #ef4444, #f87171); }
     .wg-timer-text { text-align: center; font-size: 0.95em; color: #4b5563; margin-top: 4px; font-weight: 600; }
-    .wg-players-status { display: flex; gap: 14px; }
-    .wg-player-status { text-align: center; padding: 8px 16px; border-radius: 12px; background: #f3f4f6; min-width: 80px; }
-    .wg-player-status .label { font-size: 0.8em; color: #6b7280; font-weight: 600; }
-    .wg-player-status .score { font-size: 1.3em; font-weight: 800; }
+    .wg-players-status { display: flex; gap: 10px; align-items: center; }
+    .wg-player-status { text-align: center; padding: 4px 10px; border-radius: 10px; background: #f3f4f6; min-width: 60px; }
+    .wg-player-status .label { font-size: 0.75em; color: #6b7280; font-weight: 600; }
+    .wg-player-status .score { font-size: 1.15em; font-weight: 800; }
     .wg-player-status.winner { background: #dcfce7; }
     .wg-player-status.winner .score { color: #16a34a; }
 
@@ -790,7 +790,7 @@
     .wg-arena-dual { flex: 1; display: flex; gap: 14px; padding: 4px 0; }
     .wg-player-side { flex: 1; display: flex; flex-direction: column; gap: 8px; }
     .wg-player-side h4 { text-align: center; color: white; background: rgba(0,0,0,0.25); padding: 8px; border-radius: 12px; font-size: 1.05em; flex-shrink: 0; font-weight: 700; letter-spacing: 0.5px; }
-    .wg-vs-divider { display: flex; align-items: center; font-size: 1.8em; color: white; font-weight: 900; text-shadow: 0 3px 12px rgba(0,0,0,0.35); }
+    .wg-vs-divider { display: flex; align-items: center; font-size: 1.3em; color: white; font-weight: 900; text-shadow: 0 3px 12px rgba(0,0,0,0.35); padding: 0 6px; }
 
     .wg-card-grid { display: grid; gap: 12px; width: 100%; max-width: 100%; padding: 0 4px; margin: 0 auto; box-sizing: border-box; }
     .wg-card {
@@ -2215,7 +2215,7 @@
                 <div class="wg-timer-bar"><div class="wg-timer-fill" id="wg-timer-fill"></div></div>
                 <div class="wg-timer-text" id="wg-timer-text">剩余 90 秒</div>
               </div>
-              <div class="wg-players-status" id="wg-players-status" x-show="mode==='dual'" style="display:none">
+              <div class="wg-players-status" id="wg-players-status" x-show="mode==='dual'">
                 <div class="wg-player-status" id="wg-p1-status"><div class="label">🧑 玩家1</div><div class="score" id="wg-score-p1">0</div></div>
                 <div class="wg-player-status" id="wg-p2-status"><div class="label">👩 玩家2</div><div class="score" id="wg-score-p2">0</div></div>
               </div>
@@ -2718,7 +2718,7 @@
   <script src="/js/quiz.js?v=9"></script>
   <script src="/js/essay.js?v=4"></script>
   <script src="/js/choicefill.js?v=4"></script>
-  <script src="/js/wordgame.js?v=8"></script>
+  <script src="/js/wordgame.js?v=9"></script>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <script src="/js/exam.js?v=1"></script>
     <script defer src="/js/alpine.min.js?v=4"></script>
