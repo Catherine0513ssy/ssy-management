@@ -22,6 +22,18 @@ document.addEventListener('alpine:init', () => {
       });
     },
 
+    get quickStudents() {
+      const result = { '2313': [], '2314': [] };
+      for (const [num, info] of Object.entries(this.students)) {
+        const cls = num.startsWith('2313') ? '2313' : num.startsWith('2314') ? '2314' : null;
+        if (cls) result[cls].push({ num, name: info.name });
+      }
+      // Sort by num
+      result['2313'].sort((a, b) => a.num.localeCompare(b.num));
+      result['2314'].sort((a, b) => a.num.localeCompare(b.num));
+      return result;
+    },
+
     async loadData() {
       this.loading = true;
       try {
