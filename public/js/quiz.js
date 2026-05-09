@@ -365,10 +365,10 @@ document.addEventListener('alpine:init', () => {
     speak() {
       if (!this.currentWord) return;
       const times = parseInt(this.repeatCount) || 1;
-      if (this.mode === 'cn2en') {
-        this.speakText(this.currentWord.cleanMeaning, 'zh-CN', times);
-      } else {
+      if (this.mode === 'en2cn') {
         this.speakText(this.currentWord.en, 'en-US', times);
+      } else {
+        this.speakText(this.currentWord.cleanMeaning, 'zh-CN', times);
       }
     },
 
