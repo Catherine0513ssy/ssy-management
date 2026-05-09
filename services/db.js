@@ -246,6 +246,17 @@ CREATE TABLE IF NOT EXISTS quiz_history_log (
   created_at TEXT DEFAULT (datetime('now')),
   UNIQUE(class_id, log_date, source)
 );
+
+CREATE TABLE IF NOT EXISTS wordgame_scores (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  class_id TEXT NOT NULL,
+  score INTEGER NOT NULL DEFAULT 0,
+  mode TEXT NOT NULL,
+  diff TEXT NOT NULL,
+  updated_at TEXT DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_wordgame_scores_class ON wordgame_scores(class_id, score);
 `;
 
 function initDB(dbPath) {

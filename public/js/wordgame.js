@@ -24,6 +24,17 @@ document.addEventListener('alpine:init', () => {
     loading: false,
     gameMenu: 'main',     // 'main' | 'match' | 'plane'
 
+    // Student
+    studentClass: '',
+    studentName: '',
+    showLeaderboard: false,
+    leaderboardData: [],
+    leaderboardLoading: false,
+    studentList: {
+      '2313': ['龙欣怡','罗鹏辉','唐冉','王妍熙','裴健平','吴向荣','樊俊熙','万雨彤','袁微茗','张博彦','刘瑞','刘雅萱','向俊涵','罗翔译','段轩禹','朱笑仪','邵善琳','李林颐','易露熙','罗俊涛','张莞淇','王紫贤','刘宸熙','曹怀芳','易铭轩','肖涵杰','余熙冉','郭子涵','龙莉','曾诗予','胡芸甄'],
+      '2314': ['刘桐睿','陈哲诺','王雅淇','段佳辰','郭睿熙','陈思宇','龙紫乐','李可乐','文志远','熊心悦','周子佑','胡子健','朱思羽','王昊']
+    },
+
     // Single game state
     gameState: null,
     // Dual game state
@@ -376,6 +387,7 @@ document.addEventListener('alpine:init', () => {
     endGame(state) {
       this.clearTimer();
       this.page = 'result';
+      this.submitScore(state.score);
       this.$nextTick(() => {
         const emoji = document.getElementById('wg-result-emoji');
         const title = document.getElementById('wg-result-title');
@@ -393,6 +405,7 @@ document.addEventListener('alpine:init', () => {
       this.clearTimer();
       const state = this.gameState;
       this.page = 'result';
+      this.submitScore(state.score);
       this.$nextTick(() => {
         const emoji = document.getElementById('wg-result-emoji');
         const title = document.getElementById('wg-result-title');
@@ -422,6 +435,12 @@ document.addEventListener('alpine:init', () => {
         msg = winner === 1 ? '玩家1剩余时间更多！' : '玩家2剩余时间更多！';
       }
       this.page = 'result';
+      // 双人模式也分别提交分数（用玩家1/玩家2作为姓名）
+      this.submitScore(p1.score);
+      const savedName = this.studentName;
+      this.studentName = '玩家2';
+      this.submitScore(p2.score);
+      this.studentName = savedName;
       this.$nextTick(() => {
         const emoji = document.getElementById('wg-result-emoji');
         const title = document.getElementById('wg-result-title');
@@ -466,6 +485,39 @@ document.addEventListener('alpine:init', () => {
       this.clearPlaneGame();
       this.gameMenu = 'main';
       this.$nextTick(() => this.createBg());
+    },
+
+    async submitScore(score) {
+      if (!this.studentName || !this.studentClass) return;
+      try {
+        await fetch('/api/wordgame/score', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: this.studentName,
+            class_id: this.studentClass,
+            score: score,
+            mode: this.mode,
+            diff: this.diff
+          })
+        });
+      } catch (e) {
+        console.error('提交分数失败', e);
+      }
+    },
+
+    async loadLeaderboard() {
+      if (!this.studentClass) return;
+      this.leaderboardLoading = true;
+      try {
+        const res = await fetch(`/api/wordgame/leaderboard?class_id=${this.studentClass}&mode=${this.mode}&diff=${this.diff}&limit=10`);
+        const data = await res.json();
+        this.leaderboardData = data.rows || [];
+      } catch (e) {
+        console.error('加载排行榜失败', e);
+        this.leaderboardData = [];
+      }
+      this.leaderboardLoading = false;
     },
 
     fitScreen() {

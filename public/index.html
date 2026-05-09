@@ -2184,6 +2184,28 @@
           <div class="wg-home" x-show="page==='home'">
             <h1 class="wg-title">🍬 英语单词消消乐</h1>
             <p class="wg-subtitle">翻译配对，记单词</p>
+
+            <!-- 学生选择 -->
+            <div style="background:rgba(255,255,255,0.94);border-radius:16px;padding:16px 20px;width:100%;max-width:420px;box-shadow:0 4px 16px rgba(0,0,0,0.08);box-sizing:border-box;">
+              <h3 style="margin:0 0 12px;font-size:1em;color:#1f2937;text-align:center;">👤 选择学生</h3>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+                <select x-model="studentClass" @change="studentName=''" style="padding:10px 12px;border-radius:10px;border:1px solid #e5e7eb;font-size:0.95em;background:white;cursor:pointer;">
+                  <option value="">选择班级</option>
+                  <option value="2313">2313班</option>
+                  <option value="2314">2314班</option>
+                </select>
+                <select x-model="studentName" :disabled="!studentClass" style="padding:10px 12px;border-radius:10px;border:1px solid #e5e7eb;font-size:0.95em;background:white;cursor:pointer;">
+                  <option value="">选择姓名</option>
+                  <template x-for="name in (studentList[studentClass]||[])" :key="name">
+                    <option :value="name" x-text="name"></option>
+                  </template>
+                </select>
+              </div>
+              <div x-show="studentName" style="text-align:center;font-size:0.85em;color:#6b7280;">
+                当前玩家：<span x-text="studentName" style="font-weight:700;color:#7c3aed;"></span>
+              </div>
+            </div>
+
             <div class="wg-mode-cards">
               <div class="wg-mode-card" @click="selectMode('single')" :class="{'active': mode==='single'}">
                 <div class="emoji">🧑</div>
@@ -2204,7 +2226,10 @@
                 <button class="wg-diff-btn hard" @click="selectDiff('hard')" :class="{'active': diff==='hard'}">🌳 高级<br><small>8b · 42对 · 180秒</small></button>
               </div>
             </div>
-            <button class="wg-start-btn" @click="startGame()" :disabled="loading">开始游戏</button>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;width:100%;max-width:420px;">
+              <button class="wg-start-btn" @click="startGame()" :disabled="loading || !studentName" :style="!studentName ? 'opacity:0.5;cursor:not-allowed;' : ''">开始游戏</button>
+              <button class="wg-start-btn" @click="loadLeaderboard(); showLeaderboard=true" :disabled="!studentClass" style="background:linear-gradient(135deg,#f59e0b,#d97706);" :style="!studentClass ? 'opacity:0.5;cursor:not-allowed;background:linear-gradient(135deg,#f59e0b,#d97706);' : 'background:linear-gradient(135deg,#f59e0b,#d97706);'">🏆 排行榜</button>
+            </div>
           </div>
 
           <!-- Game Page -->
@@ -2249,6 +2274,50 @@
             <div class="wg-result-actions">
               <button class="wg-btn-retry" @click="retryGame()">🔄 再玩一次</button>
               <button class="wg-btn-home" @click="goHome()">返回首页</button>
+            </div>
+          </div>
+
+          <!-- Leaderboard Modal -->
+          <div x-show="showLeaderboard" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);z-index:150;display:flex;align-items:center;justify-content:center;"
+               x-transition:enter="transition ease-out duration-200"
+               x-transition:enter-start="opacity-0"
+               x-transition:enter-end="opacity-100"
+               @click.self="showLeaderboard=false">
+            <div style="background:white;border-radius:20px;padding:24px 28px;max-width:420px;width:92%;max-height:80vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,0.25);">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+                <h3 style="margin:0;font-size:1.3em;color:#1f2937;">🏆 排行榜</h3>
+                <button @click="showLeaderboard=false" style="background:none;border:none;font-size:1.4em;cursor:pointer;color:#94a3b8;">×</button>
+              </div>
+              <div style="text-align:center;font-size:0.85em;color:#6b7280;margin-bottom:12px;">
+                <span x-text="studentClass ? studentClass + '班 · ' : ''"></span>
+                <span x-text="mode==='single' ? '单人' : '双人'"></span> ·
+                <span x-text="diff==='easy' ? '初级' : diff==='medium' ? '中级' : '高级'"></span>
+              </div>
+              <div x-show="leaderboardLoading" style="text-align:center;padding:20px;color:#94a3b8;">加载中...</div>
+              <div x-show="!leaderboardLoading && leaderboardData.length===0" style="text-align:center;padding:20px;color:#94a3b8;">暂无记录</div>
+              <div x-show="!leaderboardLoading && leaderboardData.length>0">
+                <div style="display:grid;grid-template-columns:40px 1fr 70px;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid #f1f5f9;font-weight:700;color:#64748b;font-size:0.85em;">
+                  <div>排名</div>
+                  <div>姓名</div>
+                  <div style="text-align:right;">分数</div>
+                </div>
+                <template x-for="(row, idx) in leaderboardData" :key="row.name">
+                  <div style="display:grid;grid-template-columns:40px 1fr 70px;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid #f8fafc;"
+                       :style="row.name === studentName ? 'background:#f3e8ff;border-radius:8px;padding:10px 8px;' : ''">
+                    <div style="font-weight:800;color:#7c3aed;font-size:0.9em;">
+                      <span x-show="idx===0">🥇</span>
+                      <span x-show="idx===1">🥈</span>
+                      <span x-show="idx===2">🥉</span>
+                      <span x-show="idx>=3" x-text="idx+1"></span>
+                    </div>
+                    <div style="font-weight:600;color:#1f2937;"><span x-text="row.name"></span></div>
+                    <div style="text-align:right;font-weight:800;color:#7c3aed;"><span x-text="row.score"></span></div>
+                  </div>
+                </template>
+              </div>
+              <div style="margin-top:16px;text-align:center;">
+                <button @click="showLeaderboard=false" style="padding:8px 24px;border-radius:10px;border:none;background:#e2e8f0;color:#475569;font-size:0.9em;font-weight:600;cursor:pointer;">关闭</button>
+              </div>
             </div>
           </div>
 
@@ -2718,7 +2787,7 @@
   <script src="/js/quiz.js?v=9"></script>
   <script src="/js/essay.js?v=4"></script>
   <script src="/js/choicefill.js?v=4"></script>
-  <script src="/js/wordgame.js?v=9"></script>
+  <script src="/js/wordgame.js?v=10"></script>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <script src="/js/exam.js?v=1"></script>
     <script defer src="/js/alpine.min.js?v=4"></script>

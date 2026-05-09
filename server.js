@@ -33,10 +33,8 @@ app.use((req, res, next) => {
 
 // Static files
 app.use((req, res, next) => {
-  if (req.path.endsWith('.html') || req.path === '/') {
-    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
+  if (req.path.endsWith('.html')) {
+    res.setHeader('Cache-Control', 'no-store');
   }
   next();
 });
@@ -66,7 +64,7 @@ app.use('/api/admin', require('./routes/admin'));
 app.use('/api/ocr', require('./routes/ocr'));
 app.use('/api/upload', require('./routes/upload'));
 app.use('/api/essay', require('./routes/essay'));
-
+app.use('/api/wordgame', require('./routes/wordgame'));
 
 // Error handler
 app.use(errorHandler);
