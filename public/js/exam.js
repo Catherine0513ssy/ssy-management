@@ -162,59 +162,70 @@ document.addEventListener('alpine:init', () => {
       const container = document.getElementById('examChart');
       if (!container || !this.currentStudent) return;
 
-      if (this.chartInstance) {
-        this.chartInstance.dispose();
-      }
-
-      const dates = [];
-      const scores = [];
-      const avgs = [];
-
-      const cls2 = this.currentStudent.class || (this.searchNum.trim().startsWith('2313') ? '2313' : '2314');
-      for (const exam of this.exams) {
-        const s = this.currentStudent.scores[exam.id];
-        if (s) {
-          dates.push(exam.date.slice(5));
-          scores.push(s.score);
-          avgs.push(this.getClassStat(exam, cls2, 'classAverage'));
+      // Container may have been hidden when echarts first init'd; retry until it has real width
+      const doRender = () => {
+        const w = container.clientWidth;
+        if (w < 200) {
+          setTimeout(doRender, 100);
+          return;
         }
-      }
 
-      this.chartInstance = echarts.init(container);
-      const option = {
-        tooltip: { trigger: 'axis' },
-        legend: { data: ['个人分数', '班级平均分'], bottom: 0 },
-        grid: { left: '3%', right: '4%', bottom: '15%', top: '10%', containLabel: true },
-        xAxis: { type: 'category', data: dates, axisLabel: { rotate: 45, fontSize: 10, interval: 0 } },
-        yAxis: { type: 'value', name: '分数', min: 0, max: 100 },
-        series: [
-          {
-            name: '个人分数',
-            type: 'line',
-            data: scores,
-            smooth: true,
-            symbol: 'circle',
-            symbolSize: 8,
-            lineStyle: { width: 3, color: '#5470c6' },
-            itemStyle: { color: '#5470c6' },
-            areaStyle: { color: 'rgba(84,112,198,0.1)' },
-            label: { show: true, position: 'top', formatter: '{c}', fontSize: 10, distance: 4 }
-          },
-          {
-            name: '班级平均分',
-            type: 'line',
-            data: avgs,
-            smooth: true,
-            symbol: 'diamond',
-            symbolSize: 6,
-            lineStyle: { width: 2, type: 'dashed', color: '#91cc75' },
-            itemStyle: { color: '#91cc75' }
+        if (this.chartInstance) {
+          this.chartInstance.dispose();
+        }
+
+        const dates = [];
+        const scores = [];
+        const avgs = [];
+
+        const cls2 = this.currentStudent.class || (this.searchNum.trim().startsWith('2313') ? '2313' : '2314');
+        for (const exam of this.exams) {
+          const s = this.currentStudent.scores[exam.id];
+          if (s) {
+            dates.push(exam.date.slice(5));
+            scores.push(s.score);
+            avgs.push(this.getClassStat(exam, cls2, 'classAverage'));
           }
-        ]
-      };
-      this.chartInstance.setOption(option);
+        }
 
-      window.addEventListener('resize', () => this.chartInstance && this.chartInstance.resize());
+        this.chartInstance = echarts.init(container, null, { width: w, height: 360 });
+        const option = {
+          tooltip: { trigger: 'axis' },
+          legend: { data: ['个人分数', '班级平均分'], bottom: 0 },
+          grid: { left: '3%', right: '4%', bottom: '15%', top: '10%', containLabel: true },
+          xAxis: { type: 'category', data: dates, axisLabel: { rotate: 45, fontSize: 10, interval: 0 } },
+          yAxis: { type: 'value', name: '分数', min: 0, max: 100 },
+          series: [
+            {
+              name: '个人分数',
+              type: 'line',
+              data: scores,
+              smooth: true,
+              symbol: 'circle',
+              symbolSize: 8,
+              lineStyle: { width: 3, color: '#5470c6' },
+              itemStyle: { color: '#5470c6' },
+              areaStyle: { color: 'rgba(84,112,198,0.1)' },
+              label: { show: true, position: 'top', formatter: '{c}', fontSize: 10, distance: 4 }
+            },
+            {
+              name: '班级平均分',
+              type: 'line',
+              data: avgs,
+              smooth: true,
+              symbol: 'diamond',
+              symbolSize: 6,
+              lineStyle: { width: 2, type: 'dashed', color: '#91cc75' },
+              itemStyle: { color: '#91cc75' }
+            }
+          ]
+        };
+        this.chartInstance.setOption(option);
+
+        window.addEventListener('resize', () => this.chartInstance && this.chartInstance.resize());
+      };
+
+      doRender();
     },
 
     getStudentDisplayName() {
