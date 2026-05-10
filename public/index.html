@@ -749,25 +749,31 @@
     .wg-title { font-size: clamp(1.4em, 3vw, 2em); color: #1f2937; text-align: center; letter-spacing: -0.5px; font-weight: 800; margin: 0; white-space: nowrap; }
     .wg-subtitle { color: #64748b; font-size: 1em; margin: 4px 0 0; text-align: center; }
     .wg-mode-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 560px; width: 100%; }
-    .wg-mode-card { background: rgba(255,255,255,0.96); border-radius: 24px; padding: 26px; cursor: pointer; transition: all 0.25s; box-shadow: 0 8px 28px rgba(0,0,0,0.18); border: 3px solid transparent; }
-    .wg-mode-card:hover { transform: translateY(-4px) scale(1.01); box-shadow: 0 14px 40px rgba(0,0,0,0.25); }
-    .wg-mode-card.active { border-color: #7c3aed; background: rgba(255,255,255,1); }
-    .wg-mode-card .emoji { font-size: 3em; margin-bottom: 10px; text-align: center; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
-    .wg-mode-card h3 { font-size: 1.35em; color: #1f2937; margin-bottom: 6px; text-align: center; font-weight: 700; }
-    .wg-mode-card p { color: #6b7280; font-size: 0.95em; text-align: center; }
-    .wg-difficulty { background: rgba(255,255,255,0.94); border-radius: 20px; padding: 20px 28px; max-width: 560px; width: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-    .wg-difficulty h3 { color: #1f2937; margin-bottom: 14px; font-size: 1.1em; text-align: center; font-weight: 700; }
-    .wg-diff-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .wg-diff-btn { padding: 12px 26px; border-radius: 18px; border: 2px solid #e5e7eb; background: white; font-size: 1em; font-weight: 700; cursor: pointer; transition: all 0.2s; min-width: 110px; }
-    .wg-diff-btn.easy { border-color: #86efac; }
-    .wg-diff-btn.medium { border-color: #fbbf24; }
-    .wg-diff-btn.hard { border-color: #f87171; }
-    .wg-diff-btn.easy.active { background: #86efac; color: #065f46; border-color: #86efac; }
-    .wg-diff-btn.medium.active { background: #fbbf24; color: #92400e; border-color: #fbbf24; }
-    .wg-diff-btn.hard.active { background: #f87171; color: white; border-color: #f87171; }
-    .wg-start-btn { padding: 16px 72px; border-radius: 24px; border: none; background: linear-gradient(135deg,#22c55e,#16a34a); color: white; font-size: 1.2em; font-weight: 800; cursor: pointer; box-shadow: 0 8px 28px rgba(34,197,94,0.45); transition: all 0.2s; }
-    .wg-start-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(34,197,94,0.55); }
+    .wg-mode-card { background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(248,245,255,0.95)); border-radius: 24px; padding: 28px 24px; cursor: pointer; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); box-shadow: 0 4px 20px rgba(124,58,237,0.1), 0 1px 3px rgba(0,0,0,0.05); border: 2px solid transparent; position: relative; overflow: hidden; }
+    .wg-mode-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #a78bfa, #60a5fa); opacity: 0; transition: opacity 0.3s; }
+    .wg-mode-card:nth-child(2)::before { background: linear-gradient(90deg, #f093fb, #a78bfa); }
+    .wg-mode-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(124,58,237,0.18), 0 4px 12px rgba(0,0,0,0.08); }
+    .wg-mode-card:hover::before { opacity: 1; }
+    .wg-mode-card.active { border-color: #a78bfa; background: linear-gradient(135deg, rgba(243,232,255,0.9), rgba(255,255,255,0.98)); box-shadow: 0 8px 32px rgba(124,58,237,0.2), inset 0 0 0 1px rgba(167,139,250,0.3); }
+    .wg-mode-card.active::before { opacity: 1; }
+    .wg-mode-card .emoji { width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 2em; background: linear-gradient(135deg, #a78bfa, #60a5fa); color: white; box-shadow: 0 4px 16px rgba(167,139,250,0.35); }
+    .wg-mode-card:nth-child(2) .emoji { background: linear-gradient(135deg, #f093fb, #a78bfa); box-shadow: 0 4px 16px rgba(240,147,251,0.35); }
+    .wg-mode-card h3 { font-size: 1.3em; color: #1f2937; margin-bottom: 6px; text-align: center; font-weight: 700; }
+    .wg-mode-card p { color: #6b7280; font-size: 0.9em; text-align: center; margin: 0; }
+    .wg-difficulty { background: rgba(255,255,255,0.96); border-radius: 20px; padding: 24px 28px; max-width: 560px; width: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    .wg-difficulty h3 { color: #1f2937; margin: 0 0 16px; font-size: 1.05em; text-align: center; font-weight: 700; }
+    .wg-diff-btns { display: flex; gap: 0; background: #f3f4f6; border-radius: 14px; padding: 4px; }
+    .wg-diff-btn { flex: 1; padding: 12px 8px; border-radius: 12px; border: none; background: transparent; font-size: 0.95em; font-weight: 700; cursor: pointer; transition: all 0.2s; color: #6b7280; text-align: center; }
+    .wg-diff-btn:hover { color: #4b5563; }
+    .wg-diff-btn.active { background: white; color: #7c3aed; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .wg-diff-btn small { display: block; font-size: 0.75em; font-weight: 500; color: #9ca3af; margin-top: 2px; }
+    .wg-diff-btn.active small { color: #a78bfa; }
+    .wg-start-bar { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; width: 100%; max-width: 560px; }
+    .wg-start-btn { flex: 1; min-width: 140px; padding: 16px 32px; border-radius: 16px; border: none; background: linear-gradient(135deg,#7c3aed,#a855f7); color: white; font-size: 1.1em; font-weight: 800; cursor: pointer; box-shadow: 0 4px 16px rgba(124,58,237,0.35); transition: all 0.2s; }
+    .wg-start-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(124,58,237,0.45); }
     .wg-start-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .wg-start-btn.secondary { background: linear-gradient(135deg,#f59e0b,#d97706); box-shadow: 0 4px 16px rgba(245,158,11,0.35); }
+    .wg-start-btn.secondary:hover { box-shadow: 0 8px 24px rgba(245,158,11,0.45); }
 
     /* Game page */
     .wg-game { display: none; flex: 1; flex-direction: column; gap: 12px; z-index: 1; }
@@ -878,11 +884,13 @@
       .wg-vs-divider { font-size: 1.2em; }
       .wg-player-side h4 { font-size: 0.9em; padding: 6px; }
       .wg-mode-cards { gap: 12px; }
-      .wg-mode-card { padding: 14px; border-radius: 16px; }
-      .wg-mode-card .emoji { font-size: 2.2em; }
-      .wg-mode-card h3 { font-size: 1.1em; margin-bottom: 2px; }
-      .wg-mode-card p { font-size: 0.85em; }
-      .wg-title { font-size: clamp(1.6em, 4vw, 2.4em); }
+      .wg-mode-card { padding: 20px 16px; border-radius: 20px; }
+      .wg-mode-card .emoji { width: 56px; height: 56px; font-size: 1.6em; }
+      .wg-mode-card h3 { font-size: 1.1em; margin-bottom: 4px; }
+      .wg-mode-card p { font-size: 0.82em; }
+      .wg-title { font-size: clamp(1.4em, 4vw, 2em); }
+      .wg-diff-btn { padding: 10px 4px; font-size: 0.85em; }
+      .wg-start-btn { min-width: 120px; padding: 14px 20px; font-size: 1em; }
       .wg-diff-btn { padding: 10px 14px; font-size: 0.85em; min-width: 80px; }
     }
 
@@ -2222,27 +2230,27 @@
 
             <div class="wg-mode-cards">
               <div class="wg-mode-card" @click="selectMode('single')" :class="{'active': mode==='single'}">
-                <div class="emoji">🧑</div>
-                <h3>单人模式</h3>
-                <p>挑战自己，争分夺秒</p>
+                <div class="emoji">🏃</div>
+                <h3>单人挑战</h3>
+                <p>独自闯关，挑战极限</p>
               </div>
               <div class="wg-mode-card" @click="selectMode('dual')" :class="{'active': mode==='dual'}">
-                <div class="emoji">👫</div>
-                <h3>双人模式</h3>
-                <p>同屏对战，比拼速度</p>
+                <div class="emoji">⚔️</div>
+                <h3>双人对战</h3>
+                <p>同屏竞技，一决高下</p>
               </div>
             </div>
             <div class="wg-difficulty">
               <h3>选择难度</h3>
               <div class="wg-diff-btns">
-                <button class="wg-diff-btn easy" @click="selectDiff('easy')" :class="{'active': diff==='easy'}">🌱 初级<br><small>7a · 28对 · 120秒</small></button>
-                <button class="wg-diff-btn medium" @click="selectDiff('medium')" :class="{'active': diff==='medium'}">🌿 中级<br><small>8a · 35对 · 150秒</small></button>
-                <button class="wg-diff-btn hard" @click="selectDiff('hard')" :class="{'active': diff==='hard'}">🌳 高级<br><small>8b · 42对 · 180秒</small></button>
+                <button class="wg-diff-btn" @click="selectDiff('easy')" :class="{'active': diff==='easy'}">🌱 初级<small>28对 · 120秒</small></button>
+                <button class="wg-diff-btn" @click="selectDiff('medium')" :class="{'active': diff==='medium'}">🌿 中级<small>35对 · 150秒</small></button>
+                <button class="wg-diff-btn" @click="selectDiff('hard')" :class="{'active': diff==='hard'}">🌳 高级<small>42对 · 180秒</small></button>
               </div>
             </div>
-            <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;width:100%;max-width:420px;">
-              <button class="wg-start-btn" @click="startGame()" :disabled="loading || !studentName" :style="!studentName ? 'opacity:0.5;cursor:not-allowed;' : ''">开始游戏</button>
-              <button class="wg-start-btn" @click="loadLeaderboard(); showLeaderboard=true" :disabled="!studentClass" style="background:linear-gradient(135deg,#f59e0b,#d97706);" :style="!studentClass ? 'opacity:0.5;cursor:not-allowed;background:linear-gradient(135deg,#f59e0b,#d97706);' : 'background:linear-gradient(135deg,#f59e0b,#d97706);'">🏆 排行榜</button>
+            <div class="wg-start-bar">
+              <button class="wg-start-btn" @click="startGame()" :disabled="loading || !studentName" :style="!studentName ? 'opacity:0.5;cursor:not-allowed;' : ''">🎮 开始游戏</button>
+              <button class="wg-start-btn secondary" @click="loadLeaderboard(); showLeaderboard=true" :disabled="!studentClass" :style="!studentClass ? 'opacity:0.5;cursor:not-allowed;' : ''">🏆 排行榜</button>
             </div>
           </div>
 
