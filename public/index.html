@@ -2559,7 +2559,7 @@
                 <select @change="searchNum = $event.target.value; searchStudent(); $event.target.value = ''" style="width:100%;padding:8px 12px;border-radius:10px;border:1px solid #e2e8f0;font-size:0.85em;background:white;cursor:pointer;">
                   <option value="">选择学生...</option>
                   <template x-for="s in quickStudents['2313']" :key="s.num">
-                    <option :value="s.num" x-text="s.num + ' ' + s.name"></option>
+                    <option :value="s.num" x-text="isAdmin ? s.num + ' ' + s.name : s.num"></option>
                   </template>
                 </select>
               </div>
@@ -2568,7 +2568,7 @@
                 <select @change="searchNum = $event.target.value; searchStudent(); $event.target.value = ''" style="width:100%;padding:8px 12px;border-radius:10px;border:1px solid #e2e8f0;font-size:0.85em;background:white;cursor:pointer;">
                   <option value="">选择学生...</option>
                   <template x-for="s in quickStudents['2314']" :key="s.num">
-                    <option :value="s.num" x-text="s.num + ' ' + s.name"></option>
+                    <option :value="s.num" x-text="isAdmin ? s.num + ' ' + s.name : s.num"></option>
                   </template>
                 </select>
               </div>
@@ -2583,7 +2583,7 @@
             <!-- Student header -->
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
               <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,#60a5fa);display:flex;align-items:center;justify-content:center;color:white;font-size:20px;font-weight:700;"
-                x-text="currentStudent.name ? currentStudent.name.charAt(0) : '?'">
+                x-text="isAdmin ? (currentStudent.name ? currentStudent.name.charAt(0) : '?') : '?'">
               </div>
               <div>
                 <div style="font-size:18px;font-weight:700;" x-text="isAdmin ? currentStudent.name + ' (' + searchNum + ')' : searchNum"></div>
