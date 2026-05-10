@@ -8,7 +8,21 @@
       "classAverage": 65.15,
       "maxScore": 93.5,
       "minScore": 23.0,
-      "studentCount": 50
+      "studentCount": 50,
+      "classStats": {
+        "2313": {
+          "classAverage": 65.15,
+          "maxScore": 93.5,
+          "minScore": 23.0,
+          "studentCount": 50
+        },
+        "2314": {
+          "classAverage": 61.35,
+          "maxScore": 97.0,
+          "minScore": 0,
+          "studentCount": 50
+        }
+      }
     },
     {
       "id": "2927781",
@@ -18,7 +32,21 @@
       "classAverage": 59.1,
       "maxScore": 97.0,
       "minScore": 19.5,
-      "studentCount": 50
+      "studentCount": 50,
+      "classStats": {
+        "2313": {
+          "classAverage": 59.1,
+          "maxScore": 97.0,
+          "minScore": 19.5,
+          "studentCount": 50
+        },
+        "2314": {
+          "classAverage": 55.61,
+          "maxScore": 88.5,
+          "minScore": 0,
+          "studentCount": 50
+        }
+      }
     },
     {
       "id": "2909632",
@@ -28,7 +56,21 @@
       "classAverage": 61.3,
       "maxScore": 94.0,
       "minScore": 21.0,
-      "studentCount": 50
+      "studentCount": 50,
+      "classStats": {
+        "2313": {
+          "classAverage": 61.3,
+          "maxScore": 94.0,
+          "minScore": 21.0,
+          "studentCount": 50
+        },
+        "2314": {
+          "classAverage": 58.1,
+          "maxScore": 96.5,
+          "minScore": 0,
+          "studentCount": 50
+        }
+      }
     },
     {
       "id": "3046836",
@@ -38,7 +80,21 @@
       "classAverage": 56.22,
       "maxScore": 95.5,
       "minScore": 16.0,
-      "studentCount": 50
+      "studentCount": 50,
+      "classStats": {
+        "2313": {
+          "classAverage": 56.22,
+          "maxScore": 95.5,
+          "minScore": 16.0,
+          "studentCount": 50
+        },
+        "2314": {
+          "classAverage": 52.98,
+          "maxScore": 96.0,
+          "minScore": 0,
+          "studentCount": 50
+        }
+      }
     },
     {
       "id": "3167540",
@@ -48,7 +104,21 @@
       "classAverage": 58.74,
       "maxScore": 93.5,
       "minScore": 20.5,
-      "studentCount": 50
+      "studentCount": 50,
+      "classStats": {
+        "2313": {
+          "classAverage": 58.74,
+          "maxScore": 93.5,
+          "minScore": 20.5,
+          "studentCount": 50
+        },
+        "2314": {
+          "classAverage": 54.43,
+          "maxScore": 93.5,
+          "minScore": 0,
+          "studentCount": 50
+        }
+      }
     },
     {
       "id": "3795671",
@@ -58,7 +128,21 @@
       "classAverage": 55.86,
       "maxScore": 93.0,
       "minScore": 21.0,
-      "studentCount": 50
+      "studentCount": 50,
+      "classStats": {
+        "2313": {
+          "classAverage": 55.86,
+          "maxScore": 93.0,
+          "minScore": 21.0,
+          "studentCount": 50
+        },
+        "2314": {
+          "classAverage": 48.53,
+          "maxScore": 90.5,
+          "minScore": 0,
+          "studentCount": 50
+        }
+      }
     },
     {
       "id": "1883353773",
@@ -68,7 +152,21 @@
       "classAverage": 54.5,
       "maxScore": 96.0,
       "minScore": 12.0,
-      "studentCount": 50
+      "studentCount": 50,
+      "classStats": {
+        "2313": {
+          "classAverage": 54.5,
+          "maxScore": 96.0,
+          "minScore": 12.0,
+          "studentCount": 50
+        },
+        "2314": {
+          "classAverage": 50.56,
+          "maxScore": 91.0,
+          "minScore": 0,
+          "studentCount": 50
+        }
+      }
     },
     {
       "id": "407379737",
@@ -78,7 +176,21 @@
       "classAverage": 49.22,
       "maxScore": 87.0,
       "minScore": 19.5,
-      "studentCount": 50
+      "studentCount": 50,
+      "classStats": {
+        "2313": {
+          "classAverage": 49.22,
+          "maxScore": 87.0,
+          "minScore": 19.5,
+          "studentCount": 50
+        },
+        "2314": {
+          "classAverage": 50.64,
+          "maxScore": 95.5,
+          "minScore": 15.0,
+          "studentCount": 50
+        }
+      }
     },
     {
       "id": "1481510692",
@@ -88,7 +200,21 @@
       "classAverage": 53.8,
       "maxScore": 90.5,
       "minScore": 15.5,
-      "studentCount": 50
+      "studentCount": 50,
+      "classStats": {
+        "2313": {
+          "classAverage": 53.8,
+          "maxScore": 90.5,
+          "minScore": 15.5,
+          "studentCount": 50
+        },
+        "2314": {
+          "classAverage": 52.23,
+          "maxScore": 91.5,
+          "minScore": 13.0,
+          "studentCount": 50
+        }
+      }
     },
     {
       "id": "1347569700",
@@ -98,7 +224,21 @@
       "classAverage": 54.21,
       "maxScore": 92.5,
       "minScore": 11.5,
-      "studentCount": 50
+      "studentCount": 50,
+      "classStats": {
+        "2313": {
+          "classAverage": 54.21,
+          "maxScore": 92.5,
+          "minScore": 11.5,
+          "studentCount": 50
+        },
+        "2314": {
+          "classAverage": 49.74,
+          "maxScore": 89.5,
+          "minScore": 0,
+          "studentCount": 50
+        }
+      }
     },
     {
       "id": "273833498",
@@ -108,7 +248,21 @@
       "classAverage": 55.47,
       "maxScore": 91.0,
       "minScore": 14.5,
-      "studentCount": 50
+      "studentCount": 50,
+      "classStats": {
+        "2313": {
+          "classAverage": 55.47,
+          "maxScore": 91.0,
+          "minScore": 14.5,
+          "studentCount": 50
+        },
+        "2314": {
+          "classAverage": 52.54,
+          "maxScore": 96.0,
+          "minScore": 14.0,
+          "studentCount": 50
+        }
+      }
     },
     {
       "id": "2018743143",
@@ -118,7 +272,21 @@
       "classAverage": 56.6,
       "maxScore": 90.0,
       "minScore": 12.0,
-      "studentCount": 50
+      "studentCount": 50,
+      "classStats": {
+        "2313": {
+          "classAverage": 56.6,
+          "maxScore": 90.0,
+          "minScore": 12.0,
+          "studentCount": 50
+        },
+        "2314": {
+          "classAverage": 51.5,
+          "maxScore": 96.5,
+          "minScore": 0,
+          "studentCount": 50
+        }
+      }
     },
     {
       "id": "139945040",
@@ -128,7 +296,21 @@
       "classAverage": 58.48,
       "maxScore": 90.5,
       "minScore": 19.5,
-      "studentCount": 50
+      "studentCount": 50,
+      "classStats": {
+        "2313": {
+          "classAverage": 58.48,
+          "maxScore": 90.5,
+          "minScore": 19.5,
+          "studentCount": 50
+        },
+        "2314": {
+          "classAverage": 39.78,
+          "maxScore": 95.0,
+          "minScore": 0,
+          "studentCount": 50
+        }
+      }
     },
     {
       "id": "139951785",
@@ -138,12 +320,27 @@
       "classAverage": 55.65,
       "maxScore": 89.5,
       "minScore": 21.0,
-      "studentCount": 50
+      "studentCount": 50,
+      "classStats": {
+        "2313": {
+          "classAverage": 55.65,
+          "maxScore": 89.5,
+          "minScore": 21.0,
+          "studentCount": 50
+        },
+        "2314": {
+          "classAverage": 49.87,
+          "maxScore": 94.0,
+          "minScore": 17.5,
+          "studentCount": 50
+        }
+      }
     }
   ],
   "students": {
     "231306": {
       "name": "袁微茗",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 89.5,
@@ -261,6 +458,7 @@
     },
     "231331": {
       "name": "廖芮彤",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 89.5,
@@ -378,6 +576,7 @@
     },
     "231322": {
       "name": "罗鹏辉",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 86.0,
@@ -495,6 +694,7 @@
     },
     "231320": {
       "name": "刘雅萱",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 85.0,
@@ -612,6 +812,7 @@
     },
     "231342": {
       "name": "罗翔译",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 83.5,
@@ -729,6 +930,7 @@
     },
     "231348": {
       "name": "唐冉",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 83.5,
@@ -846,6 +1048,7 @@
     },
     "231325": {
       "name": "易露熙",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 83.0,
@@ -963,6 +1166,7 @@
     },
     "231302": {
       "name": "万雨彤",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 81.5,
@@ -1080,6 +1284,7 @@
     },
     "231329": {
       "name": "吴向荣",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 79.5,
@@ -1197,6 +1402,7 @@
     },
     "231315": {
       "name": "龙欣怡",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 78.5,
@@ -1314,6 +1520,7 @@
     },
     "231352": {
       "name": "朱笑仪",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 76.5,
@@ -1383,6 +1590,7 @@
     },
     "231347": {
       "name": "裴健平",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 75.0,
@@ -1500,6 +1708,7 @@
     },
     "231328": {
       "name": "刘瑞",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 71.0,
@@ -1617,6 +1826,7 @@
     },
     "231317": {
       "name": "张博彦",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 70.5,
@@ -1734,6 +1944,7 @@
     },
     "231339": {
       "name": "段轩禹",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 70.5,
@@ -1851,6 +2062,7 @@
     },
     "231305": {
       "name": "向俊涵",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 68.0,
@@ -1968,6 +2180,7 @@
     },
     "231311": {
       "name": "曹皓彬",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 68.0,
@@ -2085,6 +2298,7 @@
     },
     "231334": {
       "name": "余熙冉",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 66.0,
@@ -2202,6 +2416,7 @@
     },
     "231303": {
       "name": "李林颐",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 65.0,
@@ -2319,6 +2534,7 @@
     },
     "231336": {
       "name": "王妍熙",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 59.5,
@@ -2436,6 +2652,7 @@
     },
     "231346": {
       "name": "樊俊熙",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 57.5,
@@ -2553,6 +2770,7 @@
     },
     "231351": {
       "name": "邵善琳",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 57.5,
@@ -2670,6 +2888,7 @@
     },
     "231321": {
       "name": "曹怀芳",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 54.0,
@@ -2787,6 +3006,7 @@
     },
     "231333": {
       "name": "易铭轩",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 54.0,
@@ -2904,6 +3124,7 @@
     },
     "231330": {
       "name": "刘宸熙",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 53.5,
@@ -3021,6 +3242,7 @@
     },
     "231316": {
       "name": "张莞淇",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 52.5,
@@ -3138,6 +3360,7 @@
     },
     "231301": {
       "name": "陈欣怡",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 51.0,
@@ -3255,6 +3478,7 @@
     },
     "231312": {
       "name": "郭子涵",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 50.0,
@@ -3372,6 +3596,7 @@
     },
     "231327": {
       "name": "李睿瑶",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 49.5,
@@ -3489,6 +3714,7 @@
     },
     "231307": {
       "name": "肖涵杰",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 48.5,
@@ -3606,6 +3832,7 @@
     },
     "231308": {
       "name": "曾诗予",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 48.5,
@@ -3723,6 +3950,7 @@
     },
     "231337": {
       "name": "王紫贤",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 46.0,
@@ -3840,6 +4068,7 @@
     },
     "231344": {
       "name": "唐翌恒",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 46.0,
@@ -3957,6 +4186,7 @@
     },
     "231319": {
       "name": "黄镒凌",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 43.5,
@@ -4074,6 +4304,7 @@
     },
     "231349": {
       "name": "龙莉",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 43.0,
@@ -4191,6 +4422,7 @@
     },
     "231314": {
       "name": "胡芸甄",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 41.5,
@@ -4308,6 +4540,7 @@
     },
     "231313": {
       "name": "罗俊涛",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 40.0,
@@ -4425,6 +4658,7 @@
     },
     "231332": {
       "name": "黄子皓",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 40.0,
@@ -4542,6 +4776,7 @@
     },
     "231343": {
       "name": "陈文杰",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 39.5,
@@ -4659,6 +4894,7 @@
     },
     "231310": {
       "name": "罗焕然",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 39.0,
@@ -4768,6 +5004,7 @@
     },
     "231335": {
       "name": "侯宇涵",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 38.0,
@@ -4885,6 +5122,7 @@
     },
     "231345": {
       "name": "汤卓逸",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 37.5,
@@ -5002,6 +5240,7 @@
     },
     "231323": {
       "name": "曾旭洋",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 34.5,
@@ -5119,6 +5358,7 @@
     },
     "231340": {
       "name": "龙梓鸣",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 33.5,
@@ -5236,6 +5476,7 @@
     },
     "231326": {
       "name": "彭雨萱",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 29.5,
@@ -5337,6 +5578,7 @@
     },
     "231309": {
       "name": "罗成辉",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 28.0,
@@ -5438,6 +5680,7 @@
     },
     "231324": {
       "name": "莫武羲",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 27.5,
@@ -5555,6 +5798,7 @@
     },
     "231341": {
       "name": "苏清泉",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 24.5,
@@ -5672,6 +5916,7 @@
     },
     "231338": {
       "name": "刘博鹏",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 24.0,
@@ -5789,6 +6034,7 @@
     },
     "231318": {
       "name": "龙妙晴",
+      "class": "2313",
       "scores": {
         "139951785": {
           "score": 21.0,
@@ -5906,6 +6152,7 @@
     },
     "231304": {
       "name": "鲁鑫鹏",
+      "class": "2313",
       "scores": {
         "139945040": {
           "score": 19.5,
@@ -5996,7 +6243,5924 @@
           "level": "E"
         }
       }
+    },
+    "231421": {
+      "name": "罗湘妮",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 97.0,
+          "classRank": 1,
+          "examRank": 1,
+          "rate": 0.97,
+          "change": 2,
+          "level": "A"
+        },
+        "2927781": {
+          "score": 86.5,
+          "classRank": 3,
+          "examRank": 80,
+          "rate": 0.865,
+          "change": null,
+          "level": "A"
+        },
+        "2909632": {
+          "score": 96.5,
+          "classRank": 1,
+          "examRank": 2,
+          "rate": 0.965,
+          "change": null,
+          "level": "A"
+        },
+        "3046836": {
+          "score": 96.0,
+          "classRank": 1,
+          "examRank": 6,
+          "rate": 0.96,
+          "change": null,
+          "level": "A"
+        },
+        "3167540": {
+          "score": 93.5,
+          "classRank": 1,
+          "examRank": 13,
+          "rate": 0.935,
+          "change": null,
+          "level": "A"
+        },
+        "3795671": {
+          "score": 90.5,
+          "classRank": 1,
+          "examRank": 32,
+          "rate": 0.905,
+          "change": null,
+          "level": "A"
+        },
+        "1883353773": {
+          "score": 91.0,
+          "classRank": 1,
+          "examRank": 36,
+          "rate": 0.91,
+          "change": null,
+          "level": "A"
+        },
+        "407379737": {
+          "score": 95.5,
+          "classRank": 1,
+          "examRank": 3,
+          "rate": 0.955,
+          "change": null,
+          "level": "A"
+        },
+        "1481510692": {
+          "score": 91.5,
+          "classRank": 1,
+          "examRank": 21,
+          "rate": 0.915,
+          "change": null,
+          "level": "A"
+        },
+        "1347569700": {
+          "score": 89.5,
+          "classRank": 1,
+          "examRank": 22,
+          "rate": 0.895,
+          "change": null,
+          "level": "A"
+        },
+        "273833498": {
+          "score": 96.0,
+          "classRank": 1,
+          "examRank": 7,
+          "rate": 0.96,
+          "change": null,
+          "level": "A"
+        },
+        "2018743143": {
+          "score": 96.5,
+          "classRank": 1,
+          "examRank": 2,
+          "rate": 0.965,
+          "change": null,
+          "level": "A"
+        },
+        "139945040": {
+          "score": 95.0,
+          "classRank": 1,
+          "examRank": 11,
+          "rate": 0.95,
+          "change": null,
+          "level": "A"
+        },
+        "139951785": {
+          "score": 94.0,
+          "classRank": 1,
+          "examRank": 4,
+          "rate": 0.94,
+          "change": null,
+          "level": "A"
+        }
+      }
+    },
+    "231418": {
+      "name": "王雅淇",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 92.5,
+          "classRank": 2,
+          "examRank": 37,
+          "rate": 0.925,
+          "change": 13,
+          "level": "A"
+        },
+        "2927781": {
+          "score": 83.0,
+          "classRank": 7,
+          "examRank": 119,
+          "rate": 0.83,
+          "change": null,
+          "level": "A"
+        },
+        "2909632": {
+          "score": 82.0,
+          "classRank": 9,
+          "examRank": 142,
+          "rate": 0.82,
+          "change": null,
+          "level": "B"
+        },
+        "3046836": {
+          "score": 82.0,
+          "classRank": 7,
+          "examRank": 134,
+          "rate": 0.82,
+          "change": null,
+          "level": "B"
+        },
+        "3167540": {
+          "score": 63.0,
+          "classRank": 18,
+          "examRank": 340,
+          "rate": 0.63,
+          "change": null,
+          "level": "B"
+        },
+        "3795671": {
+          "score": 59.0,
+          "classRank": 19,
+          "examRank": 335,
+          "rate": 0.59,
+          "change": null,
+          "level": "C"
+        },
+        "1883353773": {
+          "score": 67.0,
+          "classRank": 14,
+          "examRank": 274,
+          "rate": 0.67,
+          "change": null,
+          "level": "B"
+        },
+        "407379737": {
+          "score": 81.0,
+          "classRank": 4,
+          "examRank": 103,
+          "rate": 0.81,
+          "change": null,
+          "level": "A"
+        },
+        "1481510692": {
+          "score": 69.0,
+          "classRank": 10,
+          "examRank": 232,
+          "rate": 0.69,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 70.0,
+          "classRank": 7,
+          "examRank": 220,
+          "rate": 0.7,
+          "change": null,
+          "level": "B"
+        },
+        "273833498": {
+          "score": 78.5,
+          "classRank": 4,
+          "examRank": 169,
+          "rate": 0.785,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 75.0,
+          "classRank": 5,
+          "examRank": 216,
+          "rate": 0.75,
+          "change": null,
+          "level": "B"
+        },
+        "139945040": {
+          "score": 76.5,
+          "classRank": 6,
+          "examRank": 188,
+          "rate": 0.765,
+          "change": null,
+          "level": "B"
+        },
+        "139951785": {
+          "score": 81.5,
+          "classRank": 4,
+          "examRank": 102,
+          "rate": 0.815,
+          "change": null,
+          "level": "A"
+        }
+      }
+    },
+    "231431": {
+      "name": "夏欣乐",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 86.0,
+          "classRank": 3,
+          "examRank": 114,
+          "rate": 0.86,
+          "change": 7,
+          "level": "A"
+        },
+        "2927781": {
+          "score": 79.0,
+          "classRank": 10,
+          "examRank": 165,
+          "rate": 0.79,
+          "change": null,
+          "level": "B"
+        },
+        "2909632": {
+          "score": 69.5,
+          "classRank": 19,
+          "examRank": 284,
+          "rate": 0.695,
+          "change": null,
+          "level": "B"
+        },
+        "3046836": {
+          "score": 78.5,
+          "classRank": 11,
+          "examRank": 174,
+          "rate": 0.785,
+          "change": null,
+          "level": "B"
+        },
+        "3167540": {
+          "score": 71.0,
+          "classRank": 11,
+          "examRank": 242,
+          "rate": 0.71,
+          "change": null,
+          "level": "B"
+        },
+        "3795671": {
+          "score": 65.0,
+          "classRank": 12,
+          "examRank": 274,
+          "rate": 0.65,
+          "change": null,
+          "level": "B"
+        },
+        "1883353773": {
+          "score": 67.0,
+          "classRank": 14,
+          "examRank": 274,
+          "rate": 0.67,
+          "change": null,
+          "level": "B"
+        },
+        "407379737": {
+          "score": 58.5,
+          "classRank": 17,
+          "examRank": 318,
+          "rate": 0.585,
+          "change": null,
+          "level": "B"
+        },
+        "1481510692": {
+          "score": 74.0,
+          "classRank": 4,
+          "examRank": 185,
+          "rate": 0.74,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 61.5,
+          "classRank": 13,
+          "examRank": 318,
+          "rate": 0.615,
+          "change": null,
+          "level": "B"
+        },
+        "273833498": {
+          "score": 67.0,
+          "classRank": 12,
+          "examRank": 276,
+          "rate": 0.67,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 66.0,
+          "classRank": 18,
+          "examRank": 318,
+          "rate": 0.66,
+          "change": null,
+          "level": "B"
+        },
+        "139945040": {
+          "score": 66.0,
+          "classRank": 12,
+          "examRank": 283,
+          "rate": 0.66,
+          "change": null,
+          "level": "B"
+        },
+        "139951785": {
+          "score": 61.0,
+          "classRank": 15,
+          "examRank": 309,
+          "rate": 0.61,
+          "change": null,
+          "level": "B"
+        }
+      }
+    },
+    "231440": {
+      "name": "杨可祥",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 85.5,
+          "classRank": 4,
+          "examRank": 124,
+          "rate": 0.855,
+          "change": -1,
+          "level": "B"
+        },
+        "2927781": {
+          "score": 85.0,
+          "classRank": 4,
+          "examRank": 92,
+          "rate": 0.85,
+          "change": null,
+          "level": "A"
+        },
+        "2909632": {
+          "score": 87.5,
+          "classRank": 4,
+          "examRank": 67,
+          "rate": 0.875,
+          "change": null,
+          "level": "A"
+        },
+        "3046836": {
+          "score": 77.0,
+          "classRank": 12,
+          "examRank": 188,
+          "rate": 0.77,
+          "change": null,
+          "level": "B"
+        },
+        "3167540": {
+          "score": 76.5,
+          "classRank": 7,
+          "examRank": 181,
+          "rate": 0.765,
+          "change": null,
+          "level": "B"
+        },
+        "3795671": {
+          "score": 66.5,
+          "classRank": 10,
+          "examRank": 257,
+          "rate": 0.665,
+          "change": null,
+          "level": "B"
+        },
+        "1883353773": {
+          "score": 77.0,
+          "classRank": 8,
+          "examRank": 185,
+          "rate": 0.77,
+          "change": null,
+          "level": "B"
+        },
+        "407379737": {
+          "score": 61.0,
+          "classRank": 14,
+          "examRank": 297,
+          "rate": 0.61,
+          "change": null,
+          "level": "B"
+        },
+        "1481510692": {
+          "score": 65.5,
+          "classRank": 12,
+          "examRank": 265,
+          "rate": 0.655,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 58.0,
+          "classRank": 19,
+          "examRank": 356,
+          "rate": 0.58,
+          "change": null,
+          "level": "B"
+        },
+        "273833498": {
+          "score": 68.0,
+          "classRank": 10,
+          "examRank": 263,
+          "rate": 0.68,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 57.5,
+          "classRank": 22,
+          "examRank": 392,
+          "rate": 0.575,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 41.0,
+          "classRank": 24,
+          "examRank": 542,
+          "rate": 0.41,
+          "change": null,
+          "level": "C"
+        },
+        "139951785": {
+          "score": 62.5,
+          "classRank": 11,
+          "examRank": 298,
+          "rate": 0.625,
+          "change": null,
+          "level": "B"
+        }
+      }
+    },
+    "231451": {
+      "name": "陈思宇",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 84.0,
+          "classRank": 5,
+          "examRank": 144,
+          "rate": 0.84,
+          "change": null,
+          "level": "B"
+        },
+        "2927781": {
+          "score": 62.0,
+          "classRank": 20,
+          "examRank": 373,
+          "rate": 0.62,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 61.0,
+          "classRank": 24,
+          "examRank": 364,
+          "rate": 0.61,
+          "change": null,
+          "level": "C"
+        },
+        "3046836": {
+          "score": 70.5,
+          "classRank": 15,
+          "examRank": 250,
+          "rate": 0.705,
+          "change": null,
+          "level": "B"
+        },
+        "3167540": {
+          "score": 70.5,
+          "classRank": 13,
+          "examRank": 251,
+          "rate": 0.705,
+          "change": null,
+          "level": "B"
+        },
+        "3795671": {
+          "score": 62.5,
+          "classRank": 16,
+          "examRank": 294,
+          "rate": 0.625,
+          "change": null,
+          "level": "B"
+        },
+        "1883353773": {
+          "score": 80.0,
+          "classRank": 7,
+          "examRank": 147,
+          "rate": 0.8,
+          "change": null,
+          "level": "B"
+        },
+        "407379737": {
+          "score": 67.0,
+          "classRank": 8,
+          "examRank": 234,
+          "rate": 0.67,
+          "change": null,
+          "level": "B"
+        },
+        "1481510692": {
+          "score": 64.5,
+          "classRank": 14,
+          "examRank": 276,
+          "rate": 0.645,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 76.5,
+          "classRank": 4,
+          "examRank": 143,
+          "rate": 0.765,
+          "change": null,
+          "level": "A"
+        },
+        "273833498": {
+          "score": 67.0,
+          "classRank": 12,
+          "examRank": 276,
+          "rate": 0.67,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 72.5,
+          "classRank": 9,
+          "examRank": 242,
+          "rate": 0.725,
+          "change": null,
+          "level": "B"
+        },
+        "139945040": {
+          "score": 60.0,
+          "classRank": 16,
+          "examRank": 346,
+          "rate": 0.6,
+          "change": null,
+          "level": "B"
+        },
+        "139951785": {
+          "score": 52.0,
+          "classRank": 22,
+          "examRank": 412,
+          "rate": 0.52,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231404": {
+      "name": "陈哲诺",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 83.0,
+          "classRank": 6,
+          "examRank": 157,
+          "rate": 0.83,
+          "change": -3,
+          "level": "B"
+        },
+        "2927781": {
+          "score": 88.5,
+          "classRank": 1,
+          "examRank": 56,
+          "rate": 0.885,
+          "change": null,
+          "level": "A"
+        },
+        "2909632": {
+          "score": 90.0,
+          "classRank": 2,
+          "examRank": 46,
+          "rate": 0.9,
+          "change": null,
+          "level": "A"
+        },
+        "3046836": {
+          "score": 82.5,
+          "classRank": 6,
+          "examRank": 121,
+          "rate": 0.825,
+          "change": null,
+          "level": "B"
+        },
+        "3167540": {
+          "score": 81.0,
+          "classRank": 3,
+          "examRank": 122,
+          "rate": 0.81,
+          "change": null,
+          "level": "A"
+        },
+        "3795671": {
+          "score": 71.0,
+          "classRank": 5,
+          "examRank": 204,
+          "rate": 0.71,
+          "change": null,
+          "level": "B"
+        },
+        "1883353773": {
+          "score": 85.0,
+          "classRank": 4,
+          "examRank": 87,
+          "rate": 0.85,
+          "change": null,
+          "level": "A"
+        },
+        "407379737": {
+          "score": 81.0,
+          "classRank": 4,
+          "examRank": 103,
+          "rate": 0.81,
+          "change": null,
+          "level": "A"
+        },
+        "1481510692": {
+          "score": 74.0,
+          "classRank": 4,
+          "examRank": 185,
+          "rate": 0.74,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 66.5,
+          "classRank": 10,
+          "examRank": 255,
+          "rate": 0.665,
+          "change": null,
+          "level": "B"
+        },
+        "273833498": {
+          "score": 76.0,
+          "classRank": 5,
+          "examRank": 196,
+          "rate": 0.76,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 74.0,
+          "classRank": 7,
+          "examRank": 230,
+          "rate": 0.74,
+          "change": null,
+          "level": "B"
+        },
+        "139945040": {
+          "score": 67.0,
+          "classRank": 10,
+          "examRank": 271,
+          "rate": 0.67,
+          "change": null,
+          "level": "B"
+        },
+        "139951785": {
+          "score": 70.0,
+          "classRank": 6,
+          "examRank": 224,
+          "rate": 0.7,
+          "change": null,
+          "level": "B"
+        }
+      }
+    },
+    "231420": {
+      "name": "郭睿熙",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 82.5,
+          "classRank": 7,
+          "examRank": 168,
+          "rate": 0.825,
+          "change": 19,
+          "level": "B"
+        },
+        "2927781": {
+          "score": 77.5,
+          "classRank": 11,
+          "examRank": 177,
+          "rate": 0.775,
+          "change": null,
+          "level": "B"
+        },
+        "2909632": {
+          "score": 86.5,
+          "classRank": 6,
+          "examRank": 85,
+          "rate": 0.865,
+          "change": null,
+          "level": "A"
+        },
+        "3046836": {
+          "score": 79.0,
+          "classRank": 10,
+          "examRank": 168,
+          "rate": 0.79,
+          "change": null,
+          "level": "B"
+        },
+        "3167540": {
+          "score": 79.0,
+          "classRank": 6,
+          "examRank": 154,
+          "rate": 0.79,
+          "change": null,
+          "level": "A"
+        },
+        "3795671": {
+          "score": 63.5,
+          "classRank": 13,
+          "examRank": 284,
+          "rate": 0.635,
+          "change": null,
+          "level": "B"
+        },
+        "1883353773": {
+          "score": 74.0,
+          "classRank": 11,
+          "examRank": 211,
+          "rate": 0.74,
+          "change": null,
+          "level": "B"
+        },
+        "407379737": {
+          "score": 63.0,
+          "classRank": 11,
+          "examRank": 278,
+          "rate": 0.63,
+          "change": null,
+          "level": "B"
+        },
+        "1481510692": {
+          "score": 71.5,
+          "classRank": 8,
+          "examRank": 205,
+          "rate": 0.715,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 60.0,
+          "classRank": 17,
+          "examRank": 333,
+          "rate": 0.6,
+          "change": null,
+          "level": "B"
+        },
+        "273833498": {
+          "score": 74.0,
+          "classRank": 7,
+          "examRank": 215,
+          "rate": 0.74,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 67.5,
+          "classRank": 14,
+          "examRank": 304,
+          "rate": 0.675,
+          "change": null,
+          "level": "B"
+        },
+        "139945040": {
+          "score": 66.5,
+          "classRank": 11,
+          "examRank": 276,
+          "rate": 0.665,
+          "change": null,
+          "level": "B"
+        },
+        "139951785": {
+          "score": 65.0,
+          "classRank": 9,
+          "examRank": 277,
+          "rate": 0.65,
+          "change": null,
+          "level": "B"
+        }
+      }
+    },
+    "231403": {
+      "name": "刘桐睿",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 80.0,
+          "classRank": 8,
+          "examRank": 214,
+          "rate": 0.8,
+          "change": -6,
+          "level": "B"
+        },
+        "2927781": {
+          "score": 80.5,
+          "classRank": 9,
+          "examRank": 142,
+          "rate": 0.805,
+          "change": null,
+          "level": "B"
+        },
+        "2909632": {
+          "score": 87.5,
+          "classRank": 4,
+          "examRank": 67,
+          "rate": 0.875,
+          "change": null,
+          "level": "A"
+        },
+        "3046836": {
+          "score": 83.0,
+          "classRank": 5,
+          "examRank": 118,
+          "rate": 0.83,
+          "change": null,
+          "level": "A"
+        },
+        "3167540": {
+          "score": 79.5,
+          "classRank": 5,
+          "examRank": 150,
+          "rate": 0.795,
+          "change": null,
+          "level": "A"
+        },
+        "3795671": {
+          "score": 85.0,
+          "classRank": 3,
+          "examRank": 73,
+          "rate": 0.85,
+          "change": null,
+          "level": "A"
+        },
+        "1883353773": {
+          "score": 86.0,
+          "classRank": 3,
+          "examRank": 74,
+          "rate": 0.86,
+          "change": null,
+          "level": "A"
+        },
+        "407379737": {
+          "score": 86.0,
+          "classRank": 3,
+          "examRank": 69,
+          "rate": 0.86,
+          "change": null,
+          "level": "A"
+        },
+        "1481510692": {
+          "score": 73.0,
+          "classRank": 6,
+          "examRank": 194,
+          "rate": 0.73,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 82.5,
+          "classRank": 2,
+          "examRank": 74,
+          "rate": 0.825,
+          "change": null,
+          "level": "A"
+        },
+        "273833498": {
+          "score": 83.5,
+          "classRank": 3,
+          "examRank": 120,
+          "rate": 0.835,
+          "change": null,
+          "level": "A"
+        },
+        "2018743143": {
+          "score": 83.0,
+          "classRank": 3,
+          "examRank": 117,
+          "rate": 0.83,
+          "change": null,
+          "level": "A"
+        },
+        "139945040": {
+          "score": 80.5,
+          "classRank": 3,
+          "examRank": 150,
+          "rate": 0.805,
+          "change": null,
+          "level": "B"
+        },
+        "139951785": {
+          "score": 89.0,
+          "classRank": 2,
+          "examRank": 29,
+          "rate": 0.89,
+          "change": null,
+          "level": "A"
+        }
+      }
+    },
+    "231414": {
+      "name": "李可乐",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 80.0,
+          "classRank": 8,
+          "examRank": 214,
+          "rate": 0.8,
+          "change": 8,
+          "level": "B"
+        },
+        "2927781": {
+          "score": 66.5,
+          "classRank": 15,
+          "examRank": 325,
+          "rate": 0.665,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 76.5,
+          "classRank": 16,
+          "examRank": 202,
+          "rate": 0.765,
+          "change": null,
+          "level": "B"
+        },
+        "3046836": {
+          "score": 85.0,
+          "classRank": 4,
+          "examRank": 97,
+          "rate": 0.85,
+          "change": null,
+          "level": "A"
+        },
+        "3167540": {
+          "score": 80.0,
+          "classRank": 4,
+          "examRank": 139,
+          "rate": 0.8,
+          "change": null,
+          "level": "A"
+        },
+        "3795671": {
+          "score": 66.5,
+          "classRank": 10,
+          "examRank": 257,
+          "rate": 0.665,
+          "change": null,
+          "level": "B"
+        },
+        "1883353773": {
+          "score": 81.0,
+          "classRank": 6,
+          "examRank": 130,
+          "rate": 0.81,
+          "change": null,
+          "level": "B"
+        },
+        "407379737": {
+          "score": 56.5,
+          "classRank": 21,
+          "examRank": 341,
+          "rate": 0.565,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 80.0,
+          "classRank": 3,
+          "examRank": 113,
+          "rate": 0.8,
+          "change": null,
+          "level": "A"
+        },
+        "1347569700": {
+          "score": 60.5,
+          "classRank": 15,
+          "examRank": 329,
+          "rate": 0.605,
+          "change": null,
+          "level": "B"
+        },
+        "273833498": {
+          "score": 64.5,
+          "classRank": 15,
+          "examRank": 304,
+          "rate": 0.645,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 66.5,
+          "classRank": 16,
+          "examRank": 314,
+          "rate": 0.665,
+          "change": null,
+          "level": "B"
+        },
+        "139945040": {
+          "score": 75.5,
+          "classRank": 7,
+          "examRank": 201,
+          "rate": 0.755,
+          "change": null,
+          "level": "B"
+        },
+        "139951785": {
+          "score": 61.0,
+          "classRank": 15,
+          "examRank": 309,
+          "rate": 0.61,
+          "change": null,
+          "level": "B"
+        }
+      }
+    },
+    "231426": {
+      "name": "文志远",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 79.0,
+          "classRank": 10,
+          "examRank": 233,
+          "rate": 0.79,
+          "change": 12,
+          "level": "B"
+        },
+        "2927781": {
+          "score": 81.5,
+          "classRank": 8,
+          "examRank": 130,
+          "rate": 0.815,
+          "change": null,
+          "level": "B"
+        },
+        "2909632": {
+          "score": 83.0,
+          "classRank": 7,
+          "examRank": 133,
+          "rate": 0.83,
+          "change": null,
+          "level": "B"
+        },
+        "3046836": {
+          "score": 82.0,
+          "classRank": 7,
+          "examRank": 134,
+          "rate": 0.82,
+          "change": null,
+          "level": "B"
+        },
+        "3167540": {
+          "score": 85.0,
+          "classRank": 2,
+          "examRank": 78,
+          "rate": 0.85,
+          "change": null,
+          "level": "A"
+        },
+        "3795671": {
+          "score": 87.5,
+          "classRank": 2,
+          "examRank": 52,
+          "rate": 0.875,
+          "change": null,
+          "level": "A"
+        },
+        "1883353773": {
+          "score": 91.0,
+          "classRank": 1,
+          "examRank": 36,
+          "rate": 0.91,
+          "change": null,
+          "level": "A"
+        },
+        "407379737": {
+          "score": 89.0,
+          "classRank": 2,
+          "examRank": 40,
+          "rate": 0.89,
+          "change": null,
+          "level": "A"
+        },
+        "1481510692": {
+          "score": 88.5,
+          "classRank": 2,
+          "examRank": 40,
+          "rate": 0.885,
+          "change": null,
+          "level": "A"
+        },
+        "1347569700": {
+          "score": 79.0,
+          "classRank": 3,
+          "examRank": 114,
+          "rate": 0.79,
+          "change": null,
+          "level": "A"
+        },
+        "273833498": {
+          "score": 88.0,
+          "classRank": 2,
+          "examRank": 61,
+          "rate": 0.88,
+          "change": null,
+          "level": "A"
+        },
+        "2018743143": {
+          "score": 89.5,
+          "classRank": 2,
+          "examRank": 60,
+          "rate": 0.895,
+          "change": null,
+          "level": "A"
+        },
+        "139945040": {
+          "score": 85.5,
+          "classRank": 2,
+          "examRank": 103,
+          "rate": 0.855,
+          "change": null,
+          "level": "A"
+        },
+        "139951785": {
+          "score": 83.5,
+          "classRank": 3,
+          "examRank": 75,
+          "rate": 0.835,
+          "change": null,
+          "level": "A"
+        }
+      }
+    },
+    "231444": {
+      "name": "康紫露",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 79.0,
+          "classRank": 10,
+          "examRank": 233,
+          "rate": 0.79,
+          "change": -9,
+          "level": "B"
+        },
+        "2927781": {
+          "score": 87.0,
+          "classRank": 2,
+          "examRank": 75,
+          "rate": 0.87,
+          "change": null,
+          "level": "A"
+        },
+        "2909632": {
+          "score": 89.0,
+          "classRank": 3,
+          "examRank": 54,
+          "rate": 0.89,
+          "change": null,
+          "level": "A"
+        },
+        "3046836": {
+          "score": 86.0,
+          "classRank": 3,
+          "examRank": 87,
+          "rate": 0.86,
+          "change": null,
+          "level": "A"
+        },
+        "3167540": {
+          "score": 75.0,
+          "classRank": 9,
+          "examRank": 194,
+          "rate": 0.75,
+          "change": null,
+          "level": "B"
+        },
+        "3795671": {
+          "score": 78.5,
+          "classRank": 4,
+          "examRank": 152,
+          "rate": 0.785,
+          "change": null,
+          "level": "B"
+        },
+        "1883353773": {
+          "score": 85.0,
+          "classRank": 4,
+          "examRank": 87,
+          "rate": 0.85,
+          "change": null,
+          "level": "A"
+        },
+        "407379737": {
+          "score": 68.5,
+          "classRank": 7,
+          "examRank": 221,
+          "rate": 0.685,
+          "change": null,
+          "level": "B"
+        },
+        "1481510692": {
+          "score": 65.0,
+          "classRank": 13,
+          "examRank": 271,
+          "rate": 0.65,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 54.0,
+          "classRank": 23,
+          "examRank": 399,
+          "rate": 0.54,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 66.0,
+          "classRank": 14,
+          "examRank": 292,
+          "rate": 0.66,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 74.5,
+          "classRank": 6,
+          "examRank": 226,
+          "rate": 0.745,
+          "change": null,
+          "level": "B"
+        },
+        "139945040": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "139951785": {
+          "score": 64.0,
+          "classRank": 10,
+          "examRank": 286,
+          "rate": 0.64,
+          "change": null,
+          "level": "B"
+        }
+      }
+    },
+    "231429": {
+      "name": "王梓瑞",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 78.5,
+          "classRank": 12,
+          "examRank": 243,
+          "rate": 0.785,
+          "change": 0,
+          "level": "B"
+        },
+        "2927781": {
+          "score": 74.5,
+          "classRank": 12,
+          "examRank": 218,
+          "rate": 0.745,
+          "change": null,
+          "level": "B"
+        },
+        "2909632": {
+          "score": 79.0,
+          "classRank": 11,
+          "examRank": 177,
+          "rate": 0.79,
+          "change": null,
+          "level": "B"
+        },
+        "3046836": {
+          "score": 66.5,
+          "classRank": 19,
+          "examRank": 293,
+          "rate": 0.665,
+          "change": null,
+          "level": "B"
+        },
+        "3167540": {
+          "score": 68.0,
+          "classRank": 15,
+          "examRank": 278,
+          "rate": 0.68,
+          "change": null,
+          "level": "B"
+        },
+        "3795671": {
+          "score": 63.0,
+          "classRank": 15,
+          "examRank": 291,
+          "rate": 0.63,
+          "change": null,
+          "level": "B"
+        },
+        "1883353773": {
+          "score": 41.0,
+          "classRank": 31,
+          "examRank": 506,
+          "rate": 0.41,
+          "change": null,
+          "level": "C"
+        },
+        "407379737": {
+          "score": 50.0,
+          "classRank": 25,
+          "examRank": 423,
+          "rate": 0.5,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 67.0,
+          "classRank": 11,
+          "examRank": 245,
+          "rate": 0.67,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 49.0,
+          "classRank": 27,
+          "examRank": 449,
+          "rate": 0.49,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 70.0,
+          "classRank": 9,
+          "examRank": 246,
+          "rate": 0.7,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 57.0,
+          "classRank": 23,
+          "examRank": 397,
+          "rate": 0.57,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "139951785": {
+          "score": 48.5,
+          "classRank": 26,
+          "examRank": 462,
+          "rate": 0.485,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231409": {
+      "name": "胡子健",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 78.0,
+          "classRank": 13,
+          "examRank": 252,
+          "rate": 0.78,
+          "change": 8,
+          "level": "B"
+        },
+        "2927781": {
+          "score": 49.0,
+          "classRank": 32,
+          "examRank": 515,
+          "rate": 0.49,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 73.5,
+          "classRank": 17,
+          "examRank": 239,
+          "rate": 0.735,
+          "change": null,
+          "level": "B"
+        },
+        "3046836": {
+          "score": 71.5,
+          "classRank": 14,
+          "examRank": 234,
+          "rate": 0.715,
+          "change": null,
+          "level": "B"
+        },
+        "3167540": {
+          "score": 62.0,
+          "classRank": 21,
+          "examRank": 359,
+          "rate": 0.62,
+          "change": null,
+          "level": "B"
+        },
+        "3795671": {
+          "score": 68.5,
+          "classRank": 7,
+          "examRank": 227,
+          "rate": 0.685,
+          "change": null,
+          "level": "B"
+        },
+        "1883353773": {
+          "score": 62.0,
+          "classRank": 19,
+          "examRank": 319,
+          "rate": 0.62,
+          "change": null,
+          "level": "C"
+        },
+        "407379737": {
+          "score": 53.5,
+          "classRank": 22,
+          "examRank": 377,
+          "rate": 0.535,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 61.5,
+          "classRank": 17,
+          "examRank": 307,
+          "rate": 0.615,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 61.0,
+          "classRank": 14,
+          "examRank": 323,
+          "rate": 0.61,
+          "change": null,
+          "level": "B"
+        },
+        "273833498": {
+          "score": 63.5,
+          "classRank": 17,
+          "examRank": 318,
+          "rate": 0.635,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 69.0,
+          "classRank": 13,
+          "examRank": 284,
+          "rate": 0.69,
+          "change": null,
+          "level": "B"
+        },
+        "139945040": {
+          "score": 60.0,
+          "classRank": 16,
+          "examRank": 346,
+          "rate": 0.6,
+          "change": null,
+          "level": "B"
+        },
+        "139951785": {
+          "score": 50.0,
+          "classRank": 25,
+          "examRank": 442,
+          "rate": 0.5,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231410": {
+      "name": "丁耀阳",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 77.0,
+          "classRank": 14,
+          "examRank": 263,
+          "rate": 0.77,
+          "change": -4,
+          "level": "B"
+        },
+        "2927781": {
+          "score": 84.5,
+          "classRank": 6,
+          "examRank": 101,
+          "rate": 0.845,
+          "change": null,
+          "level": "A"
+        },
+        "2909632": {
+          "score": 81.5,
+          "classRank": 10,
+          "examRank": 149,
+          "rate": 0.815,
+          "change": null,
+          "level": "B"
+        },
+        "3046836": {
+          "score": 87.5,
+          "classRank": 2,
+          "examRank": 71,
+          "rate": 0.875,
+          "change": null,
+          "level": "A"
+        },
+        "3167540": {
+          "score": 74.0,
+          "classRank": 10,
+          "examRank": 209,
+          "rate": 0.74,
+          "change": null,
+          "level": "B"
+        },
+        "3795671": {
+          "score": 58.0,
+          "classRank": 20,
+          "examRank": 341,
+          "rate": 0.58,
+          "change": null,
+          "level": "C"
+        },
+        "1883353773": {
+          "score": 66.0,
+          "classRank": 16,
+          "examRank": 281,
+          "rate": 0.66,
+          "change": null,
+          "level": "B"
+        },
+        "407379737": {
+          "score": 48.0,
+          "classRank": 28,
+          "examRank": 448,
+          "rate": 0.48,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 59.0,
+          "classRank": 20,
+          "examRank": 340,
+          "rate": 0.59,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 32.5,
+          "classRank": 40,
+          "examRank": 636,
+          "rate": 0.325,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 62.0,
+          "classRank": 18,
+          "examRank": 337,
+          "rate": 0.62,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 24.0,
+          "classRank": 43,
+          "examRank": 702,
+          "rate": 0.24,
+          "change": null,
+          "level": "D"
+        },
+        "139945040": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "139951785": {
+          "score": 19.5,
+          "classRank": 49,
+          "examRank": 769,
+          "rate": 0.195,
+          "change": null,
+          "level": "D"
+        }
+      }
+    },
+    "231452": {
+      "name": "刘伊儿",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 77.0,
+          "classRank": 14,
+          "examRank": 263,
+          "rate": 0.77,
+          "change": null,
+          "level": "B"
+        },
+        "2927781": {
+          "score": 69.0,
+          "classRank": 14,
+          "examRank": 289,
+          "rate": 0.69,
+          "change": null,
+          "level": "B"
+        },
+        "2909632": {
+          "score": 55.5,
+          "classRank": 29,
+          "examRank": 422,
+          "rate": 0.555,
+          "change": null,
+          "level": "C"
+        },
+        "3046836": {
+          "score": 48.5,
+          "classRank": 25,
+          "examRank": 440,
+          "rate": 0.485,
+          "change": null,
+          "level": "C"
+        },
+        "3167540": {
+          "score": 56.0,
+          "classRank": 26,
+          "examRank": 423,
+          "rate": 0.56,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 45.0,
+          "classRank": 26,
+          "examRank": 483,
+          "rate": 0.45,
+          "change": null,
+          "level": "C"
+        },
+        "1883353773": {
+          "score": 50.0,
+          "classRank": 23,
+          "examRank": 418,
+          "rate": 0.5,
+          "change": null,
+          "level": "C"
+        },
+        "407379737": {
+          "score": 40.5,
+          "classRank": 35,
+          "examRank": 543,
+          "rate": 0.405,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 49.5,
+          "classRank": 29,
+          "examRank": 458,
+          "rate": 0.495,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 64.5,
+          "classRank": 12,
+          "examRank": 284,
+          "rate": 0.645,
+          "change": null,
+          "level": "B"
+        },
+        "273833498": {
+          "score": 50.0,
+          "classRank": 29,
+          "examRank": 453,
+          "rate": 0.5,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 38.5,
+          "classRank": 37,
+          "examRank": 590,
+          "rate": 0.385,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "139951785": {
+          "score": 30.5,
+          "classRank": 40,
+          "examRank": 690,
+          "rate": 0.305,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231442": {
+      "name": "王天昊",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 75.0,
+          "classRank": 16,
+          "examRank": 294,
+          "rate": 0.75,
+          "change": -10,
+          "level": "B"
+        },
+        "2927781": {
+          "score": 66.5,
+          "classRank": 15,
+          "examRank": 325,
+          "rate": 0.665,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 78.5,
+          "classRank": 12,
+          "examRank": 182,
+          "rate": 0.785,
+          "change": null,
+          "level": "B"
+        },
+        "3046836": {
+          "score": 70.5,
+          "classRank": 15,
+          "examRank": 250,
+          "rate": 0.705,
+          "change": null,
+          "level": "B"
+        },
+        "3167540": {
+          "score": 67.5,
+          "classRank": 16,
+          "examRank": 290,
+          "rate": 0.675,
+          "change": null,
+          "level": "B"
+        },
+        "3795671": {
+          "score": 62.5,
+          "classRank": 16,
+          "examRank": 294,
+          "rate": 0.625,
+          "change": null,
+          "level": "B"
+        },
+        "1883353773": {
+          "score": 75.0,
+          "classRank": 10,
+          "examRank": 205,
+          "rate": 0.75,
+          "change": null,
+          "level": "B"
+        },
+        "407379737": {
+          "score": 50.0,
+          "classRank": 25,
+          "examRank": 423,
+          "rate": 0.5,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 71.5,
+          "classRank": 8,
+          "examRank": 205,
+          "rate": 0.715,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 51.5,
+          "classRank": 25,
+          "examRank": 422,
+          "rate": 0.515,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 55.5,
+          "classRank": 26,
+          "examRank": 404,
+          "rate": 0.555,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 66.5,
+          "classRank": 16,
+          "examRank": 314,
+          "rate": 0.665,
+          "change": null,
+          "level": "B"
+        },
+        "139945040": {
+          "score": 66.0,
+          "classRank": 12,
+          "examRank": 283,
+          "rate": 0.66,
+          "change": null,
+          "level": "B"
+        }
+      }
+    },
+    "231405": {
+      "name": "廖梓月",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 74.5,
+          "classRank": 17,
+          "examRank": 303,
+          "rate": 0.745,
+          "change": -11,
+          "level": "B"
+        },
+        "2927781": {
+          "score": 58.0,
+          "classRank": 24,
+          "examRank": 425,
+          "rate": 0.58,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 72.5,
+          "classRank": 18,
+          "examRank": 248,
+          "rate": 0.725,
+          "change": null,
+          "level": "B"
+        },
+        "3046836": {
+          "score": 63.5,
+          "classRank": 20,
+          "examRank": 320,
+          "rate": 0.635,
+          "change": null,
+          "level": "B"
+        },
+        "3167540": {
+          "score": 59.0,
+          "classRank": 25,
+          "examRank": 398,
+          "rate": 0.59,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 61.0,
+          "classRank": 18,
+          "examRank": 316,
+          "rate": 0.61,
+          "change": null,
+          "level": "B"
+        },
+        "1883353773": {
+          "score": 55.0,
+          "classRank": 21,
+          "examRank": 381,
+          "rate": 0.55,
+          "change": null,
+          "level": "C"
+        },
+        "407379737": {
+          "score": 62.0,
+          "classRank": 12,
+          "examRank": 291,
+          "rate": 0.62,
+          "change": null,
+          "level": "B"
+        },
+        "1481510692": {
+          "score": 61.5,
+          "classRank": 17,
+          "examRank": 307,
+          "rate": 0.615,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 68.5,
+          "classRank": 9,
+          "examRank": 231,
+          "rate": 0.685,
+          "change": null,
+          "level": "B"
+        },
+        "273833498": {
+          "score": 59.5,
+          "classRank": 20,
+          "examRank": 362,
+          "rate": 0.595,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 54.0,
+          "classRank": 27,
+          "examRank": 423,
+          "rate": 0.54,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 54.0,
+          "classRank": 18,
+          "examRank": 408,
+          "rate": 0.54,
+          "change": null,
+          "level": "C"
+        },
+        "139951785": {
+          "score": 62.5,
+          "classRank": 11,
+          "examRank": 298,
+          "rate": 0.625,
+          "change": null,
+          "level": "B"
+        }
+      }
+    },
+    "231434": {
+      "name": "段佳辰",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 74.0,
+          "classRank": 18,
+          "examRank": 311,
+          "rate": 0.74,
+          "change": -5,
+          "level": "B"
+        },
+        "2927781": {
+          "score": 85.0,
+          "classRank": 4,
+          "examRank": 92,
+          "rate": 0.85,
+          "change": null,
+          "level": "A"
+        },
+        "2909632": {
+          "score": 83.0,
+          "classRank": 7,
+          "examRank": 133,
+          "rate": 0.83,
+          "change": null,
+          "level": "B"
+        },
+        "3046836": {
+          "score": 82.0,
+          "classRank": 7,
+          "examRank": 134,
+          "rate": 0.82,
+          "change": null,
+          "level": "B"
+        },
+        "3167540": {
+          "score": 76.0,
+          "classRank": 8,
+          "examRank": 188,
+          "rate": 0.76,
+          "change": null,
+          "level": "B"
+        },
+        "3795671": {
+          "score": 69.5,
+          "classRank": 6,
+          "examRank": 218,
+          "rate": 0.695,
+          "change": null,
+          "level": "B"
+        },
+        "1883353773": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "407379737": {
+          "score": 71.5,
+          "classRank": 6,
+          "examRank": 189,
+          "rate": 0.715,
+          "change": null,
+          "level": "B"
+        },
+        "1481510692": {
+          "score": 72.5,
+          "classRank": 7,
+          "examRank": 197,
+          "rate": 0.725,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 73.5,
+          "classRank": 6,
+          "examRank": 179,
+          "rate": 0.735,
+          "change": null,
+          "level": "B"
+        },
+        "273833498": {
+          "score": 75.0,
+          "classRank": 6,
+          "examRank": 209,
+          "rate": 0.75,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 78.0,
+          "classRank": 4,
+          "examRank": 192,
+          "rate": 0.78,
+          "change": null,
+          "level": "B"
+        },
+        "139945040": {
+          "score": 77.0,
+          "classRank": 5,
+          "examRank": 185,
+          "rate": 0.77,
+          "change": null,
+          "level": "B"
+        },
+        "139951785": {
+          "score": 67.5,
+          "classRank": 7,
+          "examRank": 247,
+          "rate": 0.675,
+          "change": null,
+          "level": "B"
+        }
+      }
+    },
+    "231432": {
+      "name": "尹皓轩",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 72.0,
+          "classRank": 19,
+          "examRank": 345,
+          "rate": 0.72,
+          "change": -5,
+          "level": "C"
+        },
+        "2927781": {
+          "score": 54.0,
+          "classRank": 28,
+          "examRank": 455,
+          "rate": 0.54,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 77.0,
+          "classRank": 14,
+          "examRank": 196,
+          "rate": 0.77,
+          "change": null,
+          "level": "B"
+        },
+        "3046836": {
+          "score": 74.5,
+          "classRank": 13,
+          "examRank": 209,
+          "rate": 0.745,
+          "change": null,
+          "level": "B"
+        },
+        "3167540": {
+          "score": 47.0,
+          "classRank": 33,
+          "examRank": 531,
+          "rate": 0.47,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 39.5,
+          "classRank": 30,
+          "examRank": 548,
+          "rate": 0.395,
+          "change": null,
+          "level": "C"
+        },
+        "1883353773": {
+          "score": 50.0,
+          "classRank": 23,
+          "examRank": 418,
+          "rate": 0.5,
+          "change": null,
+          "level": "C"
+        },
+        "407379737": {
+          "score": 61.5,
+          "classRank": 13,
+          "examRank": 295,
+          "rate": 0.615,
+          "change": null,
+          "level": "B"
+        },
+        "1481510692": {
+          "score": 36.0,
+          "classRank": 39,
+          "examRank": 638,
+          "rate": 0.36,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 57.5,
+          "classRank": 20,
+          "examRank": 362,
+          "rate": 0.575,
+          "change": null,
+          "level": "B"
+        },
+        "273833498": {
+          "score": 28.0,
+          "classRank": 44,
+          "examRank": 700,
+          "rate": 0.28,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 48.5,
+          "classRank": 29,
+          "examRank": 496,
+          "rate": 0.485,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "139951785": {
+          "score": 62.5,
+          "classRank": 11,
+          "examRank": 298,
+          "rate": 0.625,
+          "change": null,
+          "level": "B"
+        }
+      }
+    },
+    "231428": {
+      "name": "唐雨朦",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 71.5,
+          "classRank": 20,
+          "examRank": 354,
+          "rate": 0.715,
+          "change": 5,
+          "level": "C"
+        },
+        "2927781": {
+          "score": 65.5,
+          "classRank": 17,
+          "examRank": 337,
+          "rate": 0.655,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 67.5,
+          "classRank": 20,
+          "examRank": 299,
+          "rate": 0.675,
+          "change": null,
+          "level": "B"
+        },
+        "3046836": {
+          "score": 68.5,
+          "classRank": 17,
+          "examRank": 275,
+          "rate": 0.685,
+          "change": null,
+          "level": "B"
+        },
+        "3167540": {
+          "score": 62.5,
+          "classRank": 19,
+          "examRank": 349,
+          "rate": 0.625,
+          "change": null,
+          "level": "B"
+        },
+        "3795671": {
+          "score": 47.5,
+          "classRank": 23,
+          "examRank": 457,
+          "rate": 0.475,
+          "change": null,
+          "level": "C"
+        },
+        "1883353773": {
+          "score": 68.0,
+          "classRank": 13,
+          "examRank": 267,
+          "rate": 0.68,
+          "change": null,
+          "level": "B"
+        },
+        "407379737": {
+          "score": 58.5,
+          "classRank": 17,
+          "examRank": 318,
+          "rate": 0.585,
+          "change": null,
+          "level": "B"
+        },
+        "1481510692": {
+          "score": 54.5,
+          "classRank": 25,
+          "examRank": 386,
+          "rate": 0.545,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 58.5,
+          "classRank": 18,
+          "examRank": 352,
+          "rate": 0.585,
+          "change": null,
+          "level": "B"
+        },
+        "273833498": {
+          "score": 52.5,
+          "classRank": 27,
+          "examRank": 432,
+          "rate": 0.525,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 55.0,
+          "classRank": 26,
+          "examRank": 415,
+          "rate": 0.55,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 51.5,
+          "classRank": 20,
+          "examRank": 433,
+          "rate": 0.515,
+          "change": null,
+          "level": "C"
+        },
+        "139951785": {
+          "score": 52.0,
+          "classRank": 22,
+          "examRank": 412,
+          "rate": 0.52,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231407": {
+      "name": "罗珈颖",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 69.5,
+          "classRank": 21,
+          "examRank": 376,
+          "rate": 0.695,
+          "change": 11,
+          "level": "C"
+        },
+        "2927781": {
+          "score": 39.0,
+          "classRank": 39,
+          "examRank": 632,
+          "rate": 0.39,
+          "change": null,
+          "level": "D"
+        },
+        "2909632": {
+          "score": 39.0,
+          "classRank": 39,
+          "examRank": 601,
+          "rate": 0.39,
+          "change": null,
+          "level": "D"
+        },
+        "3046836": {
+          "score": 38.0,
+          "classRank": 37,
+          "examRank": 556,
+          "rate": 0.38,
+          "change": null,
+          "level": "C"
+        },
+        "3167540": {
+          "score": 42.5,
+          "classRank": 38,
+          "examRank": 593,
+          "rate": 0.425,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 42.5,
+          "classRank": 28,
+          "examRank": 515,
+          "rate": 0.425,
+          "change": null,
+          "level": "C"
+        },
+        "1883353773": {
+          "score": 35.0,
+          "classRank": 38,
+          "examRank": 569,
+          "rate": 0.35,
+          "change": null,
+          "level": "D"
+        },
+        "407379737": {
+          "score": 46.5,
+          "classRank": 31,
+          "examRank": 467,
+          "rate": 0.465,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 38.5,
+          "classRank": 37,
+          "examRank": 606,
+          "rate": 0.385,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 32.5,
+          "classRank": 40,
+          "examRank": 636,
+          "rate": 0.325,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 44.5,
+          "classRank": 31,
+          "examRank": 517,
+          "rate": 0.445,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 33.5,
+          "classRank": 40,
+          "examRank": 639,
+          "rate": 0.335,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 32.5,
+          "classRank": 32,
+          "examRank": 614,
+          "rate": 0.325,
+          "change": null,
+          "level": "C"
+        },
+        "139951785": {
+          "score": 29.0,
+          "classRank": 43,
+          "examRank": 707,
+          "rate": 0.29,
+          "change": null,
+          "level": "D"
+        }
+      }
+    },
+    "231447": {
+      "name": "周子佑",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 69.0,
+          "classRank": 22,
+          "examRank": 384,
+          "rate": 0.69,
+          "change": -16,
+          "level": "C"
+        },
+        "2927781": {
+          "score": 64.0,
+          "classRank": 18,
+          "examRank": 355,
+          "rate": 0.64,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 78.5,
+          "classRank": 12,
+          "examRank": 182,
+          "rate": 0.785,
+          "change": null,
+          "level": "B"
+        },
+        "3046836": {
+          "score": 67.5,
+          "classRank": 18,
+          "examRank": 287,
+          "rate": 0.675,
+          "change": null,
+          "level": "B"
+        },
+        "3167540": {
+          "score": 66.0,
+          "classRank": 17,
+          "examRank": 306,
+          "rate": 0.66,
+          "change": null,
+          "level": "B"
+        },
+        "3795671": {
+          "score": 45.0,
+          "classRank": 26,
+          "examRank": 483,
+          "rate": 0.45,
+          "change": null,
+          "level": "C"
+        },
+        "1883353773": {
+          "score": 46.0,
+          "classRank": 26,
+          "examRank": 454,
+          "rate": 0.46,
+          "change": null,
+          "level": "C"
+        },
+        "407379737": {
+          "score": 51.0,
+          "classRank": 24,
+          "examRank": 406,
+          "rate": 0.51,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 58.5,
+          "classRank": 21,
+          "examRank": 348,
+          "rate": 0.585,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 45.5,
+          "classRank": 31,
+          "examRank": 490,
+          "rate": 0.455,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 68.0,
+          "classRank": 10,
+          "examRank": 263,
+          "rate": 0.68,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 71.5,
+          "classRank": 11,
+          "examRank": 255,
+          "rate": 0.715,
+          "change": null,
+          "level": "B"
+        },
+        "139945040": {
+          "score": 78.0,
+          "classRank": 4,
+          "examRank": 179,
+          "rate": 0.78,
+          "change": null,
+          "level": "B"
+        },
+        "139951785": {
+          "score": 61.0,
+          "classRank": 15,
+          "examRank": 309,
+          "rate": 0.61,
+          "change": null,
+          "level": "B"
+        }
+      }
+    },
+    "231424": {
+      "name": "吴歆瑶",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 68.0,
+          "classRank": 23,
+          "examRank": 390,
+          "rate": 0.68,
+          "change": 14,
+          "level": "C"
+        },
+        "2927781": {
+          "score": 59.5,
+          "classRank": 21,
+          "examRank": 408,
+          "rate": 0.595,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 65.0,
+          "classRank": 22,
+          "examRank": 324,
+          "rate": 0.65,
+          "change": null,
+          "level": "C"
+        },
+        "3046836": {
+          "score": 44.0,
+          "classRank": 27,
+          "examRank": 484,
+          "rate": 0.44,
+          "change": null,
+          "level": "C"
+        },
+        "3167540": {
+          "score": 69.5,
+          "classRank": 14,
+          "examRank": 263,
+          "rate": 0.695,
+          "change": null,
+          "level": "B"
+        },
+        "3795671": {
+          "score": 63.5,
+          "classRank": 13,
+          "examRank": 284,
+          "rate": 0.635,
+          "change": null,
+          "level": "B"
+        },
+        "1883353773": {
+          "score": 44.0,
+          "classRank": 30,
+          "examRank": 475,
+          "rate": 0.44,
+          "change": null,
+          "level": "C"
+        },
+        "407379737": {
+          "score": 64.0,
+          "classRank": 10,
+          "examRank": 268,
+          "rate": 0.64,
+          "change": null,
+          "level": "B"
+        },
+        "1481510692": {
+          "score": 59.5,
+          "classRank": 19,
+          "examRank": 329,
+          "rate": 0.595,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 69.5,
+          "classRank": 8,
+          "examRank": 223,
+          "rate": 0.695,
+          "change": null,
+          "level": "B"
+        },
+        "273833498": {
+          "score": 64.5,
+          "classRank": 15,
+          "examRank": 304,
+          "rate": 0.645,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 71.5,
+          "classRank": 11,
+          "examRank": 255,
+          "rate": 0.715,
+          "change": null,
+          "level": "B"
+        },
+        "139945040": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "139951785": {
+          "score": 62.5,
+          "classRank": 11,
+          "examRank": 298,
+          "rate": 0.625,
+          "change": null,
+          "level": "B"
+        }
+      }
+    },
+    "231436": {
+      "name": "何妍",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 67.5,
+          "classRank": 24,
+          "examRank": 399,
+          "rate": 0.675,
+          "change": -7,
+          "level": "C"
+        },
+        "2927781": {
+          "score": 58.5,
+          "classRank": 22,
+          "examRank": 420,
+          "rate": 0.585,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 62.0,
+          "classRank": 23,
+          "examRank": 351,
+          "rate": 0.62,
+          "change": null,
+          "level": "C"
+        },
+        "3046836": {
+          "score": 43.5,
+          "classRank": 29,
+          "examRank": 488,
+          "rate": 0.435,
+          "change": null,
+          "level": "C"
+        },
+        "3167540": {
+          "score": 60.0,
+          "classRank": 23,
+          "examRank": 382,
+          "rate": 0.6,
+          "change": null,
+          "level": "B"
+        },
+        "3795671": {
+          "score": 47.0,
+          "classRank": 24,
+          "examRank": 462,
+          "rate": 0.47,
+          "change": null,
+          "level": "C"
+        },
+        "1883353773": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "407379737": {
+          "score": 47.0,
+          "classRank": 30,
+          "examRank": 461,
+          "rate": 0.47,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 56.0,
+          "classRank": 24,
+          "examRank": 373,
+          "rate": 0.56,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 49.5,
+          "classRank": 26,
+          "examRank": 445,
+          "rate": 0.495,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 58.0,
+          "classRank": 23,
+          "examRank": 383,
+          "rate": 0.58,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 51.5,
+          "classRank": 28,
+          "examRank": 451,
+          "rate": 0.515,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 53.0,
+          "classRank": 19,
+          "examRank": 418,
+          "rate": 0.53,
+          "change": null,
+          "level": "C"
+        },
+        "139951785": {
+          "score": 56.5,
+          "classRank": 20,
+          "examRank": 352,
+          "rate": 0.565,
+          "change": null,
+          "level": "B"
+        }
+      }
+    },
+    "231417": {
+      "name": "龙紫乐",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 67.0,
+          "classRank": 25,
+          "examRank": 409,
+          "rate": 0.67,
+          "change": -16,
+          "level": "C"
+        },
+        "2927781": {
+          "score": 57.0,
+          "classRank": 25,
+          "examRank": 431,
+          "rate": 0.57,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 60.0,
+          "classRank": 26,
+          "examRank": 380,
+          "rate": 0.6,
+          "change": null,
+          "level": "C"
+        },
+        "3046836": {
+          "score": 60.5,
+          "classRank": 21,
+          "examRank": 347,
+          "rate": 0.605,
+          "change": null,
+          "level": "C"
+        },
+        "3167540": {
+          "score": 61.5,
+          "classRank": 22,
+          "examRank": 364,
+          "rate": 0.615,
+          "change": null,
+          "level": "B"
+        },
+        "3795671": {
+          "score": 68.0,
+          "classRank": 8,
+          "examRank": 234,
+          "rate": 0.68,
+          "change": null,
+          "level": "B"
+        },
+        "1883353773": {
+          "score": 76.0,
+          "classRank": 9,
+          "examRank": 198,
+          "rate": 0.76,
+          "change": null,
+          "level": "B"
+        },
+        "407379737": {
+          "score": 57.5,
+          "classRank": 19,
+          "examRank": 329,
+          "rate": 0.575,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 64.5,
+          "classRank": 14,
+          "examRank": 276,
+          "rate": 0.645,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 60.5,
+          "classRank": 15,
+          "examRank": 329,
+          "rate": 0.605,
+          "change": null,
+          "level": "B"
+        },
+        "273833498": {
+          "score": 73.0,
+          "classRank": 8,
+          "examRank": 222,
+          "rate": 0.73,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 73.0,
+          "classRank": 8,
+          "examRank": 239,
+          "rate": 0.73,
+          "change": null,
+          "level": "B"
+        },
+        "139945040": {
+          "score": 67.5,
+          "classRank": 9,
+          "examRank": 266,
+          "rate": 0.675,
+          "change": null,
+          "level": "B"
+        },
+        "139951785": {
+          "score": 61.0,
+          "classRank": 15,
+          "examRank": 309,
+          "rate": 0.61,
+          "change": null,
+          "level": "B"
+        }
+      }
+    },
+    "231449": {
+      "name": "杨易",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 65.0,
+          "classRank": 26,
+          "examRank": 443,
+          "rate": 0.65,
+          "change": -9,
+          "level": "C"
+        },
+        "2927781": {
+          "score": 63.0,
+          "classRank": 19,
+          "examRank": 362,
+          "rate": 0.63,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 67.5,
+          "classRank": 20,
+          "examRank": 299,
+          "rate": 0.675,
+          "change": null,
+          "level": "B"
+        },
+        "3046836": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "3167540": {
+          "score": 52.5,
+          "classRank": 28,
+          "examRank": 455,
+          "rate": 0.525,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 38.5,
+          "classRank": 32,
+          "examRank": 574,
+          "rate": 0.385,
+          "change": null,
+          "level": "D"
+        },
+        "1883353773": {
+          "score": 70.0,
+          "classRank": 12,
+          "examRank": 249,
+          "rate": 0.7,
+          "change": null,
+          "level": "B"
+        },
+        "407379737": {
+          "score": 50.0,
+          "classRank": 25,
+          "examRank": 423,
+          "rate": 0.5,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 51.0,
+          "classRank": 28,
+          "examRank": 433,
+          "rate": 0.51,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 47.0,
+          "classRank": 29,
+          "examRank": 477,
+          "rate": 0.47,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 57.5,
+          "classRank": 24,
+          "examRank": 388,
+          "rate": 0.575,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 67.0,
+          "classRank": 15,
+          "examRank": 307,
+          "rate": 0.67,
+          "change": null,
+          "level": "B"
+        },
+        "139945040": {
+          "score": 46.5,
+          "classRank": 21,
+          "examRank": 489,
+          "rate": 0.465,
+          "change": null,
+          "level": "C"
+        },
+        "139951785": {
+          "score": 42.5,
+          "classRank": 32,
+          "examRank": 562,
+          "rate": 0.425,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231415": {
+      "name": "田瑾萱",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 63.5,
+          "classRank": 27,
+          "examRank": 463,
+          "rate": 0.635,
+          "change": -5,
+          "level": "C"
+        },
+        "2927781": {
+          "score": 50.0,
+          "classRank": 31,
+          "examRank": 505,
+          "rate": 0.5,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 57.0,
+          "classRank": 28,
+          "examRank": 410,
+          "rate": 0.57,
+          "change": null,
+          "level": "C"
+        },
+        "3046836": {
+          "score": 44.0,
+          "classRank": 27,
+          "examRank": 484,
+          "rate": 0.44,
+          "change": null,
+          "level": "C"
+        },
+        "3167540": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "3795671": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "1883353773": {
+          "score": 38.0,
+          "classRank": 33,
+          "examRank": 534,
+          "rate": 0.38,
+          "change": null,
+          "level": "D"
+        },
+        "407379737": {
+          "score": 48.0,
+          "classRank": 28,
+          "examRank": 448,
+          "rate": 0.48,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 29.0,
+          "classRank": 45,
+          "examRank": 709,
+          "rate": 0.29,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 30.0,
+          "classRank": 44,
+          "examRank": 670,
+          "rate": 0.3,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 40.5,
+          "classRank": 35,
+          "examRank": 560,
+          "rate": 0.405,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 46.5,
+          "classRank": 32,
+          "examRank": 524,
+          "rate": 0.465,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "139951785": {
+          "score": 29.0,
+          "classRank": 43,
+          "examRank": 707,
+          "rate": 0.29,
+          "change": null,
+          "level": "D"
+        }
+      }
+    },
+    "231408": {
+      "name": "卢旭林",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 61.0,
+          "classRank": 28,
+          "examRank": 485,
+          "rate": 0.61,
+          "change": 11,
+          "level": "C"
+        },
+        "2927781": {
+          "score": 49.0,
+          "classRank": 32,
+          "examRank": 515,
+          "rate": 0.49,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 46.0,
+          "classRank": 34,
+          "examRank": 523,
+          "rate": 0.46,
+          "change": null,
+          "level": "C"
+        },
+        "3046836": {
+          "score": 38.5,
+          "classRank": 35,
+          "examRank": 544,
+          "rate": 0.385,
+          "change": null,
+          "level": "C"
+        },
+        "3167540": {
+          "score": 51.0,
+          "classRank": 30,
+          "examRank": 475,
+          "rate": 0.51,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 37.0,
+          "classRank": 33,
+          "examRank": 586,
+          "rate": 0.37,
+          "change": null,
+          "level": "D"
+        },
+        "1883353773": {
+          "score": 39.0,
+          "classRank": 32,
+          "examRank": 524,
+          "rate": 0.39,
+          "change": null,
+          "level": "D"
+        },
+        "407379737": {
+          "score": 36.0,
+          "classRank": 39,
+          "examRank": 608,
+          "rate": 0.36,
+          "change": null,
+          "level": "D"
+        },
+        "1481510692": {
+          "score": 48.0,
+          "classRank": 31,
+          "examRank": 476,
+          "rate": 0.48,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 47.5,
+          "classRank": 28,
+          "examRank": 469,
+          "rate": 0.475,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 40.0,
+          "classRank": 36,
+          "examRank": 564,
+          "rate": 0.4,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 41.5,
+          "classRank": 36,
+          "examRank": 565,
+          "rate": 0.415,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 29.5,
+          "classRank": 34,
+          "examRank": 646,
+          "rate": 0.295,
+          "change": null,
+          "level": "C"
+        },
+        "139951785": {
+          "score": 40.5,
+          "classRank": 35,
+          "examRank": 592,
+          "rate": 0.405,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231422": {
+      "name": "张泽洋",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 59.5,
+          "classRank": 29,
+          "examRank": 501,
+          "rate": 0.595,
+          "change": -12,
+          "level": "C"
+        },
+        "2927781": {
+          "score": 56.5,
+          "classRank": 26,
+          "examRank": 433,
+          "rate": 0.565,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 60.5,
+          "classRank": 25,
+          "examRank": 374,
+          "rate": 0.605,
+          "change": null,
+          "level": "C"
+        },
+        "3046836": {
+          "score": 34.5,
+          "classRank": 41,
+          "examRank": 607,
+          "rate": 0.345,
+          "change": null,
+          "level": "D"
+        },
+        "3167540": {
+          "score": 45.5,
+          "classRank": 34,
+          "examRank": 555,
+          "rate": 0.455,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 28.0,
+          "classRank": 45,
+          "examRank": 697,
+          "rate": 0.28,
+          "change": null,
+          "level": "E"
+        },
+        "1883353773": {
+          "score": 57.0,
+          "classRank": 20,
+          "examRank": 365,
+          "rate": 0.57,
+          "change": null,
+          "level": "C"
+        },
+        "407379737": {
+          "score": 40.5,
+          "classRank": 35,
+          "examRank": 543,
+          "rate": 0.405,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 49.5,
+          "classRank": 29,
+          "examRank": 458,
+          "rate": 0.495,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 34.0,
+          "classRank": 37,
+          "examRank": 616,
+          "rate": 0.34,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 48.5,
+          "classRank": 30,
+          "examRank": 473,
+          "rate": 0.485,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 45.5,
+          "classRank": 33,
+          "examRank": 532,
+          "rate": 0.455,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 30.5,
+          "classRank": 33,
+          "examRank": 637,
+          "rate": 0.305,
+          "change": null,
+          "level": "C"
+        },
+        "139951785": {
+          "score": 31.0,
+          "classRank": 39,
+          "examRank": 689,
+          "rate": 0.31,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231437": {
+      "name": "钟涵宇",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 59.5,
+          "classRank": 29,
+          "examRank": 501,
+          "rate": 0.595,
+          "change": -1,
+          "level": "C"
+        },
+        "2927781": {
+          "score": 55.0,
+          "classRank": 27,
+          "examRank": 440,
+          "rate": 0.55,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 42.0,
+          "classRank": 37,
+          "examRank": 568,
+          "rate": 0.42,
+          "change": null,
+          "level": "D"
+        },
+        "3046836": {
+          "score": 39.5,
+          "classRank": 33,
+          "examRank": 530,
+          "rate": 0.395,
+          "change": null,
+          "level": "C"
+        },
+        "3167540": {
+          "score": 32.0,
+          "classRank": 44,
+          "examRank": 685,
+          "rate": 0.32,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 32.0,
+          "classRank": 39,
+          "examRank": 650,
+          "rate": 0.32,
+          "change": null,
+          "level": "D"
+        },
+        "1883353773": {
+          "score": 37.0,
+          "classRank": 36,
+          "examRank": 540,
+          "rate": 0.37,
+          "change": null,
+          "level": "D"
+        },
+        "407379737": {
+          "score": 40.5,
+          "classRank": 35,
+          "examRank": 543,
+          "rate": 0.405,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 29.5,
+          "classRank": 43,
+          "examRank": 704,
+          "rate": 0.295,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 31.0,
+          "classRank": 43,
+          "examRank": 655,
+          "rate": 0.31,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 43.5,
+          "classRank": 34,
+          "examRank": 529,
+          "rate": 0.435,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 62.5,
+          "classRank": 19,
+          "examRank": 344,
+          "rate": 0.625,
+          "change": null,
+          "level": "B"
+        },
+        "139945040": {
+          "score": 34.0,
+          "classRank": 30,
+          "examRank": 604,
+          "rate": 0.34,
+          "change": null,
+          "level": "C"
+        },
+        "139951785": {
+          "score": 28.5,
+          "classRank": 45,
+          "examRank": 715,
+          "rate": 0.285,
+          "change": null,
+          "level": "D"
+        }
+      }
+    },
+    "231430": {
+      "name": "朱思羽",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 56.0,
+          "classRank": 31,
+          "examRank": 533,
+          "rate": 0.56,
+          "change": -5,
+          "level": "C"
+        },
+        "2927781": {
+          "score": 58.5,
+          "classRank": 22,
+          "examRank": 420,
+          "rate": 0.585,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 77.0,
+          "classRank": 14,
+          "examRank": 196,
+          "rate": 0.77,
+          "change": null,
+          "level": "B"
+        },
+        "3046836": {
+          "score": 60.0,
+          "classRank": 22,
+          "examRank": 349,
+          "rate": 0.6,
+          "change": null,
+          "level": "C"
+        },
+        "3167540": {
+          "score": 62.5,
+          "classRank": 19,
+          "examRank": 349,
+          "rate": 0.625,
+          "change": null,
+          "level": "B"
+        },
+        "3795671": {
+          "score": 57.0,
+          "classRank": 21,
+          "examRank": 352,
+          "rate": 0.57,
+          "change": null,
+          "level": "C"
+        },
+        "1883353773": {
+          "score": 54.0,
+          "classRank": 22,
+          "examRank": 392,
+          "rate": 0.54,
+          "change": null,
+          "level": "C"
+        },
+        "407379737": {
+          "score": 53.5,
+          "classRank": 22,
+          "examRank": 377,
+          "rate": 0.535,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 57.5,
+          "classRank": 22,
+          "examRank": 360,
+          "rate": 0.575,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 57.5,
+          "classRank": 20,
+          "examRank": 362,
+          "rate": 0.575,
+          "change": null,
+          "level": "B"
+        },
+        "273833498": {
+          "score": 59.5,
+          "classRank": 20,
+          "examRank": 362,
+          "rate": 0.595,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 60.5,
+          "classRank": 20,
+          "examRank": 363,
+          "rate": 0.605,
+          "change": null,
+          "level": "B"
+        },
+        "139945040": {
+          "score": 63.0,
+          "classRank": 15,
+          "examRank": 307,
+          "rate": 0.63,
+          "change": null,
+          "level": "B"
+        },
+        "139951785": {
+          "score": 52.5,
+          "classRank": 21,
+          "examRank": 400,
+          "rate": 0.525,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231448": {
+      "name": "吴芷旋",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 56.0,
+          "classRank": 31,
+          "examRank": 533,
+          "rate": 0.56,
+          "change": -2,
+          "level": "C"
+        },
+        "2927781": {
+          "score": 72.0,
+          "classRank": 13,
+          "examRank": 243,
+          "rate": 0.72,
+          "change": null,
+          "level": "B"
+        },
+        "2909632": {
+          "score": 46.0,
+          "classRank": 34,
+          "examRank": 523,
+          "rate": 0.46,
+          "change": null,
+          "level": "C"
+        },
+        "3046836": {
+          "score": 39.5,
+          "classRank": 33,
+          "examRank": 530,
+          "rate": 0.395,
+          "change": null,
+          "level": "C"
+        },
+        "3167540": {
+          "score": 45.5,
+          "classRank": 34,
+          "examRank": 555,
+          "rate": 0.455,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 31.0,
+          "classRank": 41,
+          "examRank": 658,
+          "rate": 0.31,
+          "change": null,
+          "level": "D"
+        },
+        "1883353773": {
+          "score": 45.0,
+          "classRank": 28,
+          "examRank": 463,
+          "rate": 0.45,
+          "change": null,
+          "level": "C"
+        },
+        "407379737": {
+          "score": 60.0,
+          "classRank": 15,
+          "examRank": 308,
+          "rate": 0.6,
+          "change": null,
+          "level": "B"
+        },
+        "1481510692": {
+          "score": 56.5,
+          "classRank": 23,
+          "examRank": 370,
+          "rate": 0.565,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 37.5,
+          "classRank": 36,
+          "examRank": 580,
+          "rate": 0.375,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 57.5,
+          "classRank": 24,
+          "examRank": 388,
+          "rate": 0.575,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 56.0,
+          "classRank": 24,
+          "examRank": 404,
+          "rate": 0.56,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "139951785": {
+          "score": 44.5,
+          "classRank": 31,
+          "examRank": 526,
+          "rate": 0.445,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231402": {
+      "name": "刘欣薇",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 55.5,
+          "classRank": 33,
+          "examRank": 542,
+          "rate": 0.555,
+          "change": -1,
+          "level": "C"
+        },
+        "2927781": {
+          "score": 33.0,
+          "classRank": 42,
+          "examRank": 674,
+          "rate": 0.33,
+          "change": null,
+          "level": "D"
+        },
+        "2909632": {
+          "score": 41.0,
+          "classRank": 38,
+          "examRank": 581,
+          "rate": 0.41,
+          "change": null,
+          "level": "D"
+        },
+        "3046836": {
+          "score": 31.5,
+          "classRank": 44,
+          "examRank": 662,
+          "rate": 0.315,
+          "change": null,
+          "level": "D"
+        },
+        "3167540": {
+          "score": 36.5,
+          "classRank": 40,
+          "examRank": 649,
+          "rate": 0.365,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 22.5,
+          "classRank": 47,
+          "examRank": 757,
+          "rate": 0.225,
+          "change": null,
+          "level": "E"
+        },
+        "1883353773": {
+          "score": 30.0,
+          "classRank": 40,
+          "examRank": 617,
+          "rate": 0.3,
+          "change": null,
+          "level": "D"
+        },
+        "407379737": {
+          "score": 26.0,
+          "classRank": 45,
+          "examRank": 714,
+          "rate": 0.26,
+          "change": null,
+          "level": "E"
+        },
+        "1481510692": {
+          "score": 38.5,
+          "classRank": 37,
+          "examRank": 606,
+          "rate": 0.385,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 32.0,
+          "classRank": 42,
+          "examRank": 643,
+          "rate": 0.32,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 29.0,
+          "classRank": 42,
+          "examRank": 685,
+          "rate": 0.29,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 26.0,
+          "classRank": 42,
+          "examRank": 686,
+          "rate": 0.26,
+          "change": null,
+          "level": "D"
+        },
+        "139945040": {
+          "score": 35.0,
+          "classRank": 29,
+          "examRank": 597,
+          "rate": 0.35,
+          "change": null,
+          "level": "C"
+        },
+        "139951785": {
+          "score": 31.5,
+          "classRank": 38,
+          "examRank": 683,
+          "rate": 0.315,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231416": {
+      "name": "张紫馨",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 54.5,
+          "classRank": 34,
+          "examRank": 554,
+          "rate": 0.545,
+          "change": -12,
+          "level": "C"
+        },
+        "2927781": {
+          "score": 31.0,
+          "classRank": 46,
+          "examRank": 696,
+          "rate": 0.31,
+          "change": null,
+          "level": "E"
+        },
+        "2909632": {
+          "score": 28.5,
+          "classRank": 45,
+          "examRank": 717,
+          "rate": 0.285,
+          "change": null,
+          "level": "E"
+        },
+        "3046836": {
+          "score": 35.5,
+          "classRank": 40,
+          "examRank": 589,
+          "rate": 0.355,
+          "change": null,
+          "level": "D"
+        },
+        "3167540": {
+          "score": 53.5,
+          "classRank": 27,
+          "examRank": 449,
+          "rate": 0.535,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 39.5,
+          "classRank": 30,
+          "examRank": 548,
+          "rate": 0.395,
+          "change": null,
+          "level": "C"
+        },
+        "1883353773": {
+          "score": 27.0,
+          "classRank": 43,
+          "examRank": 649,
+          "rate": 0.27,
+          "change": null,
+          "level": "E"
+        },
+        "407379737": {
+          "score": 15.0,
+          "classRank": 50,
+          "examRank": 789,
+          "rate": 0.15,
+          "change": null,
+          "level": "F"
+        },
+        "1481510692": {
+          "score": 33.0,
+          "classRank": 41,
+          "examRank": 662,
+          "rate": 0.33,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 46.0,
+          "classRank": 30,
+          "examRank": 486,
+          "rate": 0.46,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 25.5,
+          "classRank": 47,
+          "examRank": 732,
+          "rate": 0.255,
+          "change": null,
+          "level": "D"
+        },
+        "2018743143": {
+          "score": 59.5,
+          "classRank": 21,
+          "examRank": 376,
+          "rate": 0.595,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 66.0,
+          "classRank": 12,
+          "examRank": 283,
+          "rate": 0.66,
+          "change": null,
+          "level": "B"
+        },
+        "139951785": {
+          "score": 60.5,
+          "classRank": 19,
+          "examRank": 314,
+          "rate": 0.605,
+          "change": null,
+          "level": "B"
+        }
+      }
+    },
+    "231450": {
+      "name": "李沛灵",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 54.0,
+          "classRank": 35,
+          "examRank": 564,
+          "rate": 0.54,
+          "change": 8,
+          "level": "D"
+        },
+        "2927781": {
+          "score": 45.5,
+          "classRank": 34,
+          "examRank": 564,
+          "rate": 0.455,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 59.5,
+          "classRank": 27,
+          "examRank": 386,
+          "rate": 0.595,
+          "change": null,
+          "level": "C"
+        },
+        "3046836": {
+          "score": 49.0,
+          "classRank": 24,
+          "examRank": 435,
+          "rate": 0.49,
+          "change": null,
+          "level": "C"
+        },
+        "3167540": {
+          "score": 42.0,
+          "classRank": 39,
+          "examRank": 596,
+          "rate": 0.42,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 51.5,
+          "classRank": 22,
+          "examRank": 412,
+          "rate": 0.515,
+          "change": null,
+          "level": "C"
+        },
+        "1883353773": {
+          "score": 45.0,
+          "classRank": 28,
+          "examRank": 463,
+          "rate": 0.45,
+          "change": null,
+          "level": "C"
+        },
+        "407379737": {
+          "score": 45.0,
+          "classRank": 32,
+          "examRank": 488,
+          "rate": 0.45,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 44.5,
+          "classRank": 33,
+          "examRank": 523,
+          "rate": 0.445,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 56.0,
+          "classRank": 22,
+          "examRank": 378,
+          "rate": 0.56,
+          "change": null,
+          "level": "B"
+        },
+        "273833498": {
+          "score": 52.5,
+          "classRank": 27,
+          "examRank": 432,
+          "rate": 0.525,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 55.5,
+          "classRank": 25,
+          "examRank": 412,
+          "rate": 0.555,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "139951785": {
+          "score": 48.5,
+          "classRank": 26,
+          "examRank": 462,
+          "rate": 0.485,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231453": {
+      "name": "龚伊娜",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 53.5,
+          "classRank": 36,
+          "examRank": 568,
+          "rate": 0.535,
+          "change": null,
+          "level": "D"
+        },
+        "2927781": {
+          "score": 51.0,
+          "classRank": 30,
+          "examRank": 498,
+          "rate": 0.51,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 50.0,
+          "classRank": 31,
+          "examRank": 481,
+          "rate": 0.5,
+          "change": null,
+          "level": "C"
+        },
+        "3046836": {
+          "score": 40.5,
+          "classRank": 32,
+          "examRank": 519,
+          "rate": 0.405,
+          "change": null,
+          "level": "C"
+        },
+        "3167540": {
+          "score": 60.0,
+          "classRank": 23,
+          "examRank": 382,
+          "rate": 0.6,
+          "change": null,
+          "level": "B"
+        },
+        "3795671": {
+          "score": 45.5,
+          "classRank": 25,
+          "examRank": 477,
+          "rate": 0.455,
+          "change": null,
+          "level": "C"
+        },
+        "1883353773": {
+          "score": 46.0,
+          "classRank": 26,
+          "examRank": 454,
+          "rate": 0.46,
+          "change": null,
+          "level": "C"
+        },
+        "407379737": {
+          "score": 65.5,
+          "classRank": 9,
+          "examRank": 247,
+          "rate": 0.655,
+          "change": null,
+          "level": "B"
+        },
+        "1481510692": {
+          "score": 35.5,
+          "classRank": 40,
+          "examRank": 644,
+          "rate": 0.355,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 65.5,
+          "classRank": 11,
+          "examRank": 272,
+          "rate": 0.655,
+          "change": null,
+          "level": "B"
+        },
+        "273833498": {
+          "score": 44.0,
+          "classRank": 32,
+          "examRank": 526,
+          "rate": 0.44,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 48.0,
+          "classRank": 30,
+          "examRank": 504,
+          "rate": 0.48,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 36.0,
+          "classRank": 27,
+          "examRank": 585,
+          "rate": 0.36,
+          "change": null,
+          "level": "C"
+        },
+        "139951785": {
+          "score": 50.5,
+          "classRank": 24,
+          "examRank": 438,
+          "rate": 0.505,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231412": {
+      "name": "陈梓维",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 52.0,
+          "classRank": 37,
+          "examRank": 576,
+          "rate": 0.52,
+          "change": -1,
+          "level": "D"
+        },
+        "2927781": {
+          "score": 27.0,
+          "classRank": 47,
+          "examRank": 737,
+          "rate": 0.27,
+          "change": null,
+          "level": "E"
+        },
+        "2909632": {
+          "score": 31.0,
+          "classRank": 43,
+          "examRank": 689,
+          "rate": 0.31,
+          "change": null,
+          "level": "E"
+        },
+        "3046836": {
+          "score": 26.0,
+          "classRank": 45,
+          "examRank": 723,
+          "rate": 0.26,
+          "change": null,
+          "level": "E"
+        },
+        "3167540": {
+          "score": 44.0,
+          "classRank": 37,
+          "examRank": 574,
+          "rate": 0.44,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 36.5,
+          "classRank": 34,
+          "examRank": 592,
+          "rate": 0.365,
+          "change": null,
+          "level": "D"
+        },
+        "1883353773": {
+          "score": 23.0,
+          "classRank": 45,
+          "examRank": 678,
+          "rate": 0.23,
+          "change": null,
+          "level": "E"
+        },
+        "407379737": {
+          "score": 31.5,
+          "classRank": 43,
+          "examRank": 656,
+          "rate": 0.315,
+          "change": null,
+          "level": "D"
+        },
+        "1481510692": {
+          "score": 13.0,
+          "classRank": 50,
+          "examRank": 794,
+          "rate": 0.13,
+          "change": null,
+          "level": "D"
+        },
+        "1347569700": {
+          "score": 42.0,
+          "classRank": 34,
+          "examRank": 527,
+          "rate": 0.42,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 19.0,
+          "classRank": 49,
+          "examRank": 772,
+          "rate": 0.19,
+          "change": null,
+          "level": "D"
+        },
+        "2018743143": {
+          "score": 34.0,
+          "classRank": 39,
+          "examRank": 633,
+          "rate": 0.34,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 46.0,
+          "classRank": 22,
+          "examRank": 495,
+          "rate": 0.46,
+          "change": null,
+          "level": "C"
+        },
+        "139951785": {
+          "score": 45.0,
+          "classRank": 30,
+          "examRank": 515,
+          "rate": 0.45,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231443": {
+      "name": "阳紫晴",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 52.0,
+          "classRank": 37,
+          "examRank": 576,
+          "rate": 0.52,
+          "change": 5,
+          "level": "D"
+        },
+        "2927781": {
+          "score": 38.0,
+          "classRank": 40,
+          "examRank": 639,
+          "rate": 0.38,
+          "change": null,
+          "level": "D"
+        },
+        "2909632": {
+          "score": 55.5,
+          "classRank": 29,
+          "examRank": 422,
+          "rate": 0.555,
+          "change": null,
+          "level": "C"
+        },
+        "3046836": {
+          "score": 51.5,
+          "classRank": 23,
+          "examRank": 417,
+          "rate": 0.515,
+          "change": null,
+          "level": "C"
+        },
+        "3167540": {
+          "score": 49.5,
+          "classRank": 31,
+          "examRank": 493,
+          "rate": 0.495,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 32.5,
+          "classRank": 38,
+          "examRank": 644,
+          "rate": 0.325,
+          "change": null,
+          "level": "D"
+        },
+        "1883353773": {
+          "score": 34.0,
+          "classRank": 39,
+          "examRank": 580,
+          "rate": 0.34,
+          "change": null,
+          "level": "D"
+        },
+        "407379737": {
+          "score": 37.0,
+          "classRank": 38,
+          "examRank": 595,
+          "rate": 0.37,
+          "change": null,
+          "level": "D"
+        },
+        "1481510692": {
+          "score": 46.5,
+          "classRank": 32,
+          "examRank": 497,
+          "rate": 0.465,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 43.0,
+          "classRank": 32,
+          "examRank": 516,
+          "rate": 0.43,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 38.0,
+          "classRank": 38,
+          "examRank": 595,
+          "rate": 0.38,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "139945040": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "139951785": {
+          "score": 42.5,
+          "classRank": 32,
+          "examRank": 562,
+          "rate": 0.425,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231401": {
+      "name": "谭轩",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 51.5,
+          "classRank": 39,
+          "examRank": 580,
+          "rate": 0.515,
+          "change": -8,
+          "level": "D"
+        },
+        "2927781": {
+          "score": 42.0,
+          "classRank": 36,
+          "examRank": 599,
+          "rate": 0.42,
+          "change": null,
+          "level": "D"
+        },
+        "2909632": {
+          "score": 44.0,
+          "classRank": 36,
+          "examRank": 541,
+          "rate": 0.44,
+          "change": null,
+          "level": "C"
+        },
+        "3046836": {
+          "score": 41.0,
+          "classRank": 31,
+          "examRank": 512,
+          "rate": 0.41,
+          "change": null,
+          "level": "C"
+        },
+        "3167540": {
+          "score": 33.0,
+          "classRank": 43,
+          "examRank": 678,
+          "rate": 0.33,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 33.0,
+          "classRank": 37,
+          "examRank": 638,
+          "rate": 0.33,
+          "change": null,
+          "level": "D"
+        },
+        "1883353773": {
+          "score": 38.0,
+          "classRank": 33,
+          "examRank": 534,
+          "rate": 0.38,
+          "change": null,
+          "level": "D"
+        },
+        "407379737": {
+          "score": 36.0,
+          "classRank": 39,
+          "examRank": 608,
+          "rate": 0.36,
+          "change": null,
+          "level": "D"
+        },
+        "1481510692": {
+          "score": 41.0,
+          "classRank": 35,
+          "examRank": 569,
+          "rate": 0.41,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 24.5,
+          "classRank": 47,
+          "examRank": 707,
+          "rate": 0.245,
+          "change": null,
+          "level": "D"
+        },
+        "273833498": {
+          "score": 33.5,
+          "classRank": 39,
+          "examRank": 634,
+          "rate": 0.335,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 26.5,
+          "classRank": 41,
+          "examRank": 680,
+          "rate": 0.265,
+          "change": null,
+          "level": "D"
+        },
+        "139945040": {
+          "score": 37.0,
+          "classRank": 26,
+          "examRank": 579,
+          "rate": 0.37,
+          "change": null,
+          "level": "C"
+        },
+        "139951785": {
+          "score": 48.0,
+          "classRank": 28,
+          "examRank": 470,
+          "rate": 0.48,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231419": {
+      "name": "胡景轩",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 50.5,
+          "classRank": 40,
+          "examRank": 596,
+          "rate": 0.505,
+          "change": -2,
+          "level": "D"
+        },
+        "2927781": {
+          "score": 43.0,
+          "classRank": 35,
+          "examRank": 588,
+          "rate": 0.43,
+          "change": null,
+          "level": "D"
+        },
+        "2909632": {
+          "score": 50.0,
+          "classRank": 31,
+          "examRank": 481,
+          "rate": 0.5,
+          "change": null,
+          "level": "C"
+        },
+        "3046836": {
+          "score": 48.0,
+          "classRank": 26,
+          "examRank": 442,
+          "rate": 0.48,
+          "change": null,
+          "level": "C"
+        },
+        "3167540": {
+          "score": 44.5,
+          "classRank": 36,
+          "examRank": 569,
+          "rate": 0.445,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 40.0,
+          "classRank": 29,
+          "examRank": 543,
+          "rate": 0.4,
+          "change": null,
+          "level": "C"
+        },
+        "1883353773": {
+          "score": 38.0,
+          "classRank": 33,
+          "examRank": 534,
+          "rate": 0.38,
+          "change": null,
+          "level": "D"
+        },
+        "407379737": {
+          "score": 41.5,
+          "classRank": 34,
+          "examRank": 538,
+          "rate": 0.415,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 42.5,
+          "classRank": 34,
+          "examRank": 554,
+          "rate": 0.425,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 33.5,
+          "classRank": 38,
+          "examRank": 619,
+          "rate": 0.335,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 40.0,
+          "classRank": 36,
+          "examRank": 564,
+          "rate": 0.4,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 44.0,
+          "classRank": 35,
+          "examRank": 545,
+          "rate": 0.44,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "139951785": {
+          "score": 37.0,
+          "classRank": 36,
+          "examRank": 640,
+          "rate": 0.37,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231439": {
+      "name": "谢东晟",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 50.0,
+          "classRank": 41,
+          "examRank": 602,
+          "rate": 0.5,
+          "change": -21,
+          "level": "D"
+        },
+        "2927781": {
+          "score": 41.0,
+          "classRank": 37,
+          "examRank": 612,
+          "rate": 0.41,
+          "change": null,
+          "level": "D"
+        },
+        "2909632": {
+          "score": 34.5,
+          "classRank": 41,
+          "examRank": 647,
+          "rate": 0.345,
+          "change": null,
+          "level": "D"
+        },
+        "3046836": {
+          "score": 38.5,
+          "classRank": 35,
+          "examRank": 544,
+          "rate": 0.385,
+          "change": null,
+          "level": "C"
+        },
+        "3167540": {
+          "score": 52.5,
+          "classRank": 28,
+          "examRank": 455,
+          "rate": 0.525,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 33.5,
+          "classRank": 36,
+          "examRank": 632,
+          "rate": 0.335,
+          "change": null,
+          "level": "D"
+        },
+        "1883353773": {
+          "score": 63.0,
+          "classRank": 18,
+          "examRank": 312,
+          "rate": 0.63,
+          "change": null,
+          "level": "C"
+        },
+        "407379737": {
+          "score": 57.0,
+          "classRank": 20,
+          "examRank": 334,
+          "rate": 0.57,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 54.5,
+          "classRank": 25,
+          "examRank": 386,
+          "rate": 0.545,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 42.5,
+          "classRank": 33,
+          "examRank": 522,
+          "rate": 0.425,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 59.0,
+          "classRank": 22,
+          "examRank": 366,
+          "rate": 0.59,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "139945040": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "139951785": {
+          "score": 34.0,
+          "classRank": 37,
+          "examRank": 665,
+          "rate": 0.34,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231427": {
+      "name": "曾嘉一",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 49.0,
+          "classRank": 42,
+          "examRank": 616,
+          "rate": 0.49,
+          "change": -7,
+          "level": "D"
+        },
+        "2927781": {
+          "score": 52.5,
+          "classRank": 29,
+          "examRank": 478,
+          "rate": 0.525,
+          "change": null,
+          "level": "C"
+        },
+        "2909632": {
+          "score": 47.0,
+          "classRank": 33,
+          "examRank": 511,
+          "rate": 0.47,
+          "change": null,
+          "level": "C"
+        },
+        "3046836": {
+          "score": 41.5,
+          "classRank": 30,
+          "examRank": 506,
+          "rate": 0.415,
+          "change": null,
+          "level": "C"
+        },
+        "3167540": {
+          "score": 35.5,
+          "classRank": 41,
+          "examRank": 659,
+          "rate": 0.355,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 36.0,
+          "classRank": 35,
+          "examRank": 601,
+          "rate": 0.36,
+          "change": null,
+          "level": "D"
+        },
+        "1883353773": {
+          "score": 36.0,
+          "classRank": 37,
+          "examRank": 556,
+          "rate": 0.36,
+          "change": null,
+          "level": "D"
+        },
+        "407379737": {
+          "score": 43.0,
+          "classRank": 33,
+          "examRank": 523,
+          "rate": 0.43,
+          "change": null,
+          "level": "C"
+        },
+        "1481510692": {
+          "score": 52.0,
+          "classRank": 27,
+          "examRank": 422,
+          "rate": 0.52,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 39.5,
+          "classRank": 35,
+          "examRank": 555,
+          "rate": 0.395,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 44.0,
+          "classRank": 32,
+          "examRank": 526,
+          "rate": 0.44,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 48.0,
+          "classRank": 30,
+          "examRank": 504,
+          "rate": 0.48,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 37.5,
+          "classRank": 25,
+          "examRank": 574,
+          "rate": 0.375,
+          "change": null,
+          "level": "C"
+        },
+        "139951785": {
+          "score": 41.5,
+          "classRank": 34,
+          "examRank": 574,
+          "rate": 0.415,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231423": {
+      "name": "胡懿岚",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 40.5,
+          "classRank": 43,
+          "examRank": 677,
+          "rate": 0.405,
+          "change": -3,
+          "level": "D"
+        },
+        "2927781": {
+          "score": 41.0,
+          "classRank": 37,
+          "examRank": 612,
+          "rate": 0.41,
+          "change": null,
+          "level": "D"
+        },
+        "2909632": {
+          "score": 39.0,
+          "classRank": 39,
+          "examRank": 601,
+          "rate": 0.39,
+          "change": null,
+          "level": "D"
+        },
+        "3046836": {
+          "score": 36.5,
+          "classRank": 38,
+          "examRank": 572,
+          "rate": 0.365,
+          "change": null,
+          "level": "D"
+        },
+        "3167540": {
+          "score": 47.5,
+          "classRank": 32,
+          "examRank": 521,
+          "rate": 0.475,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 32.0,
+          "classRank": 39,
+          "examRank": 650,
+          "rate": 0.32,
+          "change": null,
+          "level": "D"
+        },
+        "1883353773": {
+          "score": 50.0,
+          "classRank": 23,
+          "examRank": 418,
+          "rate": 0.5,
+          "change": null,
+          "level": "C"
+        },
+        "407379737": {
+          "score": 36.0,
+          "classRank": 39,
+          "examRank": 608,
+          "rate": 0.36,
+          "change": null,
+          "level": "D"
+        },
+        "1481510692": {
+          "score": 39.0,
+          "classRank": 36,
+          "examRank": 598,
+          "rate": 0.39,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 54.0,
+          "classRank": 23,
+          "examRank": 399,
+          "rate": 0.54,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 30.5,
+          "classRank": 41,
+          "examRank": 668,
+          "rate": 0.305,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 44.5,
+          "classRank": 34,
+          "examRank": 537,
+          "rate": 0.445,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 35.5,
+          "classRank": 28,
+          "examRank": 592,
+          "rate": 0.355,
+          "change": null,
+          "level": "C"
+        },
+        "139951785": {
+          "score": 45.5,
+          "classRank": 29,
+          "examRank": 505,
+          "rate": 0.455,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231425": {
+      "name": "陈宇轩",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 38.0,
+          "classRank": 44,
+          "examRank": 686,
+          "rate": 0.38,
+          "change": -3,
+          "level": "E"
+        },
+        "2927781": {
+          "score": 36.0,
+          "classRank": 41,
+          "examRank": 653,
+          "rate": 0.36,
+          "change": null,
+          "level": "D"
+        },
+        "2909632": {
+          "score": 32.0,
+          "classRank": 42,
+          "examRank": 677,
+          "rate": 0.32,
+          "change": null,
+          "level": "D"
+        },
+        "3046836": {
+          "score": 34.0,
+          "classRank": 42,
+          "examRank": 616,
+          "rate": 0.34,
+          "change": null,
+          "level": "D"
+        },
+        "3167540": {
+          "score": 21.0,
+          "classRank": 46,
+          "examRank": 766,
+          "rate": 0.21,
+          "change": null,
+          "level": "D"
+        },
+        "3795671": {
+          "score": 29.0,
+          "classRank": 43,
+          "examRank": 683,
+          "rate": 0.29,
+          "change": null,
+          "level": "E"
+        },
+        "1883353773": {
+          "score": 29.0,
+          "classRank": 41,
+          "examRank": 629,
+          "rate": 0.29,
+          "change": null,
+          "level": "E"
+        },
+        "407379737": {
+          "score": 21.5,
+          "classRank": 47,
+          "examRank": 748,
+          "rate": 0.215,
+          "change": null,
+          "level": "E"
+        },
+        "1481510692": {
+          "score": 29.0,
+          "classRank": 45,
+          "examRank": 709,
+          "rate": 0.29,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 33.0,
+          "classRank": 39,
+          "examRank": 630,
+          "rate": 0.33,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 29.0,
+          "classRank": 42,
+          "examRank": 685,
+          "rate": 0.29,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 37.0,
+          "classRank": 38,
+          "examRank": 601,
+          "rate": 0.37,
+          "change": null,
+          "level": "C"
+        },
+        "139945040": {
+          "score": 42.5,
+          "classRank": 23,
+          "examRank": 526,
+          "rate": 0.425,
+          "change": null,
+          "level": "C"
+        },
+        "139951785": {
+          "score": 27.5,
+          "classRank": 46,
+          "examRank": 723,
+          "rate": 0.275,
+          "change": null,
+          "level": "D"
+        }
+      }
+    },
+    "231411": {
+      "name": "龙奕翔",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 35.0,
+          "classRank": 45,
+          "examRank": 705,
+          "rate": 0.35,
+          "change": -2,
+          "level": "E"
+        },
+        "2927781": {
+          "score": 33.0,
+          "classRank": 42,
+          "examRank": 674,
+          "rate": 0.33,
+          "change": null,
+          "level": "D"
+        },
+        "2909632": {
+          "score": 24.5,
+          "classRank": 46,
+          "examRank": 751,
+          "rate": 0.245,
+          "change": null,
+          "level": "E"
+        },
+        "3046836": {
+          "score": 20.0,
+          "classRank": 48,
+          "examRank": 773,
+          "rate": 0.2,
+          "change": null,
+          "level": "E"
+        },
+        "3167540": {
+          "score": 34.0,
+          "classRank": 42,
+          "examRank": 672,
+          "rate": 0.34,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 29.5,
+          "classRank": 42,
+          "examRank": 678,
+          "rate": 0.295,
+          "change": null,
+          "level": "E"
+        },
+        "1883353773": {
+          "score": 18.0,
+          "classRank": 48,
+          "examRank": 723,
+          "rate": 0.18,
+          "change": null,
+          "level": "E"
+        },
+        "407379737": {
+          "score": 28.0,
+          "classRank": 44,
+          "examRank": 690,
+          "rate": 0.28,
+          "change": null,
+          "level": "E"
+        },
+        "1481510692": {
+          "score": 29.5,
+          "classRank": 43,
+          "examRank": 704,
+          "rate": 0.295,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "273833498": {
+          "score": 14.0,
+          "classRank": 50,
+          "examRank": 786,
+          "rate": 0.14,
+          "change": null,
+          "level": "D"
+        },
+        "2018743143": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "139945040": {
+          "score": 20.5,
+          "classRank": 37,
+          "examRank": 706,
+          "rate": 0.205,
+          "change": null,
+          "level": "D"
+        },
+        "139951785": {
+          "score": 26.0,
+          "classRank": 47,
+          "examRank": 737,
+          "rate": 0.26,
+          "change": null,
+          "level": "D"
+        }
+      }
+    },
+    "231445": {
+      "name": "杨子昊",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 23.0,
+          "classRank": 46,
+          "examRank": 770,
+          "rate": 0.23,
+          "change": -1,
+          "level": "E"
+        },
+        "2927781": {
+          "score": 33.0,
+          "classRank": 42,
+          "examRank": 674,
+          "rate": 0.33,
+          "change": null,
+          "level": "D"
+        },
+        "2909632": {
+          "score": 22.5,
+          "classRank": 47,
+          "examRank": 765,
+          "rate": 0.225,
+          "change": null,
+          "level": "E"
+        },
+        "3046836": {
+          "score": 21.0,
+          "classRank": 47,
+          "examRank": 764,
+          "rate": 0.21,
+          "change": null,
+          "level": "E"
+        },
+        "3167540": {
+          "score": 12.5,
+          "classRank": 49,
+          "examRank": 794,
+          "rate": 0.125,
+          "change": null,
+          "level": "D"
+        },
+        "3795671": {
+          "score": 25.5,
+          "classRank": 46,
+          "examRank": 723,
+          "rate": 0.255,
+          "change": null,
+          "level": "E"
+        },
+        "1883353773": {
+          "score": 20.0,
+          "classRank": 47,
+          "examRank": 709,
+          "rate": 0.2,
+          "change": null,
+          "level": "E"
+        },
+        "407379737": {
+          "score": 32.5,
+          "classRank": 42,
+          "examRank": 645,
+          "rate": 0.325,
+          "change": null,
+          "level": "D"
+        },
+        "1481510692": {
+          "score": 32.0,
+          "classRank": 42,
+          "examRank": 676,
+          "rate": 0.32,
+          "change": null,
+          "level": "C"
+        },
+        "1347569700": {
+          "score": 25.0,
+          "classRank": 46,
+          "examRank": 702,
+          "rate": 0.25,
+          "change": null,
+          "level": "D"
+        },
+        "273833498": {
+          "score": 26.0,
+          "classRank": 46,
+          "examRank": 725,
+          "rate": 0.26,
+          "change": null,
+          "level": "D"
+        },
+        "2018743143": {
+          "score": 23.0,
+          "classRank": 45,
+          "examRank": 709,
+          "rate": 0.23,
+          "change": null,
+          "level": "D"
+        },
+        "139945040": {
+          "score": 33.5,
+          "classRank": 31,
+          "examRank": 607,
+          "rate": 0.335,
+          "change": null,
+          "level": "C"
+        },
+        "139951785": {
+          "score": 29.5,
+          "classRank": 41,
+          "examRank": 699,
+          "rate": 0.295,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231446": {
+      "name": "袁峻熙",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 21.0,
+          "classRank": 47,
+          "examRank": 780,
+          "rate": 0.21,
+          "change": 0,
+          "level": "E"
+        },
+        "2927781": {
+          "score": 20.0,
+          "classRank": 48,
+          "examRank": 786,
+          "rate": 0.2,
+          "change": null,
+          "level": "E"
+        },
+        "2909632": {
+          "score": 20.0,
+          "classRank": 48,
+          "examRank": 780,
+          "rate": 0.2,
+          "change": null,
+          "level": "E"
+        },
+        "3046836": {
+          "score": 32.5,
+          "classRank": 43,
+          "examRank": 640,
+          "rate": 0.325,
+          "change": null,
+          "level": "D"
+        },
+        "3167540": {
+          "score": 20.0,
+          "classRank": 48,
+          "examRank": 775,
+          "rate": 0.2,
+          "change": null,
+          "level": "D"
+        },
+        "3795671": {
+          "score": 22.5,
+          "classRank": 47,
+          "examRank": 757,
+          "rate": 0.225,
+          "change": null,
+          "level": "E"
+        },
+        "1883353773": {
+          "score": 28.0,
+          "classRank": 42,
+          "examRank": 639,
+          "rate": 0.28,
+          "change": null,
+          "level": "E"
+        },
+        "407379737": {
+          "score": 17.0,
+          "classRank": 49,
+          "examRank": 782,
+          "rate": 0.17,
+          "change": null,
+          "level": "F"
+        },
+        "1481510692": {
+          "score": 24.0,
+          "classRank": 48,
+          "examRank": 747,
+          "rate": 0.24,
+          "change": null,
+          "level": "D"
+        },
+        "1347569700": {
+          "score": 12.5,
+          "classRank": 49,
+          "examRank": 758,
+          "rate": 0.125,
+          "change": null,
+          "level": "D"
+        },
+        "273833498": {
+          "score": 22.0,
+          "classRank": 48,
+          "examRank": 754,
+          "rate": 0.22,
+          "change": null,
+          "level": "D"
+        },
+        "2018743143": {
+          "score": 17.0,
+          "classRank": 47,
+          "examRank": 734,
+          "rate": 0.17,
+          "change": null,
+          "level": "D"
+        },
+        "139945040": {
+          "score": 27.0,
+          "classRank": 35,
+          "examRank": 670,
+          "rate": 0.27,
+          "change": null,
+          "level": "D"
+        },
+        "139951785": {
+          "score": 17.5,
+          "classRank": 50,
+          "examRank": 773,
+          "rate": 0.175,
+          "change": null,
+          "level": "D"
+        }
+      }
+    },
+    "231435": {
+      "name": "江梓轩",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 20.0,
+          "classRank": 48,
+          "examRank": 783,
+          "rate": 0.2,
+          "change": -18,
+          "level": "E"
+        },
+        "2927781": {
+          "score": 31.5,
+          "classRank": 45,
+          "examRank": 693,
+          "rate": 0.315,
+          "change": null,
+          "level": "E"
+        },
+        "2909632": {
+          "score": 30.5,
+          "classRank": 44,
+          "examRank": 692,
+          "rate": 0.305,
+          "change": null,
+          "level": "E"
+        },
+        "3046836": {
+          "score": 36.5,
+          "classRank": 38,
+          "examRank": 572,
+          "rate": 0.365,
+          "change": null,
+          "level": "D"
+        },
+        "3167540": {
+          "score": 20.5,
+          "classRank": 47,
+          "examRank": 770,
+          "rate": 0.205,
+          "change": null,
+          "level": "D"
+        },
+        "3795671": {
+          "score": 28.5,
+          "classRank": 44,
+          "examRank": 690,
+          "rate": 0.285,
+          "change": null,
+          "level": "E"
+        },
+        "1883353773": {
+          "score": 25.0,
+          "classRank": 44,
+          "examRank": 664,
+          "rate": 0.25,
+          "change": null,
+          "level": "E"
+        },
+        "407379737": {
+          "score": 22.0,
+          "classRank": 46,
+          "examRank": 744,
+          "rate": 0.22,
+          "change": null,
+          "level": "E"
+        },
+        "1481510692": {
+          "score": 20.5,
+          "classRank": 49,
+          "examRank": 772,
+          "rate": 0.205,
+          "change": null,
+          "level": "D"
+        },
+        "1347569700": {
+          "score": 17.5,
+          "classRank": 48,
+          "examRank": 750,
+          "rate": 0.175,
+          "change": null,
+          "level": "D"
+        },
+        "273833498": {
+          "score": 28.0,
+          "classRank": 44,
+          "examRank": 700,
+          "rate": 0.28,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 22.5,
+          "classRank": 46,
+          "examRank": 711,
+          "rate": 0.225,
+          "change": null,
+          "level": "D"
+        },
+        "139945040": {
+          "score": 19.5,
+          "classRank": 38,
+          "examRank": 709,
+          "rate": 0.195,
+          "change": null,
+          "level": "D"
+        },
+        "139951785": {
+          "score": 25.5,
+          "classRank": 48,
+          "examRank": 739,
+          "rate": 0.255,
+          "change": null,
+          "level": "D"
+        }
+      }
+    },
+    "231406": {
+      "name": "刘星君",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        }
+      }
+    },
+    "231413": {
+      "name": "刘子军",
+      "class": "2314",
+      "scores": {
+        "2745682": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "2927781": {
+          "score": 17.0,
+          "classRank": 49,
+          "examRank": 798,
+          "rate": 0.17,
+          "change": null,
+          "level": "F"
+        },
+        "2909632": {
+          "score": 18.0,
+          "classRank": 49,
+          "examRank": 785,
+          "rate": 0.18,
+          "change": null,
+          "level": "E"
+        },
+        "3046836": {
+          "score": 21.5,
+          "classRank": 46,
+          "examRank": 760,
+          "rate": 0.215,
+          "change": null,
+          "level": "E"
+        },
+        "3167540": {
+          "score": 29.5,
+          "classRank": 45,
+          "examRank": 706,
+          "rate": 0.295,
+          "change": null,
+          "level": "C"
+        },
+        "3795671": {
+          "score": 21.5,
+          "classRank": 49,
+          "examRank": 765,
+          "rate": 0.215,
+          "change": null,
+          "level": "E"
+        },
+        "1883353773": {
+          "score": 22.0,
+          "classRank": 46,
+          "examRank": 690,
+          "rate": 0.22,
+          "change": null,
+          "level": "E"
+        },
+        "407379737": {
+          "score": 20.5,
+          "classRank": 48,
+          "examRank": 763,
+          "rate": 0.205,
+          "change": null,
+          "level": "E"
+        },
+        "1481510692": {
+          "score": 26.0,
+          "classRank": 47,
+          "examRank": 736,
+          "rate": 0.26,
+          "change": null,
+          "level": "D"
+        },
+        "1347569700": {
+          "score": 29.0,
+          "classRank": 45,
+          "examRank": 680,
+          "rate": 0.29,
+          "change": null,
+          "level": "C"
+        },
+        "273833498": {
+          "score": 31.5,
+          "classRank": 40,
+          "examRank": 655,
+          "rate": 0.315,
+          "change": null,
+          "level": "C"
+        },
+        "2018743143": {
+          "score": 24.0,
+          "classRank": 43,
+          "examRank": 702,
+          "rate": 0.24,
+          "change": null,
+          "level": "D"
+        },
+        "139945040": {
+          "score": 24.5,
+          "classRank": 36,
+          "examRank": 682,
+          "rate": 0.245,
+          "change": null,
+          "level": "D"
+        },
+        "139951785": {
+          "score": 29.5,
+          "classRank": 41,
+          "examRank": 699,
+          "rate": 0.295,
+          "change": null,
+          "level": "C"
+        }
+      }
+    },
+    "231438": {
+      "name": "张熙晨",
+      "class": "2314",
+      "scores": {
+        "2927781": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "2909632": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        },
+        "3046836": {
+          "score": 0,
+          "classRank": 0,
+          "examRank": 0,
+          "rate": 0.0,
+          "change": null,
+          "level": ""
+        }
+      }
+    },
+    "231454": {
+      "name": "熊心悦",
+      "class": "2314",
+      "scores": {
+        "3167540": {
+          "score": 71.0,
+          "classRank": 11,
+          "examRank": 242,
+          "rate": 0.71,
+          "change": null,
+          "level": "B"
+        },
+        "3795671": {
+          "score": 68.0,
+          "classRank": 8,
+          "examRank": 234,
+          "rate": 0.68,
+          "change": null,
+          "level": "B"
+        },
+        "1883353773": {
+          "score": 64.0,
+          "classRank": 17,
+          "examRank": 294,
+          "rate": 0.64,
+          "change": null,
+          "level": "B"
+        },
+        "407379737": {
+          "score": 60.0,
+          "classRank": 15,
+          "examRank": 308,
+          "rate": 0.6,
+          "change": null,
+          "level": "B"
+        },
+        "1481510692": {
+          "score": 63.0,
+          "classRank": 16,
+          "examRank": 294,
+          "rate": 0.63,
+          "change": null,
+          "level": "B"
+        },
+        "1347569700": {
+          "score": 75.0,
+          "classRank": 5,
+          "examRank": 159,
+          "rate": 0.75,
+          "change": null,
+          "level": "B"
+        },
+        "273833498": {
+          "score": 62.0,
+          "classRank": 18,
+          "examRank": 337,
+          "rate": 0.62,
+          "change": null,
+          "level": "B"
+        },
+        "2018743143": {
+          "score": 72.0,
+          "classRank": 10,
+          "examRank": 248,
+          "rate": 0.72,
+          "change": null,
+          "level": "B"
+        },
+        "139945040": {
+          "score": 72.0,
+          "classRank": 8,
+          "examRank": 230,
+          "rate": 0.72,
+          "change": null,
+          "level": "B"
+        },
+        "139951785": {
+          "score": 73.0,
+          "classRank": 5,
+          "examRank": 191,
+          "rate": 0.73,
+          "change": null,
+          "level": "B"
+        }
+      }
+    },
+    "12345": {
+      "name": "王昊",
+      "class": "2314",
+      "scores": {
+        "139951785": {
+          "score": 65.5,
+          "classRank": 8,
+          "examRank": 272,
+          "rate": 0.655,
+          "change": null,
+          "level": "B"
+        }
+      }
     }
-  },
-  "updatedAt": "2026-05-08 22:58:52"
+  }
 }

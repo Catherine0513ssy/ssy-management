@@ -64,10 +64,18 @@ document.addEventListener('alpine:init', () => {
       this.$nextTick(() => this.renderChart());
     },
 
+    getClassStat(exam, cls, field) {
+      if (exam.classStats && exam.classStats[cls]) {
+        return exam.classStats[cls][field];
+      }
+      return exam[field];
+    },
+
     analyze() {
       const num = this.searchNum.trim();
       const student = this.students[num];
       if (!student) return;
+      const cls = student.class || (num.startsWith('2313') ? '2313' : num.startsWith('2314') ? '2314' : '2313');
 
       const scores = [];
       const ranks = [];
@@ -78,7 +86,7 @@ document.addEventListener('alpine:init', () => {
         if (s && s.score != null && !(s.score === 0 && s.classRank == null)) {
           scores.push(s.score);
           if (s.classRank != null) ranks.push(s.classRank);
-          exams.push({ name: exam.name, date: exam.date, score: s.score, rank: s.classRank, avg: exam.classAverage });
+          exams.push({ name: exam.name, date: exam.date, score: s.score, rank: s.classRank, avg: this.getClassStat(exam, cls, 'classAverage') });
         }
       }
 
@@ -126,7 +134,7 @@ document.addEventListener('alpine:init', () => {
         w.push({ type: '落后', desc: `个人均分低于班级平均${Math.abs(avgDiff).toFixed(1)}分`, level: 'medium' });
       }
 
-      const downstream = ranks.filter(r => r > this.exams[0].studentCount * 0.7).length;
+      const downstream = ranks.filter((r, i) => r > this.getClassStat(exams[i], cls, 'studentCount') * 0.7).length;
       if (downstream >= 3) {
         w.push({ type: '下游', desc: `${downstream}次考试排名在班级后30%`, level: 'medium' });
       }
@@ -162,12 +170,13 @@ document.addEventListener('alpine:init', () => {
       const scores = [];
       const avgs = [];
 
+      const cls2 = this.currentStudent.class || (this.searchNum.trim().startsWith('2313') ? '2313' : '2314');
       for (const exam of this.exams) {
         const s = this.currentStudent.scores[exam.id];
         if (s) {
           dates.push(exam.date.slice(5));
           scores.push(s.score);
-          avgs.push(exam.classAverage);
+          avgs.push(this.getClassStat(exam, cls2, 'classAverage'));
         }
       }
 
