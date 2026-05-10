@@ -18,7 +18,19 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + '_' + crypto.randomBytes(6).toString('hex') + ext);
   },
 });
-const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
+const upload = multer({
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter(_req, file, cb) {
+    const allowed = ['.png', '.jpg', '.jpeg', '.gif', '.webp'];
+    const ext = path.extname(file.originalname).toLowerCase();
+    if (allowed.includes(ext)) {
+      cb(null, true);
+    } else {
+      cb(new Error('只允许上传图片文件 (png, jpg, jpeg, gif, webp)'));
+    }
+  },
+});
 
 // ---------------------------------------------------------------------------
 // POST /recognize — Upload image, run OCR, extract words

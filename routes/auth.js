@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const crypto = require('crypto');
-const { getDB, getSetting } = require('../services/db');
+const bcrypt = require('bcrypt');
+const { getDB, getSetting, setSetting } = require('../services/db');
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -83,7 +84,7 @@ function extractToken(req) {
  * Body: { password: string }
  * Returns: { token } on success, 401 on failure.
  */
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   purgeExpiredTokens();
 
   const ip = getClientIP(req);
@@ -101,13 +102,35 @@ router.post('/login', (req, res) => {
     return res.status(400).json({ error: '请输入密码' });
   }
 
-  const correctPassword = getSetting('auth_password_plain');
-  if (!correctPassword) {
-    // No password configured in settings – deny all logins for safety.
+  const passwordHash = getSetting('auth_password_hash');
+  const plainPassword = getSetting('auth_password_plain');
+
+  if (!passwordHash && !plainPassword) {
     return res.status(500).json({ error: '服务器未配置登录密码' });
   }
 
-  if (password !== correctPassword) {
+  let passwordValid = false;
+
+  // Primary: bcrypt hash
+  if (passwordHash) {
+    passwordValid = await bcrypt.compare(password, passwordHash);
+  }
+
+  // Fallback: plain text (also auto-migrate to hash on success)
+  if (!passwordValid && plainPassword) {
+    passwordValid = password === plainPassword;
+    if (passwordValid && passwordHash) {
+      // Re-hash in case the hash was for a different password; this ensures
+      // the hash always matches the current working password.
+      const newHash = await bcrypt.hash(password, 12);
+      setSetting('auth_password_hash', newHash);
+    } else if (passwordValid && !passwordHash) {
+      const newHash = await bcrypt.hash(password, 12);
+      setSetting('auth_password_hash', newHash);
+    }
+  }
+
+  if (!passwordValid) {
     recordAttempt(ip, false);
     const attemptsLeft = MAX_ATTEMPTS - (failedCount + 1);
     return res.status(401).json({
