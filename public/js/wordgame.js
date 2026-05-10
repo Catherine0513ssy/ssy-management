@@ -232,7 +232,7 @@ document.addEventListener('alpine:init', () => {
         }
         el.className = `wg-card ${card.isEnglish ? 'wg-english' : 'wg-chinese'}${sizeClass}`;
         el.textContent = text;
-        el.onclick = () => this.onCardClick(el, card, prefix);
+        el.onpointerdown = (e) => { e.preventDefault(); e.stopPropagation(); this.onCardClick(el, card, prefix); };
         container.appendChild(el);
       });
     },
