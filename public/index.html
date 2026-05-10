@@ -2198,11 +2198,11 @@
           <div class="wg-home" x-show="page==='home'">
             <!-- Header Card matching app-header style -->
             <div class="wg-header-card">
-              <div class="wg-header-left">
+              <div style="text-align:center;width:100%;">
                 <h1 class="wg-title">🍬 英语单词消消乐</h1>
                 <p class="wg-subtitle">翻译配对，记单词</p>
               </div>
-              <div class="wg-header-right">
+              <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:12px;width:100%;">
                 <select class="wg-student-select" x-model="studentClass" @change="studentName=''">
                   <option value="">选择班级</option>
                   <option value="2313">2313班</option>
@@ -2214,7 +2214,7 @@
                     <option :value="name" x-text="name"></option>
                   </template>
                 </select>
-                <div x-show="studentName" class="wg-student-label">
+                <div x-show="studentName" class="wg-student-label" style="display:flex;align-items:center;">
                   玩家：<span class="wg-student-name" x-text="studentName"></span>
                 </div>
               </div>
