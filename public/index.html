@@ -1378,6 +1378,9 @@
       .hw-gallery-1 { max-width: 100%; }
       .hw-gallery-1 img { max-height: 240px; }
     }
+    @media (max-width: 600px) {
+      .plan-day-grid { grid-template-columns: repeat(6, 1fr) !important; }
+    }
   </style>
 </head>
 <body x-data="app()" x-cloak style="background:linear-gradient(135deg, #eef2ff 0%, #e0e7ff 25%, #f5f3ff 50%, #fdf2f8 75%, #fce7f3 100%);background-attachment:fixed;min-height:100vh;font-family:'Nunito','PingFang SC','Microsoft YaHei',sans-serif;margin:0;">
@@ -1992,7 +1995,7 @@
                 <span style="font-size:20px;font-weight:700;color:#d35400;">📅 30天单词计划</span>
                 <span style="font-size:14px;color:#888;" x-text="'Day ' + planDay + ' · ' + planWords.length + '词'"></span>
               </div>
-              <div style="display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-bottom:12px;">
+              <div class="plan-day-grid" style="display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-bottom:12px;">
                 <template x-for="d in 30" :key="d">
                   <button @click="loadPlanDay(d)" :style="planDay === d ? 'background:#d35400;color:white;' : 'background:#ffe8d6;color:#d35400;'" style="padding:8px 0;border:none;border-radius:6px;font-size:13px;font-weight:bold;cursor:pointer;" x-text="'D'+d"></button>
                 </template>
