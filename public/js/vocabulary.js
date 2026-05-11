@@ -19,6 +19,10 @@ document.addEventListener('alpine:init', () => {
     searchTimeout: null,
     loaded: false,
 
+    // 批量删除
+    batchMode: false,
+    selectedIds: [],
+
     async init() {
       const ensureLoaded = async () => {
         if (this.loaded) return;
@@ -126,6 +130,53 @@ document.addEventListener('alpine:init', () => {
       } catch (e) {
         this.$dispatch('toast', { message: e.message || '删除失败', type: 'error' });
       }
+    },
+
+    toggleBatchMode() {
+      this.batchMode = !this.batchMode;
+      if (!this.batchMode) this.selectedIds = [];
+    },
+
+    isWordSelected(id) {
+      return this.selectedIds.includes(id);
+    },
+
+    toggleWordSelect(id) {
+      const idx = this.selectedIds.indexOf(id);
+      if (idx >= 0) this.selectedIds.splice(idx, 1);
+      else this.selectedIds.push(id);
+    },
+
+    selectAllWords() {
+      const visibleIds = this.visibleWords.map(w => w.id);
+      if (this.selectedIds.length === visibleIds.length && visibleIds.every(id => this.selectedIds.includes(id))) {
+        this.selectedIds = [];
+      } else {
+        this.selectedIds = visibleIds.slice();
+      }
+    },
+
+    async batchDelete() {
+      if (this.selectedIds.length === 0) return;
+      if (!confirm(`确定删除选中的 ${this.selectedIds.length} 个单词？`)) return;
+      const ids = this.selectedIds.slice();
+      let okCount = 0, failCount = 0;
+      for (const id of ids) {
+        try {
+          await API.deleteWord(id);
+          okCount++;
+        } catch (e) {
+          failCount++;
+        }
+      }
+      this.words = this.words.filter(w => !ids.includes(w.id));
+      this.selectedIds = [];
+      this.batchMode = false;
+      await this.loadStats();
+      const msg = failCount === 0
+        ? `已删除 ${okCount} 个单词`
+        : `成功 ${okCount} 个,失败 ${failCount} 个`;
+      this.$dispatch('toast', { message: msg, type: failCount === 0 ? 'success' : 'warning' });
     },
 
     getPosLabel(pos) {
