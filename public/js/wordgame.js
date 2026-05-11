@@ -191,9 +191,22 @@ document.addEventListener('alpine:init', () => {
 
     getPrimaryMeaning(text) {
       if (!text) return '';
-      let cleaned = String(text).replace(/^[a-z]+\.(?:\s*&\s*[a-z]+\.)*\s*/i, '').trim();
-      cleaned = cleaned.replace(/\([^)]*\)|（[^）]*）/g, '').trim();
-      const first = cleaned.split(/[;；,/|]/)[0];
+      let cleaned = String(text);
+      // 反复剥离开头的词性前缀(支持 pron./pron,/&pron/adj&pron 等)
+      let prev;
+      do {
+        prev = cleaned;
+        cleaned = cleaned.replace(/^[\s&,，.;:]+/, '').replace(/^[a-z]+[.,]?\s*/i, '');
+      } while (cleaned !== prev);
+      // 去除括号注释、音标
+      cleaned = cleaned.replace(/\([^)]*\)|（[^）]*）/g, '')
+                       .replace(/\/[^/]+\//g, '')
+                       .replace(/\[[^\]]+\]/g, '')
+                       .trim();
+      // 遇到下一个词性 (如 "参加 n. 部分") 截断前段
+      const nextPos = cleaned.match(/^([\s\S]*?)\s+[a-z]+[.,]/i);
+      if (nextPos) cleaned = nextPos[1];
+      const first = cleaned.split(/[;；,、|]/)[0];
       return first.trim();
     },
 
