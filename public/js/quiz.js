@@ -183,6 +183,7 @@ document.addEventListener('alpine:init', () => {
     },
 
     async generate() {
+      this._unlockSpeech();
       if (this.availableWordCount === 0) {
         this.$dispatch('toast', { message: '当前年级/单元下暂无单词', type: 'error' });
         return;
@@ -294,11 +295,8 @@ document.addEventListener('alpine:init', () => {
       if (!this.words.length) return null;
       const w = this.words[this.index];
       const meaning = w.meaning || '';
-      // 解析词性: "n. 鞋" → pos="n.", cleanMeaning="鞋"
-      // 也处理 "v. & n. 游泳" 这种复合词性
-      const posMatch = meaning.match(/^([a-z]+\.(?:\s*&\s*[a-z]+\.)*\s*)/);
       const pos = w.pos || '';
-      let cm = posMatch ? meaning.slice(posMatch[0].length).trim() : meaning; cm = cm.replace(/\([^(]*[a-zA-Z][^(]*\)/g, "").replace(/\/[^/]*\//g, "").replace(/\/[^/]*\]/g, "").replace(/^[，,\s]+/, "").replace(/^&\s*/, "").trim(); const cleanMeaning = cm;
+      const cleanMeaning = this._cleanMeaning(meaning);
       return {
         en: w.en || w.word || '',
         phonetic: w.phonetic || '',
@@ -340,14 +338,76 @@ document.addEventListener('alpine:init', () => {
     },
 
     getWordPrompt(w) {
-      let m1 = (w.meaning || '').replace(/^[a-z]+\.(?:\s*&\s*[a-z]+\.)*\s*/, ''); m1 = m1.replace(/\([^(]*[a-zA-Z][^(]*\)/g, '').replace(/\/[^/]*\//g, '').replace(/\/[^/]*\]/g, '').replace(/^[，,\s]+/, '').replace(/^&\s*/, '').trim();
+      const m1 = this._cleanMeaning(w.meaning || '');
       if (this.mode === 'cn2en') return m1;
       if (this.mode === 'en2cn') return w.en || w.word || '';
       return m1; // 听写模式和中→英一样显示中文，学生听读音写英文
     },
 
+    // 清洗中文释义:剥离开头的词性前缀(支持 &pron./pron./n. & v. 等组合)，去除括号注释和音标残留
+    _cleanMeaning(meaning) {
+      let cm = String(meaning || '');
+      // 反复剥离开头的 [词性./空格/&]
+      let prev;
+      do {
+        prev = cm;
+        cm = cm.replace(/^[\s&,，]+/, '').replace(/^[a-z]+\.\s*/i, '');
+      } while (cm !== prev);
+      // 去除嵌入的括号注释、音标
+      cm = cm.replace(/\([^(]*[a-zA-Z][^(]*\)/g, '')
+             .replace(/\/[^/]*\//g, '')
+             .replace(/\/[^/]*\]/g, '')
+             .replace(/^[\s&,，]+/, '')
+             .trim();
+      return cm;
+    },
+
+    // 解锁 speechSynthesis:在用户手势同步路径里跑一次空 utterance,绕开浏览器的"非用户手势静默"策略
+    _unlockSpeech() {
+      if (this._speechUnlocked || typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+      try {
+        const u = new SpeechSynthesisUtterance('');
+        u.volume = 0;
+        speechSynthesis.speak(u);
+        this._speechUnlocked = true;
+      } catch (e) { /* ignore */ }
+    },
+
+    // 选择最匹配 lang 的 voice;找不到返回 null
+    _pickVoice(lang) {
+      if (!('speechSynthesis' in window)) return null;
+      const voices = speechSynthesis.getVoices() || [];
+      if (voices.length === 0) return null;
+      const want = String(lang || '').toLowerCase();
+      const wantPrefix = want.split('-')[0];
+      return voices.find(v => (v.lang || '').toLowerCase() === want)
+          || voices.find(v => (v.lang || '').toLowerCase().startsWith(wantPrefix + '-'))
+          || voices.find(v => (v.lang || '').toLowerCase().startsWith(wantPrefix))
+          || null;
+    },
+
     // === 朗读 ===
     speakText(text, lang, times) {
+      if (!text) return;
+      if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+        if (!this._noTtsWarned) {
+          this.$dispatch('toast', { message: '当前浏览器不支持朗读功能', type: 'error' });
+          this._noTtsWarned = true;
+        }
+        return;
+      }
+      const voices = speechSynthesis.getVoices() || [];
+      const voice = this._pickVoice(lang);
+      // 已经加载到 voice 列表但没有匹配语言时给出明确提示(只提示一次)
+      if (voices.length > 0 && !voice && !this._voiceMissingWarned) {
+        const isZh = /^zh/i.test(lang || '');
+        const hint = isZh
+          ? '未检测到中文语音包：请到手机「设置 → 系统 → 语言与输入 → 文字转语音」下载中文语音(或安装 Google 文字转语音引擎)'
+          : '未检测到 ' + (lang || '') + ' 语音包';
+        this.$dispatch('toast', { message: hint, type: 'error' });
+        this._voiceMissingWarned = true;
+      }
+
       speechSynthesis.cancel();
       const n = times || 1;
       let i = 0;
@@ -356,7 +416,14 @@ document.addEventListener('alpine:init', () => {
         const u = new SpeechSynthesisUtterance(text);
         u.lang = lang;
         u.rate = 0.8;
+        if (voice) u.voice = voice;
         u.onend = () => { i++; if (i < n) setTimeout(speakOnce, 500); };
+        u.onerror = (e) => {
+          if (!this._speakErrWarned) {
+            this.$dispatch('toast', { message: '朗读失败: ' + (e && e.error ? e.error : '请检查系统语音设置'), type: 'error' });
+            this._speakErrWarned = true;
+          }
+        };
         speechSynthesis.speak(u);
       };
       speakOnce();
@@ -488,6 +555,7 @@ document.addEventListener('alpine:init', () => {
 
     // === 智能每日50词 ===
     async loadSmartDaily() {
+      this._unlockSpeech();
       try {
         const data = await API.get('/api/quiz-smart/daily');
         if (data.words && data.words.length > 0) {
@@ -520,6 +588,7 @@ document.addEventListener('alpine:init', () => {
       }
     },
     async startPlanDictation() {
+      this._unlockSpeech();
       try {
         const data = await API.get('/api/word-plan/day/' + this.planDay + '/shuffle');
         this.words = data.words || [];
