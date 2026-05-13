@@ -35,6 +35,18 @@
       0%, 100% { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #FFD700, 0 0 40px #FFD700; }
       50% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #FFD700; }
     }
+    @keyframes dot-flash {
+      0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+      40% { opacity: 1; transform: scale(1); }
+    }
+    .chat-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #94a3b8;
+      animation: dot-flash 1.4s infinite ease-in-out both;
+    }
 
     [x-cloak] { display: none !important; }
     /* Force reset browser default button/select styles */
@@ -2374,7 +2386,7 @@
             <textarea x-model="taskForm.requirements" placeholder="作文要求（会提供给 AI 作为评分参考）" rows="3" style="width:100%;padding:10px;border-radius:10px;border:1px solid #e2e8f0;font-size:0.875rem;resize:vertical;box-sizing:border-box;margin-bottom:10px;"></textarea>
             <div style="display:flex;gap:10px;align-items:center;">
               <label style="font-size:0.875rem;color:#64748b;">满分：</label>
-              <input type="number" x-model="taskForm.max_score" min="1" max="100" style="width:70px;padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:0.875rem;">
+              <input type="number" x-model="taskForm.max_score" min="1" max="100" step="0.5" style="width:70px;padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:0.875rem;">
               <span style="font-size:0.875rem;color:#94a3b8;">分</span>
               <button @click="createTask()" style="margin-left:auto;padding:10px 24px;border-radius:20px;border:none;background:linear-gradient(135deg,#22c55e,#16a34a);color:white;font-size:0.875rem;font-weight:600;cursor:pointer;">创建任务</button>
             </div>
@@ -2453,7 +2465,7 @@
                   <span style="font-weight:600;font-size:0.875rem;" x-text="sub.student_name"></span>
                   <span class="essay-status" :style="'color:' + getStatusColor(sub.status) + ';background:' + getStatusColor(sub.status) + '18;'" x-text="getStatusLabel(sub.status)"></span>
                 </div>
-                <div x-show="sub.total_score !== null && sub.total_score !== undefined" style="margin-top:4px;font-size:18px;font-weight:800;color:#a78bfa;" x-text="sub.total_score + ' / ' + (currentTask?.max_score||10)"></div>
+                <div x-show="sub.total_score !== null && sub.total_score !== undefined" style="margin-top:4px;font-size:18px;font-weight:800;color:#a78bfa;" x-text="sub.total_score + ' / ' + (currentTask?.max_score||15)"></div>
                 <!-- Actions -->
                 <div x-show="isAdmin" style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;">
                   <button x-show="sub.status==='uploaded'" @click.stop="runOcr(sub)" :disabled="sub._ocrLoading" style="padding:4px 10px;border-radius:8px;border:1px solid #e2e8f0;background:white;font-size:0.875rem;cursor:pointer;">
@@ -2480,18 +2492,18 @@
             <button @click="backToTask()" style="padding:6px 14px;border-radius:10px;border:1px solid #e2e8f0;background:white;cursor:pointer;font-size:0.875rem;">&larr; 返回</button>
             <span style="font-weight:700;font-size:18px;" x-text="currentSub?.student_name"></span>
             <span class="essay-status" :style="'color:' + getStatusColor(currentSub?.status) + ';background:' + getStatusColor(currentSub?.status) + '18;'" x-text="getStatusLabel(currentSub?.status)"></span>
-            <span x-show="currentSub?.total_score != null" style="font-size:20px;font-weight:800;color:#a78bfa;margin-left:auto;" x-text="currentSub?.total_score + ' / ' + (currentTask?.max_score||10)"></span>
+            <span x-show="currentSub?.total_score != null" style="font-size:20px;font-weight:800;color:#a78bfa;margin-left:auto;" x-text="currentSub?.total_score + ' / ' + (currentTask?.max_score||15)"></span>
           </div>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+          <div style="display:grid;grid-template-columns:minmax(280px,38%) minmax(400px,62%);gap:20px;align-items:start;">
             <!-- Left: Original image -->
-            <div style="background:rgba(255,255,255,0.85);border-radius:16px;padding:16px;text-align:center;">
+            <div style="background:rgba(255,255,255,0.85);border-radius:16px;padding:16px;text-align:center;position:sticky;top:20px;">
               <div style="font-weight:600;margin-bottom:8px;font-size:0.875rem;color:#64748b;">&#x1F4F7; 原始手写</div>
-              <img :src="currentSub?.image_path" style="max-width:100%;max-height:70vh;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.08);">
+              <img :src="currentSub?.image_path" style="max-width:100%;max-height:65vh;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.08);">
             </div>
 
             <!-- Right: OCR + Annotations + Scores -->
-            <div style="display:flex;flex-direction:column;gap:16px;">
+            <div style="display:flex;flex-direction:column;gap:16px;min-width:0;">
               <!-- OCR Text -->
               <div style="background:rgba(255,255,255,0.85);border-radius:16px;padding:16px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
@@ -2501,10 +2513,10 @@
                     <button x-show="isAdmin && currentSub?.ocr_text && !currentSub?.ocr_confirmed" @click="confirmOcr(currentSub)" style="font-size:0.875rem;color:#059669;background:none;border:none;cursor:pointer;">&#x2713; 确认</button>
                   </div>
                 </div>
-                <div x-show="!editingOcr">
+                <div x-show="!editingOcr" style="max-height:280px;overflow-y:auto;">
                   <!-- Show annotated text if graded, otherwise plain text -->
-                  <div x-show="currentSub?.annotations && currentSub?.status !== 'uploaded'" x-html="renderAnnotatedText(currentSub?.ocr_text, currentSub?.annotations)" style="font-size:0.875rem;line-height:1.8;white-space:pre-wrap;"></div>
-                  <div x-show="!currentSub?.annotations || currentSub?.status === 'uploaded'" style="font-size:0.875rem;line-height:1.8;white-space:pre-wrap;color:#475569;" x-text="currentSub?.ocr_text || '（尚未识别）'"></div>
+                  <div x-show="currentSub?.annotations && currentSub?.status !== 'uploaded'" x-html="renderAnnotatedText(formatOcrText(currentSub?.ocr_text), currentSub?.annotations)" style="font-size:0.8rem;line-height:1.6;white-space:pre-wrap;word-break:break-word;overflow-wrap:break-word;"></div>
+                  <div x-show="!currentSub?.annotations || currentSub?.status === 'uploaded'" style="font-size:0.8rem;line-height:1.6;white-space:pre-wrap;word-break:break-word;overflow-wrap:break-word;color:#475569;" x-text="formatOcrText(currentSub?.ocr_text) || '（尚未识别）'"></div>
                 </div>
                 <div x-show="editingOcr">
                   <textarea x-model="editOcrText" rows="10" style="width:100%;padding:10px;border-radius:8px;border:1px solid #e2e8f0;font-size:0.875rem;line-height:1.6;resize:vertical;box-sizing:border-box;"></textarea>
@@ -2516,20 +2528,20 @@
               </div>
 
               <!-- Score breakdown -->
-              <div x-show="currentSub?.score_detail" style="background:rgba(255,255,255,0.85);border-radius:16px;padding:16px;">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-                  <span style="font-weight:600;font-size:0.875rem;color:#64748b;">&#x1F4CA; 评分详情</span>
-                  <button x-show="isAdmin && !editingScores" @click="editingScores=true" style="font-size:0.875rem;color:#60a5fa;background:none;border:none;cursor:pointer;">调分</button>
+              <div x-show="currentSub?.score_detail" style="background:rgba(255,255,255,0.85);border-radius:16px;padding:14px;max-height:200px;overflow-y:auto;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                  <span style="font-weight:600;font-size:0.8rem;color:#64748b;">&#x1F4CA; 评分详情</span>
+                  <button x-show="isAdmin && !editingScores" @click="editingScores=true" style="font-size:0.8rem;color:#60a5fa;background:none;border:none;cursor:pointer;">调分</button>
                 </div>
                 <template x-for="(dim, key) in (parseJSON(currentSub?.score_detail) || {})" :key="key">
                   <div class="essay-score-row">
-                    <span style="width:70px;font-size:0.875rem;font-weight:600;color:#475569;" x-text="({content:'内容',grammar:'语法',vocabulary:'词汇',structure:'结构',mechanics:'规范'})[key]||key"></span>
+                    <span style="width:60px;font-size:0.8rem;font-weight:600;color:#475569;" x-text="({content:'内容',grammar:'语法',vocabulary:'词汇',structure:'结构',mechanics:'规范'})[key]||key"></span>
                     <div class="essay-score-bar">
                       <div class="essay-score-fill" :style="'width:' + (dim.max > 0 ? (dim.score/dim.max*100) : 0) + '%'"></div>
                     </div>
-                    <span x-show="!editingScores" style="font-size:0.875rem;font-weight:700;color:#a78bfa;min-width:50px;text-align:right;" x-text="dim.score + '/' + dim.max"></span>
-                    <input x-show="editingScores" type="number" :value="dim.score" @input="dim.score = parseFloat($event.target.value)||0" :max="dim.max" min="0" step="0.5" style="width:50px;padding:2px 6px;border-radius:6px;border:1px solid #e2e8f0;font-size:0.875rem;text-align:center;">
-                    <div style="font-size:0.875rem;color:#94a3b8;flex:1;min-width:0;" x-text="dim.comment||''"></div>
+                    <span x-show="!editingScores" style="font-size:0.8rem;font-weight:700;color:#a78bfa;min-width:45px;text-align:right;" x-text="dim.score + '/' + dim.max"></span>
+                    <input x-show="editingScores" type="number" :value="dim.score" @input="dim.score = parseFloat($event.target.value)||0" :max="dim.max" min="0" step="0.5" style="width:45px;padding:2px 4px;border-radius:6px;border:1px solid #e2e8f0;font-size:0.8rem;text-align:center;">
+                    <div style="font-size:0.75rem;color:#94a3b8;flex:1;min-width:0;" x-text="dim.comment||''"></div>
                   </div>
                 </template>
                 <div x-show="editingScores" style="display:flex;gap:8px;margin-top:10px;">
@@ -2539,16 +2551,133 @@
               </div>
 
               <!-- AI Comment -->
-              <div x-show="currentSub?.ai_comment" style="background:rgba(255,255,255,0.85);border-radius:16px;padding:16px;">
-                <div style="font-weight:600;font-size:0.875rem;color:#64748b;margin-bottom:6px;">&#x1F4AC; AI 总评</div>
-                <div style="font-size:0.875rem;color:#475569;line-height:1.6;" x-text="currentSub?.ai_comment"></div>
+              <div x-show="currentSub?.ai_comment" style="background:rgba(255,255,255,0.85);border-radius:16px;padding:14px;">
+                <div style="font-weight:600;font-size:0.8rem;color:#64748b;margin-bottom:6px;">&#x1F4AC; AI 总评</div>
+                <div style="font-size:0.8rem;color:#475569;line-height:1.6;" x-text="currentSub?.ai_comment"></div>
               </div>
 
               <!-- Actions -->
               <div x-show="isAdmin" style="display:flex;gap:8px;">
-                <button x-show="currentSub?.status==='uploaded'" @click="runOcr(currentSub)" style="padding:8px 18px;border-radius:24px;border:none;background:linear-gradient(135deg,#60a5fa,#a78bfa);color:white;font-size:0.875rem;font-weight:600;cursor:pointer;">&#x1F50D; 开始识别</button>
-                <button x-show="currentSub?.ocr_text && currentSub?.status!=='graded' && currentSub?.status!=='reviewed'" @click="runGrade(currentSub)" style="padding:8px 18px;border-radius:24px;border:none;background:linear-gradient(135deg,#22c55e,#16a34a);color:white;font-size:0.875rem;font-weight:600;cursor:pointer;">&#x1F4DD; AI 评分</button>
+                <button x-show="currentSub?.status==='uploaded'" @click="runOcr(currentSub)" style="padding:8px 18px;border-radius:24px;border:none;background:linear-gradient(135deg,#60a5fa,#a78bfa);color:white;font-size:0.8rem;font-weight:600;cursor:pointer;">&#x1F50D; 开始识别</button>
+                <button x-show="currentSub?.ocr_text && currentSub?.status!=='graded' && currentSub?.status!=='reviewed'" @click="runGrade(currentSub)" style="padding:8px 18px;border-radius:24px;border:none;background:linear-gradient(135deg,#22c55e,#16a34a);color:white;font-size:0.8rem;font-weight:600;cursor:pointer;">&#x1F4DD; AI 评分</button>
               </div>
+
+              <!-- AI Rewrite -->
+              <div x-show="currentSub?.status==='graded' || currentSub?.status==='reviewed'" style="background:rgba(255,255,255,0.85);border-radius:16px;padding:14px;max-height:240px;overflow-y:auto;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                  <span style="font-weight:600;font-size:0.8rem;color:#64748b;">&#x2728; AI 改写范文</span>
+                  <button @click="requestRewrite()" :disabled="rewriteLoading" style="padding:6px 14px;border-radius:20px;border:none;background:linear-gradient(135deg,#f59e0b,#f97316);color:white;font-size:0.8rem;font-weight:600;cursor:pointer;">
+                    <span x-show="!rewriteLoading">&#x2728; 生成范文</span>
+                    <span x-show="rewriteLoading">生成中...</span>
+                  </button>
+                </div>
+                <div x-show="!aiRewrite && !rewriteLoading" style="text-align:center;color:#94a3b8;font-size:0.8rem;padding:8px;">点击上方按钮，AI将基于批改结果生成改进版作文</div>
+                <div x-show="aiRewrite" style="font-size:0.8rem;line-height:1.6;color:#475569;white-space:pre-wrap;word-break:break-word;overflow-wrap:break-word;" x-text="aiRewrite?.text"></div>
+                <div x-show="aiRewrite?.changes?.length" style="margin-top:8px;">
+                  <div style="font-weight:600;font-size:0.75rem;color:#64748b;margin-bottom:4px;">主要改动：</div>
+                  <template x-for="(c, i) in aiRewrite.changes" :key="i">
+                    <div style="font-size:0.75rem;color:#475569;padding:3px 0;border-bottom:1px solid #f1f5f9;">
+                      <span style="color:#ef4444;text-decoration:line-through;" x-text="c.original"></span>
+                      <span style="color:#22c55e;" x-text="' → ' + c.rewritten"></span>
+                      <span style="color:#94a3b8;" x-text="' (' + c.reason + ')'"></span>
+                    </div>
+                  </template>
+                </div>
+              </div>
+
+              <!-- AI Chat Panel (常驻面板) -->
+              <div x-show="currentSub?.ocr_text" style="background:rgba(255,255,255,0.85);border-radius:16px;padding:14px;">
+                <div @click="toggleChatPanel()" style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;">
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <span style="font-size:1rem;">&#x1F4AC;</span>
+                    <span style="font-weight:600;font-size:0.85rem;color:#64748b;">AI 对话答疑</span>
+                    <span x-show="chatMessages.length > 0" style="background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;border-radius:10px;padding:2px 8px;font-size:0.7rem;font-weight:700;" x-text="Math.floor(chatMessages.length/2) + '轮'"></span>
+                  </div>
+                  <span style="color:#94a3b8;font-size:0.8rem;" x-text="chatPanelOpen ? '收起 &#x25B2;' : '展开 &#x25BC;'"></span>
+                </div>
+                <div x-show="chatPanelOpen" x-transition style="margin-top:10px;">
+                  <div class="chat-panel-messages" style="max-height:260px;overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:8px;background:#f8fafc;border-radius:12px;">
+                    <div x-show="chatMessages.length===0 && !chatLoading" style="text-align:center;color:#94a3b8;font-size:0.8rem;padding:20px;">
+                      <div style="margin-bottom:4px;">向AI提问，例如：</div>
+                      <div style="font-size:0.75rem;">"为什么这句是错的？"</div>
+                      <div style="font-size:0.75rem;">"怎么把词汇用得更丰富？"</div>
+                    </div>
+                    <template x-for="msg in chatMessages" :key="msg.id || msg.content">
+                      <div style="display:flex;" :style="msg.role === 'user' ? 'justify-content:flex-end;' : 'justify-content:flex-start;'">
+                        <div style="max-width:80%;padding:8px 12px;border-radius:14px;font-size:0.8rem;line-height:1.5;word-break:break-word;" :style="msg.role === 'user' ? 'background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;border-bottom-right-radius:4px;' : 'background:#e2e8f0;color:#475569;border-bottom-left-radius:4px;'">
+                          <span x-text="msg.content"></span>
+                        </div>
+                      </div>
+                    </template>
+                    <div x-show="chatLoading" style="display:flex;justify-content:flex-start;">
+                      <div style="background:#e2e8f0;color:#94a3b8;padding:8px 12px;border-radius:14px;font-size:0.8rem;border-bottom-left-radius:4px;display:flex;align-items:center;gap:4px;">
+                        <span class="chat-dot"></span>
+                        <span class="chat-dot" style="animation-delay:0.2s;"></span>
+                        <span class="chat-dot" style="animation-delay:0.4s;"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="display:flex;gap:8px;align-items:center;margin-top:8px;">
+                    <input x-model="chatInput" @keydown.enter="sendChat()" placeholder="输入问题..." style="flex:1;padding:8px 12px;border-radius:16px;border:1px solid #e2e8f0;font-size:0.8rem;background:white;" :disabled="chatLoading">
+                    <button @click="sendChat()" :disabled="chatLoading || !chatInput.trim()" style="padding:8px 16px;border-radius:16px;border:none;background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;font-size:0.8rem;font-weight:600;cursor:pointer;white-space:nowrap;">发送</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- AI Chat Floating Button -->
+              <div x-show="currentSub?.ocr_text && !chatDrawerOpen" @click="toggleChatDrawer()" style="position:fixed;bottom:24px;right:24px;z-index:50;padding:12px 20px;border-radius:50px;border:none;background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;font-size:0.875rem;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(99,102,241,0.35);display:flex;align-items:center;gap:6px;">
+                <span>&#x1F4AC;</span>
+                <span>AI 对话</span>
+                <span x-show="chatMessages.length > 0" style="background:white;color:#a78bfa;border-radius:10px;padding:2px 6px;font-size:0.7rem;font-weight:700;" x-text="Math.floor(chatMessages.length/2)"></span>
+              </div>
+
+              <!-- AI Chat Drawer -->
+              <div x-show="chatDrawerOpen"  style="position:fixed;bottom:0;left:0;right:0;z-index:60;background:white;border-radius:16px 16px 0 0;box-shadow:0 -4px 24px rgba(0,0,0,0.12);display:flex;flex-direction:column;height:55vh;max-height:500px;">
+                <!-- Drawer Header -->
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #f1f5f9;flex-shrink:0;">
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <span style="font-size:1.2rem;">&#x1F4AC;</span>
+                    <span style="font-weight:600;font-size:0.9rem;color:#475569;">AI 对话答疑</span>
+                  </div>
+                  <button @click="toggleChatDrawer()" style="background:none;border:none;font-size:1.2rem;color:#94a3b8;cursor:pointer;padding:4px;">&#x2715;</button>
+                </div>
+
+                <!-- Messages -->
+                <div class="chat-drawer-messages" style="flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:10px;">
+                  <div x-show="chatMessages.length===0 && !chatLoading" style="text-align:center;color:#94a3b8;font-size:0.8rem;padding:40px 20px;">
+                    <div style="font-size:2rem;margin-bottom:8px;">&#x1F4AC;</div>
+                    <div>向AI提问，例如：</div>
+                    <div style="margin-top:4px;">"为什么这句是错的？"</div>
+                    <div>"怎么把词汇用得更丰富？"</div>
+                  </div>
+                  <template x-for="msg in chatMessages" :key="msg.id || msg.content">
+                    <div style="display:flex;" :style="msg.role === 'user' ? 'justify-content:flex-end;' : 'justify-content:flex-start;'">
+                      <div style="max-width:80%;padding:10px 14px;border-radius:16px;font-size:0.8rem;line-height:1.5;word-break:break-word;" :style="msg.role === 'user' ? 'background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;border-bottom-right-radius:4px;' : 'background:#f1f5f9;color:#475569;border-bottom-left-radius:4px;'">
+                        <span x-text="msg.content"></span>
+                      </div>
+                    </div>
+                  </template>
+                  <div x-show="chatLoading" style="display:flex;justify-content:flex-start;">
+                    <div style="background:#f1f5f9;color:#94a3b8;padding:10px 14px;border-radius:16px;font-size:0.8rem;border-bottom-left-radius:4px;">
+                      <span class="chat-dot"></span>
+                      <span class="chat-dot" style="animation-delay:0.2s;"></span>
+                      <span class="chat-dot" style="animation-delay:0.4s;"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Input -->
+                <div style="padding:10px 16px 16px;border-top:1px solid #f1f5f9;flex-shrink:0;background:white;">
+                  <div style="display:flex;gap:8px;align-items:center;">
+                    <input x-model="chatInput" @keydown.enter="sendChat()" placeholder="输入问题..." style="flex:1;padding:10px 14px;border-radius:20px;border:1px solid #e2e8f0;font-size:0.85rem;background:#f8fafc;" :disabled="chatLoading">
+                    <button @click="sendChat()" :disabled="chatLoading || !chatInput.trim()" style="padding:10px 18px;border-radius:20px;border:none;background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;font-size:0.85rem;font-weight:600;cursor:pointer;white-space:nowrap;">发送</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Drawer overlay -->
+              <div x-show="chatDrawerOpen" @click="toggleChatDrawer()" style="position:fixed;inset:0;z-index:55;background:rgba(0,0,0,0.25);" ></div>
+
             </div>
           </div>
         </div>
@@ -2825,7 +2954,7 @@
   </div>
 
   <!-- SCRIPTS -->
-  <script src="/js/api.js?v=4"></script>
+  <script src="/js/api.js?v=5"></script>
   <script src="/js/app.js?v=5"></script>
   <script src="/js/homework.js?v=4"></script>
   <script src="/js/checkin.js?v=4?v=4"></script>
@@ -2835,7 +2964,7 @@
   <script src="/js/ocr-upload.js?v=4"></script>
   <script src="/js/doc-upload.js?v=4"></script>
   <script src="/js/quiz.js?v=10"></script>
-  <script src="/js/essay.js?v=4"></script>
+  <script src="/js/essay.js?v=8"></script>
   <script src="/js/choicefill.js?v=4"></script>
   <script src="/js/wordgame.js?v=15"></script>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>

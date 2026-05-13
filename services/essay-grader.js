@@ -11,14 +11,14 @@ const DEFAULT_RUBRIC = {
     { key: 'structure', label: '篇章结构', weight: 15, description: '段落逻辑、连接词使用' },
     { key: 'mechanics', label: '书写规范', weight: 10, description: '拼写、标点、大小写' },
   ],
-  maxScore: 10,
+  maxScore: 15,
 };
 
 const OCR_PROMPT = `请识别这张手写英语作文图片中的文字内容。
 
 要求：
 1. 尽可能准确还原手写内容，包括拼写错误也要如实还原（不要自动纠正）
-2. 保留原始段落结构和换行
+2. 保留原始段落结构，段落之间必须用换行符 \\n 分隔，不要合并成一段
 3. 如果有涂改，以最终版本为准
 4. 如果能看到姓名或学号，请提取
 5. 返回严格 JSON 格式：{"text": "作文全文内容", "student_info": "姓名或学号（如果有）"}
@@ -65,6 +65,7 @@ const GRADE_PROMPT = `你是一位经验丰富的初中英语教师，请对以�
 注意：
 - annotations 中的 original 必须是学生作文中实际存在的文字片段
 - severity: major=严重错误必须修改, minor=小错误, suggestion=建议改进
+- 每个维度的 score 必须是 0.5 的倍数（如 7.0, 7.5, 8.0），不能出现其他小数
 - 每个维度的 score 不能超过对应的 max
 - total 应等于所有维度 score 之和`;
 
@@ -151,26 +152,141 @@ async function gradeEssay(essayText, taskInfo, rubricConfig) {
   const messages = [{ role: 'user', content: prompt }];
   const responseText = await callAI(messages, { timeout: 60000 });
 
-  // Parse JSON
-  const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+  // Parse JSON - strip markdown code blocks first
+  const cleanText = responseText.replace(/```json\s*/gi, '').replace(/```\s*$/gi, '').trim();
+  const jsonMatch = cleanText.match(/\{[\s\S]*\}/);
   if (!jsonMatch) throw new Error('AI 返回格式无法解析');
 
   const result = JSON.parse(jsonMatch[0]);
 
-  // Validate and cap scores
+  // Normalize annotations format (AI may return different field names)
+  if (result.annotations && Array.isArray(result.annotations)) {
+    result.annotations = result.annotations.map(a => ({
+      type: a.type || 'grammar',
+      original: a.original || a.word || a.phrase || '',
+      corrected: a.corrected || a.suggestion || '',
+      reason: a.reason || a.message || '',
+      severity: a.severity || 'minor',
+    }));
+  }
+
+  // Normalize highlights format (AI may return objects instead of strings)
+  if (result.highlights && Array.isArray(result.highlights)) {
+    result.highlights = result.highlights.map(h => {
+      if (typeof h === 'string') return h;
+      if (h.phrase) return h.phrase;
+      if (h.text) return h.text;
+      return JSON.stringify(h);
+    });
+  }
+
+  // Validate, round to nearest 0.5, and cap scores
   let total = 0;
   for (const dim of rubric.dimensions) {
     const maxPts = (dim.weight / totalWeight) * rubric.maxScore;
     if (result.scores && result.scores[dim.key]) {
       const s = result.scores[dim.key];
-      s.max = parseFloat(maxPts.toFixed(1));
-      s.score = Math.min(parseFloat(s.score) || 0, s.max);
+      s.max = Math.round(maxPts * 2) / 2;
+      // Round AI score to nearest 0.5
+      const rawScore = parseFloat(s.score) || 0;
+      s.score = Math.min(Math.round(rawScore * 2) / 2, s.max);
       total += s.score;
     }
   }
-  result.total = parseFloat(total.toFixed(1));
+  result.total = Math.round(total * 2) / 2;
 
   return result;
 }
 
-module.exports = { ocrEssay, gradeEssay, getRubric, DEFAULT_RUBRIC };
+// ---------------------------------------------------------------------------
+// Chat with AI about an essay
+// ---------------------------------------------------------------------------
+async function chatWithAI(essayText, taskInfo, scoreDetail, aiComment, annotations, chatHistory, userMessage) {
+  const historyText = (chatHistory || []).map(h => `${h.role === 'user' ? '学生' : 'AI'}：${h.content}`).join('\n');
+  const scoreText = scoreDetail ? JSON.stringify(scoreDetail, null, 2) : '暂无评分';
+  const annoText = annotations && annotations.length ? annotations.map(a => `- [${a.type}] "${a.original}" → "${a.corrected}"：${a.reason}`).join('\n') : '暂无错误标注';
+
+  const prompt = `你是一位经验丰富的初中英语教师。以下是一篇学生英语作文及其AI批改结果。学生正在向你提问，请基于作文和批改结果友好、专业地回答问题。
+
+## 作文信息
+- 题目：${taskInfo.title || '无题目'}
+- 要求：${taskInfo.requirements || '无特殊要求'}
+
+## 学生作文
+${essayText}
+
+## 评分结果
+${scoreText}
+
+## 错误标注
+${annoText}
+
+## AI总评
+${aiComment || '暂无'}
+
+## 对话历史
+${historyText || '（无）'}
+
+## 学生问题
+${userMessage}
+
+## 回答要求
+- 用中文回答，语气亲切、耐心，像老师指导学生
+- 回答要具体，结合作文中的实际例子
+- 如果不确定，坦诚说明
+- 仅回答与英语学习相关的问题`;
+
+  const messages = [{ role: 'user', content: prompt }];
+  return await callAI(messages, { timeout: 60000 });
+}
+
+// ---------------------------------------------------------------------------
+// AI rewrite essay
+// ---------------------------------------------------------------------------
+async function rewriteEssay(essayText, taskInfo, scoreDetail, annotations, aiComment) {
+  const annoText = annotations && annotations.length ? annotations.map(a => `- [${a.type}] "${a.original}" → "${a.corrected}"：${a.reason}`).join('\n') : '暂无错误标注';
+
+  const prompt = `你是一位经验丰富的初中英语教师。请基于以下学生作文及其批改结果，生成一篇改进版作文范文。
+
+## 作文信息
+- 题目：${taskInfo.title || '无题目'}
+- 要求：${taskInfo.requirements || '无特殊要求'}
+
+## 学生原作文
+${essayText}
+
+## 批改结果
+${aiComment || '暂无'}
+
+## 主要错误
+${annoText}
+
+## 输出要求
+请返回严格 JSON 格式，仅返回 JSON，不要附加解释：
+{
+  "rewrite": "改进后的完整作文（保持原意，修正所有错误，提升词汇和句式）",
+  "changes": [
+    {"original": "原句", "rewritten": "改后句", "reason": "改动原因"}
+  ]
+}`;
+
+  const messages = [{ role: 'user', content: prompt }];
+  const responseText = await callAI(messages, { timeout: 60000 });
+
+  // Parse JSON
+  const cleanText = responseText.replace(/```json\s*/gi, '').replace(/```\s*$/gi, '').trim();
+  const jsonMatch = cleanText.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) return { rewrite: responseText.trim(), changes: [] };
+
+  try {
+    const result = JSON.parse(jsonMatch[0]);
+    return {
+      rewrite: result.rewrite || responseText.trim(),
+      changes: Array.isArray(result.changes) ? result.changes : [],
+    };
+  } catch (_) {
+    return { rewrite: responseText.trim(), changes: [] };
+  }
+}
+
+module.exports = { ocrEssay, gradeEssay, getRubric, DEFAULT_RUBRIC, chatWithAI, rewriteEssay };

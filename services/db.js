@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS essay_tasks (
   title TEXT NOT NULL,
   requirements TEXT,
   essay_type TEXT DEFAULT 'free',
-  max_score REAL DEFAULT 10,
+  max_score REAL DEFAULT 15,
   rubric_config TEXT,
   status TEXT DEFAULT 'active',
   created_at TEXT DEFAULT (datetime('now')),
@@ -218,6 +218,17 @@ CREATE TABLE IF NOT EXISTS essay_submissions (
   status TEXT DEFAULT 'uploaded',
   created_at TEXT DEFAULT (datetime('now')),
   FOREIGN KEY (task_id) REFERENCES essay_tasks(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS essay_interactions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  submission_id INTEGER NOT NULL,
+  type TEXT NOT NULL CHECK(type IN ('chat','rewrite')),
+  role TEXT,
+  content TEXT NOT NULL,
+  extra_json TEXT,
+  created_at TEXT DEFAULT (datetime('now')),
+  FOREIGN KEY (submission_id) REFERENCES essay_submissions(id) ON DELETE CASCADE
 );
 
 -- ============================================================

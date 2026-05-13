@@ -97,4 +97,7 @@ const API = {
   gradeSubmission(id) { return this.post(`/api/essay/submissions/${id}/grade`, {}); },
   ocrAllSubmissions(taskId) { return this.post(`/api/essay/tasks/${taskId}/ocr-all`, {}); },
   gradeAllSubmissions(taskId) { return this.post(`/api/essay/tasks/${taskId}/grade-all`, {}); },
+  chatSubmission(id, message) { return this.post(`/api/essay/submissions/${id}/chat`, { message }); },
+  rewriteSubmission(id) { return this.post(`/api/essay/submissions/${id}/rewrite`, {}); },
+  getInteractions(id, type) { return this.get(`/api/essay/submissions/${id}/interactions?type=${type || ''}`); },
 };

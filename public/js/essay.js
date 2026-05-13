@@ -1,4 +1,4 @@
-document.addEventListener('alpine:init', () => {
+document.addEventListener('alpine:init', () => { console.log('[ESSAY] alpine:init fired');
   Alpine.data('essayTab', () => ({
     // View
     view: 'list',  // list | detail | submission
@@ -9,7 +9,7 @@ document.addEventListener('alpine:init', () => {
 
     // Create form
     showCreateForm: false,
-    taskForm: { title: '', requirements: '', essay_type: 'free', max_score: 10 },
+    taskForm: { title: '', requirements: '', essay_type: 'free', max_score: 15 },
 
     // Current task detail
     currentTask: null,
@@ -31,6 +31,17 @@ document.addEventListener('alpine:init', () => {
     editingScores: false,
     loaded: false,
 
+    // AI Chat Drawer
+    chatDrawerOpen: false,
+    chatPanelOpen: false,
+    chatMessages: [],
+    chatInput: '',
+    chatLoading: false,
+
+    // AI Rewrite
+    aiRewrite: null,
+    rewriteLoading: false,
+
     async init() {
       const ensureLoaded = async () => {
         if (this.loaded) return;
@@ -41,7 +52,7 @@ document.addEventListener('alpine:init', () => {
         if (event.detail?.tabId === 'essay') {
           await ensureLoaded();
         }
-      });
+      }, 50);
       if (document.body.dataset.activeTab === 'essay') {
         await ensureLoaded();
       }
@@ -59,17 +70,17 @@ document.addEventListener('alpine:init', () => {
 
     async createTask() {
       if (!this.taskForm.title.trim()) {
-        this.$dispatch('toast', { message: '请输入作文题目', type: 'error' });
+        this.$dispatch('toast', { message: '请输入作文题目', type: 'error' }, 50);
         return;
       }
       try {
         await API.createEssayTask(this.taskForm);
-        this.taskForm = { title: '', requirements: '', essay_type: 'free', max_score: 10 };
+        this.taskForm = { title: '', requirements: '', essay_type: 'free', max_score: 15 };
         this.showCreateForm = false;
         await this.loadTasks();
-        this.$dispatch('toast', { message: '任务已创建', type: 'success' });
+        this.$dispatch('toast', { message: '任务已创建', type: 'success' }, 50);
       } catch (e) {
-        this.$dispatch('toast', { message: e.message, type: 'error' });
+        this.$dispatch('toast', { message: e.message, type: 'error' }, 50);
       }
     },
 
@@ -78,9 +89,9 @@ document.addEventListener('alpine:init', () => {
       try {
         await API.deleteEssayTask(id);
         await this.loadTasks();
-        this.$dispatch('toast', { message: '已删除', type: 'success' });
+        this.$dispatch('toast', { message: '已删除', type: 'success' }, 50);
       } catch (e) {
-        this.$dispatch('toast', { message: e.message, type: 'error' });
+        this.$dispatch('toast', { message: e.message, type: 'error' }, 50);
       }
     },
 
@@ -143,9 +154,9 @@ document.addEventListener('alpine:init', () => {
         this.uploadEntries = [];
         this.showUpload = false;
         await this.loadSubmissions();
-        this.$dispatch('toast', { message: '上传成功', type: 'success' });
+        this.$dispatch('toast', { message: '上传成功', type: 'success' }, 50);
       } catch (e) {
-        this.$dispatch('toast', { message: e.message, type: 'error' });
+        this.$dispatch('toast', { message: e.message, type: 'error' }, 50);
       }
       this.uploading = false;
     },
@@ -156,19 +167,19 @@ document.addEventListener('alpine:init', () => {
       try {
         const data = await API.ocrSubmission(sub.id);
         Object.assign(sub, data.submission);
-        this.$dispatch('toast', { message: 'OCR 完成', type: 'success' });
+        this.$dispatch('toast', { message: 'OCR 完成', type: 'success' }, 50);
       } catch (e) {
-        this.$dispatch('toast', { message: e.message, type: 'error' });
+        this.$dispatch('toast', { message: e.message, type: 'error' }, 50);
       }
       sub._ocrLoading = false;
     },
 
     async confirmOcr(sub) {
       try {
-        await API.updateSubmission(sub.id, { ocr_confirmed: 1 });
+        await API.updateSubmission(sub.id, { ocr_confirmed: 1 }, 50);
         sub.ocr_confirmed = 1;
       } catch (e) {
-        this.$dispatch('toast', { message: e.message, type: 'error' });
+        this.$dispatch('toast', { message: e.message, type: 'error' }, 50);
       }
     },
 
@@ -177,9 +188,9 @@ document.addEventListener('alpine:init', () => {
       try {
         const data = await API.gradeSubmission(sub.id);
         Object.assign(sub, data.submission);
-        this.$dispatch('toast', { message: '评分完成', type: 'success' });
+        this.$dispatch('toast', { message: '评分完成', type: 'success' }, 50);
       } catch (e) {
-        this.$dispatch('toast', { message: e.message, type: 'error' });
+        this.$dispatch('toast', { message: e.message, type: 'error' }, 50);
       }
       sub._gradeLoading = false;
     },
@@ -190,7 +201,7 @@ document.addEventListener('alpine:init', () => {
         await API.deleteSubmission(sub.id);
         await this.loadSubmissions();
       } catch (e) {
-        this.$dispatch('toast', { message: e.message, type: 'error' });
+        this.$dispatch('toast', { message: e.message, type: 'error' }, 50);
       }
     },
 
@@ -202,9 +213,9 @@ document.addEventListener('alpine:init', () => {
         const data = await API.ocrAllSubmissions(this.currentTask.id);
         this.batchMsg = '';
         await this.loadSubmissions();
-        this.$dispatch('toast', { message: `识别完成：成功 ${data.processed}，失败 ${data.failed}`, type: data.failed ? 'info' : 'success' });
+        this.$dispatch('toast', { message: `识别完成：成功 ${data.processed}，失败 ${data.failed}`, type: data.failed ? 'info' : 'success' }, 50);
       } catch (e) {
-        this.$dispatch('toast', { message: e.message, type: 'error' });
+        this.$dispatch('toast', { message: e.message, type: 'error' }, 50);
       }
       this.batchProcessing = false;
       this.batchMsg = '';
@@ -217,9 +228,9 @@ document.addEventListener('alpine:init', () => {
         const data = await API.gradeAllSubmissions(this.currentTask.id);
         this.batchMsg = '';
         await this.loadSubmissions();
-        this.$dispatch('toast', { message: `评分完成：成功 ${data.processed}，失败 ${data.failed}`, type: data.failed ? 'info' : 'success' });
+        this.$dispatch('toast', { message: `评分完成：成功 ${data.processed}，失败 ${data.failed}`, type: data.failed ? 'info' : 'success' }, 50);
       } catch (e) {
-        this.$dispatch('toast', { message: e.message, type: 'error' });
+        this.$dispatch('toast', { message: e.message, type: 'error' }, 50);
       }
       this.batchProcessing = false;
       this.batchMsg = '';
@@ -229,6 +240,11 @@ document.addEventListener('alpine:init', () => {
     openSubmission(sub) {
       this.currentSub = sub;
       this.view = 'submission';
+      this.chatMessages = [];
+      this.chatInput = '';
+      this.aiRewrite = null;
+      this.loadChatHistory();
+      this.loadRewriteHistory();
     },
 
     backToTask() {
@@ -236,7 +252,65 @@ document.addEventListener('alpine:init', () => {
       this.view = 'detail';
       this.editingOcr = false;
       this.editingScores = false;
+      this.chatMessages = [];
+      this.aiRewrite = null;
       this.loadSubmissions();
+    },
+
+    // ===== AI Chat =====
+    async loadChatHistory() {
+      if (!this.currentSub) return;
+      try {
+        const data = await API.getInteractions(this.currentSub.id, 'chat');
+        this.chatMessages = data.interactions || [];
+      } catch (e) { console.error(e); }
+    },
+
+    async sendChat() {
+      if (!this.chatInput.trim() || !this.currentSub) return;
+      const msg = this.chatInput.trim();
+      this.chatInput = '';
+      this.chatLoading = true;
+      try {
+        const data = await API.chatSubmission(this.currentSub.id, msg);
+        this.chatMessages.push({ role: 'user', content: msg });
+        this.chatMessages.push({ role: 'assistant', content: data.reply });
+        setTimeout(() => {
+          const container = document.querySelector('.chat-drawer-messages');
+          if (container) container.scrollTop = container.scrollHeight;
+        }, 50);
+      } catch (e) {
+        this.$dispatch('toast', { message: e.message, type: 'error' }, 50);
+      }
+      this.chatLoading = false;
+    },
+
+    // ===== AI Rewrite =====
+    async loadRewriteHistory() {
+      if (!this.currentSub) return;
+      try {
+        const data = await API.getInteractions(this.currentSub.id, 'rewrite');
+        const rewrite = data.interactions?.[0];
+        if (rewrite) {
+          this.aiRewrite = {
+            text: rewrite.content,
+            changes: this.parseJSON(rewrite.extra_json) || [],
+          };
+        }
+      } catch (e) { console.error(e); }
+    },
+
+    async requestRewrite() {
+      if (!this.currentSub) return;
+      this.rewriteLoading = true;
+      try {
+        const data = await API.rewriteSubmission(this.currentSub.id);
+        this.aiRewrite = { text: data.rewrite, changes: data.changes || [] };
+        this.$dispatch('toast', { message: 'AI 改写完成', type: 'success' }, 50);
+      } catch (e) {
+        this.$dispatch('toast', { message: e.message, type: 'error' }, 50);
+      }
+      this.rewriteLoading = false;
     },
 
     startEditOcr() {
@@ -250,12 +324,12 @@ document.addEventListener('alpine:init', () => {
           ocr_text: this.editOcrText,
           ocr_confirmed: 1,
           status: 'ocr_done',
-        });
+        }, 50);
         Object.assign(this.currentSub, data.submission);
         this.editingOcr = false;
-        this.$dispatch('toast', { message: '已保存', type: 'success' });
+        this.$dispatch('toast', { message: '已保存', type: 'success' }, 50);
       } catch (e) {
-        this.$dispatch('toast', { message: e.message, type: 'error' });
+        this.$dispatch('toast', { message: e.message, type: 'error' }, 50);
       }
     },
 
@@ -270,17 +344,47 @@ document.addEventListener('alpine:init', () => {
           score_detail: scoreDetail,
           total_score: parseFloat(total.toFixed(1)),
           status: 'reviewed',
-        });
+        }, 50);
         this.currentSub.total_score = parseFloat(total.toFixed(1));
         this.currentSub.status = 'reviewed';
         this.editingScores = false;
-        this.$dispatch('toast', { message: '评分已更新', type: 'success' });
+        this.$dispatch('toast', { message: '评分已更新', type: 'success' }, 50);
       } catch (e) {
-        this.$dispatch('toast', { message: e.message, type: 'error' });
+        this.$dispatch('toast', { message: e.message, type: 'error' }, 50);
       }
     },
 
     // ===== Helpers =====
+    formatOcrText(text) {
+      if (!text) return '';
+      if (text.includes('\\n')) return text;
+      // Auto-split by sentence endings if no newlines present
+      return text.replace(/([.!?])(\s+)(?=[A-Z])/g, '$1\\n\\n');
+    },
+    toggleChatDrawer() {
+      this.chatDrawerOpen = !this.chatDrawerOpen;
+      if (this.chatDrawerOpen) {
+        setTimeout(() => {
+          const container = document.querySelector('.chat-drawer-messages');
+          if (container) container.scrollTop = container.scrollHeight;
+        }, 50);
+      }
+    },
+    toggleChatPanel() {
+      this.chatPanelOpen = !this.chatPanelOpen;
+      if (this.chatPanelOpen) {
+        setTimeout(() => {
+          const container = document.querySelector('.chat-panel-messages');
+          if (container) container.scrollTop = container.scrollHeight;
+        }, 50);
+      }
+    },
+    scrollChatToBottom(selector) {
+      setTimeout(() => {
+        const container = document.querySelector(selector);
+        if (container) container.scrollTop = container.scrollHeight;
+      }, 50);
+    },
     getStatusLabel(s) {
       return { uploaded: '待识别', ocr_done: '已识别', graded: '已评分', reviewed: '已审核' }[s] || s;
     },
@@ -319,4 +423,4 @@ document.addEventListener('alpine:init', () => {
       return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     },
   }));
-});
+}, 50);

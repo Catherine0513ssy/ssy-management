@@ -5,7 +5,7 @@ const crypto = require('crypto');
 const fs = require('fs');
 const { getDB } = require('../services/db');
 const { requireAuth } = require('../middleware/auth');
-const { ocrEssay, gradeEssay, getRubric, DEFAULT_RUBRIC } = require('../services/essay-grader');
+const { ocrEssay, gradeEssay, getRubric, DEFAULT_RUBRIC, chatWithAI, rewriteEssay } = require('../services/essay-grader');
 
 // ---------------------------------------------------------------------------
 // Multer configuration — save uploaded images to public/uploads/
@@ -47,7 +47,7 @@ router.post('/tasks', requireAuth, (req, res) => {
   const info = db.prepare(
     `INSERT INTO essay_tasks (class_id, title, requirements, essay_type, max_score, rubric_config)
      VALUES (?, ?, ?, ?, ?, ?)`
-  ).run(Number(class_id), title, requirements || null, essay_type || 'free', max_score || 10, rubric_config || null);
+  ).run(Number(class_id), title, requirements || null, essay_type || 'free', max_score || 15, rubric_config || null);
   const task = db.prepare('SELECT * FROM essay_tasks WHERE id = ?').get(info.lastInsertRowid);
   return res.json({ task });
 });
@@ -305,6 +305,87 @@ router.post('/tasks/:id/grade-all', requireAuth, async (req, res) => {
 router.get('/rubric', (req, res) => {
   const rubric = getRubric(null);
   return res.json({ rubric });
+});
+
+// ---------------------------------------------------------------------------
+// POST /submissions/:id/chat  — AI dialogue
+// ---------------------------------------------------------------------------
+router.post('/submissions/:id/chat', requireAuth, async (req, res) => {
+  const db = getDB();
+  const sub = db.prepare('SELECT * FROM essay_submissions WHERE id = ?').get(req.params.id);
+  if (!sub) return res.status(404).json({ error: 'Submission not found' });
+
+  const task = db.prepare('SELECT * FROM essay_tasks WHERE id = ?').get(sub.task_id);
+  const { message } = req.body;
+  if (!message || !message.trim()) return res.status(400).json({ error: 'Message required' });
+
+  // Load chat history
+  const history = db.prepare(
+    "SELECT role, content FROM essay_interactions WHERE submission_id = ? AND type = 'chat' ORDER BY created_at ASC"
+  ).all(sub.id);
+
+  const taskInfo = { title: task?.title, requirements: task?.requirements };
+  const scoreDetail = sub.score_detail ? JSON.parse(sub.score_detail) : null;
+  const annotations = sub.annotations ? JSON.parse(sub.annotations) : null;
+
+  const reply = await chatWithAI(
+    sub.ocr_text || '', taskInfo, scoreDetail, sub.ai_comment, annotations, history, message.trim()
+  );
+
+  // Save interaction
+  db.prepare(
+    `INSERT INTO essay_interactions (submission_id, type, role, content, created_at)
+     VALUES (?, 'chat', 'user', ?, datetime('now'))`
+  ).run(sub.id, message.trim());
+  db.prepare(
+    `INSERT INTO essay_interactions (submission_id, type, role, content, created_at)
+     VALUES (?, 'chat', 'assistant', ?, datetime('now'))`
+  ).run(sub.id, reply);
+
+  return res.json({ reply });
+});
+
+// ---------------------------------------------------------------------------
+// POST /submissions/:id/rewrite  — AI rewrite essay
+// ---------------------------------------------------------------------------
+router.post('/submissions/:id/rewrite', requireAuth, async (req, res) => {
+  const db = getDB();
+  const sub = db.prepare('SELECT * FROM essay_submissions WHERE id = ?').get(req.params.id);
+  if (!sub) return res.status(404).json({ error: 'Submission not found' });
+
+  const task = db.prepare('SELECT * FROM essay_tasks WHERE id = ?').get(sub.task_id);
+  const taskInfo = { title: task?.title, requirements: task?.requirements };
+  const scoreDetail = sub.score_detail ? JSON.parse(sub.score_detail) : null;
+  const annotations = sub.annotations ? JSON.parse(sub.annotations) : null;
+
+  const result = await rewriteEssay(sub.ocr_text || '', taskInfo, scoreDetail, annotations, sub.ai_comment);
+
+  // Save interaction
+  db.prepare(
+    `INSERT INTO essay_interactions (submission_id, type, role, content, extra_json, created_at)
+     VALUES (?, 'rewrite', 'assistant', ?, ?, datetime('now'))`
+  ).run(sub.id, result.rewrite, JSON.stringify(result.changes));
+
+  return res.json(result);
+});
+
+// ---------------------------------------------------------------------------
+// GET /submissions/:id/interactions  — list interactions
+// ---------------------------------------------------------------------------
+router.get('/submissions/:id/interactions', async (req, res) => {
+  const db = getDB();
+  const { type } = req.query;
+  let rows;
+  if (type) {
+    rows = db.prepare(
+      "SELECT id, type, role, content, extra_json, created_at FROM essay_interactions WHERE submission_id = ? AND type = ? ORDER BY created_at ASC"
+    ).all(req.params.id, type);
+  } else {
+    rows = db.prepare(
+      "SELECT id, type, role, content, extra_json, created_at FROM essay_interactions WHERE submission_id = ? ORDER BY created_at ASC"
+    ).all(req.params.id);
+  }
+  return res.json({ interactions: rows });
 });
 
 module.exports = router;
