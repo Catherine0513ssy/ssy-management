@@ -2737,7 +2737,7 @@
                 x-text="isAdmin ? (currentStudent.name ? currentStudent.name.charAt(0) : '?') : '?'">
               </div>
               <div>
-                <div style="font-size:18px;font-weight:700;" x-text="isAdmin ? currentStudent.name + ' (' + searchNum + ')' : searchNum"></div>
+                <div style="font-size:18px;font-weight:700;" x-text="isAdmin ? (currentStudent?.name || '') + ' (' + searchNum + ')' : searchNum"></div>
                 <div style="font-size:0.875rem;color:#64748b;" x-text="stats.examCount + ' 场考试记录'"></div>
               </div>
             </div>

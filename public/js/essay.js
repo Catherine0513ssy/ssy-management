@@ -275,14 +275,13 @@ document.addEventListener('alpine:init', () => { console.log('[ESSAY] alpine:ini
         const data = await API.chatSubmission(this.currentSub.id, msg);
         this.chatMessages.push({ role: 'user', content: msg });
         this.chatMessages.push({ role: 'assistant', content: data.reply });
-        setTimeout(() => {
-          const container = document.querySelector('.chat-drawer-messages');
-          if (container) container.scrollTop = container.scrollHeight;
-        }, 50);
+        this.scrollChatToBottom('.chat-panel-messages');
+        this.scrollChatToBottom('.chat-drawer-messages');
       } catch (e) {
         this.$dispatch('toast', { message: e.message, type: 'error' }, 50);
+      } finally {
+        this.chatLoading = false;
       }
-      this.chatLoading = false;
     },
 
     // ===== AI Rewrite =====
