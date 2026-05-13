@@ -2575,7 +2575,7 @@
                 <div x-show="aiRewrite" style="font-size:0.8rem;line-height:1.6;color:#475569;white-space:pre-wrap;word-break:break-word;overflow-wrap:break-word;" x-text="aiRewrite?.text"></div>
                 <div x-show="aiRewrite?.changes?.length" style="margin-top:8px;">
                   <div style="font-weight:600;font-size:0.75rem;color:#64748b;margin-bottom:4px;">主要改动：</div>
-                  <template x-for="(c, i) in aiRewrite.changes" :key="i">
+                  <template x-for="(c, i) in (aiRewrite?.changes || [])" :key="i">
                     <div style="font-size:0.75rem;color:#475569;padding:3px 0;border-bottom:1px solid #f1f5f9;">
                       <span style="color:#ef4444;text-decoration:line-through;" x-text="c.original"></span>
                       <span style="color:#22c55e;" x-text="' → ' + c.rewritten"></span>
@@ -2964,7 +2964,7 @@
   <script src="/js/ocr-upload.js?v=4"></script>
   <script src="/js/doc-upload.js?v=4"></script>
   <script src="/js/quiz.js?v=10"></script>
-  <script src="/js/essay.js?v=8"></script>
+  <script src="/js/essay.js?v=7"></script>
   <script src="/js/choicefill.js?v=4"></script>
   <script src="/js/wordgame.js?v=15"></script>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
