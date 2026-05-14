@@ -158,6 +158,72 @@
     }
     .stat-pill .stat-label { font-size: var(--text-xs); color: var(--text-secondary); }
     .stat-pill .stat-value { font-size: var(--text-lg); font-weight: 800; }
+
+    /* AI Diagnosis */
+    .ai-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 28px; border: none;
+      background: linear-gradient(135deg, #f472b6, #fb923c);
+      color: white; font-size: var(--text-base); font-weight: 700;
+      cursor: pointer; box-shadow: 0 4px 16px rgba(244,114,182,0.35);
+      transition: all 0.2s;
+    }
+    .ai-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(244,114,182,0.45); }
+    .ai-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .ai-btn .ai-icon { font-size: 20px; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+    .ai-panel {
+      margin-bottom: 16px;
+      background: var(--card-bg); backdrop-filter: var(--card-blur);
+      border-radius: var(--card-radius); border: 1px solid var(--card-border);
+      box-shadow: var(--card-shadow); padding: 20px;
+      animation: slideDown 0.3s ease;
+    }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .ai-summary {
+      font-size: var(--text-base); line-height: 1.7;
+      color: var(--text-primary); padding: 16px;
+      background: linear-gradient(135deg, rgba(244,114,182,0.08), rgba(251,146,60,0.08));
+      border-radius: var(--card-radius-sm); border-left: 4px solid #f472b6;
+      margin-bottom: 16px;
+    }
+
+    .dim-analysis-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 16px;
+    }
+    @media (max-width: 768px) { .dim-analysis-grid { grid-template-columns: repeat(2, 1fr); } }
+    .dim-analysis-card {
+      padding: 14px 10px; border-radius: var(--card-radius-sm);
+      text-align: center; cursor: pointer; transition: all 0.2s;
+      border: 2px solid transparent;
+    }
+    .dim-analysis-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .dim-analysis-card.active-suggest { border-color: #f472b6; }
+    .dim-analysis-card .da-name { font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: 4px; }
+    .dim-analysis-card .da-score { font-size: var(--text-xl); font-weight: 800; }
+    .dim-analysis-card .da-level { font-size: var(--text-xs); font-weight: 600; padding: 2px 8px; border-radius: 8px; display: inline-block; margin-top: 4px; }
+    .dim-analysis-card .da-delta { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
+
+    .risk-student-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: var(--card-radius-sm);
+      background: rgba(239,68,68,0.05); margin-bottom: 6px;
+      border: 1px solid rgba(239,68,68,0.1);
+    }
+    .risk-student-item .risk-name { flex: 1; font-weight: 600; font-size: var(--text-sm); }
+    .risk-student-item .risk-total { font-weight: 800; color: #dc2626; font-size: var(--text-sm); }
+    .risk-student-item .risk-dims { font-size: 11px; color: #ef4444; background: rgba(239,68,68,0.1); padding: 2px 8px; border-radius: 8px; }
+
+    .suggest-card {
+      padding: 14px; border-radius: var(--card-radius-sm);
+      background: rgba(167,139,250,0.06); border: 1.5px solid rgba(167,139,250,0.2);
+      margin-bottom: 10px;
+    }
+    .suggest-card .sg-title { font-weight: 700; font-size: var(--text-sm); color: #7c3aed; margin-bottom: 6px; }
+    .suggest-card .sg-action { font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.6; margin-bottom: 4px; }
+    .suggest-card .sg-expected { font-size: 12px; color: var(--color-success); font-weight: 600; }
   </style>
 </head>
 <body x-data="analysisApp()" x-init="init()">
@@ -199,6 +265,68 @@
           <div class="stat-label">游戏记录</div>
           <div class="stat-value" x-text="overview.stats?.total_games || '-'">-</div>
         </div>
+      </div>
+    </div>
+
+    <!-- AI Diagnosis -->
+    <div style="margin-bottom:16px;">
+      <button class="ai-btn" @click="runDiagnosis()" :disabled="aiLoading">
+        <span class="ai-icon" x-show="aiLoading">✨</span>
+        <span x-text="aiLoading ? 'AI分析中...' : '🔮 AI智能诊断'"></span>
+      </button>
+    </div>
+
+    <div class="ai-panel" x-show="aiDiagnosis" x-transition>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div class="card-title" style="margin:0;">AI诊断报告</div>
+        <button @click="aiDiagnosis=null" style="background:none;border:none;cursor:pointer;font-size:18px;color:#94a3b8;">✕</button>
+      </div>
+
+      <!-- AI Summary -->
+      <div class="ai-summary" x-show="aiDiagnosis?.ai_summary" x-text="aiDiagnosis?.ai_summary"></div>
+
+      <!-- Dimension Analysis -->
+      <div style="font-size:var(--text-sm);font-weight:600;color:var(--text-secondary);margin-bottom:10px;">五维分析（点击查看教学建议）</div>
+      <div class="dim-analysis-grid">
+        <template x-for="d in aiDiagnosis?.dimensions" :key="d.dim">
+          <div class="dim-analysis-card" :class="{ 'active-suggest': activeSuggestDim===d.dim }" @click="getSuggestions(d.dim)">
+            <div class="da-name" x-text="d.name"></div>
+            <div class="da-score" x-text="d.avg" :style="`color:${d.avg>=80?'#22c55e':d.avg>=60?'#a78bfa':d.avg>=40?'#f59e0b':'#ef4444'}`"></div>
+            <div class="da-level" x-text="d.level" :style="`background:${d.level==='优秀'?'rgba(34,197,94,0.15)':d.level==='良好'?'rgba(167,139,250,0.15)':d.level==='一般'?'rgba(245,158,11,0.15)':'rgba(239,68,68,0.15)'};color:${d.level==='优秀'?'#16a34a':d.level==='良好'?'#7c3aed':d.level==='一般'?'#d97706':'#dc2626'}`"></div>
+            <div class="da-delta" x-text="`离散${d.spread}分`"></div>
+          </div>
+        </template>
+      </div>
+
+      <!-- At Risk Students -->
+      <div x-show="aiDiagnosis?.at_risk_count > 0">
+        <div style="font-size:var(--text-sm);font-weight:600;color:var(--text-secondary);margin-bottom:10px;">
+          ⚠️ 需关注学生（<span x-text="aiDiagnosis?.at_risk_count"></span>人）
+        </div>
+        <template x-for="s in aiDiagnosis?.at_risk_students" :key="s.name">
+          <div class="risk-student-item">
+            <span class="risk-name" x-text="s.name"></span>
+            <span class="risk-dims" x-text="s.weak_dims.join('、')"></span>
+            <span class="risk-total" x-text="s.total + '分'"></span>
+          </div>
+        </template>
+      </div>
+
+      <!-- Suggestions -->
+      <div x-show="aiSuggestions.length > 0" style="margin-top:16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <div style="font-size:var(--text-sm);font-weight:600;color:var(--text-secondary);">
+            💡 <span x-text="activeSuggestDimName"></span> 改进建议
+          </div>
+          <button @click="aiSuggestions=[];activeSuggestDim=null" style="background:none;border:none;cursor:pointer;font-size:12px;color:#94a3b8;">收起</button>
+        </div>
+        <template x-for="(sg, idx) in aiSuggestions" :key="idx">
+          <div class="suggest-card">
+            <div class="sg-title" x-text="(idx+1) + '. ' + sg.title"></div>
+            <div class="sg-action" x-text="sg.action"></div>
+            <div class="sg-expected" x-text="'预期效果：' + sg.expected"></div>
+          </div>
+        </template>
       </div>
     </div>
 
@@ -305,6 +433,11 @@
         weakness: {},
         selectedStudent: null,
         chart: null,
+        aiLoading: false,
+        aiDiagnosis: null,
+        aiSuggestions: [],
+        activeSuggestDim: null,
+        activeSuggestDimName: '',
 
         get chartTitle() {
           return this.selectedStudent ? this.selectedStudent + ' 的个人雷达' : '班级学情雷达';
@@ -476,6 +609,46 @@
             animationDuration: 800,
             animationEasing: 'cubicOut',
           }, true);
+        },
+
+        async runDiagnosis() {
+          this.aiLoading = true;
+          this.aiDiagnosis = null;
+          this.aiSuggestions = [];
+          try {
+            const payload = { class_id: this.classId };
+            if (this.selectedStudent) {
+              payload.student_names = [this.selectedStudent];
+            }
+            const res = await fetch('/api/analysis/ai-diagnose', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+            });
+            const data = await res.json();
+            this.aiDiagnosis = data.diagnosis;
+          } catch (e) {
+            console.error('AI诊断失败', e);
+            alert('AI诊断请求失败，请稍后重试');
+          }
+          this.aiLoading = false;
+        },
+
+        async getSuggestions(dim) {
+          this.aiSuggestions = [];
+          this.activeSuggestDim = dim;
+          this.activeSuggestDimName = { vocabulary: '词汇力', writing: '写作力', discipline: '纪律性', engagement: '参与度', progress: '进步度' }[dim] || dim;
+          try {
+            const res = await fetch('/api/analysis/ai-suggest', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ class_id: this.classId, dimension: dim }),
+            });
+            const data = await res.json();
+            this.aiSuggestions = data.suggestions || [];
+          } catch (e) {
+            console.error('获取建议失败', e);
+          }
         },
       };
     }
