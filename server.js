@@ -65,6 +65,7 @@ app.use('/api/ocr', require('./routes/ocr'));
 app.use('/api/upload', require('./routes/upload'));
 app.use('/api/essay', require('./routes/essay'));
 app.use('/api/wordgame', require('./routes/wordgame'));
+app.use('/api/analysis', require('./routes/analysis'));
 
 // Error handler
 app.use(errorHandler);
