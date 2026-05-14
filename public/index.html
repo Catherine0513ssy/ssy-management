@@ -1483,6 +1483,37 @@
           </template>
         </div>
       </div>
+      <!-- AI学情速览 -->
+      <div class="glass-sidebar" style="margin-top:16px;" x-data="aiOverview()" x-init="load()" x-show="!$store.homeworkPresentation?.active">
+        <div style="font-weight:700;font-size:0.9375rem;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+          <span>📊</span>
+          <span>AI学情速览</span>
+        </div>
+        <div x-show="aiLoading" style="font-size:12px;color:#94a3b8;text-align:center;padding:10px;">加载中...</div>
+        <div x-show="!aiLoading && aiData" style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:10px;">
+          <div style="text-align:center;padding:6px;background:rgba(167,139,250,0.08);border-radius:8px;">
+            <div style="font-size:11px;color:#64748b;">词汇力</div>
+            <div style="font-size:16px;font-weight:800;color:#a78bfa;" x-text="aiData?.avg_radar?.vocabulary || '-'">-</div>
+          </div>
+          <div style="text-align:center;padding:6px;background:rgba(251,146,60,0.08);border-radius:8px;">
+            <div style="font-size:11px;color:#64748b;">写作力</div>
+            <div style="font-size:16px;font-weight:800;color:#fb923c;" x-text="aiData?.avg_radar?.writing || '-'">-</div>
+          </div>
+          <div style="text-align:center;padding:6px;background:rgba(34,197,94,0.08);border-radius:8px;">
+            <div style="font-size:11px;color:#64748b;">纪律性</div>
+            <div style="font-size:16px;font-weight:800;color:#22c55e;" x-text="aiData?.avg_radar?.discipline || '-'">-</div>
+          </div>
+          <div style="text-align:center;padding:6px;background:rgba(96,165,250,0.08);border-radius:8px;">
+            <div style="font-size:11px;color:#64748b;">参与度</div>
+            <div style="font-size:16px;font-weight:800;color:#60a5fa;" x-text="aiData?.avg_radar?.engagement || '-'">-</div>
+          </div>
+        </div>
+        <div x-show="!aiLoading && aiData?.weakest_dimension" style="font-size:11px;color:#92400e;background:rgba(251,191,36,0.1);padding:6px 8px;border-radius:8px;margin-bottom:10px;display:flex;align-items:center;gap:4px;">
+          <span>⚠️</span>
+          <span>最弱：<span x-text="aiData?.weakest_dimension?.name" style="font-weight:700;">-</span>（<span x-text="Math.round(aiData?.weakest_dimension?.avg || 0)">-</span>分）</span>
+        </div>
+        <a href="/analysis.html" style="display:block;text-align:center;padding:8px;border-radius:20px;background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;font-size:12px;font-weight:700;text-decoration:none;box-shadow:0 2px 8px rgba(99,102,241,0.25);">查看详细分析 →</a>
+      </div>
     </aside>
 
     <!-- MAIN CONTENT -->
