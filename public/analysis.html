@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+  <title>AI学情雷达 - SSY英语教学管理系统</title>
+  <link rel="stylesheet" href="/css/candy-theme.css">
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <script defer src="/alpinejs/cdn.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      color: var(--text-primary);
+    }
+    .container { max-width: 1400px; margin: 0 auto; padding: 16px; }
+
+    /* Header */
+    .top-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px; margin-bottom: 16px;
+      background: var(--card-bg); backdrop-filter: var(--card-blur);
+      border-radius: var(--card-radius); border: 1px solid var(--card-border);
+      box-shadow: var(--card-shadow);
+    }
+    .top-bar h1 {
+      font-size: var(--text-xl); font-weight: 700;
+      background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .top-bar .back-btn {
+      padding: 8px 16px; border-radius: 24px;
+      background: var(--gradient-primary); color: white;
+      font-size: var(--text-sm); font-weight: 600;
+      text-decoration: none; border: none; cursor: pointer;
+    }
+    .class-tabs {
+      display: flex; gap: 8px;
+    }
+    .class-tab {
+      padding: 8px 20px; border-radius: 24px; border: none;
+      font-size: var(--text-sm); font-weight: 600; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .class-tab.active {
+      background: var(--gradient-primary); color: white;
+      box-shadow: 0 3px 12px rgba(99,102,241,0.35);
+    }
+    .class-tab:not(.active) {
+      background: rgba(0,0,0,0.05); color: var(--text-secondary);
+    }
+
+    /* Layout */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr 280px;
+      gap: 16px;
+    }
+    @media (max-width: 1024px) {
+      .main-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Card */
+    .card {
+      background: var(--card-bg); backdrop-filter: var(--card-blur);
+      border-radius: var(--card-radius); border: 1px solid var(--card-border);
+      box-shadow: var(--card-shadow); padding: 16px;
+    }
+    .card-title {
+      font-size: var(--text-lg); font-weight: 700;
+      margin-bottom: 12px; color: var(--text-primary);
+    }
+
+    /* Student list */
+    .student-list {
+      max-height: calc(100vh - 200px); overflow-y: auto;
+    }
+    .student-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 12px; border-radius: var(--card-radius-sm);
+      margin-bottom: 6px; cursor: pointer;
+      transition: all 0.15s; font-size: var(--text-sm);
+    }
+    .student-item:hover { background: rgba(167,139,250,0.08); }
+    .student-item.active {
+      background: var(--gradient-primary); color: white;
+      box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+    }
+    .student-item .score {
+      font-weight: 700; font-size: var(--text-xs);
+      padding: 2px 8px; border-radius: 10px;
+      background: rgba(255,255,255,0.2);
+    }
+    .student-item.active .score { background: rgba(255,255,255,0.3); }
+
+    /* Radar chart */
+    #radarChart { width: 100%; height: 420px; }
+    @media (max-width: 768px) { #radarChart { height: 320px; } }
+
+    /* Dimension bars */
+    .dim-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+      margin-top: 12px;
+    }
+    @media (max-width: 768px) { .dim-grid { grid-template-columns: repeat(2, 1fr); } }
+    .dim-card {
+      text-align: center; padding: 12px 8px;
+      border-radius: var(--card-radius-sm);
+      background: rgba(255,255,255,0.5);
+    }
+    .dim-card .dim-name { font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: 4px; }
+    .dim-card .dim-value { font-size: var(--text-2xl); font-weight: 800; }
+    .dim-card .dim-bar {
+      height: 4px; border-radius: 2px; margin-top: 6px;
+      background: rgba(0,0,0,0.06); overflow: hidden;
+    }
+    .dim-card .dim-bar-fill { height: 100%; border-radius: 2px; transition: width 0.5s ease; }
+
+    /* Top5 */
+    .rank-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px; border-radius: var(--card-radius-sm);
+      margin-bottom: 8px; background: rgba(255,255,255,0.5);
+    }
+    .rank-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: var(--text-xs); flex-shrink: 0;
+    }
+    .rank-1 { background: linear-gradient(135deg, #FFD700, #FFA500); color: white; }
+    .rank-2 { background: linear-gradient(135deg, #C0C0C0, #A0A0A0); color: white; }
+    .rank-3 { background: linear-gradient(135deg, #CD7F32, #B87333); color: white; }
+    .rank-other { background: rgba(0,0,0,0.06); color: var(--text-secondary); }
+    .rank-name { flex: 1; font-weight: 600; font-size: var(--text-sm); }
+    .rank-score { font-weight: 800; font-size: var(--text-sm); color: var(--accent-lavender); }
+
+    /* Weakness alert */
+    .weakness-tag {
+      display: inline-block; padding: 4px 12px; border-radius: 12px;
+      font-size: var(--text-xs); font-weight: 600; margin: 4px 4px 4px 0;
+    }
+    .weakness-high { background: rgba(239,68,68,0.12); color: #dc2626; }
+    .weakness-mid { background: rgba(245,158,11,0.12); color: #d97706; }
+
+    .loading { text-align: center; padding: 40px; color: var(--text-tertiary); }
+    .empty { text-align: center; padding: 20px; color: var(--text-tertiary); font-size: var(--text-sm); }
+
+    /* Stats row */
+    .stats-row {
+      display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap;
+    }
+    .stat-pill {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 16px; border-radius: var(--card-radius-sm);
+      background: var(--card-bg); backdrop-filter: var(--card-blur);
+      border: 1px solid var(--card-border); box-shadow: var(--card-shadow);
+    }
+    .stat-pill .stat-label { font-size: var(--text-xs); color: var(--text-secondary); }
+    .stat-pill .stat-value { font-size: var(--text-lg); font-weight: 800; }
+  </style>
+</head>
+<body x-data="analysisApp()" x-init="init()">
+  <div class="container">
+    <!-- Header -->
+    <div class="top-bar">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <a href="/" class="back-btn">返回首页</a>
+        <h1>AI学情雷达</h1>
+      </div>
+      <div class="class-tabs">
+        <button class="class-tab" :class="{active: classId===1}" @click="switchClass(1)">2313班</button>
+        <button class="class-tab" :class="{active: classId===2}" @click="switchClass(2)">2314班</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-pill">
+        <div>
+          <div class="stat-label">学生人数</div>
+          <div class="stat-value" x-text="overview.student_count || '-'">-</div>
+        </div>
+      </div>
+      <div class="stat-pill">
+        <div>
+          <div class="stat-label">签到记录</div>
+          <div class="stat-value" x-text="overview.stats?.total_checkins || '-'">-</div>
+        </div>
+      </div>
+      <div class="stat-pill">
+        <div>
+          <div class="stat-label">作文提交</div>
+          <div class="stat-value" x-text="overview.stats?.total_essays || '-'">-</div>
+        </div>
+      </div>
+      <div class="stat-pill">
+        <div>
+          <div class="stat-label">游戏记录</div>
+          <div class="stat-value" x-text="overview.stats?.total_games || '-'">-</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="main-grid">
+      <!-- Left: Student List -->
+      <div class="card">
+        <div class="card-title">学生列表</div>
+        <div class="student-list" x-show="!loading">
+          <div class="student-item" :class="{active: selectedStudent===null}" @click="selectStudent(null)">
+            <span>班级平均</span>
+            <span class="score" x-text="(overview.avg_radar ? (overview.avg_radar.vocabulary+overview.avg_radar.writing+overview.avg_radar.discipline+overview.avg_radar.engagement+overview.avg_radar.progress) : 0) + '分'">-</span>
+          </div>
+          <template x-for="s in students" :key="s.name">
+            <div class="student-item" :class="{active: selectedStudent===s.name}" @click="selectStudent(s.name)">
+              <span x-text="s.name"></span>
+              <span class="score" x-text="s.total + '分'"></span>
+            </div>
+          </template>
+        </div>
+        <div class="loading" x-show="loading">加载中...</div>
+      </div>
+
+      <!-- Center: Radar Chart -->
+      <div class="card">
+        <div class="card-title" x-text="chartTitle">班级学情雷达</div>
+        <div id="radarChart"></div>
+        <div class="dim-grid">
+          <div class="dim-card">
+            <div class="dim-name">词汇力</div>
+            <div class="dim-value" :style="`color:${dimColor('vocabulary')}`" x-text="currentRadar.vocabulary">-</div>
+            <div class="dim-bar"><div class="dim-bar-fill" :style="`width:${currentRadar.vocabulary}%;background:var(--accent-lavender)`"></div></div>
+          </div>
+          <div class="dim-card">
+            <div class="dim-name">写作力</div>
+            <div class="dim-value" :style="`color:${dimColor('writing')}`" x-text="currentRadar.writing">-</div>
+            <div class="dim-bar"><div class="dim-bar-fill" :style="`width:${currentRadar.writing}%;background:var(--accent-coral)`"></div></div>
+          </div>
+          <div class="dim-card">
+            <div class="dim-name">纪律性</div>
+            <div class="dim-value" :style="`color:${dimColor('discipline')}`" x-text="currentRadar.discipline">-</div>
+            <div class="dim-bar"><div class="dim-bar-fill" :style="`width:${currentRadar.discipline}%;background:var(--color-success)`"></div></div>
+          </div>
+          <div class="dim-card">
+            <div class="dim-name">参与度</div>
+            <div class="dim-value" :style="`color:${dimColor('engagement')}`" x-text="currentRadar.engagement">-</div>
+            <div class="dim-bar"><div class="dim-bar-fill" :style="`width:${currentRadar.engagement}%;background:var(--accent-sky)`"></div></div>
+          </div>
+          <div class="dim-card">
+            <div class="dim-name">进步度</div>
+            <div class="dim-value" :style="`color:${dimColor('progress')}`" x-text="currentRadar.progress">-</div>
+            <div class="dim-bar"><div class="dim-bar-fill" :style="`width:${currentRadar.progress}%;background:var(--gradient-warm)`"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Rankings + Weakness -->
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-title">综合排名 Top5</div>
+          <template x-for="(s, idx) in overview.top_students" :key="s.name">
+            <div class="rank-item">
+              <div class="rank-num" :class="`rank-${idx+1}`" x-text="idx+1"></div>
+              <div class="rank-name" x-text="s.name"></div>
+              <div class="rank-score" x-text="s.total + '分'"></div>
+            </div>
+          </template>
+          <div class="empty" x-show="!overview.top_students || overview.top_students.length===0">暂无数据</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">薄弱维度</div>
+          <div x-show="weakness.weakest_dimension">
+            <div style="font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:8px;">
+              班级最弱：<strong style="color:var(--color-danger)" x-text="weakness.weakest_dimension?.name">-</strong>
+              均分 <span x-text="Math.round(weakness.weakest_dimension?.avg || 0)">-</span>
+            </div>
+            <div style="font-size:var(--text-xs);color:var(--text-tertiary);margin-bottom:8px;">需关注学生：</div>
+            <div>
+              <template x-for="(list, dim) in weakness.at_risk_students" :key="dim">
+                <template x-for="stu in list.slice(0,3)" :key="stu.name">
+                  <span class="weakness-tag" :class="stu.score < 30 ? 'weakness-high' : 'weakness-mid'">
+                    <span x-text="stu.name"></span>
+                    <span x-text="stu.score + '分'"></span>
+                  </span>
+                </template>
+              </template>
+            </div>
+          </div>
+          <div class="empty" x-show="!weakness.weakest_dimension">加载中...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function analysisApp() {
+      return {
+        classId: 1,
+        loading: true,
+        overview: {},
+        students: [],
+        radars: [],
+        weakness: {},
+        selectedStudent: null,
+        chart: null,
+
+        get chartTitle() {
+          return this.selectedStudent ? this.selectedStudent + ' 的个人雷达' : '班级学情雷达';
+        },
+
+        get currentRadar() {
+          if (this.selectedStudent) {
+            const r = this.radars.find(r => r.student_name === this.selectedStudent);
+            return r || { vocabulary: 0, writing: 0, discipline: 0, engagement: 0, progress: 0 };
+          }
+          return this.overview.avg_radar || { vocabulary: 0, writing: 0, discipline: 0, engagement: 0, progress: 0 };
+        },
+
+        dimColor(dim) {
+          const v = this.currentRadar[dim];
+          if (v >= 80) return 'var(--color-success)';
+          if (v >= 60) return 'var(--accent-lavender)';
+          if (v >= 40) return 'var(--color-warning)';
+          return 'var(--color-danger)';
+        },
+
+        async init() {
+          await this.loadData();
+          this.$nextTick(() => {
+            this.initChart();
+            this.updateChart();
+          });
+          window.addEventListener('resize', () => this.chart && this.chart.resize());
+        },
+
+        async loadData() {
+          this.loading = true;
+          try {
+            const [ov, st, wk] = await Promise.all([
+              fetch(`/api/analysis/class-overview?class_id=${this.classId}`).then(r => r.json()),
+              fetch(`/api/analysis/students?class_id=${this.classId}`).then(r => r.json()),
+              fetch(`/api/analysis/weakness?class_id=${this.classId}`).then(r => r.json()),
+            ]);
+            this.overview = ov;
+            this.students = st.students || [];
+            this.weakness = wk;
+
+            const radarRes = await fetch(`/api/analysis/radar?class_id=${this.classId}`);
+            const radarData = await radarRes.json();
+            this.radars = radarData.radars || [];
+          } catch (e) {
+            console.error('加载数据失败', e);
+          }
+          this.loading = false;
+        },
+
+        switchClass(id) {
+          this.classId = id;
+          this.selectedStudent = null;
+          this.loadData().then(() => this.updateChart());
+        },
+
+        selectStudent(name) {
+          this.selectedStudent = name;
+          this.updateChart();
+        },
+
+        initChart() {
+          const el = document.getElementById('radarChart');
+          if (!el) return;
+          this.chart = echarts.init(el);
+        },
+
+        updateChart() {
+          if (!this.chart) return;
+
+          const dims = [
+            { name: '词汇力', max: 100, key: 'vocabulary' },
+            { name: '写作力', max: 100, key: 'writing' },
+            { name: '纪律性', max: 100, key: 'discipline' },
+            { name: '参与度', max: 100, key: 'engagement' },
+            { name: '进步度', max: 100, key: 'progress' },
+          ];
+
+          const avgRadar = this.overview.avg_radar;
+          const series = [];
+
+          // 班级平均（填充背景）
+          if (avgRadar) {
+            series.push({
+              name: '班级平均',
+              type: 'radar',
+              data: [{
+                value: dims.map(d => avgRadar[d.key] || 0),
+                name: '班级平均',
+              }],
+              areaStyle: { color: 'rgba(167,139,250,0.15)' },
+              lineStyle: { color: '#a78bfa', width: 2 },
+              itemStyle: { color: '#a78bfa' },
+              symbol: 'circle',
+              symbolSize: 6,
+            });
+          }
+
+          // 选中学生
+          if (this.selectedStudent) {
+            const r = this.radars.find(r => r.student_name === this.selectedStudent);
+            if (r) {
+              series.push({
+                name: this.selectedStudent,
+                type: 'radar',
+                data: [{
+                  value: dims.map(d => r[d.key] || 0),
+                  name: this.selectedStudent,
+                }],
+                areaStyle: { color: 'rgba(96,165,250,0.2)' },
+                lineStyle: { color: '#60a5fa', width: 3 },
+                itemStyle: { color: '#60a5fa' },
+                symbol: 'circle',
+                symbolSize: 8,
+              });
+            }
+          } else {
+            // 没有选中学生时，显示Top3的轮廓线（半透明）
+            const top3 = this.students.slice(0, 3);
+            const colors = ['#FFD700', '#C0C0C0', '#CD7F32'];
+            top3.forEach((s, i) => {
+              const r = this.radars.find(r => r.student_name === s.name);
+              if (r) {
+                series.push({
+                  name: s.name,
+                  type: 'radar',
+                  data: [{
+                    value: dims.map(d => r[d.key] || 0),
+                    name: s.name,
+                  }],
+                  lineStyle: { color: colors[i], width: 1.5, opacity: 0.6 },
+                  itemStyle: { color: colors[i], opacity: 0.6 },
+                  symbol: 'circle',
+                  symbolSize: 4,
+                  areaStyle: { opacity: 0 },
+                });
+              }
+            });
+          }
+
+          this.chart.setOption({
+            tooltip: { trigger: 'item' },
+            legend: {
+              bottom: 0,
+              textStyle: { fontSize: 12, color: '#64748b' },
+              itemWidth: 14,
+              itemHeight: 10,
+            },
+            radar: {
+              indicator: dims,
+              shape: 'polygon',
+              radius: '65%',
+              center: ['50%', '48%'],
+              axisName: {
+                color: '#64748b',
+                fontSize: 13,
+                fontWeight: 600,
+              },
+              splitArea: {
+                areaStyle: {
+                  color: ['rgba(167,139,250,0.03)', 'rgba(167,139,250,0.06)', 'rgba(167,139,250,0.03)', 'rgba(167,139,250,0.06)'],
+                },
+              },
+              axisLine: { lineStyle: { color: 'rgba(0,0,0,0.08)' } },
+              splitLine: { lineStyle: { color: 'rgba(0,0,0,0.06)' } },
+            },
+            series,
+            animationDuration: 800,
+            animationEasing: 'cubicOut',
+          }, true);
+        },
+      };
+    }
+  </script>
+</body>
+</html>
