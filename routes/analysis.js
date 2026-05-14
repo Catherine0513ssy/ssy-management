@@ -283,4 +283,217 @@ router.get('/student/:name', (req, res) => {
   }
 });
 
+// ============================================================================
+// AI Analysis Engine
+// ============================================================================
+
+const { callAI } = require('../services/ocr-ai');
+
+const DIM_NAMES = { vocabulary: '词汇力', writing: '写作力', discipline: '纪律性', engagement: '参与度', progress: '进步度' };
+const DIM_COLORS = { vocabulary: '#a78bfa', writing: '#fb923c', discipline: '#22c55e', engagement: '#60a5fa', progress: '#f472b6' };
+
+function getDimLevel(score) {
+  if (score >= 80) return { level: '优秀', color: '#22c55e' };
+  if (score >= 60) return { level: '良好', color: '#60a5fa' };
+  if (score >= 40) return { level: '一般', color: '#f59e0b' };
+  return { level: '薄弱', color: '#ef4444' };
+}
+
+function buildClassDiagnosis(radars, avgRadar, weakness) {
+  // 80% rule-based diagnosis
+  const dims = ['vocabulary', 'writing', 'discipline', 'engagement', 'progress'];
+  const dimAnalysis = dims.map(d => {
+    const avg = avgRadar[d] || 0;
+    const values = radars.map(r => r[d]).sort((a, b) => a - b);
+    const lowCount = values.filter(v => v < 40).length;
+    const midCount = values.filter(v => v >= 40 && v < 60).length;
+    return {
+      dim: d, name: DIM_NAMES[d],
+      avg, level: getDimLevel(avg).level,
+      low_count: lowCount, mid_count: midCount, total: radars.length,
+      max: values[values.length - 1] || 0, min: values[0] || 0,
+      spread: (values[values.length - 1] || 0) - (values[0] || 0),
+    };
+  });
+
+  const weakest = dimAnalysis.sort((a, b) => a.avg - b.avg)[0];
+  const strongest = dimAnalysis.sort((a, b) => b.avg - a.avg)[0];
+
+  // Identify at-risk students (< 40 in any dim or total < 200)
+  const atRisk = radars.filter(r => {
+    const total = r.vocabulary + r.writing + r.discipline + r.engagement + r.progress;
+    return total < 200 || dims.some(d => r[d] < 30);
+  }).map(r => ({
+    name: r.student_name,
+    total: r.vocabulary + r.writing + r.discipline + r.engagement + r.progress,
+    weak_dims: dims.filter(d => r[d] < 40).map(d => DIM_NAMES[d]),
+  })).sort((a, b) => a.total - b.total);
+
+  return {
+    dimensions: dimAnalysis,
+    weakest: { dim: weakest.dim, name: weakest.name, avg: weakest.avg },
+    strongest: { dim: strongest.dim, name: strongest.name, avg: strongest.avg },
+    at_risk_count: atRisk.length,
+    at_risk_students: atRisk.slice(0, 5),
+    class_level: avgRadar.vocabulary + avgRadar.writing + avgRadar.discipline + avgRadar.engagement + avgRadar.progress >= 300 ? '良好' : '需加强',
+  };
+}
+
+async function generateAIDiagnosis(diagnosis, className) {
+  // 20% AI-generated highlight
+  const prompt = `你是一位初中英语教学专家。请基于以下班级学情数据，生成一段简洁有力的诊断摘要（100字以内）。
+
+班级：${className}
+五维平均分：词汇力${diagnosis.dimensions.find(d=>d.dim==='vocabulary').avg}、写作力${diagnosis.dimensions.find(d=>d.dim==='writing').avg}、纪律性${diagnosis.dimensions.find(d=>d.dim==='discipline').avg}、参与度${diagnosis.dimensions.find(d=>d.dim==='engagement').avg}、进步度${diagnosis.dimensions.find(d=>d.dim==='progress').avg}
+最弱维度：${diagnosis.weakest.name}（${diagnosis.weakest.avg}分）
+最强维度：${diagnosis.strongest.name}（${diagnosis.strongest.avg}分）
+需关注学生：${diagnosis.at_risk_count}人
+
+要求：
+1. 用教师口吻，简洁有力
+2. 指出亮点和隐患
+3. 给出一句行动建议
+4. 只输出纯文本，不要JSON、不要markdown`;
+
+  try {
+    const text = await callAI([{ role: 'user', content: prompt }], { timeout: 30000 });
+    return text.trim();
+  } catch (e) {
+    console.error('[AI diagnose]', e);
+    return `${className}整体${diagnosis.class_level}。${diagnosis.weakest.name}是最薄弱环节，建议加强训练。`;
+  }
+}
+
+async function generateAISuggestions(diagnosis, targetDim, className) {
+  const dimData = diagnosis.dimensions.find(d => d.dim === targetDim);
+  const prompt = `你是一位初中英语教学专家。针对"${DIM_NAMES[targetDim]}"薄弱（班级均分${dimData?.avg || 0}分），给出3条具体可操作的教学改进建议。
+
+要求：
+1. 每条建议包含：标题（10字内）+ 具体行动（30字内）+ 预期效果（20字内）
+2. 输出严格JSON格式：{"suggestions":[{"title":"...","action":"...","expected":"..."}]}
+3. 仅返回JSON，不要附加解释`;
+
+  try {
+    const text = await callAI([{ role: 'user', content: prompt }], { timeout: 30000 });
+    const clean = text.replace(/```json\s*/gi, '').replace(/```\s*$/gi, '').trim();
+    const match = clean.match(/\{[\s\S]*\}/);
+    if (match) {
+      return JSON.parse(match[0]).suggestions || [];
+    }
+  } catch (e) {
+    console.error('[AI suggest]', e);
+  }
+
+  // Fallback suggestions
+  const fallbacks = {
+    vocabulary: [
+      { title: '分层听写', action: '按能力分组，不同学生布置不同难度词汇', expected: '两周内听写通过率提升20%' },
+      { title: '游戏化记词', action: '每周安排单词消消乐PK赛', expected: '激发兴趣，主动复习' },
+      { title: '词汇墙展示', action: '将高频错词做成班级词汇墙', expected: '利用碎片时间反复记忆' },
+    ],
+    writing: [
+      { title: '范文仿写', action: '提供满分范文，逐句拆解后仿写', expected: '掌握基本句式结构' },
+      { title: 'AI精批', action: '学生拍照上传作文，AI自动批改', expected: '及时反馈，精准定位错误' },
+      { title: '每周一练', action: '固定每周一篇作文，形成写作习惯', expected: '量变引起质变' },
+    ],
+    discipline: [
+      { title: '小组竞赛', action: '以小组为单位进行签到PK', expected: '同伴压力转化为动力' },
+      { title: '连续奖励', action: '连续全勤3次给予积分奖励', expected: '培养坚持习惯' },
+      { title: '家长通报', action: '每周向家长推送签到报告', expected: '家校协同督学' },
+    ],
+    engagement: [
+      { title: '优秀展示', action: '每周评选优秀作业并在课堂展示', expected: '树立榜样，激发参与' },
+      { title: '积分兑换', action: '参与活动积累积分兑换小奖品', expected: '正向激励持续参与' },
+      { title: '角色轮换', action: '让不同学生担任小组活动主持人', expected: '人人都有表现机会' },
+    ],
+    progress: [
+      { title: '错题重测', action: '针对错题定期安排二次测试', expected: '巩固薄弱点' },
+      { title: '个人档案', action: '为每个学生建立学情跟踪档案', expected: '可视化进步轨迹' },
+      { title: '目标设定', action: '与学生共同制定短期可达目标', expected: '增强成就感和方向感' },
+    ],
+  };
+  return fallbacks[targetDim] || fallbacks.vocabulary;
+}
+
+// ============================================================================
+// POST /api/analysis/ai-diagnose
+// Body: { class_id, student_names? }
+// ============================================================================
+router.post('/ai-diagnose', async (req, res) => {
+  try {
+    const { class_id, student_names } = req.body;
+    if (!class_id) return res.status(400).json({ error: 'class_id is required' });
+    const cid = Number(class_id);
+    const db = getDB();
+    const allSessions = db.prepare(`SELECT class_id, type, date FROM checkin_sessions`).all();
+
+    let targetRadars;
+    if (student_names && Array.isArray(student_names) && student_names.length > 0) {
+      targetRadars = student_names.map(n => computeStudentRadar(db, cid, n, allSessions));
+    } else {
+      const students = db.prepare(`SELECT name FROM students WHERE class_id = ? AND active = 1 ORDER BY sort_order`).all(cid);
+      targetRadars = students.map(s => computeStudentRadar(db, cid, s.name, allSessions));
+    }
+
+    const avgRadar = {
+      vocabulary: Math.round(avg(targetRadars.map(r => r.vocabulary))),
+      writing: Math.round(avg(targetRadars.map(r => r.writing))),
+      discipline: Math.round(avg(targetRadars.map(r => r.discipline))),
+      engagement: Math.round(avg(targetRadars.map(r => r.engagement))),
+      progress: Math.round(avg(targetRadars.map(r => r.progress))),
+    };
+
+    const diagnosis = buildClassDiagnosis(targetRadars, avgRadar);
+    const aiSummary = await generateAIDiagnosis(diagnosis, classIdToName(cid) + '班');
+
+    res.json({
+      class_id: cid,
+      diagnosis: { ...diagnosis, ai_summary: aiSummary },
+      avg_radar: avgRadar,
+    });
+  } catch (e) {
+    console.error('[analysis/ai-diagnose]', e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// ============================================================================
+// POST /api/analysis/ai-suggest
+// Body: { class_id, dimension }
+// dimension: vocabulary|writing|discipline|engagement|progress
+// ============================================================================
+router.post('/ai-suggest', async (req, res) => {
+  try {
+    const { class_id, dimension } = req.body;
+    if (!class_id) return res.status(400).json({ error: 'class_id is required' });
+    if (!dimension || !DIM_NAMES[dimension]) return res.status(400).json({ error: 'invalid dimension' });
+    const cid = Number(class_id);
+    const db = getDB();
+    const allSessions = db.prepare(`SELECT class_id, type, date FROM checkin_sessions`).all();
+    const students = db.prepare(`SELECT name FROM students WHERE class_id = ? AND active = 1 ORDER BY sort_order`).all(cid);
+    const radars = students.map(s => computeStudentRadar(db, cid, s.name, allSessions));
+    const avgRadar = {
+      vocabulary: Math.round(avg(radars.map(r => r.vocabulary))),
+      writing: Math.round(avg(radars.map(r => r.writing))),
+      discipline: Math.round(avg(radars.map(r => r.discipline))),
+      engagement: Math.round(avg(radars.map(r => r.engagement))),
+      progress: Math.round(avg(radars.map(r => r.progress))),
+    };
+
+    const diagnosis = buildClassDiagnosis(radars, avgRadar);
+    const suggestions = await generateAISuggestions(diagnosis, dimension, classIdToName(cid) + '班');
+
+    res.json({
+      class_id: cid,
+      dimension,
+      dimension_name: DIM_NAMES[dimension],
+      avg_score: avgRadar[dimension],
+      suggestions,
+    });
+  } catch (e) {
+    console.error('[analysis/ai-suggest]', e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
 module.exports = router;
