@@ -774,4 +774,101 @@ router.post('/personal-path', async (req, res) => {
   }
 });
 
+// ============================================================================
+// GET /api/analysis/class-compare
+// Compare two classes
+// ============================================================================
+router.get('/class-compare', (req, res) => {
+  try {
+    const { class_id_1, class_id_2 } = req.query;
+    if (!class_id_1 || !class_id_2) return res.status(400).json({ error: 'class_id_1 and class_id_2 are required' });
+    const cid1 = Number(class_id_1);
+    const cid2 = Number(class_id_2);
+    const db = getDB();
+    const allSessions = db.prepare(`SELECT class_id, type, date FROM checkin_sessions`).all();
+
+    const students1 = db.prepare(`SELECT name FROM students WHERE class_id = ? AND active = 1 ORDER BY sort_order`).all(cid1);
+    const students2 = db.prepare(`SELECT name FROM students WHERE class_id = ? AND active = 1 ORDER BY sort_order`).all(cid2);
+
+    const radars1 = students1.map(s => computeStudentRadar(db, cid1, s.name, allSessions));
+    const radars2 = students2.map(s => computeStudentRadar(db, cid2, s.name, allSessions));
+
+    const avg1 = {
+      vocabulary: Math.round(avg(radars1.map(r => r.vocabulary))),
+      writing: Math.round(avg(radars1.map(r => r.writing))),
+      discipline: Math.round(avg(radars1.map(r => r.discipline))),
+      engagement: Math.round(avg(radars1.map(r => r.engagement))),
+      progress: Math.round(avg(radars1.map(r => r.progress))),
+    };
+    const avg2 = {
+      vocabulary: Math.round(avg(radars2.map(r => r.vocabulary))),
+      writing: Math.round(avg(radars2.map(r => r.writing))),
+      discipline: Math.round(avg(radars2.map(r => r.discipline))),
+      engagement: Math.round(avg(radars2.map(r => r.engagement))),
+      progress: Math.round(avg(radars2.map(r => r.progress))),
+    };
+
+    res.json({
+      class_1: { id: cid1, name: classIdToName(cid1), avg_radar: avg1, student_count: students1.length },
+      class_2: { id: cid2, name: classIdToName(cid2), avg_radar: avg2, student_count: students2.length },
+      diff: {
+        vocabulary: avg1.vocabulary - avg2.vocabulary,
+        writing: avg1.writing - avg2.writing,
+        discipline: avg1.discipline - avg2.discipline,
+        engagement: avg1.engagement - avg2.engagement,
+        progress: avg1.progress - avg2.progress,
+      },
+    });
+  } catch (e) {
+    console.error('[analysis/class-compare]', e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// ============================================================================
+// GET /api/analysis/trend?class_id=1&months=6
+// Monthly trend of checkin pass rate as proxy for discipline/vocabulary
+// ============================================================================
+router.get('/trend', (req, res) => {
+  try {
+    const { class_id, months = '6' } = req.query;
+    if (!class_id) return res.status(400).json({ error: 'class_id is required' });
+    const cid = Number(class_id);
+    const monthCount = Math.min(parseInt(months) || 6, 12);
+    const db = getDB();
+
+    // Get monthly checkin pass rates
+    const rows = db.prepare(`
+      SELECT
+        substr(cs.date, 1, 7) as month,
+        cs.type,
+        COUNT(cr.id) as total,
+        SUM(CASE WHEN cr.passed = 1 THEN 1 ELSE 0 END) as passed
+      FROM checkin_records cr
+      JOIN checkin_sessions cs ON cs.id = cr.session_id
+      JOIN students s ON s.id = cr.student_id
+      WHERE cs.class_id = ? AND s.active = 1
+      GROUP BY substr(cs.date, 1, 7), cs.type
+      ORDER BY month DESC
+      LIMIT ?
+    `).all(cid, monthCount * 2);
+
+    // Reorganize by month
+    const byMonth = {};
+    rows.forEach(r => {
+      if (!byMonth[r.month]) byMonth[r.month] = { month: r.month };
+      const rate = r.total > 0 ? Math.round((r.passed / r.total) * 100) : 0;
+      if (r.type === 'word') byMonth[r.month].word_rate = rate;
+      if (r.type === 'essay') byMonth[r.month].essay_rate = rate;
+    });
+
+    const trend = Object.values(byMonth).sort((a, b) => a.month.localeCompare(b.month));
+
+    res.json({ class_id: cid, months: monthCount, trend });
+  } catch (e) {
+    console.error('[analysis/trend]', e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
 module.exports = router;

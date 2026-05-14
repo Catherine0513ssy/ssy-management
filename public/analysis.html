@@ -461,6 +461,44 @@
             <div class="dim-bar"><div class="dim-bar-fill" :style="`width:${currentRadar.progress}%;background:var(--gradient-warm)`"></div></div>
           </div>
         </div>
+
+        <!-- Deep Analysis Tabs -->
+        <div style="margin-top:20px;border-top:1px solid rgba(0,0,0,0.06);padding-top:16px;"
+        x-show="!selectedStudent">
+          <div style="display:flex;gap:8px;margin-bottom:16px;">
+            <button @click="deepTab='compare';loadClassCompare()" style="padding:8px 16px;border-radius:20px;border:none;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;"
+              :style="deepTab==='compare' ? 'background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;box-shadow:0 2px 8px rgba(99,102,241,0.25);' : 'background:rgba(0,0,0,0.05);color:#64748b;'"
+            >📊 班级对比</button>
+            <button @click="deepTab='trend';loadTrend()" style="padding:8px 16px;border-radius:20px;border:none;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;"
+              :style="deepTab==='trend' ? 'background:linear-gradient(135deg,#a78bfa,#60a5fa);color:white;box-shadow:0 2px 8px rgba(99,102,241,0.25);' : 'background:rgba(0,0,0,0.05);color:#64748b;'"
+            >📈 时间趋势</button>
+          </div>
+
+          <!-- Class Compare -->
+          <div x-show="deepTab==='compare'">
+            <div id="compareChart" style="width:100%;height:300px;"></div>
+            <div style="display:flex;gap:16px;justify-content:center;margin-top:10px;">
+              <div style="text-align:center;">
+                <div style="font-size:12px;color:#64748b;">2313班</div>
+                <div style="font-size:18px;font-weight:800;color:#a78bfa;">
+                  x-text="(classCompare?.class_1?.avg_radar ? (classCompare.class_1.avg_radar.vocabulary+classCompare.class_1.avg_radar.writing+classCompare.class_1.avg_radar.discipline+classCompare.class_1.avg_radar.engagement+classCompare.class_1.avg_radar.progress) : 0) + '分'"
+                >-</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-size:12px;color:#64748b;">2314班</div>
+                <div style="font-size:18px;font-weight:800;color:#60a5fa;">
+                  x-text="(classCompare?.class_2?.avg_radar ? (classCompare.class_2.avg_radar.vocabulary+classCompare.class_2.avg_radar.writing+classCompare.class_2.avg_radar.discipline+classCompare.class_2.avg_radar.engagement+classCompare.class_2.avg_radar.progress) : 0) + '分'"
+                >-</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trend -->
+          <div x-show="deepTab==='trend'">
+            <div id="trendChart" style="width:100%;height:300px;"></div>
+            <div style="font-size:12px;color:#94a3b8;text-align:center;margin-top:6px;">基于月度签到通过率的趋势分析</div>
+          </div>
+        </div>
       </div>
 
       <!-- Right: Rankings + Weakness -->
@@ -584,6 +622,11 @@
         reportHistory: [],
         pathLoading: false,
         personalPath: null,
+        deepTab: '',
+        classCompare: null,
+        trendData: null,
+        compareChart: null,
+        trendChart: null,
 
         get chartTitle() {
           return this.selectedStudent ? this.selectedStudent + ' 的个人雷达' : '班级学情雷达';
@@ -611,7 +654,11 @@
             this.initChart();
             this.updateChart();
           });
-          window.addEventListener('resize', () => this.chart && this.chart.resize());
+          window.addEventListener('resize', () => {
+            this.chart && this.chart.resize();
+            this.compareChart && this.compareChart.resize();
+            this.trendChart && this.trendChart.resize();
+          });
         },
 
         async loadData() {
@@ -838,6 +885,72 @@
             alert('加载个性化路径失败');
           }
           this.pathLoading = false;
+        },
+
+        async loadClassCompare() {
+          try {
+            const res = await fetch(`/api/analysis/class-compare?class_id_1=1&class_id_2=2`);
+            this.classCompare = await res.json();
+            this.$nextTick(() => this.initCompareChart());
+          } catch (e) {
+            console.error('加载班级对比失败', e);
+          }
+        },
+
+        async loadTrend() {
+          try {
+            const res = await fetch(`/api/analysis/trend?class_id=${this.classId}&months=6`);
+            const data = await res.json();
+            this.trendData = data.trend || [];
+            this.$nextTick(() => this.initTrendChart());
+          } catch (e) {
+            console.error('加载趋势失败', e);
+          }
+        },
+
+        initCompareChart() {
+          const el = document.getElementById('compareChart');
+          if (!el || !this.classCompare) return;
+          if (this.compareChart) this.compareChart.dispose();
+          this.compareChart = echarts.init(el);
+
+          const dims = ['词汇力', '写作力', '纪律性', '参与度', '进步度'];
+          const keys = ['vocabulary', 'writing', 'discipline', 'engagement', 'progress'];
+          const c1 = this.classCompare.class_1;
+          const c2 = this.classCompare.class_2;
+
+          this.compareChart.setOption({
+            tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+            legend: { data: [c1.name + '班', c2.name + '班'], bottom: 0, textStyle: { fontSize: 12 } },
+            grid: { left: '3%', right: '4%', bottom: '15%', top: '10%', containLabel: true },
+            xAxis: { type: 'category', data: dims, axisLabel: { fontSize: 12 } },
+            yAxis: { type: 'value', max: 100, axisLabel: { fontSize: 11 } },
+            series: [
+              { name: c1.name + '班', type: 'bar', data: keys.map(k => c1.avg_radar[k]), itemStyle: { color: '#a78bfa', borderRadius: [4, 4, 0, 0] }, barWidth: '30%' },
+              { name: c2.name + '班', type: 'bar', data: keys.map(k => c2.avg_radar[k]), itemStyle: { color: '#60a5fa', borderRadius: [4, 4, 0, 0] }, barWidth: '30%' },
+            ],
+            animationDuration: 600,
+          });
+        },
+
+        initTrendChart() {
+          const el = document.getElementById('trendChart');
+          if (!el || !this.trendData || this.trendData.length === 0) return;
+          if (this.trendChart) this.trendChart.dispose();
+          this.trendChart = echarts.init(el);
+
+          this.trendChart.setOption({
+            tooltip: { trigger: 'axis' },
+            legend: { data: ['单词听写通过率', '作文默写通过率'], bottom: 0, textStyle: { fontSize: 12 } },
+            grid: { left: '3%', right: '4%', bottom: '15%', top: '10%', containLabel: true },
+            xAxis: { type: 'category', data: this.trendData.map(d => d.month), axisLabel: { fontSize: 12 } },
+            yAxis: { type: 'value', max: 100, axisLabel: { fontSize: 11, formatter: '{value}%' } },
+            series: [
+              { name: '单词听写通过率', type: 'line', data: this.trendData.map(d => d.word_rate || 0), smooth: true, itemStyle: { color: '#a78bfa' }, areaStyle: { color: 'rgba(167,139,250,0.1)' } },
+              { name: '作文默写通过率', type: 'line', data: this.trendData.map(d => d.essay_rate || 0), smooth: true, itemStyle: { color: '#60a5fa' }, areaStyle: { color: 'rgba(96,165,250,0.1)' } },
+            ],
+            animationDuration: 600,
+          });
         },
 
         async loadReports() {
