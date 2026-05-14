@@ -224,6 +224,66 @@
     .suggest-card .sg-title { font-weight: 700; font-size: var(--text-sm); color: #7c3aed; margin-bottom: 6px; }
     .suggest-card .sg-action { font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.6; margin-bottom: 4px; }
     .suggest-card .sg-expected { font-size: 12px; color: var(--color-success); font-weight: 600; }
+
+    /* Loading spinner */
+    .spinner {
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 3px solid rgba(167,139,250,0.15);
+      border-top-color: #a78bfa;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Skeleton */
+    .skeleton {
+      background: linear-gradient(90deg, rgba(0,0,0,0.04) 25%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.04) 75%);
+      background-size: 200% 100%;
+      animation: skeleton-shimmer 1.5s infinite;
+      border-radius: 8px;
+    }
+    @keyframes skeleton-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    /* Card entrance animation */
+    .card-enter {
+      animation: cardEnter 0.4s ease backwards;
+    }
+    @keyframes cardEnter {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .card-enter-delay-1 { animation-delay: 0.05s; }
+    .card-enter-delay-2 { animation-delay: 0.1s; }
+    .card-enter-delay-3 { animation-delay: 0.15s; }
+
+    /* Data notice */
+    .data-notice {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 16px; border-radius: var(--card-radius-sm);
+      background: linear-gradient(135deg, rgba(251,191,36,0.1), rgba(245,158,11,0.08));
+      border: 1.5px solid rgba(245,158,11,0.25);
+      margin-bottom: 16px; font-size: var(--text-sm);
+      color: #92400e;
+    }
+    .data-notice .notice-icon { font-size: 18px; flex-shrink: 0; }
+
+    /* Error state */
+    .error-state {
+      text-align: center; padding: 40px 20px;
+      color: var(--text-tertiary);
+    }
+    .error-state .error-icon { font-size: 48px; margin-bottom: 12px; }
+    .error-state .error-text { font-size: var(--text-sm); margin-bottom: 16px; }
+    .error-state button {
+      padding: 8px 20px; border-radius: 20px; border: none;
+      background: var(--gradient-primary); color: white;
+      font-size: var(--text-sm); font-weight: 600; cursor: pointer;
+    }
+
+    /* Scrollbar styling */
+    .student-list::-webkit-scrollbar { width: 4px; }
+    .student-list::-webkit-scrollbar-track { background: transparent; }
+    .student-list::-webkit-scrollbar-thumb { background: rgba(167,139,250,0.3); border-radius: 2px; }
   </style>
 </head>
 <body x-data="analysisApp()" x-init="init()">
@@ -333,9 +393,19 @@
     <!-- Main Grid -->
     <div class="main-grid">
       <!-- Left: Student List -->
-      <div class="card">
+      <div class="card card-enter card-enter-delay-1">
         <div class="card-title">学生列表</div>
-        <div class="student-list" x-show="!loading">
+        <div x-show="loading" class="loading">
+          <div class="spinner"></div>
+          <div style="font-size:var(--text-sm);color:var(--text-tertiary);">加载学生数据...</div>
+        </div>
+        <!-- Error state -->
+        <div x-show="loadError" class="error-state">
+          <div class="error-icon">😅</div>
+          <div class="error-text">数据加载失败</div>
+          <button @click="loadData()">重新加载</button>
+        </div>
+        <div class="student-list" x-show="!loading && !loadError">
           <div class="student-item" :class="{active: selectedStudent===null}" @click="selectStudent(null)">
             <span>班级平均</span>
             <span class="score" x-text="(overview.avg_radar ? (overview.avg_radar.vocabulary+overview.avg_radar.writing+overview.avg_radar.discipline+overview.avg_radar.engagement+overview.avg_radar.progress) : 0) + '分'">-</span>
@@ -347,12 +417,22 @@
             </div>
           </template>
         </div>
-        <div class="loading" x-show="loading">加载中...</div>
       </div>
 
       <!-- Center: Radar Chart -->
-      <div class="card">
+      <div class="card card-enter card-enter-delay-2">
         <div class="card-title" x-text="chartTitle">班级学情雷达</div>
+
+        <!-- Data insufficiency notice -->
+        <div class="data-notice" x-show="overview.stats?.total_essays === 0">
+          <span class="notice-icon">📊</span>
+          <span><strong>写作力数据积累中</strong> — 建议让学生提交作文，系统将自动进行OCR识别和AI批改，雷达图将更具参考价值。</span>
+        </div>
+        <div class="data-notice" x-show="overview.stats?.total_games === 0 && overview.stats?.total_essays > 0" style="background:linear-gradient(135deg,rgba(96,165,250,0.1),rgba(59,130,246,0.08));border-color:rgba(59,130,246,0.25);color:#1d4ed8;">
+          <span class="notice-icon">🎮</span>
+          <span><strong>游戏数据较少</strong> — 推广单词消消乐游戏，每班20+人次参与后参与度维度将有显著区分度。</span>
+        </div>
+
         <div id="radarChart"></div>
         <div class="dim-grid">
           <div class="dim-card">
@@ -384,7 +464,7 @@
       </div>
 
       <!-- Right: Rankings + Weakness -->
-      <div>
+      <div class="card-enter card-enter-delay-3">
         <div class="card" style="margin-bottom:16px;">
           <div class="card-title">综合排名 Top5</div>
           <template x-for="(s, idx) in overview.top_students" :key="s.name">
@@ -487,6 +567,7 @@
       return {
         classId: 1,
         loading: true,
+        loadError: false,
         overview: {},
         students: [],
         radars: [],
@@ -535,6 +616,7 @@
 
         async loadData() {
           this.loading = true;
+          this.loadError = false;
           try {
             const [ov, st, wk] = await Promise.all([
               fetch(`/api/analysis/class-overview?class_id=${this.classId}`).then(r => r.json()),
@@ -550,6 +632,7 @@
             this.radars = radarData.radars || [];
           } catch (e) {
             console.error('加载数据失败', e);
+            this.loadError = true;
           }
           this.loading = false;
         },
@@ -557,11 +640,17 @@
         switchClass(id) {
           this.classId = id;
           this.selectedStudent = null;
+          this.aiDiagnosis = null;
+          this.aiSuggestions = [];
+          this.activeSuggestDim = null;
+          this.personalPath = null;
+          this.currentReport = null;
           this.loadData().then(() => this.updateChart());
         },
 
         selectStudent(name) {
           this.selectedStudent = name;
+          this.personalPath = null;
           this.updateChart();
         },
 
