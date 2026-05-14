@@ -441,6 +441,43 @@
           </div>
           <div x-show="!currentReport" class="empty">点击"生成本周"获取AI周报</div>
         </div>
+
+        <!-- Personal Path -->
+        <div class="card" style="margin-top:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <div class="card-title" style="margin:0;">个性化学习路径</div>
+            <button @click="loadPersonalPath()" :disabled="pathLoading || !selectedStudent" style="background:none;border:none;cursor:pointer;font-size:12px;color:#a78bfa;font-weight:600;"
+              x-text="pathLoading ? '生成中...' : '查看路径'">查看路径</button>
+          </div>
+          <div x-show="personalPath">
+            <div style="font-size:var(--text-sm);line-height:1.7;color:var(--text-primary);margin-bottom:12px;padding:12px;background:linear-gradient(135deg,rgba(167,139,250,0.08),rgba(96,165,250,0.08));border-radius:var(--card-radius-sm);border-left:4px solid #a78bfa;"
+              x-text="personalPath?.ai_encouragement">-</div>
+            <div style="font-size:12px;font-weight:600;color:#7c3aed;margin-bottom:8px;"
+              x-text="personalPath?.path?.target">-</div>
+            <div>
+              <template x-for="(p, idx) in personalPath?.path?.phases" :key="idx">
+                <div style="padding:10px 12px;border-radius:var(--card-radius-sm);background:rgba(255,255,255,0.5);margin-bottom:8px;border-left:3px solid #a78bfa;">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                    <span style="font-size:var(--text-sm);font-weight:700;color:var(--text-primary);"
+                      x-text="'阶段' + p.phase + '：' + p.title"></span>
+                    <span style="font-size:11px;color:#94a3b8;background:rgba(0,0,0,0.05);padding:2px 8px;border-radius:8px;"
+                      x-text="p.duration"></span>
+                  </div>
+                  <div style="font-size:11px;color:#f59e0b;margin-bottom:4px;"
+                    x-text="'针对：' + p.focus_dim + '（' + p.focus_score + '分）'"></div>
+                  <ul style="margin:0;padding-left:16px;font-size:var(--text-sm);color:var(--text-secondary);line-height:1.7;">
+                    <template x-for="(a, ai) in p.actions" :key="ai">
+                      <li x-text="a"></li>
+                    </template>
+                  </ul>
+                </div>
+              </template>
+            </div>
+          </div>
+          <div x-show="!personalPath" class="empty">
+            <span x-text="selectedStudent ? '点击"查看路径"生成个性化学习计划' : '请先选择一名学生'">请先选择一名学生</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -464,6 +501,8 @@
         reportLoading: false,
         currentReport: null,
         reportHistory: [],
+        pathLoading: false,
+        personalPath: null,
 
         get chartTitle() {
           return this.selectedStudent ? this.selectedStudent + ' 的个人雷达' : '班级学情雷达';
@@ -692,6 +731,24 @@
             alert('生成周报失败');
           }
           this.reportLoading = false;
+        },
+
+        async loadPersonalPath() {
+          if (!this.selectedStudent) return;
+          this.pathLoading = true;
+          try {
+            const res = await fetch('/api/analysis/personal-path', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ class_id: this.classId, student_name: this.selectedStudent }),
+            });
+            const data = await res.json();
+            this.personalPath = data.path;
+          } catch (e) {
+            console.error('加载路径失败', e);
+            alert('加载个性化路径失败');
+          }
+          this.pathLoading = false;
         },
 
         async loadReports() {

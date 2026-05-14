@@ -652,4 +652,126 @@ router.get('/weekly-reports', (req, res) => {
   }
 });
 
+// ============================================================================
+// Personal Learning Path
+// ============================================================================
+
+const PATH_TEMPLATES = {
+  vocabulary: {
+    title: '词汇力提升计划',
+    phases: [
+      { phase: 1, title: '基础巩固', duration: '1-2周', actions: ['每日听写打卡，错词归入个人错词本', '使用单词消消乐游戏化复习', '制作个人词汇卡片随身携带'] },
+      { phase: 2, title: '拓展应用', duration: '2-3周', actions: ['每周完成2篇阅读，标注生词', '用新学词汇造句，每天5句', '参与班级词汇竞赛'] },
+      { phase: 3, title: '综合运用', duration: '持续', actions: ['在写作中主动使用新词汇', '每周自测，追踪词汇量增长', '帮助同学解答词汇问题'] },
+    ],
+  },
+  writing: {
+    title: '写作力提升计划',
+    phases: [
+      { phase: 1, title: '句型积累', duration: '1-2周', actions: ['每天仿写5个重点句型', '背诵3篇满分范文', '整理个人万能句型库'] },
+      { phase: 2, title: '段落训练', duration: '2-3周', actions: ['每周完成2篇作文，AI精批', '针对批改反馈逐条修改', '学习连接词和过渡句使用'] },
+      { phase: 3, title: '独立创作', duration: '持续', actions: ['每周独立写作1篇，限时完成', '与同学互评作文', '建立个人优秀作文集'] },
+    ],
+  },
+  discipline: {
+    title: '学习纪律强化计划',
+    phases: [
+      { phase: 1, title: '习惯养成', duration: '1-2周', actions: ['制定每日学习计划表', '设置手机专注模式，避免分心', '每日睡前复盘完成情况'] },
+      { phase: 2, title: '小组互助', duration: '2-3周', actions: ['加入学习小组，互相监督', '连续打卡奖励机制', '定期向老师汇报进度'] },
+      { phase: 3, title: '自我驱动', duration: '持续', actions: ['设定阶段性目标并自我奖励', '记录学习日志，追踪成长', '帮助后进同学，教学相长'] },
+    ],
+  },
+  engagement: {
+    title: '课堂参与度提升计划',
+    phases: [
+      { phase: 1, title: '破冰行动', duration: '1周', actions: ['每节课至少举手回答1次', '主动参与小组讨论', '记录自己的课堂发言次数'] },
+      { phase: 2, title: '深度参与', duration: '2-3周', actions: ['承担小组汇报任务', '在单词游戏和竞赛中积极表现', '向老师提出自己的疑问'] },
+      { phase: 3, title: '引领带动', duration: '持续', actions: ['主动组织学习小组活动', '分享学习方法和经验', '成为班级学习氛围的带动者'] },
+    ],
+  },
+  progress: {
+    title: '持续进步计划',
+    phases: [
+      { phase: 1, title: '诊断定位', duration: '1周', actions: ['分析历次成绩，找出薄弱环节', '与老师沟通，制定改进方案', '设定具体可量化的短期目标'] },
+      { phase: 2, title: '专项突破', duration: '2-4周', actions: ['针对薄弱点进行专项训练', '每周自测，追踪进步曲线', '及时调整学习策略'] },
+      { phase: 3, title: '稳定提升', duration: '持续', actions: ['保持学习节奏，不骄不躁', '定期复盘，固化有效方法', '挑战更高目标，不断突破'] },
+    ],
+  },
+};
+
+async function generatePersonalPath(db, classId, studentName, allSessions) {
+  const radar = computeStudentRadar(db, classId, studentName, allSessions);
+  const dims = ['vocabulary', 'writing', 'discipline', 'engagement', 'progress'];
+  const dimNames = { vocabulary: '词汇力', writing: '写作力', discipline: '纪律性', engagement: '参与度', progress: '进步度' };
+
+  const sortedDims = dims.map(d => ({ dim: d, name: dimNames[d], score: radar[d] }))
+    .sort((a, b) => a.score - b.score);
+
+  const weakDims = sortedDims.filter(d => d.score < 60).slice(0, 2);
+  const focusDims = weakDims.length > 0 ? weakDims : sortedDims.slice(0, 1);
+
+  const pathPhases = [];
+  focusDims.forEach((fd, idx) => {
+    const template = PATH_TEMPLATES[fd.dim];
+    if (template) {
+      template.phases.forEach(p => {
+        pathPhases.push({
+          ...p,
+          focus_dim: fd.name,
+          focus_score: fd.score,
+          priority: idx + 1,
+        });
+      });
+    }
+  });
+
+  const prompt = `你是一位亲切的初中英语教师。学生${studentName}本周学情数据：词汇力${radar.vocabulary}、写作力${radar.writing}、纪律性${radar.discipline}、参与度${radar.engagement}、进步度${radar.progress}。最需提升：${focusDims.map(d => d.name).join('、')}。
+
+请写一段100字以内的个性化鼓励寄语，要求：
+1. 先肯定优点（从数据中找到亮点）
+2. 再温和指出改进方向
+3. 给出一句具体可执行的行动建议
+4. 语气亲切，像老师在跟学生一对一谈话
+5. 只输出纯文本`;
+
+  let aiEncouragement = '';
+  try {
+    aiEncouragement = await callAI([{ role: 'user', content: prompt }], { timeout: 30000 });
+    aiEncouragement = aiEncouragement.trim();
+  } catch (e) {
+    console.error('[personal path AI]', e);
+    aiEncouragement = `${studentName}同学，你在${sortedDims[sortedDims.length - 1].name}方面表现不错，继续保持！${focusDims[0].name}还有提升空间，加油！`;
+  }
+
+  return {
+    student_name: studentName,
+    current_radar: { vocabulary: radar.vocabulary, writing: radar.writing, discipline: radar.discipline, engagement: radar.engagement, progress: radar.progress },
+    weakest_dims: focusDims,
+    path: {
+      target: focusDims.map(d => d.name).join('、') + '提升计划',
+      phases: pathPhases.slice(0, 6),
+    },
+    ai_encouragement: aiEncouragement,
+  };
+}
+
+// ============================================================================
+// POST /api/analysis/personal-path
+// Body: { class_id, student_name }
+// ============================================================================
+router.post('/personal-path', async (req, res) => {
+  try {
+    const { class_id, student_name } = req.body;
+    if (!class_id || !student_name) return res.status(400).json({ error: 'class_id and student_name are required' });
+    const cid = Number(class_id);
+    const db = getDB();
+    const allSessions = db.prepare(`SELECT class_id, type, date FROM checkin_sessions`).all();
+    const path = await generatePersonalPath(db, cid, student_name, allSessions);
+    res.json({ path });
+  } catch (e) {
+    console.error('[analysis/personal-path]', e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
 module.exports = router;
