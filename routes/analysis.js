@@ -496,4 +496,160 @@ router.post('/ai-suggest', async (req, res) => {
   }
 });
 
+// ============================================================================
+// Weekly Report
+// ============================================================================
+
+function ensureWeeklyReportTable(db) {
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS weekly_reports (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      class_id INTEGER NOT NULL,
+      week_start TEXT NOT NULL,
+      week_end TEXT NOT NULL,
+      report_json TEXT NOT NULL,
+      ai_summary TEXT,
+      created_at TEXT DEFAULT (datetime('now')),
+      UNIQUE(class_id, week_start)
+    );
+    CREATE INDEX IF NOT EXISTS idx_weekly_reports_class ON weekly_reports(class_id, week_start);
+  `);
+}
+
+function getWeekRange(offsetWeeks = 0) {
+  const now = new Date();
+  const dayOfWeek = now.getDay(); // 0=Sunday
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1) + offsetWeeks * 7);
+  monday.setHours(0, 0, 0, 0);
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+  return {
+    start: monday.toISOString().split('T')[0],
+    end: sunday.toISOString().split('T')[0],
+  };
+}
+
+async function generateWeeklyReport(db, classId) {
+  const week = getWeekRange(0);
+  const allSessions = db.prepare(`SELECT class_id, type, date FROM checkin_sessions`).all();
+  const students = db.prepare(`SELECT name FROM students WHERE class_id = ? AND active = 1 ORDER BY sort_order`).all(classId);
+  const radars = students.map(s => computeStudentRadar(db, classId, s.name, allSessions));
+
+  const avgRadar = {
+    vocabulary: Math.round(avg(radars.map(r => r.vocabulary))),
+    writing: Math.round(avg(radars.map(r => r.writing))),
+    discipline: Math.round(avg(radars.map(r => r.discipline))),
+    engagement: Math.round(avg(radars.map(r => r.engagement))),
+    progress: Math.round(avg(radars.map(r => r.progress))),
+  };
+
+  const withTotal = radars.map(r => ({
+    name: r.student_name,
+    total: r.vocabulary + r.writing + r.discipline + r.engagement + r.progress,
+    vocabulary: r.vocabulary, writing: r.writing, discipline: r.discipline,
+    engagement: r.engagement, progress: r.progress,
+  }));
+
+  const topStudents = [...withTotal].sort((a, b) => b.total - a.total).slice(0, 3);
+  const concernStudents = [...withTotal].sort((a, b) => a.total - b.total).slice(0, 3);
+
+  const dimNames = { vocabulary: '词汇力', writing: '写作力', discipline: '纪律性', engagement: '参与度', progress: '进步度' };
+  const dims = ['vocabulary', 'writing', 'discipline', 'engagement', 'progress'];
+  const weakestDim = [...dims].sort((a, b) => avgRadar[a] - avgRadar[b])[0];
+
+  const prompt = `你是一位初中英语教学专家。请基于以下班级本周学情数据，生成一段周报摘要（200字以内）。
+
+班级：${classIdToName(classId)}班
+本周五维均分：词汇力${avgRadar.vocabulary}、写作力${avgRadar.writing}、纪律性${avgRadar.discipline}、参与度${avgRadar.engagement}、进步度${avgRadar.progress}
+亮点学生：${topStudents.map(s => s.name).join('、')}
+需关注学生：${concernStudents.map(s => s.name).join('、')}
+最弱维度：${dimNames[weakestDim]}（${avgRadar[weakestDim]}分）
+
+要求：用教师工作周报口吻，包含本周亮点、隐患、下周重点。只输出纯文本。`;
+
+  let aiSummary = '';
+  try {
+    aiSummary = await callAI([{ role: 'user', content: prompt }], { timeout: 30000 });
+    aiSummary = aiSummary.trim();
+  } catch (e) {
+    console.error('[weekly report AI]', e);
+    aiSummary = `${classIdToName(classId)}班本周${dimNames[weakestDim]}仍需加强，建议下周重点突破。`;
+  }
+
+  const report = {
+    week_start: week.start, week_end: week.end, class_id: classId,
+    avg_radar: avgRadar, top_students: topStudents,
+    concern_students: concernStudents,
+    weakest_dimension: { dim: weakestDim, name: dimNames[weakestDim], avg: avgRadar[weakestDim] },
+  };
+
+  const existing = db.prepare(`SELECT id FROM weekly_reports WHERE class_id = ? AND week_start = ?`).get(classId, week.start);
+  if (existing) {
+    db.prepare(`UPDATE weekly_reports SET report_json = ?, ai_summary = ?, created_at = datetime('now') WHERE id = ?`)
+      .run(JSON.stringify(report), aiSummary, existing.id);
+  } else {
+    db.prepare(`INSERT INTO weekly_reports (class_id, week_start, week_end, report_json, ai_summary) VALUES (?, ?, ?, ?, ?)`)
+      .run(classId, week.start, week.end, JSON.stringify(report), aiSummary);
+  }
+
+  return { ...report, ai_summary: aiSummary };
+}
+
+// Ensure table exists on module load
+try {
+  ensureWeeklyReportTable(getDB());
+} catch (e) {
+  console.error('[weekly report] table init failed', e);
+}
+
+// ============================================================================
+// POST /api/analysis/weekly-report
+// Body: { class_id }
+// ============================================================================
+router.post('/weekly-report', async (req, res) => {
+  try {
+    const { class_id } = req.body;
+    if (!class_id) return res.status(400).json({ error: 'class_id is required' });
+    const cid = Number(class_id);
+    const db = getDB();
+    ensureWeeklyReportTable(db);
+    const report = await generateWeeklyReport(db, cid);
+    res.json({ report });
+  } catch (e) {
+    console.error('[analysis/weekly-report]', e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// ============================================================================
+// GET /api/analysis/weekly-reports?class_id=1&limit=10
+// ============================================================================
+router.get('/weekly-reports', (req, res) => {
+  try {
+    const { class_id, limit = '10' } = req.query;
+    if (!class_id) return res.status(400).json({ error: 'class_id is required' });
+    const cid = Number(class_id);
+    const db = getDB();
+    ensureWeeklyReportTable(db);
+    const rows = db.prepare(`
+      SELECT * FROM weekly_reports
+      WHERE class_id = ?
+      ORDER BY week_start DESC
+      LIMIT ?
+    `).all(cid, Math.min(parseInt(limit) || 10, 50));
+
+    const reports = rows.map(r => ({
+      id: r.id, week_start: r.week_start, week_end: r.week_end,
+      ai_summary: r.ai_summary, created_at: r.created_at,
+      ...JSON.parse(r.report_json),
+    }));
+
+    res.json({ reports });
+  } catch (e) {
+    console.error('[analysis/weekly-reports]', e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
 module.exports = router;

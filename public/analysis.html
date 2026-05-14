@@ -418,6 +418,29 @@
           </div>
           <div class="empty" x-show="!weakness.weakest_dimension">加载中...</div>
         </div>
+
+        <!-- Weekly Report -->
+        <div class="card" style="margin-top:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <div class="card-title" style="margin:0;">AI周报</div>
+            <button @click="generateReport()" :disabled="reportLoading" style="background:none;border:none;cursor:pointer;font-size:12px;color:#a78bfa;font-weight:600;"
+              x-text="reportLoading ? '生成中...' : '生成本周'">生成本周</button>
+          </div>
+          <div x-show="currentReport">
+            <div style="font-size:11px;color:#94a3b8;margin-bottom:6px;"
+              x-text="currentReport?.week_start + ' ~ ' + currentReport?.week_end">-</div>
+            <div style="font-size:var(--text-sm);line-height:1.7;color:var(--text-primary);margin-bottom:10px;"
+              x-text="currentReport?.ai_summary">-</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;"
+              x-show="currentReport?.avg_radar">
+              <template x-for="d in [{k:'vocabulary',n:'词汇'},{k:'writing',n:'写作'},{k:'discipline',n:'纪律'},{k:'engagement',n:'参与'},{k:'progress',n:'进步'}]" :key="d.k">
+                <span style="font-size:11px;padding:3px 8px;border-radius:8px;background:rgba(167,139,250,0.1);color:#7c3aed;font-weight:600;"
+                  x-text="d.n + ':' + (currentReport?.avg_radar?.[d.k] || 0)"></span>
+              </template>
+            </div>
+          </div>
+          <div x-show="!currentReport" class="empty">点击"生成本周"获取AI周报</div>
+        </div>
       </div>
     </div>
   </div>
@@ -438,6 +461,9 @@
         aiSuggestions: [],
         activeSuggestDim: null,
         activeSuggestDimName: '',
+        reportLoading: false,
+        currentReport: null,
+        reportHistory: [],
 
         get chartTitle() {
           return this.selectedStudent ? this.selectedStudent + ' 的个人雷达' : '班级学情雷达';
@@ -648,6 +674,36 @@
             this.aiSuggestions = data.suggestions || [];
           } catch (e) {
             console.error('获取建议失败', e);
+          }
+        },
+
+        async generateReport() {
+          this.reportLoading = true;
+          try {
+            const res = await fetch('/api/analysis/weekly-report', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ class_id: this.classId }),
+            });
+            const data = await res.json();
+            this.currentReport = data.report;
+          } catch (e) {
+            console.error('生成周报失败', e);
+            alert('生成周报失败');
+          }
+          this.reportLoading = false;
+        },
+
+        async loadReports() {
+          try {
+            const res = await fetch(`/api/analysis/weekly-reports?class_id=${this.classId}&limit=5`);
+            const data = await res.json();
+            this.reportHistory = data.reports || [];
+            if (this.reportHistory.length > 0) {
+              this.currentReport = this.reportHistory[0];
+            }
+          } catch (e) {
+            console.error('加载周报历史失败', e);
           }
         },
       };
