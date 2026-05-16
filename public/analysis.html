@@ -381,7 +381,7 @@
           <div class="risk-student-item">
             <span class="risk-name" x-text="s.name"></span>
             <span class="risk-dims" x-text="s.weak_dims.join('、')"></span>
-            <span class="risk-total" x-text="s.total + '分'"></span>
+            <span class="risk-total" x-text="(scoreMap[s.name]?.total ?? Math.round(s.total/5)) + '分'"></span>
           </div>
         </template>
       </div>
@@ -422,12 +422,12 @@
         <div class="student-list" x-show="!loading && !loadError">
           <div class="student-item" :class="{active: selectedStudent===null}" @click="selectStudent(null)">
             <span>班级平均</span>
-            <span class="score" x-text="(overview.avg_radar ? (overview.avg_radar.vocabulary+overview.avg_radar.writing+overview.avg_radar.discipline+overview.avg_radar.engagement+overview.avg_radar.progress) : 0) + '分'">-</span>
+            <span class="score" x-text="(scoreAvg?.total ?? Math.round((overview.avg_radar?.vocabulary+overview.avg_radar?.writing+overview.avg_radar?.discipline+overview.avg_radar?.engagement+overview.avg_radar?.progress || 0)/5)) + '分'">-</span>
           </div>
           <template x-for="s in students" :key="s.name">
             <div class="student-item" :class="{active: selectedStudent===s.name}" @click="selectStudent(s.name)">
               <span x-text="s.name"></span>
-              <span class="score" x-text="s.total + '分'"></span>
+              <span class="score" x-text="(scoreMap[s.name]?.total ?? Math.round(s.total/5)) + '分'"></span>
             </div>
           </template>
         </div>
@@ -499,13 +499,13 @@
               <div style="text-align:center;">
                 <div style="font-size:12px;color:#64748b;">2313班</div>
                 <div style="font-size:18px;font-weight:800;color:#a78bfa;">
-                  x-text="(classCompare?.class_1?.avg_radar ? (classCompare.class_1.avg_radar.vocabulary+classCompare.class_1.avg_radar.writing+classCompare.class_1.avg_radar.discipline+classCompare.class_1.avg_radar.engagement+classCompare.class_1.avg_radar.progress) : 0) + '分'"
+                  x-text="(classCompare?.class_1?.avg_radar ? Math.round((classCompare.class_1.avg_radar.vocabulary+classCompare.class_1.avg_radar.writing+classCompare.class_1.avg_radar.discipline+classCompare.class_1.avg_radar.engagement+classCompare.class_1.avg_radar.progress)/5) : 0) + '分'"
                 >-</div>
               </div>
               <div style="text-align:center;">
                 <div style="font-size:12px;color:#64748b;">2314班</div>
                 <div style="font-size:18px;font-weight:800;color:#60a5fa;">
-                  x-text="(classCompare?.class_2?.avg_radar ? (classCompare.class_2.avg_radar.vocabulary+classCompare.class_2.avg_radar.writing+classCompare.class_2.avg_radar.discipline+classCompare.class_2.avg_radar.engagement+classCompare.class_2.avg_radar.progress) : 0) + '分'"
+                  x-text="(classCompare?.class_2?.avg_radar ? Math.round((classCompare.class_2.avg_radar.vocabulary+classCompare.class_2.avg_radar.writing+classCompare.class_2.avg_radar.discipline+classCompare.class_2.avg_radar.engagement+classCompare.class_2.avg_radar.progress)/5) : 0) + '分'"
                 >-</div>
               </div>
             </div>
@@ -527,7 +527,7 @@
             <div class="rank-item" :style="s.name === selectedStudent ? 'background:rgba(167,139,250,0.12);border-radius:8px;' : ''">
               <div class="rank-num" :class="`rank-${getRankInClass(s.name)}`" x-text="getRankInClass(s.name)"></div>
               <div class="rank-name" x-text="s.name" :style="s.name === selectedStudent ? 'font-weight:800;color:#7c3aed;' : ''"></div>
-              <div class="rank-score" x-text="s.total + '分'"></div>
+              <div class="rank-score" x-text="(scoreMap[s.name]?.total ?? Math.round(s.total/5)) + '分'"></div>
             </div>
           </template>
           <div class="empty" x-show="!selectedStudent && (!overview.top_students || overview.top_students.length===0)">暂无数据</div>
@@ -673,6 +673,8 @@
         trendData: null,
         compareChart: null,
         trendChart: null,
+        scoreMap: {},
+        scoreAvg: null,
 
         get chartTitle() {
           return this.selectedStudent ? this.selectedStudent + ' 的个人雷达' : '班级学情雷达';
@@ -744,14 +746,22 @@
           this.loading = true;
           this.loadError = false;
           try {
-            const [ov, st, wk] = await Promise.all([
+            const [ov, st, wk, sc] = await Promise.all([
               fetch(`/api/analysis/class-overview?class_id=${this.classId}`).then(r => r.json()),
               fetch(`/api/analysis/students?class_id=${this.classId}`).then(r => r.json()),
               fetch(`/api/analysis/weakness?class_id=${this.classId}`).then(r => r.json()),
+              fetch(`/api/analysis/scores?class_id=${this.classId}`).then(r => r.json()).catch(() => ({ scores: [] })),
             ]);
             this.overview = ov;
             this.students = st.students || [];
             this.weakness = wk;
+
+            // Build score map from new 100-point API
+            this.scoreMap = {};
+            (sc.scores || []).forEach(s => {
+              this.scoreMap[s.student_name] = s;
+            });
+            this.scoreAvg = sc.average || null;
 
             const radarRes = await fetch(`/api/analysis/radar?class_id=${this.classId}`);
             const radarData = await radarRes.json();
