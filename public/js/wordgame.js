@@ -741,44 +741,54 @@ document.addEventListener('alpine:init', () => {
       this.page = 'game';
       this.gameMenu = 'plane';
       this.$nextTick(() => {
+        const arena = document.getElementById('wg-arena');
+        if (arena) {
+          const pauseOverlay = arena.querySelector('.wg-pause-overlay');
+          arena.innerHTML = '';
+          if (pauseOverlay) arena.appendChild(pauseOverlay);
+          const canvas = document.createElement('canvas');
+          canvas.id = 'wg-plane-canvas';
+          canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border-radius:12px;cursor:none;';
+          arena.appendChild(canvas);
+        }
         const cfg = this.PLANE_CONFIG[this.diff];
         const words = this.pickWords(cfg.grade, 60);
-        this.initPlaneGame(words);
+        requestAnimationFrame(() => this.initPlaneGame(words));
       });
     },
 
     initPlaneGame(words) {
       const canvas = document.getElementById('wg-plane-canvas');
       if (!canvas) return;
+      canvas.style.display = 'block';
       this.resizePlaneCanvas();
-      const ctx = canvas.getContext('2d');
-      const cfg = this.PLANE_CONFIG[this.diff];
-      const dpr = window.devicePixelRatio || 1;
+        const ctx = canvas.getContext('2d');
+        const dpr = window.devicePixelRatio || 1;
 
-      this.planeState = {
-        canvas, ctx, words,
-        width: canvas.width / dpr,
-        height: canvas.height / dpr,
-        score: 0,
-        playerHp: 3,
-        maxPlayerHp: 3,
-        plane: { x: (canvas.width / dpr) / 2, y: (canvas.height / dpr) - 80, width: 46, height: 46 },
-        planeTargetX: (canvas.width / dpr) / 2,
-        bullets: [],
-        enemies: [],
-        items: [],
-        particles: [],
-        target: null,
-        targetIsEnglish: false,
-        targetHitsRequired: 0,
-        targetHitsCurrent: 0,
-        spawnTimer: 0,
-        lastShot: 0,
-        combo: 0,
-        gameOver: false,
-        correctHits: 0,
-        frozenUntil: 0
-      };
+        this.planeState = {
+          canvas, ctx, words,
+          width: canvas.width / dpr,
+          height: canvas.height / dpr,
+          score: 0,
+          playerHp: 3,
+          maxPlayerHp: 3,
+          plane: { x: (canvas.width / dpr) / 2, y: (canvas.height / dpr) - 80, width: 46, height: 46 },
+          planeTargetX: (canvas.width / dpr) / 2,
+          bullets: [],
+          enemies: [],
+          items: [],
+          particles: [],
+          target: null,
+          targetIsEnglish: false,
+          targetHitsRequired: 0,
+          targetHitsCurrent: 0,
+          spawnTimer: 0,
+          lastShot: 0,
+          combo: 0,
+          gameOver: false,
+          correctHits: 0,
+          frozenUntil: 0
+        };
 
       this.updatePlaneHpUI();
       this.setPlaneTarget();

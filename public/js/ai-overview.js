@@ -9,9 +9,14 @@ function aiOverview() {
     async load() {
       this.aiLoading = true;
       try {
-        const res = await fetch('/api/analysis/class-overview?class_id=1');
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json();
+        const [ovRes, wkRes] = await Promise.all([
+          fetch('/api/analysis/class-overview?class_id=1'),
+          fetch('/api/analysis/weakness?class_id=1'),
+        ]);
+        if (!ovRes.ok) throw new Error('HTTP ' + ovRes.status);
+        const data = await ovRes.json();
+        const weakness = wkRes.ok ? await wkRes.json() : {};
+
         const nameMap = {
           vocabulary: '词汇力',
           writing: '写作力',
@@ -30,6 +35,18 @@ function aiOverview() {
         if (weakKey) {
           data.weakest_dimension = { name: nameMap[weakKey] || weakKey, avg: weakVal };
         }
+
+        // Alert: total unique at-risk students across all dimensions
+        const riskSet = new Set();
+        Object.values(weakness.at_risk_students || {}).forEach(list => {
+          list.forEach(s => riskSet.add(s.name));
+        });
+        data.alert = {
+          weakest_name: weakness.weakest_dimension?.name || '-',
+          weakest_avg: weakness.weakest_dimension?.avg || 0,
+          risk_count: riskSet.size,
+        };
+
         this.aiData = data;
       } catch (e) {
         console.warn('[aiOverview] load failed:', e);

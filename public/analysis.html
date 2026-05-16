@@ -284,6 +284,13 @@
     .student-list::-webkit-scrollbar { width: 4px; }
     .student-list::-webkit-scrollbar-track { background: transparent; }
     .student-list::-webkit-scrollbar-thumb { background: rgba(167,139,250,0.3); border-radius: 2px; }
+
+    @media (max-width: 768px) {
+      .top-bar { flex-direction: column; align-items: stretch; gap: 10px; padding: 10px 14px; }
+      .top-bar .back-btn { padding: 6px 12px; font-size: var(--text-xs); }
+      .top-bar h1 { font-size: 18px; }
+      .class-tabs { justify-content: center; }
+    }
   </style>
 </head>
 <body x-data="analysisApp()" x-init="init()">
@@ -324,6 +331,12 @@
         <div>
           <div class="stat-label">游戏记录</div>
           <div class="stat-value" x-text="overview.stats?.total_games || '-'">-</div>
+        </div>
+      </div>
+      <div class="stat-pill" style="background:linear-gradient(135deg,rgba(239,68,68,0.12),rgba(220,38,38,0.08));border-color:rgba(239,68,68,0.25);color:#dc2626;" x-show="atRiskTotal > 0">
+        <div>
+          <div class="stat-label">需关注</div>
+          <div class="stat-value" x-text="atRiskTotal + '人'">-</div>
         </div>
       </div>
     </div>
@@ -690,6 +703,14 @@
             .map(([k, name]) => ({ key: k, name, score: r[k] || 0 }))
             .sort((a, b) => a.score - b.score)
             .slice(0, 2);
+        },
+
+        get atRiskTotal() {
+          const set = new Set();
+          Object.values(this.weakness.at_risk_students || {}).forEach(list => {
+            list.forEach(s => set.add(s.name));
+          });
+          return set.size;
         },
 
         getRankInClass(name) {
