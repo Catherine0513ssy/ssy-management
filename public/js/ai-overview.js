@@ -1,6 +1,7 @@
 /**
  * Alpine.js component used by index.html sidebar "AI 学情速览" card.
  * Fetches /api/analysis/class-overview and derives the weakest dimension client-side.
+ * Now also fetches 100-point scores from /api/analysis/scores.
  */
 function aiOverview() {
   return {
@@ -9,13 +10,21 @@ function aiOverview() {
     async load() {
       this.aiLoading = true;
       try {
-        const [ovRes, wkRes] = await Promise.all([
+        const [ovRes, wkRes, scRes] = await Promise.all([
           fetch('/api/analysis/class-overview?class_id=1'),
           fetch('/api/analysis/weakness?class_id=1'),
+          fetch('/api/analysis/scores?class_id=1').catch(() => null),
         ]);
         if (!ovRes.ok) throw new Error('HTTP ' + ovRes.status);
         const data = await ovRes.json();
         const weakness = wkRes.ok ? await wkRes.json() : {};
+
+        // Merge new 100-point scores if available
+        if (scRes && scRes.ok) {
+          const scoreData = await scRes.json();
+          data.scoreAvg = scoreData.average || null;
+          data.scores = scoreData.scores || [];
+        }
 
         const nameMap = {
           vocabulary: '词汇力',
@@ -24,9 +33,12 @@ function aiOverview() {
           engagement: '参与度',
           progress: '进步度',
         };
+
+        // Use 100-point avg for weakest dimension if available
+        const avgSrc = data.scoreAvg || data.avg_radar || {};
         let weakKey = null;
         let weakVal = Infinity;
-        for (const [k, v] of Object.entries(data.avg_radar || {})) {
+        for (const [k, v] of Object.entries(avgSrc)) {
           if (typeof v === 'number' && v < weakVal) {
             weakVal = v;
             weakKey = k;
