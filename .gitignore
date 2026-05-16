@@ -10,3 +10,4 @@ logs/
 *.log
 .env
 .DS_Store
+public/index.html.bak.*
