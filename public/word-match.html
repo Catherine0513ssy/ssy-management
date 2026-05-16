@@ -6,7 +6,7 @@
   <title>🍬 英语单词消消乐</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
+
     body {
       font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
       height: 100vh;
@@ -16,8 +16,7 @@
       flex-direction: column;
       padding: 12px;
     }
-    
-/* ===== 背景动画 ===== */    .bg-animation {      position: fixed;      top: 0; left: 0;      width: 100%; height: 100%;      pointer-events: none;      z-index: 0;      overflow: hidden;    }    /* 漂浮粒子 */    .particle {      position: absolute;      border-radius: 50%;      background: rgba(255, 255, 255, 0.6);      animation: floatUp linear infinite;      box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);    }    @keyframes floatUp {      0% { transform: translateY(100vh) scale(0); opacity: 0; }      10% { opacity: 1; transform: translateY(90vh) scale(1); }      90% { opacity: 1; }      100% { transform: translateY(-10vh) scale(0.5); opacity: 0; }    }    /* 星星闪烁 */    .star {      position: absolute;      width: 4px; height: 4px;      background: white;      border-radius: 50%;      animation: twinkle ease-in-out infinite;      box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.8), 0 0 16px 4px rgba(255, 255, 200, 0.4);    }    @keyframes twinkle {      0%, 100% { opacity: 0.2; transform: scale(0.5); }      50% { opacity: 1; transform: scale(1.2); }    }
+
     /* ===== 首页 ===== */
     #home-page {
       display: flex;
@@ -25,21 +24,21 @@
       align-items: center;
       justify-content: center;
       height: 100%;
-      gap: 16px;
+      gap: 14px;
     }
-    
+
     .game-title {
       font-size: clamp(2em, 5vw, 3.5em);
       color: white;
       text-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
-    
+
     .game-subtitle {
       color: rgba(255,255,255,0.85);
       font-size: 1.1em;
-      margin-bottom: 10px;
+      margin-bottom: 4px;
     }
-    
+
     .mode-cards {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -47,7 +46,7 @@
       max-width: 500px;
       width: 100%;
     }
-    
+
     .mode-card {
       background: rgba(255,255,255,0.95);
       border-radius: 20px;
@@ -56,52 +55,79 @@
       transition: transform 0.2s, box-shadow 0.2s;
       box-shadow: 0 6px 24px rgba(0,0,0,0.15);
     }
-    
+
     .mode-card:hover {
       transform: translateY(-3px);
       box-shadow: 0 10px 32px rgba(0,0,0,0.2);
     }
-    
+
     .mode-card .emoji { font-size: 2.5em; margin-bottom: 8px; }
     .mode-card h3 { font-size: 1.2em; color: #333; margin-bottom: 4px; }
     .mode-card p { color: #666; font-size: 0.85em; }
-    
+
+    /* 班级选择 */
+    .class-select {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .class-btn {
+      padding: 8px 20px;
+      border-radius: 12px;
+      border: 2px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.15);
+      color: white;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .class-btn.active {
+      background: rgba(255,255,255,0.9);
+      color: #667eea;
+      border-color: white;
+      font-weight: 700;
+    }
+
     .difficulty-section {
       background: rgba(255,255,255,0.9);
       border-radius: 16px;
       padding: 16px 24px;
     }
-    
+
     .difficulty-section h3 {
       color: #333;
       margin-bottom: 12px;
       font-size: 1em;
     }
-    
+
     .difficulty-btns {
       display: flex;
       gap: 10px;
       justify-content: center;
     }
-    
+
     .diff-btn {
-      padding: 10px 20px;
+      padding: 10px 16px;
       border-radius: 16px;
       border: 2px solid #e2e8f0;
       background: white;
-      font-size: 0.9em;
+      font-size: 0.85em;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
+      line-height: 1.4;
     }
-    
+
     .diff-btn.easy { border-color: #86efac; }
     .diff-btn.medium { border-color: #fbbf24; }
     .diff-btn.hard { border-color: #f87171; }
     .diff-btn.easy.active { background: #86efac; color: #065f46; }
     .diff-btn.medium.active { background: #fbbf24; color: #92400e; }
     .diff-btn.hard.active { background: #f87171; color: white; }
-    
+
     .start-btn {
       padding: 14px 60px;
       border-radius: 20px;
@@ -114,10 +140,24 @@
       box-shadow: 0 6px 24px rgba(34,197,94,0.4);
       transition: transform 0.2s;
     }
-    
+
     .start-btn:hover { transform: translateY(-2px); }
     .start-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-    
+
+    .lb-btn {
+      padding: 10px 32px;
+      border-radius: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.15);
+      color: white;
+      font-size: 0.95em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .lb-btn:hover { background: rgba(255,255,255,0.3); }
+
     /* ===== 游戏页 ===== */
     #game-page {
       display: none;
@@ -125,7 +165,7 @@
       flex-direction: column;
       gap: 8px;
     }
-    
+
     .game-header {
       display: flex;
       align-items: center;
@@ -135,112 +175,114 @@
       padding: 10px 16px;
       flex-shrink: 0;
     }
-    
+
     .score-display {
       font-size: 1.1em;
       font-weight: 700;
       color: #333;
       white-space: nowrap;
     }
-    
+
     .timer-section {
       flex: 1;
     }
-    
+
     .timer-bar {
       height: 10px;
       background: #e2e8f0;
       border-radius: 5px;
       overflow: hidden;
     }
-    
+
     .timer-fill {
       height: 100%;
       background: linear-gradient(90deg, #22c55e, #84efac);
       border-radius: 5px;
       transition: width 0.5s linear, background 0.5s;
     }
-    
+
     .timer-fill.warning { background: linear-gradient(90deg, #f59e0b, #fcd34d); }
     .timer-fill.danger { background: linear-gradient(90deg, #ef4444, #f87171); }
-    
+
     .timer-text {
       text-align: center;
       font-size: 0.8em;
       color: #64748b;
       margin-top: 2px;
     }
-    
+
     .players-status {
       display: flex;
       gap: 12px;
     }
-    
+
     .player-status {
       text-align: center;
       padding: 6px 12px;
       border-radius: 10px;
       background: #f8fafc;
     }
-    
+
     .player-status .label { font-size: 0.75em; color: #64748b; }
     .player-status .score { font-size: 1.1em; font-weight: 700; }
     .player-status.winner { background: #dcfce7; }
     .player-status.winner .score { color: #16a34a; }
-    
+
     /* 牌阵 - 单人 */
     .arena-single {
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 8px 0;
     }
-    
+
     .card-grid {
       display: grid;
       gap: 6px;
       width: 100%;
-      max-width: 1000px;
+      max-width: 960px;
       padding: 0 4px;
     }
-    
-    .card-grid.grid-8 { grid-template-columns: repeat(4, 1fr); }
-    .card-grid.grid-10 { grid-template-columns: repeat(5, 1fr); }
-    .card-grid.grid-12 { grid-template-columns: repeat(6, 1fr); }
-    .card-grid.grid-56 { grid-template-columns: repeat(8, 1fr); gap: 5px; }
-    .card-grid.grid-70 { grid-template-columns: repeat(7, 1fr); gap: 5px; }
-    .card-grid.grid-84 { grid-template-columns: repeat(7, 1fr); gap: 5px; }
-    
+
+    .card-grid.grid-16 { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .card-grid.grid-20 { grid-template-columns: repeat(5, 1fr); gap: 6px; }
+    .card-grid.grid-24 { grid-template-columns: repeat(6, 1fr); gap: 6px; }
+    .card-grid.grid-28 { grid-template-columns: repeat(7, 1fr); gap: 5px; }
+    .card-grid.grid-32 { grid-template-columns: repeat(8, 1fr); gap: 5px; }
+
     /* 牌阵 - 双人 */
     .arena-dual {
       flex: 1;
       display: flex;
       gap: 8px;
+      padding: 4px 0;
     }
-    
+
     .player-side {
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
-    
+
     .player-side h4 {
       text-align: center;
       color: white;
       background: rgba(0,0,0,0.2);
-      padding: 6px;
-      border-radius: 10px;
-      font-size: 0.95em;
+      padding: 4px;
+      border-radius: 8px;
+      font-size: 0.85em;
       flex-shrink: 0;
     }
-    
+
     .player-side .card-grid {
       flex: 1;
+      gap: 6px;
     }
-    
+
     .player-side .card-grid { grid-template-columns: repeat(2, 1fr); }
-    
+
     .vs-divider {
       display: flex;
       align-items: center;
@@ -249,7 +291,7 @@
       font-weight: 800;
       text-shadow: 0 2px 10px rgba(0,0,0,0.3);
     }
-    
+
     /* 卡片 */
     .card {
       background: rgba(255, 255, 255, 0.25);
@@ -257,7 +299,7 @@
       -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.4);
       border-radius: 12px;
-      padding: 6px 4px;
+      padding: 4px 3px;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -266,42 +308,44 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: clamp(0.75em, 1.4vw, 1em);
       font-weight: 700;
       word-break: break-all;
       line-height: 1.2;
-      height: 54px;
+      min-height: 54px;
+      height: auto;
       color: #1e293b;
       text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+      overflow: hidden;
     }
+
     .card.english {
       background: linear-gradient(135deg, rgba(147, 197, 253, 0.5), rgba(96, 165, 250, 0.5));
       border-color: rgba(147, 197, 253, 0.6);
       color: #1e3a5f;
       text-shadow: 0 1px 3px rgba(255, 255, 255, 0.6);
+    }
+
     .card.chinese {
       background: linear-gradient(135deg, rgba(249, 168, 212, 0.5), rgba(236, 72, 153, 0.5));
       border-color: rgba(249, 168, 212, 0.6);
       color: #4a1a4a;
       text-shadow: 0 1px 3px rgba(255, 255, 255, 0.6);
     }
-      color: white;
-    }
-    
+
     .card:hover:not(.matched):not(.selected) {
       transform: translateY(-3px) scale(1.03);
       background: rgba(255, 255, 255, 0.4);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5);
       border-color: rgba(255, 255, 255, 0.6);
     }
-    
+
     .card.selected {
       transform: scale(1.06);
       box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.8), 0 0 20px rgba(251, 191, 36, 0.4), 0 8px 24px rgba(0, 0, 0, 0.2);
       border-color: rgba(251, 191, 36, 0.8);
       background: rgba(255, 255, 255, 0.5);
     }
-    
+
     .card.matched {
       opacity: 0;
       transform: scale(0.3);
@@ -314,14 +358,302 @@
       border-color: rgba(239, 68, 68, 0.8);
       box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.5);
     }
-    }
-    
+
     .card.correct {
       animation: glassPop 0.4s ease;
       border-color: rgba(34, 197, 94, 0.8);
       box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.5), 0 0 20px rgba(34, 197, 94, 0.3);
     }
-    
+
+    /* ===== 结果页 ===== */
+    #result-page {
+      display: none;
+      text-align: center;
+      background: rgba(255,255,255,0.95);
+      border-radius: 24px;
+      padding: 24px 28px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.2);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .result-emoji { font-size: 3.5em; margin-bottom: 8px; }
+    .result-title { font-size: 1.6em; color: #333; margin-bottom: 4px; }
+    .result-subtitle { color: #666; margin-bottom: 16px; font-size: 0.95em; }
+
+    .result-stats {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 16px;
+    }
+
+    .stat-item { text-align: center; }
+    .stat-value { font-size: 1.8em; font-weight: 700; color: #667eea; }
+    .stat-label { color: #64748b; font-size: 0.85em; }
+
+    .result-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn-retry {
+      padding: 12px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-home {
+      padding: 10px;
+      border-radius: 14px;
+      border: 2px solid #e2e8f0;
+      background: white;
+      color: #64748b;
+      font-size: 0.95em;
+      cursor: pointer;
+    }
+
+    /* 单词回顾 */
+    .word-review {
+      margin-top: 12px;
+      text-align: left;
+      max-height: 180px;
+      overflow-y: auto;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 10px;
+    }
+
+    .word-review h4 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 6px;
+      font-size: 0.95em;
+    }
+
+    .word-review-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8em;
+    }
+
+    .word-review-table th,
+    .word-review-table td {
+      padding: 3px 6px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .word-review-table th {
+      color: #64748b;
+      font-size: 0.75em;
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.95);
+    }
+
+    .word-review-table .ok { color: #22c55e; text-align: center; }
+    .word-review-table .miss { color: #ef4444; text-align: center; }
+
+    /* ===== 弹窗 ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 300;
+    }
+
+    .modal-box {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      max-width: 440px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .modal-box h3 {
+      text-align: center;
+      margin-bottom: 16px;
+      color: #333;
+      font-size: 1.15em;
+    }
+
+    .modal-input, .modal-select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 1em;
+      margin-bottom: 10px;
+      background: white;
+      font-family: inherit;
+    }
+
+    .modal-input:focus, .modal-select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .modal-actions button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      font-size: 1em;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .modal-confirm {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      font-weight: 600;
+    }
+
+    .modal-cancel {
+      background: #f1f5f9;
+      color: #64748b;
+    }
+
+    .dual-name-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .dual-name-col {
+      flex: 1;
+    }
+
+    .dual-name-col h4 {
+      font-size: 0.85em;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+
+    /* 排行榜 */
+    .leaderboard-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .leaderboard-tab, .leaderboard-tab-mode {
+      padding: 5px 12px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      background: white;
+      font-size: 0.8em;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .leaderboard-tab.active, .leaderboard-tab-mode.active {
+      background: #667eea;
+      color: white;
+      border-color: #667eea;
+    }
+
+    .leaderboard-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 4px;
+    }
+
+    .leaderboard-table th,
+    .leaderboard-table td {
+      padding: 6px 4px;
+      text-align: center;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .leaderboard-table th {
+      color: #64748b;
+      font-size: 0.75em;
+    }
+
+    .leaderboard-table td {
+      font-size: 0.88em;
+    }
+
+    .leaderboard-table .rank-1 { color: #f59e0b; font-weight: 700; }
+    .leaderboard-table .rank-2 { color: #94a3b8; font-weight: 700; }
+    .leaderboard-table .rank-3 { color: #b45309; font-weight: 700; }
+
+    /* 得分飘字 */
+    .score-popup {
+      position: fixed;
+      font-size: 1.3em;
+      font-weight: 700;
+      color: #22c55e;
+      pointer-events: none;
+      animation: floatUp 0.8s ease forwards;
+      z-index: 100;
+    }
+
+    /* 加载中 */
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+    }
+
+    .loading-box {
+      background: white;
+      padding: 24px 40px;
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #e2e8f0;
+      border-top-color: #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 12px;
+    }
+
+    .init-loading-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: #f59e0b;
+      color: white;
+      text-align: center;
+      padding: 5px;
+      font-size: 0.8em;
+      z-index: 500;
+      display: none;
+    }
+
+    /* ===== 动画 ===== */
     @keyframes glassShake {
       0%, 100% { transform: translateX(0); }
       20% { transform: translateX(-6px); }
@@ -335,126 +667,69 @@
       50% { transform: scale(1.1); }
       100% { transform: scale(1); }
     }
-      50% { transform: scale(1.15); }
-      100% { transform: scale(0); opacity: 0; }
-    }
-    
-    /* 得分飘字 */
-    .score-popup {
-      position: fixed;
-      font-size: 1.3em;
-      font-weight: 700;
-      color: #22c55e;
-      pointer-events: none;
-      animation: floatUp 0.8s ease forwards;
-      z-index: 100;
-    }
-    
+
     @keyframes floatUp {
       0% { opacity: 1; transform: translateY(0); }
       100% { opacity: 0; transform: translateY(-50px); }
     }
-    
-    /* ===== 结果页 ===== */
-    #result-page {
-      display: none;
-      text-align: center;
-      background: rgba(255,255,255,0.95);
-      border-radius: 24px;
-      padding: 30px 40px;
-      max-width: 450px;
-      width: 100%;
-      box-shadow: 0 12px 48px rgba(0,0,0,0.2);
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-    
-    .result-emoji { font-size: 4em; margin-bottom: 12px; }
-    .result-title { font-size: 1.8em; color: #333; margin-bottom: 6px; }
-    .result-subtitle { color: #666; margin-bottom: 20px; }
-    
-    .result-stats {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      margin-bottom: 24px;
-    }
-    
-    .stat-item { text-align: center; }
-    .stat-value { font-size: 2em; font-weight: 700; color: #667eea; }
-    .stat-label { color: #64748b; font-size: 0.85em; }
-    
-    .result-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    
-    .btn-retry {
-      padding: 12px;
-      border-radius: 14px;
-      border: none;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white;
-      font-size: 1em;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    
-    .btn-home {
-      padding: 10px;
-      border-radius: 14px;
-      border: 2px solid #e2e8f0;
-      background: white;
-      color: #64748b;
-      font-size: 0.95em;
-      cursor: pointer;
-    }
-    
-    /* 加载中 */
-    .loading-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 200;
-    }
-    
-    .loading-box {
-      background: white;
-      padding: 24px 40px;
-      border-radius: 16px;
-      text-align: center;
-    }
-    
-    .loading-spinner {
-      width: 40px;
-      height: 40px;
-      border: 4px solid #e2e8f0;
-      border-top-color: #667eea;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 12px;
-    }
-    
+
     @keyframes spin { to { transform: rotate(360deg); } }
-    
-    /* 重置按钮样式 */
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.03); }
+      50% { transform: scale(1); }
+      75% { transform: scale(1.03); }
+    }
+
+    .heartbeat .timer-bar {
+      animation: heartbeat 0.6s ease infinite;
+    }
+
+    .heartbeat .timer-text {
+      color: #ef4444;
+      font-weight: 700;
+      font-size: 0.95em;
+    }
+
+    /* 新纪录提示 */
+    .new-record-toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+      padding: 10px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      z-index: 400;
+      animation: toastIn 0.4s ease, toastOut 0.4s ease 2.2s forwards;
+      white-space: nowrap;
+    }
+
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    @keyframes toastOut {
+      from { opacity: 1; transform: translateX(-50%) translateY(0); }
+      to { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    }
+
     button:focus { outline: none; }
   </style>
 </head>
 <body>
 
-  <div class="bg-animation" id="bgAnim"></div>
+<div class="init-loading-bar" id="init-loading">正在加载学生名单...</div>
+
 <!-- 首页 -->
 <div id="home-page">
   <h1 class="game-title">🍬 英语单词消消乐</h1>
   <p class="game-subtitle">翻译配对，记单词</p>
-  
+
   <div class="mode-cards">
     <div class="mode-card" onclick="selectMode('single')" id="card-single" style="border: 3px solid #667eea;">
       <div class="emoji">🧑</div>
@@ -467,17 +742,24 @@
       <p>同屏对战，比拼速度</p>
     </div>
   </div>
-  
+
+  <div class="class-select">
+    <button class="class-btn active" onclick="selectClass('1')">2313班</button>
+    <button class="class-btn" onclick="selectClass('2')">2314班</button>
+    <button class="class-btn" onclick="selectClass('')">其他</button>
+  </div>
+
   <div class="difficulty-section">
     <h3>选择难度</h3>
     <div class="difficulty-btns">
-      <button class="diff-btn easy active" onclick="selectDiff('easy')">🌱 初级<br><small>7a · 28对 · 120秒</small></button>
-      <button class="diff-btn medium" onclick="selectDiff('medium')">🌿 中级<br><small>8a · 35对 · 150秒</small></button>
-      <button class="diff-btn hard" onclick="selectDiff('hard')">🌳 高级<br><small>8b · 42对 · 180秒</small></button>
+      <button class="diff-btn easy active" onclick="selectDiff('easy')">🌱 初级<br><small>7a · 10对 · 90秒</small></button>
+      <button class="diff-btn medium" onclick="selectDiff('medium')">🌿 中级<br><small>8a · 14对 · 80秒</small></button>
+      <button class="diff-btn hard" onclick="selectDiff('hard')">🌳 高级<br><small>8b · 16对 · 60秒</small></button>
     </div>
   </div>
-  
+
   <button class="start-btn" id="start-btn" onclick="startGame()">开始游戏</button>
+  <button class="lb-btn" onclick="showLeaderboard()">🏆 排行榜</button>
 </div>
 
 <!-- 游戏页 -->
@@ -490,7 +772,7 @@
     </div>
     <div class="players-status" id="players-status" style="display:none"></div>
   </div>
-  
+
   <div id="arena"></div>
 </div>
 
@@ -513,14 +795,53 @@
       <div class="stat-label">配对</div>
     </div>
   </div>
+  <div class="word-review" id="word-review" style="display:none">
+    <h4>📚 本次单词回顾</h4>
+    <div id="word-review-list"></div>
+  </div>
   <div class="result-actions">
     <button class="btn-retry" onclick="retryGame()">🔄 再玩一次</button>
     <button class="btn-home" onclick="goHome()">返回首页</button>
   </div>
 </div>
 
+<!-- 名字选择弹窗 -->
+<div class="modal-overlay" id="name-modal">
+  <div class="modal-box">
+    <h3 id="name-modal-title">输入玩家名字</h3>
+    <div id="name-modal-content"></div>
+    <div class="modal-actions">
+      <button class="modal-confirm" onclick="confirmNames()">开始游戏</button>
+      <button class="modal-cancel" onclick="closeNameModal()">取消</button>
+    </div>
+  </div>
+</div>
+
+<!-- 排行榜弹窗 -->
+<div class="modal-overlay" id="leaderboard-modal">
+  <div class="modal-box">
+    <h3>🏆 排行榜</h3>
+    <div class="leaderboard-tabs">
+      <button class="leaderboard-tab active" data-diff="easy" onclick="selectLeaderboardTab('easy')">初级</button>
+      <button class="leaderboard-tab" data-diff="medium" onclick="selectLeaderboardTab('medium')">中级</button>
+      <button class="leaderboard-tab" data-diff="hard" onclick="selectLeaderboardTab('hard')">高级</button>
+    </div>
+    <div class="leaderboard-tabs">
+      <button class="leaderboard-tab-mode active" data-mode="single" onclick="selectLeaderboardMode('single')">单人</button>
+      <button class="leaderboard-tab-mode" data-mode="dual" onclick="selectLeaderboardMode('dual')">双人</button>
+    </div>
+    <table class="leaderboard-table">
+      <thead><tr><th>排名</th><th>名字</th><th>分数</th><th>日期</th></tr></thead>
+      <tbody id="leaderboard-body"></tbody>
+    </table>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeLeaderboard()" style="margin-top:8px;">关闭</button>
+    </div>
+  </div>
+</div>
+
 <!-- 加载中 -->
-<div class="loading-overlay" id="loading" style="display:none">
+<div class="loading-overlay" id="loading">
   <div class="loading-box">
     <div class="loading-spinner"></div>
     <div>正在加载单词...</div>
@@ -529,19 +850,67 @@
 
 <script>
 const CONFIG = {
-  easy:   { grade: '7a', pairs: 28, time: 120 },
-  medium: { grade: '8a', pairs: 35, time: 150 },
-  hard:   { grade: '8b', pairs: 42, time: 180 }
+  easy:   { grade: '7a', pairs: 10, time: 90 },
+  medium: { grade: '8a', pairs: 14, time: 80 },
+  hard:   { grade: '8b', pairs: 16, time: 60 }
 };
 
-const API_BASE = 'http://175.24.181.240:8080';
+const API_BASE = '';
+let cachedToken = null;
 let wordPool = [];
+let classStudents = { '1': [], '2': [] };
 let currentMode = 'single';
 let currentDiff = 'easy';
+let currentClassId = '1';
+let playerNames = { p1: '', p2: '' };
 let gameState = null;
 let dualState = null;
 let timerInterval = null;
 
+const recentWords = { easy: [], medium: [], hard: [] };
+const MAX_RECENT = 30;
+
+/* ========== 初始化 ========== */
+async function initGame() {
+  document.getElementById('init-loading').style.display = 'block';
+  try {
+    const token = await login();
+    const [r1, r2] = await Promise.all([
+      fetch(`${API_BASE}/api/wordgame/students?class_id=1`, { headers: { 'Authorization': `Bearer ${token}` } }).then(r => r.json()),
+      fetch(`${API_BASE}/api/wordgame/students?class_id=2`, { headers: { 'Authorization': `Bearer ${token}` } }).then(r => r.json())
+    ]);
+    classStudents['1'] = (r1.students || []).map(s => s.name);
+    classStudents['2'] = (r2.students || []).map(s => s.name);
+  } catch(e) {
+    console.error('加载学生名单失败', e);
+  } finally {
+    document.getElementById('init-loading').style.display = 'none';
+  }
+}
+
+/* ========== 登录 ========== */
+async function login() {
+  if (cachedToken) return cachedToken;
+  const res = await fetch(`${API_BASE}/api/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ password: 'Ssy2026' })
+  });
+  const data = await res.json();
+  cachedToken = data.token;
+  return cachedToken;
+}
+
+async function fetchWords() {
+  const token = await login();
+  const res = await fetch(`${API_BASE}/api/vocabulary?class_id=1`, {
+    headers: { 'Authorization': `Bearer ${token}` }
+  });
+  const data = await res.json();
+  return data.words || [];
+}
+
+/* ========== 首页交互 ========== */
 function selectMode(mode) {
   currentMode = mode;
   document.getElementById('card-single').style.border = mode === 'single' ? '3px solid #667eea' : '3px solid transparent';
@@ -554,6 +923,18 @@ function selectDiff(diff) {
   document.querySelector(`.diff-btn.${diff}`).classList.add('active');
 }
 
+function selectClass(classId) {
+  currentClassId = classId;
+  document.querySelectorAll('.class-btn').forEach((b, i) => {
+    b.classList.toggle('active',
+      (classId === '1' && i === 0) ||
+      (classId === '2' && i === 1) ||
+      (classId === '' && i === 2)
+    );
+  });
+}
+
+/* ========== 开始游戏 ========== */
 async function startGame() {
   document.getElementById('loading').style.display = 'flex';
   try {
@@ -564,38 +945,93 @@ async function startGame() {
     return;
   }
   document.getElementById('loading').style.display = 'none';
-  document.getElementById('home-page').style.display = 'none';
-  document.getElementById('game-page').style.display = 'flex';
-  document.getElementById('result-page').style.display = 'none';
-  if (currentMode === 'single') startSingleGame();
-  else startDualGame();
+  showNameModal();
 }
 
-async function fetchWords() {
-  const token = await login();
-  const res = await fetch(`${API_BASE}/api/vocabulary?class_id=1`, {
-    headers: { 'Authorization': `Bearer ${token}` }
-  });
-  const data = await res.json();
-  return data.words || [];
+/* ========== 名字选择弹窗 ========== */
+function showNameModal() {
+  const modal = document.getElementById('name-modal');
+  const content = document.getElementById('name-modal-content');
+  modal.style.display = 'flex';
+
+  const names1 = classStudents['1'] || [];
+  const names2 = classStudents['2'] || [];
+
+  if (currentMode === 'single') {
+    content.innerHTML = `
+      <label style="display:block;margin-bottom:4px;color:#64748b;font-size:0.85em;">从名单选择（可选）</label>
+      <select class="modal-select" id="name-select-single" onchange="document.getElementById('name-input-single').value=this.value">
+        <option value="">-- 手动输入或选择 --</option>
+        ${names1.length ? `<optgroup label="2313班">${names1.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('')}</optgroup>` : ''}
+        ${names2.length ? `<optgroup label="2314班">${names2.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('')}</optgroup>` : ''}
+      </select>
+      <input type="text" class="modal-input" id="name-input-single" placeholder="输入你的名字" maxlength="20" value="${escapeHtml(playerNames.p1)}">
+    `;
+  } else {
+    content.innerHTML = `
+      <div class="dual-name-row">
+        <div class="dual-name-col">
+          <h4>🧑 玩家1</h4>
+          <select class="modal-select" id="name-select-p1" onchange="document.getElementById('name-input-p1').value=this.value">
+            <option value="">-- 选择 --</option>
+            ${names1.length ? `<optgroup label="2313班">${names1.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('')}</optgroup>` : ''}
+            ${names2.length ? `<optgroup label="2314班">${names2.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('')}</optgroup>` : ''}
+          </select>
+          <input type="text" class="modal-input" id="name-input-p1" placeholder="输入名字" maxlength="20" style="margin-bottom:0;" value="${escapeHtml(playerNames.p1)}">
+        </div>
+        <div class="dual-name-col">
+          <h4>👩 玩家2</h4>
+          <select class="modal-select" id="name-select-p2" onchange="document.getElementById('name-input-p2').value=this.value">
+            <option value="">-- 选择 --</option>
+            ${names1.length ? `<optgroup label="2313班">${names1.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('')}</optgroup>` : ''}
+            ${names2.length ? `<optgroup label="2314班">${names2.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('')}</optgroup>` : ''}
+          </select>
+          <input type="text" class="modal-input" id="name-input-p2" placeholder="输入名字" maxlength="20" style="margin-bottom:0;" value="${escapeHtml(playerNames.p2)}">
+        </div>
+      </div>
+    `;
+  }
 }
 
-async function login() {
-  const res = await fetch(`${API_BASE}/api/auth/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ password: 'Ssy2026' })
-  });
-  const data = await res.json();
-  return data.token;
+function closeNameModal() {
+  document.getElementById('name-modal').style.display = 'none';
 }
 
-function startSingleGame() {
+function confirmNames() {
+  if (currentMode === 'single') {
+    const name = document.getElementById('name-input-single').value.trim();
+    if (!name) { alert('请输入名字'); return; }
+    playerNames.p1 = name;
+    closeNameModal();
+    document.getElementById('home-page').style.display = 'none';
+    document.getElementById('game-page').style.display = 'flex';
+    document.getElementById('result-page').style.display = 'none';
+    startSingleGame(name, currentClassId || '0');
+  } else {
+    const p1 = document.getElementById('name-input-p1').value.trim();
+    const p2 = document.getElementById('name-input-p2').value.trim();
+    if (!p1 || !p2) { alert('请输入双方名字'); return; }
+    if (p1 === p2) { alert('两位玩家名字不能相同'); return; }
+    playerNames.p1 = p1;
+    playerNames.p2 = p2;
+    closeNameModal();
+    document.getElementById('home-page').style.display = 'none';
+    document.getElementById('game-page').style.display = 'flex';
+    document.getElementById('result-page').style.display = 'none';
+    startDualGame(p1, currentClassId || '0', p2, currentClassId || '0');
+  }
+}
+
+/* ========== 单人游戏 ========== */
+function startSingleGame(playerName, classId) {
   const cfg = CONFIG[currentDiff];
   const words = pickWords(cfg.grade, cfg.pairs);
   gameState = {
     score: 0, matched: 0, total: cfg.pairs,
-    timeLeft: cfg.time, words, selected: null, combo: 0
+    timeLeft: cfg.time, words, selected: null, combo: 0,
+    playerName, classId,
+    matchedWordIds: new Set(),
+    startTime: Date.now()
   };
   document.getElementById('score-display').textContent = '得分: 0';
   document.getElementById('score-display').style.display = 'block';
@@ -615,19 +1051,23 @@ function renderArenaSingle(words) {
   renderGrid('grid-single', all, 's');
 }
 
-function startDualGame() {
+/* ========== 双人游戏 ========== */
+function startDualGame(p1name, p1class, p2name, p2class) {
   const cfg = CONFIG[currentDiff];
   const words = pickWords(cfg.grade, cfg.pairs);
   dualState = {
-    p1: { score: 0, matched: 0, timeLeft: cfg.time, words, selected: null, combo: 0, done: false },
-    p2: { score: 0, matched: 0, timeLeft: cfg.time, words: [...words], selected: null, combo: 0, done: false },
-    winner: null
+    p1: { score: 0, matched: 0, timeLeft: cfg.time, words, selected: null, combo: 0, done: false,
+          playerName: p1name, classId: p1class, matchedWordIds: new Set() },
+    p2: { score: 0, matched: 0, timeLeft: cfg.time, words: [...words], selected: null, combo: 0, done: false,
+          playerName: p2name, classId: p2class, matchedWordIds: new Set() },
+    winner: null,
+    startTime: Date.now()
   };
   document.getElementById('score-display').style.display = 'none';
   document.getElementById('players-status').style.display = 'flex';
   document.getElementById('players-status').innerHTML = `
-    <div class="player-status" id="p1-status"><div class="label">🧑 玩家1</div><div class="score" id="score-p1">0</div></div>
-    <div class="player-status" id="p2-status"><div class="label">👩 玩家2</div><div class="score" id="score-p2">0</div></div>
+    <div class="player-status" id="p1-status"><div class="label">🧑 ${escapeHtml(p1name)}</div><div class="score" id="score-p1">0</div></div>
+    <div class="player-status" id="p2-status"><div class="label">👩 ${escapeHtml(p2name)}</div><div class="score" id="score-p2">0</div></div>
   `;
   renderArenaDual(words);
   startDualTimer();
@@ -638,12 +1078,12 @@ function renderArenaDual(words) {
   arena.innerHTML = `
     <div class="arena-dual">
       <div class="player-side">
-        <h4>🧑 玩家1</h4>
+        <h4>🧑 ${escapeHtml(dualState.p1.playerName)}</h4>
         <div class="card-grid grid-${words.length * 2}" id="grid-p1"></div>
       </div>
       <div class="vs-divider">⚔️</div>
       <div class="player-side">
-        <h4>👩 玩家2</h4>
+        <h4>👩 ${escapeHtml(dualState.p2.playerName)}</h4>
         <div class="card-grid grid-${words.length * 2}" id="grid-p2"></div>
       </div>
     </div>
@@ -656,36 +1096,58 @@ function renderArenaDual(words) {
   renderGrid('grid-p2', cards(words), 'p2');
 }
 
+/* ========== 渲染卡片 ========== */
 function renderGrid(containerId, cards, prefix) {
   const container = document.getElementById(containerId);
-  // JS直接控制列数
-  const n = cards.length;
-  const cols = n <= 16 ? 4 : n <= 24 ? 5 : n <= 36 ? 6 : n <= 56 ? 8 : 7;
-  container.style.gridTemplateColumns = 'repeat(' + cols + ', 1fr)';
-  container.style.display = 'grid';
   container.innerHTML = '';
+  const isDual = prefix === 'p1' || prefix === 'p2';
   cards.forEach(card => {
     const el = document.createElement('div');
     el.className = `card ${card.isEnglish ? 'english' : 'chinese'}`;
-    el.textContent = card.isEnglish ? card.word : card.meaning;
+    const text = card.isEnglish ? card.word : card.meaning;
+    el.textContent = text;
+    setCardFontSize(el, text, isDual);
     el.onclick = () => onCardClick(el, card, prefix);
     container.appendChild(el);
   });
 }
 
+function setCardFontSize(el, text, isDual) {
+  const len = text.length;
+  const hasChinese = /[一-鿿]/.test(text);
+  const effectiveLen = hasChinese ? len : len * 0.65;
+
+  let size;
+  if (isDual) {
+    if (effectiveLen <= 3) size = '0.95em';
+    else if (effectiveLen <= 5) size = '0.78em';
+    else if (effectiveLen <= 8) size = '0.62em';
+    else if (effectiveLen <= 12) size = '0.5em';
+    else size = '0.4em';
+  } else {
+    if (effectiveLen <= 4) size = '1.05em';
+    else if (effectiveLen <= 7) size = '0.88em';
+    else if (effectiveLen <= 11) size = '0.72em';
+    else if (effectiveLen <= 15) size = '0.58em';
+    else size = '0.46em';
+  }
+  el.style.fontSize = size;
+}
+
+/* ========== 点击逻辑 ========== */
 function onCardClick(el, card, prefix) {
   if (el.classList.contains('matched')) return;
   let pState;
   if (prefix === 'p1') pState = dualState.p1;
   else if (prefix === 'p2') pState = dualState.p2;
   else pState = gameState;
-  
+
   if (el.classList.contains('selected')) {
     el.classList.remove('selected');
     pState.selected = null;
     return;
   }
-  
+
   if (pState.selected) {
     const prev = pState.selected;
     if (prev.isEnglish !== card.isEnglish && prev.id.replace('_en','').replace('_cn','') === card.id.replace('_en','').replace('_cn','')) {
@@ -696,6 +1158,11 @@ function onCardClick(el, card, prefix) {
       pState.score += pts;
       pState.matched++;
       pState.combo = (pState.combo || 0) + 1;
+
+      // 记录配对成功的单词
+      const wordId = card.id.replace('_en','').replace('_cn','');
+      pState.matchedWordIds.add(wordId);
+
       showScorePopup(el, '+' + pts);
       updateScore(pState, prefix);
       pState.selected = null;
@@ -735,18 +1202,29 @@ function updateScore(state, prefix) {
   }
 }
 
+/* ========== 计时器 ========== */
 function startTimer() {
   const fill = document.getElementById('timer-fill');
   const cfg = CONFIG[currentDiff];
   let elapsed = 0;
   timerInterval = setInterval(() => {
     elapsed += 0.1;
-    const pct = Math.max(0, (cfg.time - elapsed) / cfg.time * 100);
+    const remaining = cfg.time - elapsed;
+    const pct = Math.max(0, remaining / cfg.time * 100);
     fill.style.width = pct + '%';
     fill.className = 'timer-fill' + (pct < 20 ? ' danger' : pct < 50 ? ' warning' : '');
-    document.getElementById('timer-text').textContent = '剩余 ' + Math.ceil(cfg.time - elapsed) + ' 秒';
+    document.getElementById('timer-text').textContent = '剩余 ' + Math.ceil(remaining) + ' 秒';
+
+    // 心跳动画
+    if (remaining <= 10 && remaining > 0) {
+      document.body.classList.add('heartbeat');
+    } else {
+      document.body.classList.remove('heartbeat');
+    }
+
     if (elapsed >= cfg.time) {
       clearInterval(timerInterval);
+      document.body.classList.remove('heartbeat');
       endGameTimeout();
     }
   }, 100);
@@ -767,57 +1245,91 @@ function startDualTimer() {
     fill.style.width = pct + '%';
     fill.className = 'timer-fill' + (pct < 20 ? ' danger' : pct < 50 ? ' warning' : '');
     document.getElementById('timer-text').textContent = '剩余 ' + Math.ceil(remaining) + ' 秒';
+
+    // 心跳动画
+    if (remaining <= 10 && remaining > 0) {
+      document.body.classList.add('heartbeat');
+    } else {
+      document.body.classList.remove('heartbeat');
+    }
+
     if (dualState.p1.timeLeft <= 0 && dualState.p2.timeLeft <= 0) {
       clearInterval(timerInterval);
+      document.body.classList.remove('heartbeat');
       showDualResult(null);
     }
   }, 100);
 }
 
+/* ========== 游戏结束 ========== */
 function endGame(state) {
   clearInterval(timerInterval);
+  document.body.classList.remove('heartbeat');
   document.getElementById('result-emoji').textContent = '🎉';
   document.getElementById('result-title').textContent = '通关成功！';
-  document.getElementById('result-subtitle').textContent = '太棒了！';
+  document.getElementById('result-subtitle').textContent = '太棒了，' + state.playerName + '！';
   document.getElementById('stat-score').textContent = state.score;
   document.getElementById('stat-time').textContent = (CONFIG[currentDiff].time - Math.ceil(state.timeLeft)) + '秒';
   document.getElementById('stat-correct').textContent = state.matched + '对';
+
+  submitScore(state.playerName, state.classId, state.score, 'single', currentDiff);
+  renderWordReview(state.words, state.matchedWordIds);
+
   showResult();
 }
 
 function endGameTimeout() {
   clearInterval(timerInterval);
+  document.body.classList.remove('heartbeat');
   const state = gameState;
   document.getElementById('result-emoji').textContent = '⏰';
   document.getElementById('result-title').textContent = '时间到！';
-  document.getElementById('result-subtitle').textContent = '完成了 ' + state.matched + ' / ' + state.total + ' 对';
+  document.getElementById('result-subtitle').textContent = state.playerName + ' 完成了 ' + state.matched + ' / ' + state.total + ' 对';
   document.getElementById('stat-score').textContent = state.score;
   document.getElementById('stat-time').textContent = CONFIG[currentDiff].time + '秒';
   document.getElementById('stat-correct').textContent = state.matched + '对';
+
+  submitScore(state.playerName, state.classId, state.score, 'single', currentDiff);
+  renderWordReview(state.words, state.matchedWordIds);
+
   showResult();
 }
 
 function showDualResult(winnerKey) {
   clearInterval(timerInterval);
+  document.body.classList.remove('heartbeat');
   const p1 = dualState.p1, p2 = dualState.p2;
+
+  // 两人都提交成绩
+  submitScore(p1.playerName, p1.classId, p1.score, 'dual', currentDiff);
+  submitScore(p2.playerName, p2.classId, p2.score, 'dual', currentDiff);
+
   let winner, msg;
   if (dualState.winner) {
     winner = dualState.winner;
-    msg = winner === 1 ? '🧑 玩家1领先一步！' : '👩 玩家2领先一步！';
+    msg = winner === 1 ? '🧑 ' + p1.playerName + ' 领先一步！' : '👩 ' + p2.playerName + ' 领先一步！';
   } else if (p1.matched > p2.matched) {
-    winner = 1; msg = '🧑 玩家1配对更多！';
+    winner = 1; msg = '🧑 ' + p1.playerName + ' 配对更多！';
   } else if (p2.matched > p1.matched) {
-    winner = 2; msg = '👩 玩家2配对更多！';
+    winner = 2; msg = '👩 ' + p2.playerName + ' 配对更多！';
   } else {
     winner = p1.timeLeft > p2.timeLeft ? 1 : 2;
-    msg = winner === 1 ? '🧑 玩家1剩余时间更多！' : '👩 玩家2剩余时间更多！';
+    msg = winner === 1 ? '🧑 ' + p1.playerName + ' 剩余时间更多！' : '👩 ' + p2.playerName + ' 剩余时间更多！';
   }
+
+  const title = (winner === 1 ? p1.playerName : p2.playerName) + ' 获胜！';
   document.getElementById('result-emoji').textContent = '🏆';
-  document.getElementById('result-title').textContent = '玩家' + winner + ' 获胜！';
+  document.getElementById('result-title').textContent = title;
   document.getElementById('result-subtitle').textContent = msg;
   document.getElementById('stat-score').textContent = p1.score + ' vs ' + p2.score;
   document.getElementById('stat-time').textContent = Math.ceil(p1.timeLeft) + '秒 vs ' + Math.ceil(p2.timeLeft) + '秒';
   document.getElementById('stat-correct').textContent = p1.matched + '对 vs ' + p2.matched + '对';
+
+  renderDualWordReview(dualState.p1.words, p1.matchedWordIds, p2.matchedWordIds, p1.playerName, p2.playerName);
+
+  // 高亮获胜方
+  document.getElementById('p' + winner + '-status').classList.add('winner');
+
   showResult();
 }
 
@@ -828,16 +1340,161 @@ function showResult() {
 
 function retryGame() {
   document.getElementById('result-page').style.display = 'none';
-  startGame();
+  document.getElementById('word-review').style.display = 'none';
+  document.getElementById('p1-status')?.classList.remove('winner');
+  document.getElementById('p2-status')?.classList.remove('winner');
+  showNameModal();
 }
 
 function goHome() {
   document.getElementById('result-page').style.display = 'none';
   document.getElementById('game-page').style.display = 'none';
   document.getElementById('home-page').style.display = 'flex';
+  document.getElementById('word-review').style.display = 'none';
+  document.getElementById('p1-status')?.classList.remove('winner');
+  document.getElementById('p2-status')?.classList.remove('winner');
+  document.body.classList.remove('heartbeat');
   clearInterval(timerInterval);
 }
 
+/* ========== 成绩提交 ========== */
+async function submitScore(name, classId, score, mode, diff) {
+  try {
+    const res = await fetch(`${API_BASE}/api/wordgame/score`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, class_id: classId || '0', score, mode, diff })
+    });
+    const data = await res.json();
+    if (data.updated) {
+      showNewRecordToast(name, score);
+    }
+  } catch(e) {
+    console.error('提交成绩失败', e);
+  }
+  // 无论网络是否成功，都存 localStorage
+  const key = `wg_best_${name}_${mode}_${diff}`;
+  const current = parseInt(localStorage.getItem(key) || '0');
+  if (score > current) {
+    localStorage.setItem(key, String(score));
+  }
+}
+
+function showNewRecordToast(name, score) {
+  const toast = document.createElement('div');
+  toast.className = 'new-record-toast';
+  toast.textContent = `🎉 ${name} 打破纪录！${score}分`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2600);
+}
+
+/* ========== 单词回顾 ========== */
+function renderWordReview(words, matchedIds) {
+  const container = document.getElementById('word-review');
+  const list = document.getElementById('word-review-list');
+  container.style.display = 'block';
+
+  list.innerHTML = `
+    <table class="word-review-table">
+      <thead><tr><th>英文</th><th>中文</th><th>状态</th></tr></thead>
+      <tbody>
+        ${words.map(w => {
+          const ok = matchedIds.has(w.id);
+          return `<tr><td>${escapeHtml(w.word)}</td><td>${escapeHtml(w.meaning)}</td><td class="${ok ? 'ok' : 'miss'}">${ok ? '✅' : '❌'}</td></tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+function renderDualWordReview(words, p1matched, p2matched, p1name, p2name) {
+  const container = document.getElementById('word-review');
+  const list = document.getElementById('word-review-list');
+  container.style.display = 'block';
+
+  list.innerHTML = `
+    <table class="word-review-table">
+      <thead><tr><th>英文</th><th>中文</th><th>${escapeHtml(p1name)}</th><th>${escapeHtml(p2name)}</th></tr></thead>
+      <tbody>
+        ${words.map(w => {
+          const p1ok = p1matched.has(w.id);
+          const p2ok = p2matched.has(w.id);
+          return `<tr>
+            <td>${escapeHtml(w.word)}</td>
+            <td>${escapeHtml(w.meaning)}</td>
+            <td class="${p1ok ? 'ok' : 'miss'}">${p1ok ? '✅' : '❌'}</td>
+            <td class="${p2ok ? 'ok' : 'miss'}">${p2ok ? '✅' : '❌'}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+/* ========== 排行榜 ========== */
+async function showLeaderboard() {
+  document.getElementById('leaderboard-modal').style.display = 'flex';
+  await loadLeaderboard();
+}
+
+function closeLeaderboard() {
+  document.getElementById('leaderboard-modal').style.display = 'none';
+}
+
+async function loadLeaderboard() {
+  const diff = document.querySelector('.leaderboard-tab.active')?.dataset.diff || currentDiff;
+  const mode = document.querySelector('.leaderboard-tab-mode.active')?.dataset.mode || 'single';
+
+  try {
+    const res = await fetch(`${API_BASE}/api/wordgame/leaderboard?mode=${mode}&diff=${diff}&limit=10`);
+    const data = await res.json();
+    renderLeaderboardTable(data.rows || []);
+  } catch(e) {
+    renderLeaderboardFromLocal(mode, diff);
+  }
+}
+
+function renderLeaderboardTable(rows) {
+  const tbody = document.getElementById('leaderboard-body');
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="4" style="color:#94a3b8;padding:16px;">暂无记录，快来创造第一！</td></tr>';
+    return;
+  }
+  tbody.innerHTML = rows.map((r, i) => `
+    <tr>
+      <td class="rank-${i < 3 ? (i+1) : ''}">${i < 3 ? ['🥇','🥈','🥉'][i] : (i+1)}</td>
+      <td>${escapeHtml(r.name)}</td>
+      <td><strong>${r.score}</strong></td>
+      <td style="color:#94a3b8;font-size:0.8em;">${r.updated_at ? r.updated_at.slice(0,10) : '-'}</td>
+    </tr>
+  `).join('');
+}
+
+function renderLeaderboardFromLocal(mode, diff) {
+  const rows = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith('wg_best_') && key.endsWith(`_${mode}_${diff}`)) {
+      const name = key.replace('wg_best_', '').replace(`_${mode}_${diff}`, '');
+      const score = parseInt(localStorage.getItem(key) || '0');
+      if (score > 0) rows.push({ name, score, updated_at: '' });
+    }
+  }
+  rows.sort((a, b) => b.score - a.score);
+  renderLeaderboardTable(rows.slice(0, 10));
+}
+
+function selectLeaderboardTab(diff) {
+  document.querySelectorAll('.leaderboard-tab').forEach(t => t.classList.toggle('active', t.dataset.diff === diff));
+  loadLeaderboard();
+}
+
+function selectLeaderboardMode(mode) {
+  document.querySelectorAll('.leaderboard-tab-mode').forEach(t => t.classList.toggle('active', t.dataset.mode === mode));
+  loadLeaderboard();
+}
+
+/* ========== 工具函数 ========== */
 function showScorePopup(el, text) {
   const rect = el.getBoundingClientRect();
   const popup = document.createElement('div');
@@ -851,31 +1508,39 @@ function showScorePopup(el, text) {
 
 function pickWords(grade, count) {
   const filtered = wordPool.filter(w => w.grade === grade);
-  
-  // Categorize by POS
+  const diffKey = currentDiff;
+  const recent = recentWords[diffKey];
+  const recentIds = new Set(recent);
+
   const verbs = filtered.filter(w => w.pos === 'verb');
   const adjNouns = filtered.filter(w => w.pos === 'adjective' || w.pos === 'noun');
   const others = filtered.filter(w => w.pos !== 'verb' && w.pos !== 'adjective' && w.pos !== 'noun');
-  
-  // 70% verbs, 20% adj+noun, 10% random
+
   const verbCount = Math.floor(count * 0.7);
   const adjNounCount = Math.floor(count * 0.2);
-  const randomCount = count - verbCount - adjNounCount; // usually 10%
-  
-  const selectedVerbs = shuffle(verbs).slice(0, Math.min(verbCount, verbs.length));
-  const selectedAdjNouns = shuffle(adjNouns).slice(0, Math.min(adjNounCount, adjNouns.length));
-  const selectedOthers = shuffle(others).slice(0, Math.min(randomCount, others.length));
-  
-  // Combine
+  const randomCount = count - verbCount - adjNounCount;
+
+  const pickNonRecent = (arr) => {
+    const nonRecent = arr.filter(w => !recentIds.has(w.id));
+    const recentOnes = arr.filter(w => recentIds.has(w.id));
+    return [...shuffle(nonRecent), ...shuffle(recentOnes)];
+  };
+
+  const selectedVerbs = pickNonRecent(verbs).slice(0, Math.min(verbCount, verbs.length));
+  const selectedAdjNouns = pickNonRecent(adjNouns).slice(0, Math.min(adjNounCount, adjNouns.length));
+  const selectedOthers = pickNonRecent(others).slice(0, Math.min(randomCount, others.length));
+
   let selected = [...selectedVerbs, ...selectedAdjNouns, ...selectedOthers];
-  
-  // Fill remaining slots with any available words if needed
+
   if (selected.length < count) {
     const remaining = filtered.filter(w => !selected.includes(w));
     const needed = count - selected.length;
     selected.push(...shuffle(remaining).slice(0, needed));
   }
-  
+
+  const selectedIds = selected.map(w => w.id);
+  recentWords[diffKey] = [...selectedIds, ...recent].slice(0, MAX_RECENT);
+
   return shuffle(selected);
 }
 
@@ -887,7 +1552,16 @@ function shuffle(arr) {
   }
   return a;
 }
-// 背景动画function createParticles() {  const container = document.getElementById("bgAnim");  if (!container) return;  container.innerHTML = "";    // 创建星星  for (let i = 0; i < 30; i++) {    const star = document.createElement("div");    star.className = "star";    star.style.left = Math.random() * 100 + "%";    star.style.top = Math.random() * 100 + "%";    star.style.animationDuration = (1.5 + Math.random() * 2) + "s";    star.style.animationDelay = Math.random() * 3 + "s";    container.appendChild(star);  }    // 创建粒子  for (let i = 0; i < 20; i++) {    const particle = document.createElement("div");    particle.className = "particle";    particle.style.left = Math.random() * 100 + "%";    particle.style.width = (4 + Math.random() * 8) + "px";    particle.style.height = particle.style.width;    particle.style.animationDuration = (8 + Math.random() * 6) + "s";    particle.style.animationDelay = Math.random() * 10 + "s";    container.appendChild(particle);  }}function startBgAnimation() {  createParticles();}// 页面加载时启动document.addEventListener("DOMContentLoaded", startBgAnimation);
+
+function escapeHtml(text) {
+  if (!text) return '';
+  const div = document.createElement('div');
+  div.textContent = String(text);
+  return div.innerHTML;
+}
+
+/* ========== 启动 ========== */
+initGame();
 </script>
 </body>
 </html>

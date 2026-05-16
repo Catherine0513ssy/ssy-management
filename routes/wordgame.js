@@ -74,4 +74,20 @@ router.get('/leaderboard', (req, res) => {
   }
 });
 
+// GET /api/wordgame/students?class_id=1
+router.get('/students', (req, res) => {
+  try {
+    const { class_id } = req.query;
+    if (!class_id) return res.status(400).json({ error: 'class_id is required' });
+    const db = getDB();
+    const students = db.prepare(
+      `SELECT id, name, group_id FROM students WHERE class_id = ? AND active = 1 ORDER BY sort_order, id`
+    ).all(Number(class_id));
+    res.json({ students });
+  } catch (e) {
+    console.error('[wordgame students]', e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
 module.exports = router;
