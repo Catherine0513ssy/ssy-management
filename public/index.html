@@ -1556,7 +1556,6 @@
         </div>
       </div>
       <div class="glass-sidebar anim-item anim-3">
-        <input type="text" class="glass-input" x-model="searchText" @input="filterDates()" placeholder="🔍 搜索日期..." style="width:100%;padding:10px 14px;border-radius:12px;font-size:14px;margin-bottom:12px;box-sizing:border-box;">
         <div style="max-height:300px;overflow-y:auto;">
           <template x-for="d in filteredDates" :key="d.date">
             <div class="date-item" :class="{'active':d.date===selectedDate}" @click="selectDate(d.date)">
