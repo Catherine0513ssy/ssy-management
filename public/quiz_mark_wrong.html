@@ -195,6 +195,25 @@
       padding: 40px;
       color: #666;
     }
+    @media (max-width: 768px) {
+      body { padding: 10px; }
+      .container { padding: 15px; }
+      h1 { font-size: 22px; }
+      .subtitle { font-size: 16px; margin-bottom: 15px; }
+      .stats { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 15px; }
+      .stat-card { padding: 10px; border-radius: 8px; }
+      .stat-number { font-size: 20px; }
+      .stat-label { font-size: 14px; }
+      .section-title { font-size: 16px; }
+      .word-list { grid-template-columns: 1fr; max-height: 300px; gap: 6px; padding: 8px; }
+      .word-item { padding: 6px 10px; }
+      .word-en, .word-cn, .word-badge { font-size: 15px; }
+      .filters { gap: 6px; margin-bottom: 10px; }
+      .filter-btn { padding: 4px 10px; font-size: 13px; border-radius: 14px; }
+      .actions { flex-wrap: wrap; gap: 8px; margin-top: 15px; }
+      .btn { padding: 8px 16px; font-size: 14px; border-radius: 18px; }
+      .message { padding: 10px; font-size: 14px; }
+    }
   </style>
 </head>
 <body>
