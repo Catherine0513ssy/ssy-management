@@ -1333,6 +1333,7 @@ document.addEventListener('alpine:init', () => {
       this.clearPlaneTimer();
       this.page = 'result';
       const st = this.planeState;
+      this.submitScore(this.studentName, this.studentClass, st.score);
       this.$nextTick(() => {
         const emoji = document.getElementById('wg-result-emoji');
         const title = document.getElementById('wg-result-title');
