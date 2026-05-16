@@ -772,10 +772,6 @@
     .wg-mode-card:nth-child(2) .emoji { background: linear-gradient(135deg, #f093fb, #a78bfa); box-shadow: 0 4px 16px rgba(240,147,251,0.35); }
     .wg-mode-card h3 { font-size: 1.3em; color: #1f2937; margin-bottom: 6px; text-align: center; font-weight: 700; }
     .wg-mode-card p { color: #6b7280; font-size: 0.9em; text-align: center; margin: 0; }
-    .wg-back-floating { position: fixed; top: 76px; left: 16px; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.96); border: none; box-shadow: 0 4px 16px rgba(124,58,237,0.18), 0 1px 3px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s cubic-bezier(0.4,0,0.2,1); font-size: 1.4em; color: #7c3aed; font-weight: 700; padding: 0; line-height: 1; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-    .wg-back-floating:hover { transform: translateX(-2px); box-shadow: 0 8px 24px rgba(124,58,237,0.28), 0 2px 6px rgba(0,0,0,0.1); background: white; }
-    .wg-back-floating:active { transform: translateX(0) scale(0.92); }
-    @media (max-width: 480px) { .wg-back-floating { top: 64px; left: 12px; width: 40px; height: 40px; font-size: 1.25em; } }
     .wg-difficulty { background: rgba(255,255,255,0.96); border-radius: 20px; padding: 24px 28px; max-width: 560px; width: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
     .wg-difficulty h3 { color: #1f2937; margin: 0 0 16px; font-size: 1.05em; text-align: center; font-weight: 700; }
     .wg-diff-btns { display: flex; gap: 0; background: #f3f4f6; border-radius: 14px; padding: 4px; }
@@ -2348,8 +2344,6 @@
 
           <!-- Home Page -->
           <div class="wg-home" x-show="page==='home'">
-            <!-- 悬浮返回按钮（子菜单可见） -->
-            <button class="wg-back-floating" x-show="gameMenu==='match' || gameMenu==='plane'" @click="backToMenu()" title="返回游戏选择" aria-label="返回游戏选择">←</button>
             <!-- Header Card matching app-header style -->
             <div class="wg-header-card">
               <div class="wg-header-left">
@@ -2421,6 +2415,9 @@
 
             <!-- 消消乐子菜单 -->
             <div x-show="gameMenu==='match'" style="margin-top:8px;">
+              <div style="text-align:center;margin-bottom:12px;">
+                <button @click="backToMenu()" style="background:rgba(255,255,255,0.2);border:none;color:white;padding:6px 16px;border-radius:12px;cursor:pointer;font-size:0.85em;">← 返回主菜单</button>
+              </div>
               <div class="wg-mode-cards">
                 <div class="wg-mode-card" @click="selectMode('single')" :class="{'active': mode==='single'}">
                   <div class="emoji">🏃</div>
@@ -2449,6 +2446,9 @@
 
             <!-- 飞机射击子菜单 -->
             <div x-show="gameMenu==='plane'" style="margin-top:8px;">
+              <div style="text-align:center;margin-bottom:12px;">
+                <button @click="backToMenu()" style="background:rgba(255,255,255,0.2);border:none;color:white;padding:6px 16px;border-radius:12px;cursor:pointer;font-size:0.85em;">← 返回主菜单</button>
+              </div>
               <div style="text-align:center;color:rgba(255,255,255,0.85);margin-bottom:12px;font-size:0.9em;">
                 <p>✈️ 移动飞机，射击正确的单词</p>
                 <p>🖱️ 鼠标/手指控制飞机左右移动</p>

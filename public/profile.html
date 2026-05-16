@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+  <title>个人画像 - SSY英语学习管理系统</title>
+  <link rel="stylesheet" href="/css/candy-theme.css">
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <script defer src="/alpinejs/cdn.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      color: var(--text-primary);
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 16px; }
+
+    .top-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px; margin-bottom: 16px;
+      background: var(--card-bg); backdrop-filter: var(--card-blur);
+      border-radius: var(--card-radius); border: 1px solid var(--card-border);
+      box-shadow: var(--card-shadow);
+    }
+    .back-btn {
+      padding: 8px 16px; border-radius: 24px;
+      background: var(--gradient-primary); color: white;
+      font-size: var(--text-sm); font-weight: 600;
+      text-decoration: none; border: none; cursor: pointer;
+    }
+
+    .card {
+      background: var(--card-bg); backdrop-filter: var(--card-blur);
+      border-radius: var(--card-radius); border: 1px solid var(--card-border);
+      box-shadow: var(--card-shadow); padding: 16px; margin-bottom: 16px;
+    }
+
+    /* Hero section with tier */
+    .hero {
+      text-align: center; padding: 24px 16px;
+    }
+    .hero-name {
+      font-size: var(--text-2xl); font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .hero-tier {
+      display: inline-block;
+      padding: 6px 20px; border-radius: 20px;
+      font-size: var(--text-base); font-weight: 800;
+      color: white;
+      margin-bottom: 12px;
+    }
+    .hero-score {
+      font-size: 48px; font-weight: 900;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-score-label {
+      font-size: var(--text-sm); color: var(--text-secondary);
+    }
+    .hero-rank {
+      margin-top: 12px;
+      font-size: var(--text-base); color: var(--text-secondary);
+    }
+    .hero-rank strong {
+      color: var(--text-primary); font-size: var(--text-lg);
+    }
+    .hero-percentile {
+      display: inline-block;
+      margin-top: 8px; padding: 4px 12px; border-radius: 12px;
+      font-size: var(--text-xs); font-weight: 700;
+      background: rgba(34,197,94,0.15); color: #16a34a;
+    }
+
+    /* Dimension cards */
+    .dim-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+    }
+    @media (max-width: 640px) { .dim-grid { grid-template-columns: repeat(2, 1fr); } }
+    .dim-card {
+      text-align: center; padding: 12px 8px;
+      border-radius: var(--card-radius-sm);
+      background: rgba(255,255,255,0.5);
+    }
+    .dim-card .dim-name { font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: 4px; }
+    .dim-card .dim-value { font-size: var(--text-xl); font-weight: 800; }
+    .dim-card .dim-max { font-size: var(--text-xs); color: var(--text-tertiary); }
+    .dim-card .dim-bar {
+      height: 4px; border-radius: 2px; margin-top: 6px;
+      background: rgba(0,0,0,0.06); overflow: hidden;
+    }
+    .dim-card .dim-bar-fill { height: 100%; border-radius: 2px; transition: width 0.5s ease; }
+
+    /* Radar chart */
+    #radarChart { width: 100%; height: 360px; }
+    @media (max-width: 640px) { #radarChart { height: 280px; } }
+
+    /* Trend chart */
+    #trendChart { width: 100%; height: 240px; }
+
+    /* AI Feedback */
+    .feedback-list {
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .feedback-item {
+      padding: 12px 16px; border-radius: var(--card-radius-sm);
+      background: rgba(167,139,250,0.08);
+      border-left: 3px solid #a78bfa;
+      font-size: var(--text-sm); line-height: 1.6;
+    }
+
+    /* Above average tags */
+    .tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      padding: 4px 12px; border-radius: 12px;
+      font-size: var(--text-xs); font-weight: 600;
+      background: rgba(34,197,94,0.12); color: #16a34a;
+    }
+
+    .loading { text-align: center; padding: 40px; color: var(--text-tertiary); }
+    .empty { text-align: center; padding: 20px; color: var(--text-tertiary); font-size: var(--text-sm); }
+
+    .section-title {
+      font-size: var(--text-base); font-weight: 700;
+      margin-bottom: 12px; color: var(--text-primary);
+    }
+
+    [x-cloak] { display: none !important; }
+  </style>
+</head>
+<body x-data="profileApp()" x-init="init()">
+  <div class="container">
+    <!-- Header -->
+    <div class="top-bar">
+      <a href="javascript:history.back()" class="back-btn">返回</a>
+      <h1 style="font-size: var(--text-lg); font-weight: 700; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">个人画像</h1>
+      <div style="width: 60px;"></div>
+    </div>
+
+    <!-- Loading -->
+    <div x-show="loading" class="loading">加载中...</div>
+
+    <div x-show="!loading">
+      <!-- Hero Card -->
+      <div class="card hero">
+        <div class="hero-name" x-text="profile?.student_name"></div>
+        <div class="hero-tier" :style="'background: ' + (profile?.score?.tier?.bg || 'linear-gradient(135deg, #CD7F32, #B87333)')" x-text="profile?.score?.tier?.name || '青铜'"></div>
+        <div class="hero-score" x-text="profile?.score?.total || 0"></div>
+        <div class="hero-score-label">总分 / 100</div>
+        <div class="hero-rank">
+          班级排名 <strong x-text="'第' + (profile?.rank || '-') + '名'"></strong>
+          / 共 <span x-text="profile?.total_students || 0"></span> 人
+        </div>
+        <div class="hero-percentile" x-show="profile?.percentile" x-text="'超过' + profile?.percentile + '%的同学'"></div>
+      </div>
+
+      <!-- Dimension Breakdown -->
+      <div class="card">
+        <div class="section-title">五维拆解</div>
+        <div class="dim-grid">
+          <div class="dim-card">
+            <div class="dim-name">词汇力</div>
+            <div class="dim-value" style="color: #a78bfa;" x-text="profile?.score?.vocabulary || 0"></div>
+            <div class="dim-max">/ 25</div>
+            <div class="dim-bar"><div class="dim-bar-fill" style="background: #a78bfa; width: 0;" :style="'background: #a78bfa; width: ' + ((profile?.score?.vocabulary || 0) / 25 * 100) + '%'"></div></div>
+          </div>
+          <div class="dim-card">
+            <div class="dim-name">写作力</div>
+            <div class="dim-value" style="color: #fb923c;" x-text="profile?.score?.writing || 0"></div>
+            <div class="dim-max">/ 25</div>
+            <div class="dim-bar"><div class="dim-bar-fill" style="background: #fb923c; width: 0;" :style="'background: #fb923c; width: ' + ((profile?.score?.writing || 0) / 25 * 100) + '%'"></div></div>
+          </div>
+          <div class="dim-card">
+            <div class="dim-name">纪律性</div>
+            <div class="dim-value" style="color: #22c55e;" x-text="profile?.score?.discipline || 0"></div>
+            <div class="dim-max">/ 20</div>
+            <div class="dim-bar"><div class="dim-bar-fill" style="background: #22c55e; width: 0;" :style="'background: #22c55e; width: ' + ((profile?.score?.discipline || 0) / 20 * 100) + '%'"></div></div>
+          </div>
+          <div class="dim-card">
+            <div class="dim-name">参与度</div>
+            <div class="dim-value" style="color: #60a5fa;" x-text="profile?.score?.engagement || 0"></div>
+            <div class="dim-max">/ 20</div>
+            <div class="dim-bar"><div class="dim-bar-fill" style="background: #60a5fa; width: 0;" :style="'background: #60a5fa; width: ' + ((profile?.score?.engagement || 0) / 20 * 100) + '%'"></div></div>
+          </div>
+          <div class="dim-card">
+            <div class="dim-name">进步度</div>
+            <div class="dim-value" style="color: #f472b6;" x-text="profile?.score?.progress || 0"></div>
+            <div class="dim-max">/ 10</div>
+            <div class="dim-bar"><div class="dim-bar-fill" style="background: #f472b6; width: 0;" :style="'background: #f472b6; width: ' + ((profile?.score?.progress || 0) / 10 * 100) + '%'"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Above Average -->
+      <div class="card" x-show="profile?.above_average?.length > 0">
+        <div class="section-title">高于班级平均</div>
+        <div class="tag-list">
+          <template x-for="dim in profile?.above_average" :key="dim">
+            <span class="tag" x-text="dim"></span>
+          </template>
+        </div>
+      </div>
+
+      <!-- Radar Chart -->
+      <div class="card">
+        <div class="section-title">五维雷达图</div>
+        <div id="radarChart"></div>
+      </div>
+
+      <!-- Trend Chart -->
+      <div class="card" x-show="profile?.trend?.length > 1">
+        <div class="section-title">进步趋势（近4周）</div>
+        <div id="trendChart"></div>
+      </div>
+
+      <!-- AI Feedback -->
+      <div class="card" x-show="profile?.ai_feedback?.length > 0">
+        <div class="section-title">AI 寄语</div>
+        <div class="feedback-list">
+          <template x-for="msg in profile?.ai_feedback" :key="msg">
+            <div class="feedback-item" x-text="msg"></div>
+          </template>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function profileApp() {
+      return {
+        loading: true,
+        profile: null,
+        radarChart: null,
+        trendChart: null,
+
+        init() {
+          this.load();
+        },
+
+        async load() {
+          this.loading = true;
+          const params = new URLSearchParams(window.location.search);
+          const name = params.get('name');
+          const classId = params.get('class_id') || '1';
+
+          if (!name) {
+            this.loading = false;
+            return;
+          }
+
+          try {
+            const res = await fetch(`/api/analysis/profile/${encodeURIComponent(name)}?class_id=${classId}`);
+            this.profile = await res.json();
+            this.$nextTick(() => {
+              this.initRadarChart();
+              this.initTrendChart();
+            });
+          } catch (e) {
+            console.error('Load failed:', e);
+          }
+          this.loading = false;
+        },
+
+        initRadarChart() {
+          const el = document.getElementById('radarChart');
+          if (!el || !this.profile) return;
+          this.radarChart = echarts.init(el);
+
+          const s = this.profile.score;
+          const avg = this.profile.class_average;
+
+          // Use percentage for radar so all dimensions fit 0-100 scale
+          const dims = [
+            { name: '词汇力', max: 100 },
+            { name: '写作力', max: 100 },
+            { name: '纪律性', max: 100 },
+            { name: '参与度', max: 100 },
+            { name: '进步度', max: 100 },
+          ];
+
+          const personalPct = [
+            (s.vocabulary / 25 * 100),
+            (s.writing / 25 * 100),
+            (s.discipline / 20 * 100),
+            (s.engagement / 20 * 100),
+            (s.progress / 10 * 100),
+          ];
+
+          const avgPct = avg ? [
+            (avg.vocabulary / 25 * 100),
+            (avg.writing / 25 * 100),
+            (avg.discipline / 20 * 100),
+            (avg.engagement / 20 * 100),
+            (avg.progress / 10 * 100),
+          ] : [0,0,0,0,0];
+
+          this.radarChart.setOption({
+            tooltip: { trigger: 'item' },
+            legend: { bottom: 0, textStyle: { fontSize: 12, color: '#64748b' } },
+            radar: {
+              indicator: dims,
+              radius: '65%',
+              splitArea: {
+                areaStyle: {
+                  color: ['rgba(167,139,250,0.02)', 'rgba(167,139,250,0.05)', 'rgba(167,139,250,0.08)', 'rgba(167,139,250,0.11)'],
+                },
+              },
+              axisLine: { lineStyle: { color: 'rgba(0,0,0,0.08)' } },
+              splitLine: { lineStyle: { color: 'rgba(0,0,0,0.06)' } },
+              axisName: { color: '#64748b', fontSize: 12 },
+            },
+            series: [
+              {
+                name: '班级平均',
+                type: 'radar',
+                data: [{ value: avgPct, name: '班级平均' }],
+                areaStyle: { color: 'rgba(167,139,250,0.1)' },
+                lineStyle: { color: '#a78bfa', width: 2, type: 'dashed' },
+                itemStyle: { color: '#a78bfa' },
+                symbol: 'circle',
+                symbolSize: 4,
+              },
+              {
+                name: this.profile.student_name,
+                type: 'radar',
+                data: [{ value: personalPct, name: this.profile.student_name }],
+                areaStyle: { color: 'rgba(96,165,250,0.2)' },
+                lineStyle: { color: '#60a5fa', width: 3 },
+                itemStyle: { color: '#60a5fa' },
+                symbol: 'circle',
+                symbolSize: 6,
+              },
+            ],
+          });
+        },
+
+        initTrendChart() {
+          const el = document.getElementById('trendChart');
+          if (!el || !this.profile?.trend || this.profile.trend.length < 2) return;
+          this.trendChart = echarts.init(el);
+
+          const trend = this.profile.trend;
+          const weeks = trend.map(t => t.week_start.slice(5)); // MM-DD
+
+          this.trendChart.setOption({
+            tooltip: { trigger: 'axis' },
+            grid: { left: 50, right: 20, top: 20, bottom: 30 },
+            xAxis: {
+              type: 'category',
+              data: weeks,
+              axisLine: { lineStyle: { color: 'rgba(0,0,0,0.1)' } },
+              axisLabel: { color: '#64748b', fontSize: 11 },
+            },
+            yAxis: {
+              type: 'value',
+              min: 0,
+              max: 100,
+              axisLine: { show: false },
+              splitLine: { lineStyle: { color: 'rgba(0,0,0,0.06)' } },
+              axisLabel: { color: '#64748b', fontSize: 11 },
+            },
+            series: [
+              {
+                name: '总分',
+                type: 'line',
+                data: trend.map(t => t.total),
+                smooth: true,
+                lineStyle: { color: '#a78bfa', width: 3 },
+                itemStyle: { color: '#a78bfa' },
+                areaStyle: { color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1, colorStops: [{ offset: 0, color: 'rgba(167,139,250,0.3)' }, { offset: 1, color: 'rgba(167,139,250,0.05)' }] } },
+                symbol: 'circle',
+                symbolSize: 6,
+              },
+              {
+                name: '排名',
+                type: 'line',
+                yAxisIndex: 0,
+                data: trend.map(t => 100 - (t.rank / this.profile.total_students * 100)),
+                smooth: true,
+                lineStyle: { color: '#fb923c', width: 2, type: 'dashed' },
+                itemStyle: { color: '#fb923c' },
+                symbol: 'circle',
+                symbolSize: 4,
+              },
+            ],
+            legend: { bottom: 0, textStyle: { fontSize: 11, color: '#64748b' } },
+          });
+        },
+      };
+    }
+  </script>
+</body>
+</html>
