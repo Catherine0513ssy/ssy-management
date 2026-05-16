@@ -428,10 +428,6 @@
           <span class="notice-icon">📊</span>
           <span><strong>写作力数据积累中</strong> — 建议让学生提交作文，系统将自动进行OCR识别和AI批改，雷达图将更具参考价值。</span>
         </div>
-        <div class="data-notice" x-show="overview.stats?.total_essays > 0 && overview.stats?.total_essays < 10" style="background:linear-gradient(135deg,rgba(251,191,36,0.12),rgba(245,158,11,0.08));border-color:rgba(245,158,11,0.3);color:#92400e;">
-          <span class="notice-icon">⚠️</span>
-          <span><strong>写作样本量较低</strong>（仅 <span x-text="overview.stats?.total_essays"></span> 条）— 写作力分数仅供参考，建议补充至15条以上以提升雷达图可信度。</span>
-        </div>
         <div class="data-notice" x-show="overview.stats?.total_games === 0 && overview.stats?.total_essays > 0" style="background:linear-gradient(135deg,rgba(96,165,250,0.1),rgba(59,130,246,0.08));border-color:rgba(59,130,246,0.25);color:#1d4ed8;">
           <span class="notice-icon">🎮</span>
           <span><strong>游戏数据较少</strong> — 推广单词消消乐游戏，每班20+人次参与后参与度维度将有显著区分度。</span>
@@ -508,65 +504,37 @@
       <!-- Right: Rankings + Weakness -->
       <div class="card-enter card-enter-delay-3">
         <div class="card" style="margin-bottom:16px;">
-          <div class="card-title" x-text="selectedStudent ? '邻近排名 (±5名)' : '综合排名 Top5'">综合排名 Top5</div>
-          <template x-for="s in (selectedStudent ? neighborStudents : (overview.top_students || []))" :key="s.name">
-            <div class="rank-item" :style="s.name === selectedStudent ? 'background:rgba(167,139,250,0.12);border-radius:8px;' : ''">
-              <div class="rank-num" :class="`rank-${getRankInClass(s.name)}`" x-text="getRankInClass(s.name)"></div>
-              <div class="rank-name" x-text="s.name" :style="s.name === selectedStudent ? 'font-weight:800;color:#7c3aed;' : ''"></div>
+          <div class="card-title">综合排名 Top5</div>
+          <template x-for="(s, idx) in overview.top_students" :key="s.name">
+            <div class="rank-item">
+              <div class="rank-num" :class="`rank-${idx+1}`" x-text="idx+1"></div>
+              <div class="rank-name" x-text="s.name"></div>
               <div class="rank-score" x-text="s.total + '分'"></div>
             </div>
           </template>
-          <div class="empty" x-show="!selectedStudent && (!overview.top_students || overview.top_students.length===0)">暂无数据</div>
-          <div class="empty" x-show="selectedStudent && neighborStudents.length===0">暂无数据</div>
+          <div class="empty" x-show="!overview.top_students || overview.top_students.length===0">暂无数据</div>
         </div>
 
         <div class="card">
-          <div class="card-title" x-text="selectedStudent ? '个人薄弱项' : '薄弱维度'">薄弱维度</div>
-
-          <!-- Class mode -->
-          <template x-if="!selectedStudent">
-            <div>
-              <div x-show="weakness.weakest_dimension">
-                <div style="font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:8px;">
-                  班级最弱：<strong style="color:var(--color-danger)" x-text="weakness.weakest_dimension?.name">-</strong>
-                  均分 <span x-text="Math.round(weakness.weakest_dimension?.avg || 0)">-</span>
-                </div>
-                <div style="font-size:var(--text-xs);color:var(--text-tertiary);margin-bottom:8px;">需关注学生：</div>
-                <div>
-                  <template x-for="(list, dim) in weakness.at_risk_students" :key="dim">
-                    <template x-for="stu in list.slice(0,3)" :key="stu.name">
-                      <span class="weakness-tag" :class="stu.score < 30 ? 'weakness-high' : 'weakness-mid'">
-                        <span x-text="stu.name"></span>
-                        <span x-text="stu.score + '分'"></span>
-                      </span>
-                    </template>
-                  </template>
-                </div>
-              </div>
-              <div class="empty" x-show="!weakness.weakest_dimension">加载中...</div>
+          <div class="card-title">薄弱维度</div>
+          <div x-show="weakness.weakest_dimension">
+            <div style="font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:8px;">
+              班级最弱：<strong style="color:var(--color-danger)" x-text="weakness.weakest_dimension?.name">-</strong>
+              均分 <span x-text="Math.round(weakness.weakest_dimension?.avg || 0)">-</span>
             </div>
-          </template>
-
-          <!-- Personal mode -->
-          <template x-if="selectedStudent">
+            <div style="font-size:var(--text-xs);color:var(--text-tertiary);margin-bottom:8px;">需关注学生：</div>
             <div>
-              <div x-show="personalWeakest.length > 0">
-                <div style="font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:10px;">
-                  <strong style="color:#7c3aed;" x-text="selectedStudent"></strong> 最薄弱的 2 维：
-                </div>
-                <template x-for="d in personalWeakest" :key="d.key">
-                  <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:8px;background:rgba(239,68,68,0.06);margin-bottom:6px;font-size:var(--text-sm);">
-                    <span x-text="d.name"></span>
-                    <strong :style="`color:${d.score < 30 ? 'var(--color-danger)' : 'var(--color-warning)'};font-size:15px;`" x-text="d.score + '分'"></strong>
-                  </div>
+              <template x-for="(list, dim) in weakness.at_risk_students" :key="dim">
+                <template x-for="stu in list.slice(0,3)" :key="stu.name">
+                  <span class="weakness-tag" :class="stu.score < 30 ? 'weakness-high' : 'weakness-mid'">
+                    <span x-text="stu.name"></span>
+                    <span x-text="stu.score + '分'"></span>
+                  </span>
                 </template>
-                <div style="font-size:11px;color:#94a3b8;margin-top:8px;line-height:1.5;">
-                  💡 建议从这两项开始针对性提升
-                </div>
-              </div>
-              <div class="empty" x-show="personalWeakest.length === 0">该学生暂无雷达数据</div>
+              </template>
             </div>
-          </template>
+          </div>
+          <div class="empty" x-show="!weakness.weakest_dimension">加载中...</div>
         </div>
 
         <!-- Weekly Report -->
@@ -670,31 +638,6 @@
             return r || { vocabulary: 0, writing: 0, discipline: 0, engagement: 0, progress: 0 };
           }
           return this.overview.avg_radar || { vocabulary: 0, writing: 0, discipline: 0, engagement: 0, progress: 0 };
-        },
-
-        get neighborStudents() {
-          if (!this.selectedStudent || !this.students.length) return [];
-          const idx = this.students.findIndex(s => s.name === this.selectedStudent);
-          if (idx < 0) return [];
-          const start = Math.max(0, idx - 5);
-          const end = Math.min(this.students.length, idx + 6);
-          return this.students.slice(start, end);
-        },
-
-        get personalWeakest() {
-          if (!this.selectedStudent) return [];
-          const r = this.radars.find(rr => rr.student_name === this.selectedStudent);
-          if (!r) return [];
-          const dimNames = { vocabulary: '词汇力', writing: '写作力', discipline: '纪律性', engagement: '参与度', progress: '进步度' };
-          return Object.entries(dimNames)
-            .map(([k, name]) => ({ key: k, name, score: r[k] || 0 }))
-            .sort((a, b) => a.score - b.score)
-            .slice(0, 2);
-        },
-
-        getRankInClass(name) {
-          const idx = this.students.findIndex(s => s.name === name);
-          return idx >= 0 ? idx + 1 : '-';
         },
 
         dimColor(dim) {

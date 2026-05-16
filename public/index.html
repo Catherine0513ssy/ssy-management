@@ -841,6 +841,9 @@
       background: linear-gradient(135deg, rgba(249,168,212,0.55), rgba(236,72,153,0.55)); border-color: rgba(249,168,212,0.7); color: #4a1a4a;
       word-break: break-all; overflow-wrap: anywhere; font-size: clamp(0.9rem, 1.6vw, 1.25rem);
     }
+    .wg-card.wg-chinese.wg-long { font-size: clamp(0.78rem, 1.35vw, 1.05rem); }
+    .wg-card.wg-chinese.wg-xl { font-size: clamp(0.68rem, 1.15vw, 0.95rem); }
+    .wg-card.wg-chinese.wg-xxl { font-size: clamp(0.58rem, 1vw, 0.85rem); }
     .wg-card:hover:not(.wg-matched):not(.wg-selected) { transform: translateY(-4px) scale(1.02); background: rgba(255,255,255,0.5); box-shadow: 0 10px 28px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.75); }
     .wg-card.wg-selected { transform: scale(1.05); box-shadow: 0 0 0 4px rgba(251,191,36,0.85), 0 0 24px rgba(251,191,36,0.45), 0 10px 28px rgba(0,0,0,0.2); border-color: rgba(251,191,36,0.9); background: rgba(255,255,255,0.6); }
     .wg-card.wg-matched { opacity: 0; transform: scale(0.25); pointer-events: none; transition: all 0.45s cubic-bezier(0.4,0,0.2,1); }
@@ -851,6 +854,60 @@
 
     .wg-score-popup { position: fixed; font-size: 1.5em; font-weight: 800; color: #22c55e; pointer-events: none; animation: wgFloatScore 0.8s ease forwards; z-index: 100; text-shadow: 0 2px 6px rgba(0,0,0,0.15); }
     @keyframes wgFloatScore { 0%{opacity:1;transform:translateY(0) scale(1);} 100%{opacity:0;transform:translateY(-60px) scale(1.1);} }
+
+    /* 心跳动画 */
+    @keyframes wgHeartbeat {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.02); }
+      50% { transform: scale(1); }
+      75% { transform: scale(1.02); }
+    }
+    .wg-heartbeat .wg-timer-bar {
+      animation: wgHeartbeat 0.6s ease infinite;
+    }
+    .wg-heartbeat .wg-timer-text {
+      color: #ef4444;
+      font-weight: 700;
+    }
+
+    /* 新纪录提示动画 */
+    @keyframes wgToastIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    @keyframes wgToastOut {
+      from { opacity: 1; transform: translateX(-50%) translateY(0); }
+      to { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    }
+
+    /* 单词回顾 */
+    .wg-word-review {
+      margin-top: 12px;
+      text-align: left;
+      max-height: 180px;
+      overflow-y: auto;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 10px;
+    }
+    .wg-word-review-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85em;
+    }
+    .wg-word-review-table th,
+    .wg-word-review-table td {
+      padding: 4px 8px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .wg-word-review-table th {
+      color: #64748b;
+      font-size: 0.75em;
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.95);
+    }
+    .wg-word-review-table .ok { color: #22c55e; text-align: center; }
+    .wg-word-review-table .miss { color: #ef4444; text-align: center; }
 
     /* Result */
     .wg-result { display: none; text-align: center; background: rgba(255,255,255,0.98); border-radius: 28px; padding: 36px 44px; max-width: 480px; width: 92%; box-shadow: 0 20px 60px rgba(0,0,0,0.25); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; }
@@ -892,6 +949,9 @@
       .wg-card.wg-english.wg-xl    { font-size: clamp(0.64rem, 2.8vw, 0.82rem); }
       .wg-card.wg-english.wg-xxl   { font-size: clamp(0.56rem, 2.4vw, 0.72rem); }
       .wg-card.wg-chinese { font-size: clamp(0.8rem, 3.6vw, 1.05rem); }
+      .wg-card.wg-chinese.wg-long  { font-size: clamp(0.72rem, 3.2vw, 0.95rem); }
+      .wg-card.wg-chinese.wg-xl    { font-size: clamp(0.64rem, 2.8vw, 0.82rem); }
+      .wg-card.wg-chinese.wg-xxl   { font-size: clamp(0.56rem, 2.4vw, 0.72rem); }
       .wg-arena-dual { gap: 8px; }
       .wg-vs-divider { font-size: 1.2em; }
       .wg-player-side h4 { font-size: 0.9em; padding: 6px; }
@@ -2258,19 +2318,44 @@
                 <p class="wg-subtitle">翻译配对，记单词</p>
               </div>
               <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:12px;width:100%;">
-                <select class="wg-student-select" x-model="studentClass" @change="studentName=''">
+                <select class="wg-student-select" x-model="studentClass" @change="studentName='';player2Name=''">
                   <option value="">选择班级</option>
                   <option value="2313">2313班</option>
                   <option value="2314">2314班</option>
                 </select>
-                <select class="wg-student-select" x-model="studentName" :disabled="!studentClass">
-                  <option value="">选择姓名</option>
-                  <template x-for="name in (studentList[studentClass]||[])" :key="name">
-                    <option :value="name" x-text="name"></option>
-                  </template>
-                </select>
+                <!-- 单人模式：一个名字 -->
+                <template x-if="mode==='single'">
+                  <select class="wg-student-select" x-model="studentName" :disabled="!studentClass">
+                    <option value="">选择姓名</option>
+                    <template x-for="name in (studentList[studentClass]||[])" :key="name">
+                      <option :value="name" x-text="name"></option>
+                    </template>
+                  </select>
+                </template>
+                <!-- 双人模式：两个名字 -->
+                <template x-if="mode==='dual'">
+                  <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+                    <select class="wg-student-select" x-model="studentName" :disabled="!studentClass">
+                      <option value="">玩家1</option>
+                      <template x-for="name in (studentList[studentClass]||[])" :key="name">
+                        <option :value="name" x-text="name"></option>
+                      </template>
+                    </select>
+                    <select class="wg-student-select" x-model="player2Name" :disabled="!studentClass">
+                      <option value="">玩家2</option>
+                      <template x-for="name in (studentList[studentClass]||[])" :key="name">
+                        <option :value="name" x-text="name"></option>
+                      </template>
+                    </select>
+                  </div>
+                </template>
                 <div x-show="studentName" class="wg-student-label" style="display:flex;align-items:center;">
-                  玩家：<span class="wg-student-name" x-text="studentName"></span>
+                  <template x-if="mode==='single'">
+                    <span>玩家：<span class="wg-student-name" x-text="studentName"></span></span>
+                  </template>
+                  <template x-if="mode==='dual'">
+                    <span><span class="wg-student-name" x-text="studentName || '?'"></span> vs <span class="wg-student-name" x-text="player2Name || '?'"></span></span>
+                  </template>
                 </div>
               </div>
             </div>
@@ -2296,7 +2381,7 @@
               </div>
             </div>
             <div class="wg-start-bar">
-              <button class="wg-start-btn" @click="startGame()" :disabled="loading || !studentName" :style="!studentName ? 'opacity:0.5;cursor:not-allowed;' : ''">🎮 开始游戏</button>
+              <button class="wg-start-btn" @click="startGame()" :disabled="loading || (mode==='single' ? !studentName : (!studentName || !player2Name))" :style="(mode==='single' ? !studentName : (!studentName || !player2Name)) ? 'opacity:0.5;cursor:not-allowed;' : ''">🎮 开始游戏</button>
               <button class="wg-start-btn secondary" @click="loadLeaderboard(); showLeaderboard=true" :disabled="!studentClass" :style="!studentClass ? 'opacity:0.5;cursor:not-allowed;' : ''">🏆 排行榜</button>
             </div>
           </div>
@@ -2340,6 +2425,7 @@
               <div class="wg-stat-item"><div class="wg-stat-value" id="wg-stat-time">0秒</div><div class="wg-stat-label">用时</div></div>
               <div class="wg-stat-item"><div class="wg-stat-value" id="wg-stat-correct">0对</div><div class="wg-stat-label">配对</div></div>
             </div>
+            <div id="wg-word-review" class="wg-word-review" style="display:none;"></div>
             <div class="wg-result-actions">
               <button class="wg-btn-retry" @click="retryGame()">🔄 再玩一次</button>
               <button class="wg-btn-home" @click="goHome()">返回首页</button>
@@ -2944,9 +3030,10 @@
   <script src="/js/quiz.js?v=10"></script>
   <script src="/js/essay.js?v=7"></script>
   <script src="/js/choicefill.js?v=4"></script>
-  <script src="/js/wordgame.js?v=15"></script>
+  <script src="/js/wordgame.js?v=16"></script>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <script src="/js/exam.js?v=3"></script>
+    <script defer src="/js/ai-overview.js?v=1"></script>
     <script defer src="/js/alpine.min.js?v=4"></script>
 
   <!-- Mobile Bottom Tab Bar -->

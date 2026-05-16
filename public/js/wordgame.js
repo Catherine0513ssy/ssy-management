@@ -27,6 +27,8 @@ document.addEventListener('alpine:init', () => {
     // Student
     studentClass: '',
     studentName: '',
+    player2Name: '',
+    player2Class: '',
     showLeaderboard: false,
     leaderboardData: [],
     leaderboardLoading: false,
@@ -168,15 +170,17 @@ document.addEventListener('alpine:init', () => {
     renderArenaDual(words) {
       const arena = document.getElementById('wg-arena');
       if (!arena) return;
+      const p1Name = this.studentName || '玩家1';
+      const p2Name = this.player2Name || '玩家2';
       arena.innerHTML = `
         <div class="wg-arena-dual">
           <div class="wg-player-side">
-            <h4>玩家1</h4>
+            <h4>🧑 ${this.escapeHtml(p1Name)}</h4>
             <div class="wg-card-grid" id="wg-grid-p1"></div>
           </div>
           <div class="wg-vs-divider">VS</div>
           <div class="wg-player-side">
-            <h4>玩家2</h4>
+            <h4>👩 ${this.escapeHtml(p2Name)}</h4>
             <div class="wg-card-grid" id="wg-grid-p2"></div>
           </div>
         </div>
@@ -237,8 +241,13 @@ document.addEventListener('alpine:init', () => {
         const el = document.createElement('div');
         const text = card.isEnglish ? (card.word || '') : this.getPrimaryMeaning(card.meaning);
         let sizeClass = '';
+        const len = text.length;
         if (card.isEnglish) {
-          const len = text.length;
+          if (len > 16) sizeClass = ' wg-xxl';
+          else if (len > 12) sizeClass = ' wg-xl';
+          else if (len > 8) sizeClass = ' wg-long';
+        } else {
+          // 中文释义也按长度缩小字体
           if (len > 16) sizeClass = ' wg-xxl';
           else if (len > 12) sizeClass = ' wg-xl';
           else if (len > 8) sizeClass = ' wg-long';
@@ -324,13 +333,22 @@ document.addEventListener('alpine:init', () => {
       const cfg = this.CONFIG[this.diff];
       this.timerInterval = setInterval(() => {
         this.timerElapsed += 0.1;
-        const pct = Math.max(0, (cfg.time - this.timerElapsed) / cfg.time * 100);
+        const remaining = cfg.time - this.timerElapsed;
+        const pct = Math.max(0, remaining / cfg.time * 100);
         if (fill) fill.style.width = pct + '%';
         if (fill) fill.className = 'wg-timer-fill' + (pct < 20 ? ' wg-danger' : pct < 50 ? ' wg-warning' : '');
         const txt = document.getElementById('wg-timer-text');
-        if (txt) txt.textContent = '剩余 ' + Math.ceil(cfg.time - this.timerElapsed) + ' 秒';
+        if (txt) txt.textContent = '剩余 ' + Math.ceil(remaining) + ' 秒';
+        // 心跳动画
+        const wrap = document.querySelector('.wordgame-wrap');
+        if (wrap) {
+          if (remaining <= 10 && remaining > 0) wrap.classList.add('wg-heartbeat');
+          else wrap.classList.remove('wg-heartbeat');
+        }
         if (this.timerElapsed >= cfg.time) {
           this.clearTimer();
+          const w = document.querySelector('.wordgame-wrap');
+          if (w) w.classList.remove('wg-heartbeat');
           this.endGameTimeout();
         }
       }, 100);
@@ -353,8 +371,16 @@ document.addEventListener('alpine:init', () => {
         if (fill) fill.className = 'wg-timer-fill' + (pct < 20 ? ' wg-danger' : pct < 50 ? ' wg-warning' : '');
         const txt = document.getElementById('wg-timer-text');
         if (txt) txt.textContent = '剩余 ' + Math.ceil(remaining) + ' 秒';
+        // 心跳动画
+        const wrap = document.querySelector('.wordgame-wrap');
+        if (wrap) {
+          if (remaining <= 10 && remaining > 0) wrap.classList.add('wg-heartbeat');
+          else wrap.classList.remove('wg-heartbeat');
+        }
         if (this.dualState.p1.timeLeft <= 0 && this.dualState.p2.timeLeft <= 0) {
           this.clearTimer();
+          const w = document.querySelector('.wordgame-wrap');
+          if (w) w.classList.remove('wg-heartbeat');
           this.showDualResult(null);
         }
       }, 100);
@@ -400,17 +426,18 @@ document.addEventListener('alpine:init', () => {
     endGame(state) {
       this.clearTimer();
       this.page = 'result';
-      this.submitScore(state.score);
+      this.submitScore(this.studentName, this.studentClass, state.score);
       this.$nextTick(() => {
         const emoji = document.getElementById('wg-result-emoji');
         const title = document.getElementById('wg-result-title');
         const sub = document.getElementById('wg-result-subtitle');
         if (emoji) emoji.textContent = '🎉';
         if (title) title.textContent = '通关成功！';
-        if (sub) sub.textContent = '太棒了！';
+        if (sub) sub.textContent = '太棒了，' + this.studentName + '！';
         this.setStat('wg-stat-score', state.score);
         this.setStat('wg-stat-time', (this.CONFIG[this.diff].time - Math.ceil(state.timeLeft)) + '秒');
         this.setStat('wg-stat-correct', state.matched + '对');
+        this.renderWordReview();
       });
     },
 
@@ -418,52 +445,54 @@ document.addEventListener('alpine:init', () => {
       this.clearTimer();
       const state = this.gameState;
       this.page = 'result';
-      this.submitScore(state.score);
+      this.submitScore(this.studentName, this.studentClass, state.score);
       this.$nextTick(() => {
         const emoji = document.getElementById('wg-result-emoji');
         const title = document.getElementById('wg-result-title');
         const sub = document.getElementById('wg-result-subtitle');
         if (emoji) emoji.textContent = '⏰';
         if (title) title.textContent = '时间到！';
-        if (sub) sub.textContent = '完成了 ' + state.matched + ' / ' + state.total + ' 对';
+        if (sub) sub.textContent = this.studentName + ' 完成了 ' + state.matched + ' / ' + state.total + ' 对';
         this.setStat('wg-stat-score', state.score);
         this.setStat('wg-stat-time', this.CONFIG[this.diff].time + '秒');
         this.setStat('wg-stat-correct', state.matched + '对');
+        this.renderWordReview();
       });
     },
 
     showDualResult(winnerKey) {
       this.clearTimer();
       const p1 = this.dualState.p1, p2 = this.dualState.p2;
+      const p1Name = this.studentName || '玩家1';
+      const p2Name = this.player2Name || '玩家2';
       let winner, msg;
       if (this.dualState.winner) {
         winner = this.dualState.winner;
-        msg = winner === 1 ? '玩家1领先一步！' : '玩家2领先一步！';
+        msg = winner === 1 ? p1Name + ' 领先一步！' : p2Name + ' 领先一步！';
       } else if (p1.matched > p2.matched) {
-        winner = 1; msg = '玩家1配对更多！';
+        winner = 1; msg = p1Name + ' 配对更多！';
       } else if (p2.matched > p1.matched) {
-        winner = 2; msg = '玩家2配对更多！';
+        winner = 2; msg = p2Name + ' 配对更多！';
       } else {
         winner = p1.timeLeft > p2.timeLeft ? 1 : 2;
-        msg = winner === 1 ? '玩家1剩余时间更多！' : '玩家2剩余时间更多！';
+        msg = winner === 1 ? p1Name + ' 剩余时间更多！' : p2Name + ' 剩余时间更多！';
       }
       this.page = 'result';
-      // 双人模式也分别提交分数（用玩家1/玩家2作为姓名）
-      this.submitScore(p1.score);
-      const savedName = this.studentName;
-      this.studentName = '玩家2';
-      this.submitScore(p2.score);
-      this.studentName = savedName;
+      // 分别提交两人的真实成绩
+      this.submitScore(p1Name, this.studentClass, p1.score);
+      this.submitScore(p2Name, this.player2Class || this.studentClass, p2.score);
       this.$nextTick(() => {
         const emoji = document.getElementById('wg-result-emoji');
         const title = document.getElementById('wg-result-title');
         const sub = document.getElementById('wg-result-subtitle');
+        const winName = winner === 1 ? p1Name : p2Name;
         if (emoji) emoji.textContent = '🏆';
-        if (title) title.textContent = '玩家' + winner + ' 获胜！';
+        if (title) title.textContent = winName + ' 获胜！';
         if (sub) sub.textContent = msg;
         this.setStat('wg-stat-score', p1.score + ' vs ' + p2.score);
         this.setStat('wg-stat-time', Math.ceil(p1.timeLeft) + '秒 vs ' + Math.ceil(p2.timeLeft) + '秒');
         this.setStat('wg-stat-correct', p1.matched + '对 vs ' + p2.matched + '对');
+        this.renderWordReviewDual();
       });
     },
 
@@ -497,26 +526,95 @@ document.addEventListener('alpine:init', () => {
       this.dualState = null;
       this.clearPlaneGame();
       this.gameMenu = 'main';
+      const wrap = document.querySelector('.wordgame-wrap');
+      if (wrap) wrap.classList.remove('wg-heartbeat');
       this.$nextTick(() => this.createBg());
     },
 
-    async submitScore(score) {
-      if (!this.studentName || !this.studentClass) return;
+    renderWordReview() {
+      const container = document.getElementById('wg-word-review');
+      if (!container || !this.gameState) return;
+      const words = this.gameState.words;
+      const matchedIds = new Set();
+      // 从 gameState  reconstruct matched words (通过检查哪些已经被配对)
+      // 由于我们没有直接存 matchedWordIds，这里用 matched 数量来近似
+      // 更精确的做法是在 onCardClick 中记录
+      container.innerHTML = `
+        <table class="wg-word-review-table">
+          <thead><tr><th>英文</th><th>中文</th><th>状态</th></tr></thead>
+          <tbody>
+            ${words.map((w, i) => {
+              const ok = i < this.gameState.matched;
+              return `<tr><td>${this.escapeHtml(w.word)}</td><td>${this.escapeHtml(this.getPrimaryMeaning(w.meaning))}</td><td class="${ok ? 'ok' : 'miss'}">${ok ? '✅' : '❌'}</td></tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+      container.style.display = 'block';
+    },
+
+    renderWordReviewDual() {
+      const container = document.getElementById('wg-word-review');
+      if (!container || !this.dualState) return;
+      const words = this.dualState.p1.words;
+      const p1Name = this.studentName || '玩家1';
+      const p2Name = this.player2Name || '玩家2';
+      container.innerHTML = `
+        <table class="wg-word-review-table">
+          <thead><tr><th>英文</th><th>中文</th><th>${this.escapeHtml(p1Name)}</th><th>${this.escapeHtml(p2Name)}</th></tr></thead>
+          <tbody>
+            ${words.map((w, i) => {
+              const p1ok = i < this.dualState.p1.matched;
+              const p2ok = i < this.dualState.p2.matched;
+              return `<tr>
+                <td>${this.escapeHtml(w.word)}</td>
+                <td>${this.escapeHtml(this.getPrimaryMeaning(w.meaning))}</td>
+                <td class="${p1ok ? 'ok' : 'miss'}">${p1ok ? '✅' : '❌'}</td>
+                <td class="${p2ok ? 'ok' : 'miss'}">${p2ok ? '✅' : '❌'}</td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+      container.style.display = 'block';
+    },
+
+    escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = String(text);
+      return div.innerHTML;
+    },
+
+    async submitScore(name, classId, score) {
+      if (!name || !classId) return;
       try {
-        await fetch('/api/wordgame/score', {
+        const res = await fetch('/api/wordgame/score', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            name: this.studentName,
-            class_id: this.studentClass,
+            name: name,
+            class_id: classId,
             score: score,
             mode: this.mode,
             diff: this.diff
           })
         });
+        const data = await res.json();
+        if (data.updated) {
+          this.showNewRecordToast(name, score);
+        }
       } catch (e) {
         console.error('提交分数失败', e);
       }
+    },
+
+    showNewRecordToast(name, score) {
+      const toast = document.createElement('div');
+      toast.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#f59e0b,#d97706);color:white;padding:10px 24px;border-radius:12px;font-weight:700;z-index:400;animation:wgToastIn 0.4s ease,wgToastOut 0.4s ease 2.2s forwards;white-space:nowrap;';
+      toast.textContent = `🎉 ${name} 打破纪录！${score}分`;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2600);
     },
 
     async loadLeaderboard() {
